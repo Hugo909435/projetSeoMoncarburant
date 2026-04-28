@@ -1,0 +1,386 @@
+---
+// Layout pour les articles piliers de silo
+import type { CollectionEntry } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumb from './Breadcrumb.astro';
+import TableOfContents from './TableOfContents.astro';
+import AuthorBox from './AuthorBox.astro';
+import RelatedArticles from './RelatedArticles.astro';
+import FAQ from './FAQ.astro';
+import Newsletter from './Newsletter.astro';
+import ShareButtons from './ShareButtons.astro';
+
+interface Heading {
+  depth: number;
+  slug: string;
+  text: string;
+}
+
+interface AuthorData {
+  name: string;
+  slug: string;
+  bio: string;
+  photo: string;
+  expertise: string[];
+  linkedin?: string;
+}
+
+interface Props {
+  pilier: CollectionEntry<'piliers'>['data'];
+  satellites?: CollectionEntry<'blog'>[];
+  author?: AuthorData;
+  headings?: Heading[];
+}
+
+const { pilier, satellites = [], author, headings = [] } = Astro.props;
+
+const {
+  title,
+  metaTitle,
+  metaDescription,
+  slug,
+  publishedAt,
+  updatedAt,
+  category,
+  featuredImage,
+  imageAlt,
+  readingTime,
+  faq,
+  ctaTitle,
+  ctaDescription,
+} = pilier;
+
+const categoryLabels: Record<string, string> = {
+  economies: 'Économies',
+  carburants: 'Carburants',
+  fiscalite: 'Fiscalité',
+  entretien: 'Entretien',
+};
+
+const pageUrl = `https://mon-carburant.com/piliers/${slug}/`;
+
+const breadcrumb = [
+  { label: 'Accueil', href: '/' },
+  { label: categoryLabels[category], href: `/categorie/${category}` },
+  { label: title, href: `/piliers/${slug}` },
+];
+
+const articleSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  '@id': pageUrl,
+  headline: title,
+  description: metaDescription,
+  image: featuredImage.startsWith('http') ? featuredImage : `https://mon-carburant.com${featuredImage}`,
+  datePublished: publishedAt.toISOString(),
+  dateModified: (updatedAt ?? publishedAt).toISOString(),
+  author: author
+    ? { '@type': 'Person', name: author.name, url: `https://mon-carburant.com/auteur/${author.slug}/` }
+    : { '@type': 'Organization', name: 'Mon Carburant' },
+  publisher: {
+    '@type': 'Organization',
+    name: 'Mon Carburant',
+    logo: { '@type': 'ImageObject', url: 'https://mon-carburant.com/images/logo.png' },
+  },
+};
+
+const dateFormatted = new Intl.DateTimeFormat('fr-FR', {
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric',
+}).format(publishedAt);
+---
+
+<BaseLayout
+  title={metaTitle}
+  description={metaDescription}
+  canonical={pageUrl}
+  image={featuredImage}
+  imageAlt={imageAlt}
+  type="article"
+  publishedAt={publishedAt.toISOString()}
+  updatedAt={updatedAt?.toISOString()}
+  authorName={author?.name}
+  jsonLd={articleSchema}
+>
+  <article class="pilier-page">
+    <div class="container">
+      <Breadcrumb items={breadcrumb} />
+
+      <header class="pilier-header">
+        <div class="pilier-badge-row">
+          <span class="badge">{categoryLabels[category]}</span>
+          <span class="pilier-tag">Article pilier</span>
+        </div>
+        <h1 class="pilier-title">{title}</h1>
+        <div class="pilier-meta">
+          {author && (
+            <a href={`/auteur/${author.slug}/`} class="meta-author">
+              <img
+                src={author.photo}
+                alt={`Photo de ${author.name}`}
+                width="32"
+                height="32"
+                loading="eager"
+                decoding="async"
+                class="meta-photo"
+                onerror="this.src='/images/authors/placeholder.svg'"
+              />
+              {author.name}
+            </a>
+          )}
+          <time datetime={publishedAt.toISOString()}>{dateFormatted}</time>
+          <span>{readingTime} min de lecture</span>
+        </div>
+
+        <div class="pilier-featured-image">
+          <img
+            src={featuredImage}
+            alt={imageAlt}
+            width="1200"
+            height="630"
+            loading="eager"
+            decoding="async"
+            fetchpriority="high"
+          />
+        </div>
+      </header>
+
+      <!-- Sommaire des satellites -->
+      {satellites.length > 0 && (
+        <div class="pilier-satellites-summary">
+          <h2 class="satellites-title">Dans ce guide complet</h2>
+          <ul class="satellites-list" role="list">
+            {satellites.map((s) => (
+              <li>
+                <a href={`/blog/${s.data.slug}/`} class="satellite-link">
+                  <span class="satellite-arrow">→</span>
+                  {s.data.title}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      <div class="pilier-body">
+        {headings.length > 1 && (
+          <div class="pilier-toc">
+            <TableOfContents headings={headings} />
+          </div>
+        )}
+
+        <div class="pilier-content prose">
+          <slot />
+          {faq && faq.length > 0 && <FAQ items={faq} />}
+          <ShareButtons url={pageUrl} title={title} />
+        </div>
+      </div>
+
+      <!-- CTA de fin d'article -->
+      {(ctaTitle || ctaDescription) && (
+        <div class="pilier-cta">
+          <h2>{ctaTitle ?? 'Allez plus loin'}</h2>
+          {ctaDescription && <p>{ctaDescription}</p>}
+          <a href="/contact" class="btn-primary">Nous contacter</a>
+        </div>
+      )}
+
+      {author && <AuthorBox author={author} />}
+
+      <!-- Articles satellites liés -->
+      {satellites.length > 0 && (
+        <RelatedArticles
+          articles={satellites}
+          title="Articles de ce silo"
+        />
+      )}
+
+      <div style="margin-top: 3rem;">
+        <Newsletter compact />
+      </div>
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .pilier-page {
+    padding-top: 2rem;
+    padding-bottom: 4rem;
+  }
+
+  .pilier-header {
+    max-width: 56rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .pilier-badge-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+  }
+
+  .pilier-tag {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    background: #e0f2fe;
+    color: #0369a1;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .pilier-title {
+    font-size: clamp(1.75rem, 4vw, 2.75rem);
+    line-height: 1.15;
+    color: var(--color-primary);
+    margin: 0 0 1rem;
+  }
+
+  .pilier-meta {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.75rem 1.25rem;
+    margin-bottom: 1.5rem;
+    font-size: 0.875rem;
+    color: var(--color-text-secondary);
+  }
+
+  .meta-author {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--color-text);
+    font-weight: 500;
+    text-decoration: none;
+  }
+
+  .meta-author:hover {
+    color: var(--color-accent);
+  }
+
+  .meta-photo {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  .pilier-featured-image {
+    border-radius: 0.75rem;
+    overflow: hidden;
+    aspect-ratio: 16 / 9;
+    background: #f3f4f6;
+  }
+
+  .pilier-featured-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .pilier-satellites-summary {
+    background: #f0f9ff;
+    border: 1px solid #bae6fd;
+    border-radius: 0.75rem;
+    padding: 1.5rem 2rem;
+    margin-bottom: 2rem;
+    max-width: 56rem;
+  }
+
+  .satellites-title {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: 700;
+    color: #0369a1;
+    margin: 0 0 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .satellites-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    columns: 1;
+    gap: 0.5rem;
+  }
+
+  @media (min-width: 640px) {
+    .satellites-list {
+      columns: 2;
+    }
+  }
+
+  .satellite-link {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    font-size: 0.9375rem;
+    color: #0369a1;
+    padding: 0.25rem 0;
+    text-decoration: none;
+  }
+
+  .satellite-link:hover {
+    color: var(--color-accent);
+    text-decoration: underline;
+  }
+
+  .satellite-arrow {
+    flex-shrink: 0;
+    color: var(--color-accent);
+    font-weight: 700;
+  }
+
+  .pilier-body {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    margin-top: 2rem;
+  }
+
+  @media (min-width: 1024px) {
+    .pilier-body {
+      grid-template-columns: 1fr 16rem;
+      align-items: start;
+    }
+
+    .pilier-toc {
+      order: 2;
+    }
+
+    .pilier-content {
+      order: 1;
+    }
+  }
+
+  .pilier-content {
+    min-width: 0;
+  }
+
+  .pilier-cta {
+    background: linear-gradient(135deg, var(--color-accent) 0%, #d0651a 100%);
+    color: #fff;
+    border-radius: 1rem;
+    padding: 2rem 2.5rem;
+    margin-top: 2.5rem;
+    max-width: 56rem;
+  }
+
+  .pilier-cta h2 {
+    color: #fff;
+    font-size: 1.375rem;
+    margin: 0 0 0.75rem;
+  }
+
+  .pilier-cta p {
+    color: rgba(255 255 255 / 0.85);
+    margin: 0 0 1.25rem;
+  }
+</style>

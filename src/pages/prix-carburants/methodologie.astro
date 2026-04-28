@@ -1,0 +1,179 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import meta from '../../data/fuel/meta.json';
+
+const lastUpdate = meta.lastUpdate
+  ? new Date(meta.lastUpdate).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit' })
+  : 'Non disponible';
+
+const title = 'Méthodologie du comparateur de carburant — Mon Carburant';
+const description = 'Comment fonctionne notre comparateur de prix carburant ? Source des données, fréquence de mise à jour, limites et mentions légales open data.';
+---
+
+<BaseLayout title={title} description={description} canonical="/prix-carburants/methodologie/">
+  <main class="container methodologie-page">
+    <nav aria-label="Fil d'ariane" class="breadcrumb-nav">
+      <a href="/">Accueil</a> ›
+      <a href="/prix-carburants/">Prix carburants</a> ›
+      <span>Méthodologie</span>
+    </nav>
+
+    <h1>Méthodologie du comparateur de carburant</h1>
+
+    <div class="meta-update">
+      Dernière mise à jour des données : <strong>{lastUpdate}</strong> ·
+      {meta.totalStations.toLocaleString('fr-FR')} stations référencées
+    </div>
+
+    <section class="methodo-section">
+      <h2>1. Source des données</h2>
+      <p>
+        Les prix affichés sur Mon Carburant proviennent exclusivement du
+        <strong>flux officiel quotidien du gouvernement français</strong>, disponible sur :
+      </p>
+      <ul>
+        <li>
+          <a href="https://www.prix-carburants.gouv.fr/rubrique/opendata/" rel="noopener noreferrer" target="_blank">
+            prix-carburants.gouv.fr — Open Data
+          </a>
+        </li>
+        <li>
+          <a href="https://www.data.gouv.fr/datasets/prix-des-carburants-en-france-flux-quotidien-1" rel="noopener noreferrer" target="_blank">
+            data.gouv.fr — Jeux de données
+          </a>
+        </li>
+      </ul>
+      <p>
+        Ces données sont publiées sous <strong>Licence Ouverte / Open Licence v2.0</strong> par le
+        ministère de l'Économie et des Finances, dans le cadre du dispositif de transparence
+        des prix des carburants instauré par la loi du 1er août 2008.
+      </p>
+      <p>
+        Chaque station-service est légalement tenue de communiquer ses prix au gouvernement
+        dès qu'elle les modifie. Ces prix sont agrégés et publiés chaque jour dans un fichier XML compressé.
+      </p>
+    </section>
+
+    <section class="methodo-section">
+      <h2>2. Fréquence de mise à jour</h2>
+      <p>
+        Notre système récupère le flux de données <strong>quotidiennement à 6h00 du matin</strong>
+        (heure de Paris). Le fichier fourni correspond aux données du jour J-1, c'est-à-dire
+        les prix communiqués la veille.
+      </p>
+      <p>
+        La date et l'heure de la dernière mise à jour sont affichées sur chaque page du comparateur.
+        Chaque prix individuel inclut également la date de mise à jour communiquée par la station.
+      </p>
+    </section>
+
+    <section class="methodo-section">
+      <h2>3. Traitement des données</h2>
+      <p>Notre algorithme de traitement effectue les opérations suivantes :</p>
+      <ol>
+        <li>Téléchargement du fichier ZIP depuis le serveur gouvernemental</li>
+        <li>Décompression et décodage du fichier XML (encodage ISO-8859-1)</li>
+        <li>Normalisation des codes postaux et extraction des numéros de département</li>
+        <li>Conversion des prix (format millièmes d'euro → euros)</li>
+        <li>Conversion des coordonnées GPS (format 1/100 000° → degrés décimaux)</li>
+        <li>Exclusion des ruptures de stock en cours</li>
+        <li>Calcul des prix moyens nationaux, régionaux et départementaux</li>
+        <li>Génération des fichiers JSON optimisés pour chaque département et chaque ville</li>
+      </ol>
+      <p>
+        Les calculs de moyennes portent uniquement sur les stations ayant renseigné un prix
+        non nul et non en rupture pour le carburant concerné.
+      </p>
+    </section>
+
+    <section class="methodo-section">
+      <h2>4. Limites et précautions</h2>
+      <div class="warning-box">
+        <h3>⚠️ Points d'attention</h3>
+        <ul>
+          <li>
+            <strong>Délai J-1</strong> : les prix affichés correspondent aux données de la veille.
+            En cas de forte variation des cours du pétrole, les prix réels en station peuvent
+            différer légèrement.
+          </li>
+          <li>
+            <strong>Stations non mises à jour</strong> : certaines stations ne transmettent pas
+            leurs prix régulièrement. Un prix peut dater de plusieurs jours si la station
+            n'a pas mis à jour ses données.
+          </li>
+          <li>
+            <strong>Ruptures non signalées</strong> : toutes les ruptures de stock ne sont pas
+            systématiquement déclarées dans le système officiel.
+          </li>
+          <li>
+            <strong>Données géographiques</strong> : les coordonnées GPS sont celles déclarées
+            par les stations. De rares imprécisions peuvent exister.
+          </li>
+          <li>
+            <strong>Prix autoroutiers</strong> : les stations d'autoroute pratiquent
+            traditionnellement des prix significativement plus élevés. Elles sont identifiées
+            dans notre comparateur par le badge "Autoroute".
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="methodo-section">
+      <h2>5. Mentions légales — Utilisation des données open data</h2>
+      <p>
+        Les données utilisées par Mon Carburant sont issues du portail open data du gouvernement français
+        et sont publiées sous <strong>Licence Ouverte / Open Licence 2.0</strong>.
+      </p>
+      <p>
+        Conformément à cette licence, nous mentionnons la source des données sur toutes nos pages :
+        <em>"Source des données : data.economie.gouv.fr (Licence Ouverte)"</em>.
+      </p>
+      <p>
+        L'utilisation de ces données est libre, gratuite et ouverte à tous,
+        y compris pour un usage commercial, sous réserve de mentionner la source.
+        Pour plus d'informations sur la licence :
+        <a href="https://www.etalab.gouv.fr/licence-ouverte-open-licence" rel="noopener noreferrer" target="_blank">
+          etalab.gouv.fr — Licence Ouverte
+        </a>.
+      </p>
+    </section>
+
+    <section class="methodo-section">
+      <h2>6. Note sur les données historiques</h2>
+      <p>
+        Le comparateur actuel ne conserve que les données du jour J-1. L'historique des prix
+        (courbes d'évolution sur plusieurs mois) est une fonctionnalité prévue dans une prochaine version.
+        Ce type de suivi nécessite un stockage temporel des données qui n'est pas encore implémenté.
+      </p>
+    </section>
+
+    <div class="back-links">
+      <a href="/prix-carburants/" class="back-btn">← Retour au comparateur</a>
+      <a href="/blog/" class="back-btn secondary">Voir les articles</a>
+    </div>
+  </main>
+</BaseLayout>
+
+<style>
+  .methodologie-page { padding-top: 1.5rem; padding-bottom: 4rem; max-width: 52rem; }
+  .breadcrumb-nav { font-size: 0.875rem; color: var(--color-text-muted); margin-bottom: 1.5rem; }
+  .breadcrumb-nav a { color: var(--color-primary); text-decoration: none; }
+  .breadcrumb-nav a:hover { text-decoration: underline; }
+  h1 { font-size: clamp(1.75rem, 3.5vw, 2.25rem); font-weight: 800; color: var(--color-primary); margin: 0 0 1rem; }
+  .meta-update { background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 0.5rem; padding: 0.75rem 1rem; font-size: 0.875rem; color: #166534; margin-bottom: 2.5rem; }
+  .methodo-section { margin-bottom: 2.5rem; }
+  .methodo-section h2 { font-size: 1.25rem; font-weight: 700; color: var(--color-primary); margin: 0 0 1rem; border-bottom: 2px solid #e5e7eb; padding-bottom: 0.5rem; }
+  .methodo-section h3 { font-size: 1rem; font-weight: 700; margin: 0 0 0.75rem; }
+  .methodo-section p { color: #374151; line-height: 1.75; margin-bottom: 0.875rem; }
+  .methodo-section ul, .methodo-section ol { color: #374151; line-height: 1.75; padding-left: 1.5rem; margin-bottom: 0.875rem; }
+  .methodo-section li { margin-bottom: 0.4rem; }
+  .methodo-section a { color: var(--color-accent); }
+  .warning-box { background: #fff7ed; border: 1px solid #fed7aa; border-left: 4px solid #ea580c; border-radius: 0.5rem; padding: 1.25rem 1.5rem; }
+  .warning-box ul { margin: 0; }
+  .warning-box li { margin-bottom: 0.75rem; }
+  .back-links { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 2.5rem; }
+  .back-btn { padding: 0.625rem 1.25rem; border-radius: 0.5rem; text-decoration: none; font-weight: 600; font-size: 0.9rem; transition: all 0.2s; background: var(--color-primary); color: #fff; }
+  .back-btn:hover { background: #1a4a66; }
+  .back-btn.secondary { background: #f1f5f9; color: var(--color-primary); border: 1px solid #e2e8f0; }
+  .back-btn.secondary:hover { background: #e2e8f0; }
+</style>

@@ -1,0 +1,225 @@
+---
+// Footer — 4 colonnes, aucun lien sortant
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="site-footer" role="contentinfo">
+  <div class="container footer-grid">
+    <!-- Colonne 1 : À propos -->
+    <div class="footer-col">
+      <a href="/" class="footer-logo" aria-label="Mon Carburant — Accueil">
+        <svg width="24" height="24" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+          <rect width="28" height="28" rx="6" fill="#E87722"/>
+          <path d="M14 6C14 6 8 14 8 18a6 6 0 0 0 12 0c0-4-6-12-6-12z" fill="white"/>
+        </svg>
+        <span>Mon<strong>Carburant</strong></span>
+      </a>
+      <p class="footer-tagline">
+        Économisez sur le carburant, roulez plus malin. Conseils, comparatifs et décryptages pour les automobilistes français.
+      </p>
+    </div>
+
+    <!-- Colonne 2 : Catégories -->
+    <div class="footer-col">
+      <h3>Thématiques</h3>
+      <ul role="list">
+        <li><a href="/categorie/economies">Économies de carburant</a></li>
+        <li><a href="/categorie/carburants">Types de carburants</a></li>
+        <li><a href="/categorie/fiscalite">Fiscalité automobile</a></li>
+        <li><a href="/categorie/entretien">Entretien du véhicule</a></li>
+        <li><a href="/blog">Tous les articles</a></li>
+        <li><a href="/prix-carburants/">Comparateur carburant</a></li>
+      </ul>
+    </div>
+
+    <!-- Colonne 3 : Pages légales -->
+    <div class="footer-col">
+      <h3>Informations</h3>
+      <ul role="list">
+        <li><a href="/a-propos">À propos</a></li>
+        <li><a href="/mentions-legales">Mentions légales</a></li>
+        <li><a href="/politique-confidentialite">Politique de confidentialité</a></li>
+        <li><a href="/rss.xml">Flux RSS</a></li>
+      </ul>
+    </div>
+
+    <!-- Colonne 4 : Contact -->
+    <div class="footer-col">
+      <h3>Contact</h3>
+      <p>Une question, une suggestion ou une opportunité éditoriale ?</p>
+      <a href="/contact" class="footer-cta">Nous contacter</a>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <div class="container footer-bottom-inner">
+      <p>© {currentYear} Mon Carburant — Tous droits réservés</p>
+      <p class="footer-datasource">
+        Source des données : <a href="https://data.economie.gouv.fr" rel="noopener noreferrer" target="_blank">data.economie.gouv.fr</a> (Licence Ouverte)
+      </p>
+      <nav aria-label="Navigation légale">
+        <a href="/mentions-legales">Mentions légales</a>
+        <a href="/politique-confidentialite">Confidentialité</a>
+      </nav>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background: var(--color-primary);
+    color: #cbd5e1;
+    margin-top: 4rem;
+  }
+
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+  }
+
+  @media (min-width: 640px) {
+    .footer-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .footer-grid {
+      grid-template-columns: 2fr 1fr 1fr 1.5fr;
+    }
+  }
+
+  .footer-col h3 {
+    font-family: var(--font-display);
+    font-size: 0.875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #fff;
+    margin: 0 0 1rem;
+  }
+
+  .footer-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #fff;
+    text-decoration: none;
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: 500;
+    margin-bottom: 0.75rem;
+  }
+
+  .footer-logo:hover {
+    color: #fff;
+  }
+
+  .footer-logo strong {
+    color: var(--color-accent);
+    font-weight: 800;
+  }
+
+  .footer-tagline {
+    font-size: 0.875rem;
+    line-height: 1.6;
+    color: #94a3b8;
+    margin: 0;
+  }
+
+  .footer-col ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .footer-col a {
+    font-size: 0.875rem;
+    color: #94a3b8;
+    text-decoration: none;
+    transition: color 0.15s ease;
+  }
+
+  .footer-col a:hover {
+    color: #fff;
+  }
+
+  .footer-col p {
+    font-size: 0.875rem;
+    color: #94a3b8;
+    margin: 0 0 1rem;
+    line-height: 1.6;
+  }
+
+  .footer-cta {
+    display: inline-flex;
+    padding: 0.5rem 1rem;
+    background: var(--color-accent);
+    color: #fff !important;
+    border-radius: 0.375rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    transition: background 0.2s ease;
+  }
+
+  .footer-cta:hover {
+    background: #d0651a;
+    color: #fff;
+  }
+
+  .footer-bottom {
+    border-top: 1px solid #1e3a50;
+  }
+
+  .footer-datasource {
+    margin: 0;
+    font-size: 0.75rem;
+    color: #475569;
+  }
+  .footer-datasource a {
+    color: #64748b;
+    text-decoration: underline;
+  }
+  .footer-bottom-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding-top: 1.25rem;
+    padding-bottom: 1.25rem;
+    font-size: 0.8125rem;
+    color: #64748b;
+  }
+
+  @media (min-width: 640px) {
+    .footer-bottom-inner {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+    }
+  }
+
+  .footer-bottom-inner p {
+    margin: 0;
+  }
+
+  .footer-bottom nav {
+    display: flex;
+    gap: 1.25rem;
+  }
+
+  .footer-bottom nav a {
+    color: #64748b;
+    text-decoration: none;
+    transition: color 0.15s ease;
+  }
+
+  .footer-bottom nav a:hover {
+    color: #94a3b8;
+  }
+</style>

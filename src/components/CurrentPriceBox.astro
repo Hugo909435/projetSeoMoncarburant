@@ -1,0 +1,93 @@
+---
+import statsNational from '../data/fuel/stats-national.json';
+
+interface Props {
+  fuel: 'Gazole' | 'SP95' | 'SP98' | 'E10' | 'E85' | 'GPLc';
+}
+
+const { fuel } = Astro.props;
+
+const FUEL_CONFIG = {
+  Gazole: { slug: 'gazole', label: 'Gazole', color: '#374151' },
+  SP95:   { slug: 'sp95',   label: 'Sans-Plomb 95', color: '#16a34a' },
+  SP98:   { slug: 'sp98',   label: 'Sans-Plomb 98', color: '#2563eb' },
+  E10:    { slug: 'e10',    label: 'E10', color: '#15803d' },
+  E85:    { slug: 'e85',    label: 'E85 Bioéthanol', color: '#E87722' },
+  GPLc:   { slug: 'gpl',    label: 'GPL', color: '#ca8a04' },
+};
+
+const config = FUEL_CONFIG[fuel];
+const price = statsNational[fuel];
+---
+
+<aside class="cpb-box" style={`--fuel-color: ${config.color}`}>
+  <div class="cpb-inner">
+    <div class="cpb-icon" aria-hidden="true">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+        <path d="M7 3h7a1 1 0 0 1 1 1v17H6V4a1 1 0 0 1 1-1Z" />
+        <path d="M15 8h2.5L20 10.5V18a2 2 0 0 1-4 0v-5" />
+        <path d="M8.5 7h4" />
+      </svg>
+    </div>
+    <div class="cpb-content">
+      <p class="cpb-label">Prix actuel du {config.label} en France</p>
+      <p class="cpb-price">
+        {price != null
+          ? <strong>{price.toFixed(3)} €/L</strong>
+          : <strong>—</strong>
+        }
+        <span class="cpb-note">moyenne nationale</span>
+      </p>
+    </div>
+    <a href={`/prix-${config.slug}/`} class="cpb-cta">
+      Voir toutes les stations →
+    </a>
+  </div>
+</aside>
+
+<style>
+  .cpb-box {
+    background: linear-gradient(135deg, #f8fafc, #fff);
+    border: 2px solid var(--fuel-color);
+    border-radius: 0.75rem;
+    padding: 1.25rem 1.5rem;
+    margin: 2rem 0;
+    container-type: inline-size;
+  }
+  .cpb-inner {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .cpb-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    color: var(--fuel-color);
+    background: color-mix(in srgb, var(--fuel-color) 10%, #fff);
+    border-radius: 0.5rem;
+    flex-shrink: 0;
+  }
+  .cpb-content { flex: 1; min-width: 0; }
+  .cpb-label { font-size: 0.8125rem; color: var(--color-text-muted); margin: 0 0 0.25rem; font-weight: 600; }
+  .cpb-price { margin: 0; display: flex; align-items: baseline; gap: 0.5rem; }
+  .cpb-price strong { font-size: 1.5rem; color: var(--fuel-color); }
+  .cpb-note { font-size: 0.8125rem; color: var(--color-text-muted); }
+  .cpb-cta {
+    display: inline-flex;
+    padding: 0.5rem 1rem;
+    background: var(--fuel-color);
+    color: #fff;
+    border-radius: 0.5rem;
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 700;
+    white-space: nowrap;
+    transition: opacity 0.2s;
+    flex-shrink: 0;
+  }
+  .cpb-cta:hover { opacity: 0.85; }
+</style>

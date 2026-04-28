@@ -1,0 +1,46 @@
+---
+// Page d'article individuel
+import { getCollection, render } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+import ArticleLayout from '../../components/ArticleLayout.astro';
+
+export async function getStaticPaths() {
+  const articles = await getCollection('blog', ({ data }) => !data.draft);
+  return articles.map((entry) => ({
+    params: { slug: entry.data.slug },
+    props: { entry },
+  }));
+}
+
+interface Props {
+  entry: CollectionEntry<'blog'>;
+}
+
+const { entry } = Astro.props;
+const { Content, headings } = await render(entry);
+
+// Récupérer l'auteur
+const authors = await getCollection('authors');
+const authorEntry = authors.find((a) => a.data.slug === entry.data.author);
+const author = authorEntry?.data;
+
+// Articles liés (même catégorie, même silo si disponible)
+const allArticles = await getCollection('blog', ({ data }) => !data.draft && data.slug !== entry.data.slug);
+const related = allArticles
+  .filter(
+    (a) =>
+      a.data.category === entry.data.category ||
+      (entry.data.pillar && a.data.pillar === entry.data.pillar)
+  )
+  .sort((a, b) => b.data.publishedAt.getTime() - a.data.publishedAt.getTime())
+  .slice(0, 3);
+---
+
+<ArticleLayout
+  article={entry.data}
+  author={author}
+  relatedArticles={related}
+  headings={headings}
+>
+  <Content />
+</ArticleLayout>

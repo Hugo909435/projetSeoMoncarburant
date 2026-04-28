@@ -1,0 +1,246 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import statsNational from '../data/fuel/stats-national.json';
+import statsByDepartment from '../data/fuel/stats-by-department.json';
+import departments from '../data/departments.json';
+import meta from '../data/fuel/meta.json';
+import { FUEL_CONFIGS } from '../data/fuel/config';
+
+export function getStaticPaths() {
+  return (Object.keys(FUEL_CONFIGS) as Array<keyof typeof FUEL_CONFIGS>).map((fuel) => ({
+    params: { fuel },
+    props: { fuelSlug: fuel, config: FUEL_CONFIGS[fuel] },
+  }));
+}
+
+const { fuelSlug, config } = Astro.props;
+const fuelKey = config.key;
+const deps = departments as Record<string, { num: string; name: string; slug: string; region: string }>;
+const depStats = statsByDepartment as Record<string, Record<string, number | null>>;
+
+// Trier les départements par prix pour ce carburant
+const depsWithPrice = Object.entries(depStats)
+  .map(([num, stats]) => ({ num, price: stats[fuelKey] ?? null, dept: deps[num] }))
+  .filter(d => d.price != null && d.dept)
+  .sort((a, b) => (a.price as number) - (b.price as number));
+
+const cheapest = depsWithPrice.slice(0, 10);
+const mostExpensive = depsWithPrice.slice(-10).reverse();
+
+const nationalAvg = statsNational[fuelKey as keyof typeof statsNational];
+
+const lastUpdate = meta.lastUpdate
+  ? new Date(meta.lastUpdate).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })
+  : null;
+
+const title = `Prix du ${config.label} en France — Comparateur Mon Carburant`;
+const description = `Prix du ${config.label} en France : moyenne nationale${nationalAvg ? ` ${nationalAvg.toFixed(3)}€/L` : ''}, classement des départements les moins chers et conseils. Mis à jour quotidiennement.`;
+
+// Heatmap : créer un classement visuel par couleur
+function priceToColor(price: number | null): string {
+  if (price == null) return '#e2e8f0';
+  const minP = depsWithPrice[0]?.price ?? nationalAvg ?? 1.8;
+  const maxP = depsWithPrice[depsWithPrice.length - 1]?.price ?? (nationalAvg ?? 1.8) + 0.2;
+  if (minP == null || maxP == null) return '#94a3b8';
+  const ratio = Math.max(0, Math.min(1, ((price as number) - (minP as number)) / ((maxP as number) - (minP as number))));
+  const r = Math.round(22 + (220 - 22) * ratio);
+  const g = Math.round(163 - (163 - 38) * ratio);
+  const b = Math.round(74 - (74 - 50) * ratio);
+  return `rgb(${r},${g},${b})`;
+}
+---
+
+<BaseLayout title={title} description={description} canonical={`/prix-${fuelSlug}/`}>
+  <main>
+    <!-- Hero -->
+    <section class="fuel-type-hero" style={`--fuel-color: ${config.color}`}>
+      <div class="container">
+        <h1>Prix du {config.label} en France</h1>
+        <p class="hero-sub">{config.forVehicles}</p>
+        {lastUpdate && <p class="update-badge">Données du {lastUpdate}</p>}
+      </div>
+    </section>
+
+    <div class="container page-body">
+      <!-- Prix national -->
+      <section class="section-block">
+        <div class="national-price-box" style={`--fuel-color: ${config.color}`}>
+          <div class="np-label">Prix moyen national</div>
+          <div class="np-price">
+            {nationalAvg != null ? nationalAvg.toFixed(3) : '—'}
+            <span class="np-unit">€/L</span>
+          </div>
+          <div class="np-sub">Moyenne de {meta.totalStations.toLocaleString('fr-FR')} stations</div>
+        </div>
+      </section>
+
+      <!-- Top 10 moins chers / plus chers -->
+      {depsWithPrice.length > 0 && (
+        <section class="section-block">
+          <h2>Classement des départements</h2>
+          <div class="ranking-grid">
+            <div>
+              <h3 class="ranking-title green">Prix les plus bas</h3>
+              <ol class="ranking-list">
+                {cheapest.map(({ num, price, dept }) => (
+                  <li>
+                    <a href={`/prix-carburants/${dept.slug}/`} class="ranking-link">
+                      <span class="rank-dept">{dept.num} — {dept.name}</span>
+                      <span class="rank-price" style={`color: ${config.color}`}>{(price as number).toFixed(3)} €/L</span>
+                    </a>
+                  </li>
+                ))}
+              </ol>
+            </div>
+            <div>
+              <h3 class="ranking-title red">Prix les plus élevés</h3>
+              <ol class="ranking-list" reversed>
+                {mostExpensive.map(({ num, price, dept }) => (
+                  <li>
+                    <a href={`/prix-carburants/${dept.slug}/`} class="ranking-link">
+                      <span class="rank-dept">{dept.num} — {dept.name}</span>
+                      <span class="rank-price orange">{(price as number).toFixed(3)} €/L</span>
+                    </a>
+                  </li>
+                ))}
+              </ol>
+            </div>
+          </div>
+        </section>
+      )}
+
+      <!-- Heatmap visuelle -->
+      {depsWithPrice.length > 0 && (
+        <section class="section-block">
+          <h2>Prix par département</h2>
+          <p class="heatmap-legend">
+            <span class="legend-item legend-cheap">Moins cher</span>
+            <span class="legend-arrow">→</span>
+            <span class="legend-item legend-expensive">Plus cher</span>
+          </p>
+          <div class="dept-heatmap">
+            {depsWithPrice.map(({ dept, price }) => (
+              <a
+                href={`/prix-carburants/${dept.slug}/`}
+                class="heatmap-cell"
+                style={`background: ${priceToColor(price)}`}
+                title={`${dept.name} : ${(price as number).toFixed(3)} €/L`}
+              >
+                <span class="hc-num">{dept.num}</span>
+                <span class="hc-price">{(price as number).toFixed(2)}</span>
+              </a>
+            ))}
+          </div>
+        </section>
+      )}
+
+      <!-- Description du carburant -->
+      <section class="section-block">
+        <h2>Tout savoir sur le {config.label}</h2>
+        <div class="fuel-description">
+          {config.description.split('\n').filter(l => l.trim()).map(para => (
+            <p>{para}</p>
+          ))}
+        </div>
+        <div class="cta-links">
+          <a href="/prix-carburants/" class="cta-btn primary">Trouver une station →</a>
+          <a href="/prix-carburants/methodologie/" class="cta-btn secondary">Notre méthodologie</a>
+        </div>
+      </section>
+
+      <!-- Liens vers autres carburants -->
+      <section class="section-block">
+          <h2>Autres carburants</h2>
+          <div class="other-fuels">
+          {Object.entries(FUEL_CONFIGS)
+            .filter(([slug]) => slug !== fuelSlug)
+            .map(([slug, cfg]) => (
+              <a href={`/prix-${slug}/`} class="other-fuel-link" style={`--fc: ${cfg.color}`}>
+                {cfg.label}
+                {statsNational[cfg.key as keyof typeof statsNational] != null && (
+                  <span class="of-price">{statsNational[cfg.key as keyof typeof statsNational]!.toFixed(3)} €/L</span>
+                )}
+              </a>
+            ))
+          }
+        </div>
+      </section>
+    </div>
+  </main>
+</BaseLayout>
+
+<style>
+  .fuel-type-hero {
+    background: linear-gradient(135deg, var(--color-primary) 60%, var(--fuel-color) 200%);
+    color: #fff; padding: 3rem 0 2.5rem;
+  }
+  .fuel-type-hero h1 { font-size: clamp(1.75rem, 4vw, 2.5rem); font-weight: 800; color: #fff; margin: 0 0 0.5rem; }
+  .hero-sub { color: #cbd5e1; margin: 0 0 1rem; }
+  .update-badge {
+    display: inline-flex; background: rgba(255,255,255,0.12); padding: 0.3rem 0.75rem;
+    border-radius: 999px; font-size: 0.8125rem; color: #cbd5e1; margin: 0;
+  }
+  .page-body { padding-top: 2.5rem; padding-bottom: 3rem; }
+  .section-block { margin-bottom: 3rem; }
+  .section-block h2 { font-size: 1.375rem; font-weight: 700; color: var(--color-primary); margin: 0 0 1.25rem; border-bottom: 2px solid #e5e7eb; padding-bottom: 0.5rem; }
+  .national-price-box {
+    display: inline-flex; flex-direction: column; align-items: center;
+    background: #fff; border: 3px solid var(--fuel-color); border-radius: 1rem;
+    padding: 2rem 3rem; text-align: center; box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  }
+  .np-label { font-size: 0.875rem; color: var(--color-text-muted); font-weight: 600; margin-bottom: 0.5rem; }
+  .np-price { font-size: 3rem; font-weight: 900; color: var(--fuel-color); display: flex; align-items: baseline; gap: 0.4rem; }
+  .np-unit { font-size: 1.25rem; font-weight: 500; color: var(--color-text-muted); }
+  .np-sub { font-size: 0.8125rem; color: var(--color-text-muted); margin-top: 0.5rem; }
+  .ranking-grid { display: grid; grid-template-columns: 1fr; gap: 2rem; }
+  @media (min-width: 768px) { .ranking-grid { grid-template-columns: 1fr 1fr; } }
+  .ranking-title { font-size: 1rem; font-weight: 700; margin: 0 0 0.75rem; }
+  .ranking-title.green { color: #166534; }
+  .ranking-title.red { color: #c2410c; }
+  .ranking-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.5rem; counter-reset: ranking-counter; }
+  .ranking-list li { counter-increment: ranking-counter; }
+  .ranking-link {
+    display: flex; justify-content: space-between; align-items: center;
+    background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 0.5rem;
+    padding: 0.6rem 1rem; text-decoration: none; color: inherit;
+    transition: all 0.15s;
+  }
+  .ranking-link:hover { background: #f1f5f9; border-color: #cbd5e1; }
+  .ranking-link::before { content: counter(ranking-counter) ". "; color: var(--color-text-muted); font-weight: 700; margin-right: 0.5rem; }
+  .rank-dept { color: var(--color-primary); font-weight: 600; font-size: 0.9rem; }
+  .rank-price { font-weight: 700; font-size: 0.9rem; }
+  .rank-price.orange { color: #c2410c; }
+  .heatmap-legend { display: flex; align-items: center; gap: 0.75rem; font-size: 0.875rem; color: var(--color-text-muted); margin: 0 0 1rem; }
+  .legend-item { padding: 0.25rem 0.75rem; border-radius: 0.25rem; font-weight: 600; font-size: 0.8125rem; }
+  .legend-cheap { background: #16a34a; color: #fff; }
+  .legend-expensive { background: #dc2626; color: #fff; }
+  .dept-heatmap {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+    gap: 0.4rem;
+  }
+  .heatmap-cell {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    border-radius: 0.375rem; padding: 0.5rem 0.25rem; text-decoration: none;
+    transition: transform 0.15s, opacity 0.15s; min-height: 52px;
+  }
+  .heatmap-cell:hover { transform: scale(1.05); opacity: 0.9; }
+  .hc-num { font-size: 0.75rem; font-weight: 700; color: #fff; text-shadow: 0 1px 2px rgba(0,0,0,0.4); }
+  .hc-price { font-size: 0.7rem; color: rgba(255,255,255,0.9); text-shadow: 0 1px 2px rgba(0,0,0,0.4); }
+  .fuel-description p { color: #374151; line-height: 1.75; margin-bottom: 1rem; font-size: 1rem; }
+  .cta-links { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 1.5rem; }
+  .cta-btn { padding: 0.625rem 1.25rem; border-radius: 0.5rem; text-decoration: none; font-weight: 600; font-size: 0.9rem; transition: all 0.2s; }
+  .cta-btn.primary { background: var(--color-accent); color: #fff; }
+  .cta-btn.primary:hover { background: #d0651a; }
+  .cta-btn.secondary { background: #f1f5f9; color: var(--color-primary); border: 1px solid #e2e8f0; }
+  .cta-btn.secondary:hover { background: #e2e8f0; }
+  .other-fuels { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+  .other-fuel-link {
+    display: flex; flex-direction: column; background: #fff; border: 2px solid var(--fc);
+    border-radius: 0.5rem; padding: 0.6rem 1rem; text-decoration: none; color: var(--fc);
+    font-weight: 700; font-size: 0.875rem; transition: all 0.15s;
+  }
+  .other-fuel-link:hover { background: var(--fc); color: #fff; }
+  .other-fuel-link:hover .of-price { color: rgba(255,255,255,0.8); }
+  .of-price { font-size: 0.8rem; font-weight: 600; color: var(--color-text-muted); margin-top: 0.15rem; }
+</style>

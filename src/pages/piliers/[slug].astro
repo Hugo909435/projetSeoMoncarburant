@@ -1,0 +1,45 @@
+---
+// Page d'article pilier
+import { getCollection, render } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+import PillarLayout from '../../components/PillarLayout.astro';
+
+export async function getStaticPaths() {
+  const piliers = await getCollection('piliers', ({ data }) => !data.draft);
+  return piliers.map((entry) => ({
+    params: { slug: entry.data.slug },
+    props: { entry },
+  }));
+}
+
+interface Props {
+  entry: CollectionEntry<'piliers'>;
+}
+
+const { entry } = Astro.props;
+const { Content, headings } = await render(entry);
+
+// Auteur
+const authors = await getCollection('authors');
+const authorEntry = authors.find((a) => a.data.slug === entry.data.author);
+const author = authorEntry?.data;
+
+// Articles satellites du silo
+const allArticles = await getCollection('blog', ({ data }) => !data.draft);
+const satellites = allArticles
+  .filter(
+    (a) =>
+      entry.data.relatedArticles.includes(a.data.slug) ||
+      a.data.pillar === entry.data.slug
+  )
+  .sort((a, b) => b.data.publishedAt.getTime() - a.data.publishedAt.getTime());
+---
+
+<PillarLayout
+  pilier={entry.data}
+  satellites={satellites}
+  author={author}
+  headings={headings}
+>
+  <Content />
+</PillarLayout>

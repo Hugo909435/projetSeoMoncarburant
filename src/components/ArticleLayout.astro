@@ -1,0 +1,264 @@
+---
+// Layout complet pour les articles satellites
+import type { CollectionEntry } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumb from './Breadcrumb.astro';
+import TableOfContents from './TableOfContents.astro';
+import AuthorBox from './AuthorBox.astro';
+import RelatedArticles from './RelatedArticles.astro';
+import FAQ from './FAQ.astro';
+import ShareButtons from './ShareButtons.astro';
+
+interface Heading {
+  depth: number;
+  slug: string;
+  text: string;
+}
+
+interface AuthorData {
+  name: string;
+  slug: string;
+  bio: string;
+  photo: string;
+  expertise: string[];
+  linkedin?: string;
+}
+
+interface Props {
+  article: CollectionEntry<'blog'>['data'];
+  author?: AuthorData;
+  relatedArticles?: CollectionEntry<'blog'>[];
+  headings?: Heading[];
+}
+
+const { article, author, relatedArticles = [], headings = [] } = Astro.props;
+
+const {
+  title,
+  metaTitle,
+  metaDescription,
+  slug,
+  publishedAt,
+  updatedAt,
+  category,
+  featuredImage,
+  imageAlt,
+  readingTime,
+  faq,
+  tags,
+} = article;
+
+const categoryLabels: Record<string, string> = {
+  economies: 'Économies',
+  carburants: 'Carburants',
+  fiscalite: 'Fiscalité',
+  entretien: 'Entretien',
+};
+
+const pageUrl = `https://mon-carburant.com/blog/${slug}/`;
+
+const breadcrumb = [
+  { label: 'Accueil', href: '/' },
+  { label: 'Blog', href: '/blog' },
+  { label: categoryLabels[category], href: `/categorie/${category}` },
+  { label: title, href: `/blog/${slug}` },
+];
+
+const articleSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: title,
+  description: metaDescription,
+  image: featuredImage.startsWith('http') ? featuredImage : `https://mon-carburant.com${featuredImage}`,
+  datePublished: publishedAt.toISOString(),
+  dateModified: (updatedAt ?? publishedAt).toISOString(),
+  author: author
+    ? {
+        '@type': 'Person',
+        name: author.name,
+        url: `https://mon-carburant.com/auteur/${author.slug}/`,
+      }
+    : { '@type': 'Organization', name: 'Mon Carburant' },
+  publisher: {
+    '@type': 'Organization',
+    name: 'Mon Carburant',
+    logo: { '@type': 'ImageObject', url: 'https://mon-carburant.com/images/logo.png' },
+  },
+  mainEntityOfPage: { '@type': 'WebPage', '@id': pageUrl },
+  keywords: tags.join(', '),
+};
+
+const dateFormatted = new Intl.DateTimeFormat('fr-FR', {
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric',
+}).format(publishedAt);
+---
+
+<BaseLayout
+  title={metaTitle}
+  description={metaDescription}
+  canonical={pageUrl}
+  image={featuredImage}
+  imageAlt={imageAlt}
+  type="article"
+  publishedAt={publishedAt.toISOString()}
+  updatedAt={updatedAt?.toISOString()}
+  authorName={author?.name}
+  jsonLd={articleSchema}
+>
+  <article class="article-page">
+    <div class="container">
+      <Breadcrumb items={breadcrumb} />
+
+      <!-- En-tête de l'article -->
+      <header class="article-header">
+        <span class="badge">{categoryLabels[category]}</span>
+        <h1 class="article-title">{title}</h1>
+        <div class="article-meta">
+          {author && (
+            <a href={`/auteur/${author.slug}/`} class="meta-author">
+              <img
+                src={author.photo}
+                alt={`Photo de ${author.name}`}
+                width="32"
+                height="32"
+                loading="eager"
+                decoding="async"
+                class="meta-author-photo"
+                onerror="this.src='/images/authors/placeholder.svg'"
+              />
+              {author.name}
+            </a>
+          )}
+          <time datetime={publishedAt.toISOString()} class="meta-date">{dateFormatted}</time>
+          <span class="meta-reading">{readingTime} min de lecture</span>
+        </div>
+
+        <!-- Image principale (eager loading car above-the-fold) -->
+        <div class="article-featured-image">
+          <img
+            src={featuredImage}
+            alt={imageAlt}
+            width="1200"
+            height="630"
+            loading="eager"
+            decoding="async"
+            fetchpriority="high"
+          />
+        </div>
+      </header>
+
+      <!-- Corps : TOC sidebar + contenu -->
+      <div class="article-body">
+        {headings.filter(h => h.depth <= 3).length > 1 && (
+          <div class="article-toc">
+            <TableOfContents headings={headings} />
+          </div>
+        )}
+
+        <div class="article-content prose">
+          <slot />
+          {faq && faq.length > 0 && <FAQ items={faq} />}
+          <ShareButtons url={pageUrl} title={title} />
+        </div>
+      </div>
+
+      {author && <AuthorBox author={author} />}
+      <RelatedArticles articles={relatedArticles} />
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .article-page {
+    padding-top: 2rem;
+    padding-bottom: 4rem;
+  }
+
+  .article-header {
+    max-width: 56rem;
+    margin-bottom: 2rem;
+  }
+
+  .article-header .badge {
+    margin-bottom: 1rem;
+  }
+
+  .article-title {
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    line-height: 1.2;
+    color: var(--color-primary);
+    margin: 0.5rem 0 1rem;
+  }
+
+  .article-meta {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.75rem 1.25rem;
+    margin-bottom: 1.5rem;
+    font-size: 0.875rem;
+    color: var(--color-text-secondary);
+  }
+
+  .meta-author {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--color-text);
+    font-weight: 500;
+    text-decoration: none;
+  }
+
+  .meta-author:hover {
+    color: var(--color-accent);
+  }
+
+  .meta-author-photo {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  .article-featured-image {
+    border-radius: 0.75rem;
+    overflow: hidden;
+    aspect-ratio: 16 / 9;
+    background: #f3f4f6;
+  }
+
+  .article-featured-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .article-body {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    margin-top: 2rem;
+  }
+
+  @media (min-width: 1024px) {
+    .article-body {
+      grid-template-columns: 1fr 16rem;
+      align-items: start;
+    }
+
+    /* TOC à droite sur desktop */
+    .article-toc {
+      order: 2;
+    }
+
+    .article-content {
+      order: 1;
+    }
+  }
+
+  .article-content {
+    min-width: 0;
+  }
+</style>

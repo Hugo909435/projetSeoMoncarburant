@@ -1,0 +1,134 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Mentions légales — Mon Carburant"
+  description="Mentions légales du site Mon Carburant : éditeur, hébergeur, directeur de la publication, propriété intellectuelle et conditions d'utilisation."
+  canonical="https://mon-carburant.com/mentions-legales/"
+  noIndex={false}
+>
+  <div class="page-content">
+    <div class="container prose-page">
+      <h1>Mentions légales</h1>
+      <p class="last-updated">Dernière mise à jour : avril 2026</p>
+
+      <h2>1. Éditeur du site</h2>
+      <p>
+        Le site <strong>mon-carburant.com</strong> est édité par :<br />
+        <strong>[À COMPLÉTER — Nom de la société ou nom et prénom si personne physique]</strong><br />
+        Forme juridique : [À COMPLÉTER — ex : SAS, auto-entrepreneur, etc.]<br />
+        Capital social : [À COMPLÉTER ou supprimer si non applicable]<br />
+        Siège social : [À COMPLÉTER — Adresse complète]<br />
+        SIRET : [À COMPLÉTER]<br />
+        Numéro de TVA intracommunautaire : [À COMPLÉTER ou "Non assujetti"]
+      </p>
+
+      <h2>2. Directeur de la publication</h2>
+      <p>
+        Le directeur de la publication est : <strong>[À COMPLÉTER — Prénom Nom]</strong><br />
+        Contact : <a href="/contact">Via notre formulaire de contact</a>
+      </p>
+
+      <h2>3. Hébergeur</h2>
+      <p>
+        Le site est hébergé par :<br />
+        <strong>Hostinger International Ltd</strong><br />
+        61 Lordou Vironos Street, 6023 Larnaca, Chypre<br />
+        Site web : <span class="no-link">hostinger.com</span>
+      </p>
+
+      <h2>4. Propriété intellectuelle</h2>
+      <p>
+        L'ensemble des contenus présents sur mon-carburant.com (textes, images, infographies, logos, structure éditoriale) est la propriété exclusive de l'éditeur du site, ou fait l'objet d'une autorisation d'utilisation.
+      </p>
+      <p>
+        Toute reproduction, représentation, modification ou adaptation, totale ou partielle, des contenus de ce site, sans l'accord écrit préalable de l'éditeur, est strictement interdite et susceptible de constituer une contrefaçon au sens des articles L.335-2 et suivants du Code de la Propriété Intellectuelle.
+      </p>
+      <p>
+        La citation de nos articles est autorisée à condition de mentionner la source (Mon Carburant) et d'inclure un lien hypertexte vers l'article d'origine.
+      </p>
+
+      <h2>5. Liens hypertextes</h2>
+      <p>
+        Le site mon-carburant.com peut contenir des liens vers d'autres sites. L'éditeur n'est pas responsable du contenu de ces sites tiers et ne saurait être tenu responsable de tout dommage ou préjudice résultant de leur consultation.
+      </p>
+
+      <h2>6. Responsabilité</h2>
+      <p>
+        Les informations publiées sur ce site ont un caractère général et informatif. Elles ne constituent pas un conseil personnalisé et ne sauraient engager la responsabilité de l'éditeur. L'éditeur s'efforce de maintenir les informations à jour mais ne garantit pas l'exactitude, l'exhaustivité ou l'actualité des contenus à tout moment.
+      </p>
+
+      <h2>7. Protection des données personnelles</h2>
+      <p>
+        La collecte et le traitement de vos données personnelles sont décrits dans notre <a href="/politique-confidentialite">Politique de confidentialité</a>, conformément au Règlement Général sur la Protection des Données (RGPD) et à la loi Informatique et Libertés.
+      </p>
+
+      <h2>8. Cookies</h2>
+      <p>
+        Ce site peut utiliser des cookies à des fins statistiques et d'amélioration de l'expérience utilisateur. Pour plus d'informations sur les cookies utilisés et sur la manière de les contrôler, consultez notre <a href="/politique-confidentialite">Politique de confidentialité</a>.
+      </p>
+
+      <h2>9. Droit applicable et juridiction compétente</h2>
+      <p>
+        Les présentes mentions légales sont soumises au droit français. En cas de litige, et à défaut de résolution amiable, les tribunaux français seront seuls compétents.
+      </p>
+
+      <h2>10. Contact</h2>
+      <p>
+        Pour toute question relative aux présentes mentions légales, vous pouvez nous contacter via notre <a href="/contact">formulaire de contact</a>.
+      </p>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .page-content {
+    padding: 3rem 0 5rem;
+  }
+
+  .prose-page {
+    max-width: 56rem;
+  }
+
+  .prose-page h1 {
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    color: var(--color-primary);
+    margin: 0 0 0.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid var(--color-border);
+  }
+
+  .last-updated {
+    font-size: 0.875rem;
+    color: var(--color-text-secondary);
+    margin: 0 0 2.5rem;
+  }
+
+  .prose-page h2 {
+    font-size: 1.25rem;
+    color: var(--color-primary);
+    margin: 2.5rem 0 0.75rem;
+  }
+
+  .prose-page p {
+    color: var(--color-text);
+    line-height: 1.75;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+  }
+
+  .prose-page a {
+    color: var(--color-accent);
+    text-decoration: underline;
+  }
+
+  .prose-page strong {
+    color: var(--color-primary);
+  }
+
+  .no-link {
+    font-style: italic;
+    color: var(--color-text-secondary);
+  }
+</style>

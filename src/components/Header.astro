@@ -1,0 +1,240 @@
+---
+// Header principal — logo + navigation
+const navLinks = [
+  { href: '/', label: 'Accueil' },
+  { href: '/prix-carburants', label: 'Prix carburants' },
+  { href: '/categorie/economies', label: 'Économies' },
+  { href: '/categorie/carburants', label: 'Carburants' },
+  { href: '/categorie/fiscalite', label: 'Fiscalité' },
+  { href: '/categorie/entretien', label: 'Entretien' },
+  { href: '/blog', label: 'Blog' },
+  { href: '/a-propos', label: 'À propos' },
+  { href: '/contact', label: 'Contact' },
+];
+
+const { pathname } = Astro.url;
+
+function isActive(href: string): boolean {
+  if (href === '/') return pathname === '/';
+  return pathname === href || pathname.startsWith(href + '/');
+}
+---
+
+<header class="site-header" role="banner">
+  <div class="container header-inner">
+    <!-- Logo -->
+    <a href="/" class="logo" aria-label="Mon Carburant — Retour à l'accueil">
+      <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+        <rect width="28" height="28" rx="6" fill="#E87722"/>
+        <path d="M14 6C14 6 8 14 8 18a6 6 0 0 0 12 0c0-4-6-12-6-12z" fill="white"/>
+      </svg>
+      <span class="logo-text">Mon<strong>Carburant</strong></span>
+    </a>
+
+    <!-- Navigation desktop -->
+    <nav id="main-nav" aria-label="Navigation principale">
+      <ul role="list">
+        {navLinks.map((link) => (
+          <li>
+            <a
+              href={link.href}
+              class:list={['nav-link', { active: isActive(link.href) }]}
+              aria-current={pathname === link.href ? 'page' : undefined}
+            >
+              {link.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+
+    <!-- Bouton menu mobile -->
+    <button
+      class="mobile-toggle"
+      aria-label="Ouvrir le menu"
+      aria-expanded="false"
+      aria-controls="main-nav"
+      type="button"
+    >
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+    </button>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: #fff;
+    border-bottom: 1px solid var(--color-border);
+    box-shadow: 0 1px 3px rgb(0 0 0 / 0.06);
+  }
+
+  .header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 4rem;
+    gap: 1rem;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--color-primary);
+    flex-shrink: 0;
+    text-decoration: none;
+  }
+
+  .logo:hover {
+    color: var(--color-primary);
+  }
+
+  .logo-text {
+    font-family: var(--font-display);
+    font-size: 1.125rem;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+  }
+
+  .logo-text strong {
+    font-weight: 800;
+    color: var(--color-accent);
+  }
+
+  nav ul {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .nav-link {
+    display: block;
+    padding: 0.375rem 0.625rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--color-text);
+    border-radius: 0.375rem;
+    transition: color 0.15s ease, background 0.15s ease;
+    white-space: nowrap;
+    text-decoration: none;
+  }
+
+  .nav-link:hover {
+    color: var(--color-accent);
+    background: #fff7ed;
+  }
+
+  .nav-link.active {
+    color: var(--color-accent);
+    font-weight: 600;
+  }
+
+  .mobile-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    width: 2.5rem;
+    height: 2.5rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.375rem;
+    border-radius: 0.375rem;
+    flex-shrink: 0;
+  }
+
+  .mobile-toggle:hover {
+    background: #f3f4f6;
+  }
+
+  .hamburger-line {
+    display: block;
+    width: 20px;
+    height: 2px;
+    background: var(--color-primary);
+    border-radius: 2px;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+  }
+
+  /* État ouvert du menu */
+  .mobile-toggle[aria-expanded="true"] .hamburger-line:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+  }
+
+  .mobile-toggle[aria-expanded="true"] .hamburger-line:nth-child(2) {
+    opacity: 0;
+  }
+
+  .mobile-toggle[aria-expanded="true"] .hamburger-line:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+  }
+
+  @media (max-width: 1023px) {
+    .mobile-toggle {
+      display: flex;
+    }
+
+    nav {
+      position: absolute;
+      top: 4rem;
+      left: 0;
+      right: 0;
+      background: #fff;
+      border-bottom: 1px solid var(--color-border);
+      box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.08);
+      display: none;
+      padding: 0.75rem 0;
+    }
+
+    nav.open {
+      display: block;
+    }
+
+    nav ul {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0;
+      padding: 0 1rem;
+    }
+
+    .nav-link {
+      padding: 0.625rem 0.75rem;
+      font-size: 0.9375rem;
+      border-radius: 0.5rem;
+    }
+  }
+</style>
+
+<script>
+  // Menu mobile — js minimal, uniquement pour le toggle
+  const toggle = document.querySelector('.mobile-toggle') as HTMLButtonElement | null;
+  const nav = document.querySelector('#main-nav') as HTMLElement | null;
+
+  if (toggle && nav) {
+    toggle.addEventListener('click', () => {
+      const isOpen = toggle.getAttribute('aria-expanded') === 'true';
+      toggle.setAttribute('aria-expanded', String(!isOpen));
+      toggle.setAttribute('aria-label', isOpen ? 'Ouvrir le menu' : 'Fermer le menu');
+      nav.classList.toggle('open', !isOpen);
+    });
+
+    // Fermer sur clic en dehors
+    document.addEventListener('click', (e) => {
+      if (!toggle.contains(e.target as Node) && !nav.contains(e.target as Node)) {
+        toggle.setAttribute('aria-expanded', 'false');
+        toggle.setAttribute('aria-label', 'Ouvrir le menu');
+        nav.classList.remove('open');
+      }
+    });
+  }
+</script>

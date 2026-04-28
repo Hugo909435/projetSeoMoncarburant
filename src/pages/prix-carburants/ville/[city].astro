@@ -1,0 +1,213 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import departments from '../../../data/departments.json';
+import statsNational from '../../../data/fuel/stats-national.json';
+import meta from '../../../data/fuel/meta.json';
+import { FUEL_COLORS, FUEL_KEYS } from '../../../data/fuel/config';
+
+export async function getStaticPaths() {
+  const cityFiles = import.meta.glob('../../../data/fuel/stations-by-city/*.json', { eager: true });
+  const deps = departments as Record<string, { num: string; name: string; slug: string; region: string; regionSlug: string }>;
+
+  return Object.entries(cityFiles).map(([path, data]: [string, any]) => {
+    const slug = path.match(/\/([^/]+)\.json$/)?.[1];
+    if (!slug || !data || !data.stations || data.stations.length === 0) return null;
+
+    const dept = deps[data.department];
+    return {
+      params: { city: slug },
+      props: { cityData: data, dept },
+    };
+  }).filter(Boolean);
+}
+
+const { cityData, dept } = Astro.props;
+const { cityName, citySlug, stats, stations, count } = cityData;
+
+function priceDiff(price: number | null | undefined, fuelKey: string) {
+  const nat = statsNational[fuelKey as keyof typeof statsNational];
+  if (price == null || nat == null) return null;
+  return ((price - nat) / nat) * 100;
+}
+
+const lastUpdate = meta.lastUpdate
+  ? new Date(meta.lastUpdate).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })
+  : null;
+
+const gazoleAvg = stats['Gazole'];
+const sp95Avg = stats['SP95'];
+const gazoleDiff = priceDiff(gazoleAvg, 'Gazole');
+const sp95Prices = stations
+  .map((station) => station.prices.SP95)
+  .filter((price) => price != null) as number[];
+const lowestSp95 = sp95Prices.length > 0 ? Math.min(...sp95Prices) : null;
+
+const title = `Prix carburant à ${cityName} — Comparateur Mon Carburant`;
+const description = `Comparez les prix du carburant à ${cityName}. ${count} stations référencées${gazoleAvg ? `, prix moyen Gazole ${gazoleAvg.toFixed(3)}€/L` : ''}. Mis à jour quotidiennement.`;
+
+const breadcrumb = [
+  { name: 'Accueil', url: '/' },
+  { name: 'Prix carburants', url: '/prix-carburants/' },
+  { name: cityName, url: `/prix-carburants/ville/${citySlug}/` },
+];
+if (dept) {
+  breadcrumb.splice(2, 0, { name: dept.name, url: `/prix-carburants/${dept.slug}/` });
+}
+
+const uniqueText = [
+  `À ${cityName}, ${count} stations-service proposent leurs tarifs en temps réel.`,
+  gazoleAvg
+    ? `Le prix moyen du Gazole est de ${gazoleAvg.toFixed(3)} €/L${gazoleDiff != null ? ` (${gazoleDiff > 0 ? '+' : ''}${gazoleDiff.toFixed(1)}% vs. la moyenne nationale)` : ''}.`
+    : null,
+  sp95Avg && lowestSp95 != null
+    ? `Le Sans-Plomb 95 est disponible à partir de ${lowestSp95.toFixed(3)} €/L.`
+    : null,
+  'Utilisez notre comparateur pour trouver la station la moins chère et économiser sur chaque plein.',
+  'Données mises à jour quotidiennement depuis les sources officielles du gouvernement français.',
+].filter(Boolean);
+---
+
+<BaseLayout title={title} description={description} canonical={`/prix-carburants/ville/${citySlug}/`}>
+  <main>
+    <!-- Breadcrumb -->
+    <div class="container" style="padding-top:1rem">
+      <nav aria-label="Fil d'ariane" class="breadcrumb-nav">
+        {breadcrumb.map((item, i) => (
+          <>
+            {i > 0 && <span aria-hidden="true"> › </span>}
+            {i < breadcrumb.length - 1
+              ? <a href={item.url}>{item.name}</a>
+              : <span aria-current="page">{item.name}</span>
+            }
+          </>
+        ))}
+      </nav>
+    </div>
+
+    <!-- Hero -->
+    <section class="city-hero">
+      <div class="container">
+        <h1>Prix des carburants à {cityName}</h1>
+        <p class="city-subtitle">
+          {count} stations · {dept ? <a href={`/prix-carburants/${dept.slug}/`} class="dept-link">{dept.name}</a> : null}
+        </p>
+        {lastUpdate && <p class="update-info">Données du {lastUpdate}</p>}
+      </div>
+    </section>
+
+    <div class="container page-body">
+      <!-- Stats -->
+      <section class="section-block">
+        <h2>Prix moyens à {cityName}</h2>
+        <div class="fuel-stats-grid">
+          {FUEL_KEYS.map((fuel) => {
+            const avg = stats[fuel] ?? null;
+            const diff = priceDiff(avg, fuel);
+            return (
+              <div class="fuel-stat-card" style={`--fuel-color: ${FUEL_COLORS[fuel]}`}>
+                <div class="fsc-label">{fuel === 'GPLc' ? 'GPL' : fuel}</div>
+                <div class="fsc-price">
+                  {avg != null ? avg.toFixed(3) : '—'}
+                  {avg != null && <span class="fsc-unit">€/L</span>}
+                </div>
+                {diff != null && (
+                  <div class={`fsc-diff ${diff < -5 ? 'badge-green' : diff > 5 ? 'badge-orange' : 'badge-neutral'}`}>
+                    {diff > 0 ? '+' : ''}{diff.toFixed(1)}% France
+                  </div>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      </section>
+
+      <!-- Stations triées par prix -->
+      <section class="section-block">
+        <h2>Stations à {cityName} — prix croissants</h2>
+        <div class="table-wrapper">
+          <table class="stations-table">
+            <thead>
+              <tr>
+                <th>Adresse</th>
+                <th>CP</th>
+                <th>Gazole</th>
+                <th>SP95</th>
+                <th>E10</th>
+                <th>E85</th>
+                <th>GPL</th>
+              </tr>
+            </thead>
+            <tbody>
+              {stations.map((s) => (
+                <tr>
+                  <td class="station-addr">{s.adresse || '—'}</td>
+                  <td>{s.cp}</td>
+                  <td>{s.prices.Gazole?.toFixed(3) ?? '—'}</td>
+                  <td>{s.prices.SP95?.toFixed(3) ?? '—'}</td>
+                  <td>{s.prices.E10?.toFixed(3) ?? '—'}</td>
+                  <td>{s.prices.E85?.toFixed(3) ?? '—'}</td>
+                  <td>{s.prices.GPLc?.toFixed(3) ?? '—'}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Liens navigation -->
+      <section class="section-block">
+        <div class="nav-links">
+          {dept && <a href={`/prix-carburants/${dept.slug}/`} class="nav-link">← {dept.name} ({dept.num})</a>}
+          <a href="/prix-carburants/" class="nav-link">Comparateur national</a>
+        </div>
+      </section>
+
+      <!-- Texte SEO -->
+      <section class="section-block seo-text">
+        <h2>Carburant à {cityName} : tout savoir</h2>
+        {uniqueText.map((line) => (
+          <p>{line}</p>
+        ))}
+      </section>
+    </div>
+  </main>
+</BaseLayout>
+
+<style>
+  .breadcrumb-nav { font-size: 0.875rem; color: var(--color-text-muted); }
+  .breadcrumb-nav a { color: var(--color-primary); text-decoration: none; }
+  .breadcrumb-nav a:hover { text-decoration: underline; }
+  .city-hero { background: var(--color-primary); color: #fff; padding: 2.5rem 0 2rem; }
+  .city-hero h1 { font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 800; color: #fff; margin: 0 0 0.5rem; }
+  .city-subtitle { color: #94a3b8; margin: 0 0 0.5rem; }
+  .dept-link { color: var(--color-accent); text-decoration: none; }
+  .dept-link:hover { text-decoration: underline; }
+  .update-info { font-size: 0.8125rem; color: #64748b; margin: 0; }
+  .page-body { padding-top: 2rem; padding-bottom: 3rem; }
+  .section-block { margin-bottom: 3rem; }
+  .section-block h2 { font-size: 1.2rem; font-weight: 700; color: var(--color-primary); margin: 0 0 1.25rem; border-bottom: 2px solid #e5e7eb; padding-bottom: 0.5rem; }
+  .fuel-stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem; }
+  @media (min-width: 768px) { .fuel-stats-grid { grid-template-columns: repeat(6, 1fr); } }
+  .fuel-stat-card { background: #fff; border: 2px solid #e5e7eb; border-top: 3px solid var(--fuel-color); border-radius: 0.5rem; padding: 1rem; }
+  .fsc-label { font-size: 0.75rem; color: var(--color-text-muted); font-weight: 700; margin-bottom: 0.25rem; }
+  .fsc-price { font-size: 1.25rem; font-weight: 800; color: var(--fuel-color); display: flex; align-items: baseline; gap: 0.2rem; }
+  .fsc-unit { font-size: 0.7rem; font-weight: 500; color: var(--color-text-muted); }
+  .fsc-diff { font-size: 0.7rem; padding: 0.15rem 0.4rem; border-radius: 999px; margin-top: 0.25rem; display: inline-block; font-weight: 600; }
+  .badge-green { background: #dcfce7; color: #166534; }
+  .badge-orange { background: #fff7ed; color: #c2410c; }
+  .badge-neutral { background: #f1f5f9; color: #64748b; }
+  .table-wrapper { overflow-x: auto; }
+  .stations-table { width: 100%; border-collapse: collapse; font-size: 0.875rem; }
+  .stations-table th { background: #f1f5f9; color: var(--color-primary); padding: 0.6rem 0.75rem; text-align: left; font-size: 0.8rem; }
+  .stations-table td { padding: 0.55rem 0.75rem; border-bottom: 1px solid #f1f5f9; }
+  .stations-table tr:hover td { background: #f8fafc; }
+  .station-addr { max-width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .nav-links { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .nav-link {
+    background: #f1f5f9; border: 1px solid #e2e8f0; border-radius: 0.5rem;
+    padding: 0.5rem 1rem; text-decoration: none; color: var(--color-primary); font-size: 0.875rem; font-weight: 600;
+    transition: all 0.15s;
+  }
+  .nav-link:hover { background: var(--color-primary); color: #fff; }
+  .seo-text p { color: #374151; line-height: 1.7; margin-bottom: 0.75rem; }
+</style>

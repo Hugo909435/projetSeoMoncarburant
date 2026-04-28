@@ -1,0 +1,117 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Page introuvable (404) — Mon Carburant"
+  description="La page que vous recherchez n'existe pas ou a été déplacée. Retournez à l'accueil de Mon Carburant."
+  noIndex={true}
+>
+  <div class="error-page">
+    <div class="container error-inner">
+      <div class="error-number" aria-hidden="true">404</div>
+      <h1 class="error-title">Page introuvable</h1>
+      <p class="error-desc">
+        La page que vous cherchez n'existe pas, a été déplacée ou son URL a changé.
+      </p>
+      <div class="error-actions">
+        <a href="/" class="btn-primary">Retour à l'accueil</a>
+        <a href="/blog" class="btn-secondary">Voir nos articles</a>
+      </div>
+
+      <div class="error-suggestions">
+        <p class="suggestions-title">Vous cherchez peut-être :</p>
+        <ul>
+          <li><a href="/categorie/economies">Économies de carburant</a></li>
+          <li><a href="/categorie/carburants">Types de carburants</a></li>
+          <li><a href="/categorie/fiscalite">Fiscalité automobile</a></li>
+          <li><a href="/categorie/entretien">Entretien du véhicule</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .error-page {
+    padding: 5rem 0 6rem;
+    min-height: 60vh;
+    display: flex;
+    align-items: center;
+  }
+
+  .error-inner {
+    max-width: 36rem;
+    text-align: center;
+  }
+
+  .error-number {
+    font-family: var(--font-display);
+    font-size: 8rem;
+    font-weight: 900;
+    color: var(--color-border);
+    line-height: 1;
+    margin-bottom: 1rem;
+    letter-spacing: -0.05em;
+  }
+
+  .error-title {
+    font-family: var(--font-display);
+    font-size: 2rem;
+    color: var(--color-primary);
+    margin: 0 0 1rem;
+  }
+
+  .error-desc {
+    font-size: 1.0625rem;
+    color: var(--color-text-secondary);
+    line-height: 1.65;
+    margin: 0 0 2rem;
+  }
+
+  .error-actions {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-bottom: 3rem;
+  }
+
+  .error-suggestions {
+    text-align: left;
+    background: #f9fafb;
+    border: 1px solid var(--color-border);
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+  }
+
+  .suggestions-title {
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: var(--color-text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin: 0 0 0.75rem;
+  }
+
+  .error-suggestions ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+  }
+
+  .error-suggestions a {
+    font-size: 0.9375rem;
+    color: var(--color-primary);
+    font-weight: 500;
+    text-decoration: none;
+  }
+
+  .error-suggestions a:hover {
+    color: var(--color-accent);
+    text-decoration: underline;
+  }
+</style>

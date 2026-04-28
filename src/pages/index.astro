@@ -1,0 +1,601 @@
+---
+// Page d'accueil
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ArticleCard from '../components/ArticleCard.astro';
+import Newsletter from '../components/Newsletter.astro';
+
+const allArticles = await getCollection('blog', ({ data }) => !data.draft);
+allArticles.sort((a, b) => b.data.publishedAt.getTime() - a.data.publishedAt.getTime());
+
+const latestArticles = allArticles.slice(0, 6);
+const popularArticles = allArticles.slice(0, 3);
+
+const allPiliers = await getCollection('piliers', ({ data }) => !data.draft);
+const featuredPilier = allPiliers[0];
+
+const categories = [
+  {
+    slug: 'economies',
+    label: 'Économies de carburant',
+    desc: 'Techniques d\'éco-conduite, comparer les prix, cartes essence : réduisez votre facture dès aujourd\'hui.',
+    icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>',
+    color: '#059669',
+  },
+  {
+    slug: 'carburants',
+    label: 'Types de carburants',
+    desc: 'SP95, E10, diesel, E85, GPL, hydrogène : comprendre les différences et choisir le bon carburant.',
+    icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2C12 2 5 10 5 15a7 7 0 0 0 14 0c0-5-7-13-7-13z"/></svg>',
+    color: '#0369a1',
+  },
+  {
+    slug: 'fiscalite',
+    label: 'Fiscalité automobile',
+    desc: 'TVA, TICPE, bonus-malus, remboursement frais kilométriques : tout sur la fiscalité du carburant.',
+    icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>',
+    color: '#7c3aed',
+  },
+  {
+    slug: 'entretien',
+    label: 'Entretien du véhicule',
+    desc: 'Un véhicule bien entretenu consomme moins. Pneus, filtres, vidanges : les bons gestes.',
+    icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>',
+    color: '#b45309',
+  },
+];
+
+const websiteSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'Mon Carburant',
+  url: 'https://mon-carburant.com',
+  description: 'Économisez sur le carburant, roulez plus malin',
+  inLanguage: 'fr-FR',
+  potentialAction: {
+    '@type': 'SearchAction',
+    target: {
+      '@type': 'EntryPoint',
+      urlTemplate: 'https://mon-carburant.com/blog/?q={search_term_string}',
+    },
+    'query-input': 'required name=search_term_string',
+  },
+};
+
+const organizationSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'Mon Carburant',
+  url: 'https://mon-carburant.com',
+  logo: 'https://mon-carburant.com/images/logo.png',
+  description: 'Média éditorial indépendant spécialisé dans le carburant et l\'économie automobile.',
+  foundingDate: '2026',
+  areaServed: 'FR',
+  inLanguage: 'fr-FR',
+};
+---
+
+<BaseLayout
+  title="Mon Carburant — Économisez sur le carburant, roulez plus malin"
+  description="Conseils pratiques, comparatifs et décryptages pour réduire votre budget carburant. Éco-conduite, fiscalité, entretien : tout pour rouler plus malin."
+  canonical="https://mon-carburant.com/"
+  jsonLd={[websiteSchema, organizationSchema]}
+>
+  <!-- Hero -->
+  <section class="hero" aria-label="Introduction">
+    <div class="container hero-inner">
+      <div class="hero-content">
+        <p class="hero-eyebrow">Le média carburant des automobilistes français</p>
+        <h1 class="hero-title">
+          Économisez sur le carburant,<br />
+          <span class="hero-title-accent">roulez plus malin</span>
+        </h1>
+        <p class="hero-subtitle">
+          Conseils d'éco-conduite, décryptages fiscaux, comparatifs carburants. Tout pour réduire votre budget mobilité sans changer de vie.
+        </p>
+        <div class="hero-actions">
+          <a href="/blog" class="btn-primary">Lire nos articles</a>
+          <a href="/categorie/economies" class="btn-secondary">Économiser maintenant</a>
+        </div>
+        <div class="hero-stats" aria-label="Chiffres clés">
+          <div class="stat">
+            <strong>15 à 30%</strong>
+            <span>d'économies possibles avec l'éco-conduite</span>
+          </div>
+          <div class="stat-sep" aria-hidden="true"></div>
+          <div class="stat">
+            <strong>4 thématiques</strong>
+            <span>carburants, économies, fiscalité, entretien</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Derniers articles -->
+  {latestArticles.length > 0 && (
+    <section class="section-articles" aria-label="Derniers articles">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">Nos derniers conseils</h2>
+          <a href="/blog" class="section-link">Voir tous les articles →</a>
+        </div>
+        <div class="articles-grid">
+          {latestArticles.map((article) => (
+            <ArticleCard article={article} />
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- Thématiques -->
+  <section class="section-categories" aria-label="Nos thématiques">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">Nos thématiques</h2>
+        <p class="section-desc">4 angles d'approche pour maîtriser votre budget carburant</p>
+      </div>
+      <div class="categories-grid">
+        {categories.map((cat) => (
+          <a href={`/categorie/${cat.slug}`} class="category-card" style={`--cat-color: ${cat.color}`}>
+            <span class="cat-icon" aria-hidden="true" set:html={cat.icon} />
+            <h3 class="cat-label">{cat.label}</h3>
+            <p class="cat-desc">{cat.desc}</p>
+            <span class="cat-link">Découvrir →</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Article du moment (pilier) -->
+  {featuredPilier && (
+    <section class="section-pilier" aria-label="Article du moment">
+      <div class="container">
+        <div class="pilier-feature">
+          <div class="pilier-feature-image">
+            <img
+              src={featuredPilier.data.featuredImage}
+              alt={featuredPilier.data.imageAlt}
+              width="700"
+              height="400"
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
+          <div class="pilier-feature-content">
+            <p class="pilier-eyebrow">Guide complet</p>
+            <h2 class="pilier-feature-title">{featuredPilier.data.title}</h2>
+            <p class="pilier-feature-excerpt">{featuredPilier.data.excerpt}</p>
+            <a href={`/piliers/${featuredPilier.data.slug}/`} class="btn-primary">
+              Lire le guide complet →
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- Newsletter -->
+  <section class="section-newsletter" aria-label="Newsletter">
+    <div class="container">
+      <Newsletter />
+    </div>
+  </section>
+
+  <!-- Articles populaires -->
+  {popularArticles.length > 0 && (
+    <section class="section-popular" aria-label="Articles populaires">
+      <div class="container">
+        <h2 class="section-title">Articles populaires</h2>
+        <div class="popular-list">
+          {popularArticles.map((article, i) => (
+            <a href={`/blog/${article.data.slug}/`} class="popular-item">
+              <span class="popular-num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+              <div class="popular-info">
+                <span class="badge popular-badge">{article.data.category}</span>
+                <h3 class="popular-title">{article.data.title}</h3>
+                <p class="popular-meta">
+                  <time datetime={article.data.publishedAt.toISOString()}>
+                    {new Intl.DateTimeFormat('fr-FR', { day: 'numeric', month: 'short', year: 'numeric' }).format(article.data.publishedAt)}
+                  </time>
+                  · {article.data.readingTime} min
+                </p>
+              </div>
+              <img
+                src={article.data.featuredImage}
+                alt={article.data.imageAlt}
+                width="120"
+                height="80"
+                loading="lazy"
+                decoding="async"
+                class="popular-img"
+              />
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+</BaseLayout>
+
+<style>
+  /* ── Hero ── */
+  .hero {
+    background: linear-gradient(135deg, var(--color-primary) 0%, #1a4a68 100%);
+    color: #fff;
+    padding: 4rem 0 5rem;
+  }
+
+  .hero-inner {
+    max-width: 64rem;
+  }
+
+  .hero-eyebrow {
+    font-size: 0.8125rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-accent);
+    margin: 0 0 1rem;
+  }
+
+  .hero-title {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 5vw, 3.25rem);
+    font-weight: 800;
+    line-height: 1.15;
+    color: #fff;
+    margin: 0 0 1.25rem;
+  }
+
+  .hero-title-accent {
+    color: var(--color-accent);
+  }
+
+  .hero-subtitle {
+    font-size: 1.125rem;
+    color: #94a3b8;
+    max-width: 45ch;
+    line-height: 1.65;
+    margin: 0 0 2rem;
+  }
+
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .hero .btn-secondary {
+    border-color: rgba(255 255 255 / 0.3);
+    color: #fff;
+  }
+
+  .hero .btn-secondary:hover {
+    border-color: #fff;
+    background: rgba(255 255 255 / 0.1);
+    color: #fff;
+  }
+
+  .hero-stats {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .stat {
+    display: flex;
+    flex-direction: column;
+    gap: 0.125rem;
+  }
+
+  .stat strong {
+    font-family: var(--font-display);
+    font-size: 1.375rem;
+    font-weight: 800;
+    color: var(--color-accent);
+  }
+
+  .stat span {
+    font-size: 0.8125rem;
+    color: #94a3b8;
+  }
+
+  .stat-sep {
+    width: 1px;
+    height: 2.5rem;
+    background: rgba(255 255 255 / 0.15);
+  }
+
+  /* ── Sections communes ── */
+  .section-articles,
+  .section-categories,
+  .section-pilier,
+  .section-newsletter,
+  .section-popular {
+    padding: 4rem 0;
+  }
+
+  .section-categories,
+  .section-popular {
+    background: #f9fafb;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .section-title {
+    font-family: var(--font-display);
+    font-size: 1.625rem;
+    font-weight: 800;
+    color: var(--color-primary);
+    margin: 0;
+  }
+
+  .section-desc {
+    color: var(--color-text-secondary);
+    font-size: 1rem;
+    margin: -1rem 0 0;
+  }
+
+  .section-link {
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: var(--color-accent);
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .section-link:hover {
+    text-decoration: underline;
+  }
+
+  /* ── Grille articles ── */
+  .articles-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  @media (min-width: 640px) {
+    .articles-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .articles-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  /* ── Catégories ── */
+  .categories-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+
+  @media (min-width: 640px) {
+    .categories-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .categories-grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  .category-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding: 1.75rem;
+    background: #fff;
+    border: 1px solid var(--color-border);
+    border-radius: 0.75rem;
+    text-decoration: none;
+    transition: box-shadow 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
+  }
+
+  .category-card:hover {
+    box-shadow: 0 8px 24px rgb(0 0 0 / 0.08);
+    transform: translateY(-2px);
+    border-color: var(--cat-color);
+  }
+
+  .cat-icon {
+    font-size: 2rem;
+    line-height: 1;
+  }
+
+  .cat-label {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--cat-color);
+    margin: 0;
+  }
+
+  .cat-desc {
+    font-size: 0.875rem;
+    color: var(--color-text-secondary);
+    line-height: 1.55;
+    margin: 0;
+    flex: 1;
+  }
+
+  .cat-link {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--cat-color);
+  }
+
+  /* ── Pilier featured ── */
+  .pilier-feature {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    background: #fff;
+    border: 1px solid var(--color-border);
+    border-radius: 1rem;
+    overflow: hidden;
+  }
+
+  @media (min-width: 768px) {
+    .pilier-feature {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .pilier-feature-image {
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    background: #f3f4f6;
+  }
+
+  .pilier-feature-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .pilier-feature-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1rem;
+    padding: 2rem;
+  }
+
+  .pilier-eyebrow {
+    font-size: 0.8125rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-accent);
+    margin: 0;
+  }
+
+  .pilier-feature-title {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--color-primary);
+    line-height: 1.25;
+    margin: 0;
+  }
+
+  .pilier-feature-excerpt {
+    color: var(--color-text-secondary);
+    font-size: 0.9375rem;
+    line-height: 1.65;
+    margin: 0;
+  }
+
+  /* ── Populaires ── */
+  .popular-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .popular-item {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    padding: 1.25rem 0;
+    border-bottom: 1px solid var(--color-border);
+    text-decoration: none;
+    transition: background 0.15s ease;
+  }
+
+  .popular-item:first-child {
+    border-top: 1px solid var(--color-border);
+  }
+
+  .popular-item:hover {
+    background: rgba(232 119 34 / 0.04);
+    margin-inline: -1rem;
+    padding-inline: 1rem;
+    border-radius: 0.5rem;
+  }
+
+  .popular-num {
+    font-family: var(--font-display);
+    font-size: 1.875rem;
+    font-weight: 800;
+    color: var(--color-border);
+    flex-shrink: 0;
+    min-width: 2.5rem;
+    line-height: 1;
+  }
+
+  .popular-info {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.375rem;
+  }
+
+  .popular-badge {
+    font-size: 0.6875rem;
+    padding: 0.125rem 0.5rem;
+    align-self: flex-start;
+  }
+
+  .popular-title {
+    font-family: var(--font-display);
+    font-size: 0.9375rem;
+    font-weight: 700;
+    color: var(--color-primary);
+    margin: 0;
+    line-height: 1.3;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .popular-item:hover .popular-title {
+    color: var(--color-accent);
+  }
+
+  .popular-meta {
+    font-size: 0.8125rem;
+    color: var(--color-text-secondary);
+    margin: 0;
+  }
+
+  .popular-img {
+    width: 100px;
+    height: 70px;
+    object-fit: cover;
+    border-radius: 0.5rem;
+    flex-shrink: 0;
+    display: none;
+  }
+
+  @media (min-width: 480px) {
+    .popular-img {
+      display: block;
+    }
+  }
+
+  .section-newsletter {
+    background: none;
+  }
+</style>

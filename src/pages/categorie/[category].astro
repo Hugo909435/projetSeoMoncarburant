@@ -1,0 +1,146 @@
+---
+// Listing par catégorie
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ArticleCard from '../../components/ArticleCard.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+
+export async function getStaticPaths() {
+  return [
+    { params: { category: 'economies' } },
+    { params: { category: 'carburants' } },
+    { params: { category: 'fiscalite' } },
+    { params: { category: 'entretien' } },
+  ];
+}
+
+const { category } = Astro.params;
+
+const categoryMeta: Record<string, { label: string; description: string; desc: string }> = {
+  economies: {
+    label: 'Économies de carburant',
+    description: 'Techniques d\'éco-conduite, comparateurs de prix, cartes carburant : tous nos conseils pour réduire votre budget essence ou diesel.',
+    desc: 'Réduire sa consommation de carburant de 15 à 30% est accessible à tous. Découvrez nos meilleures astuces.',
+  },
+  carburants: {
+    label: 'Types de carburants',
+    description: 'SP95, SP98, E10, diesel B7, E85 superéthanol, GPL, hydrogène : comparatifs et guides pour choisir le bon carburant.',
+    desc: 'Comprendre les différences entre les carburants pour faire le meilleur choix selon votre véhicule.',
+  },
+  fiscalite: {
+    label: 'Fiscalité automobile',
+    description: 'TICPE, TVA carburant, bonus-malus, remboursement des frais kilométriques : tout sur la fiscalité du carburant en France.',
+    desc: 'Décryptage de la fiscalité automobile et des aides à la mobilité en France.',
+  },
+  entretien: {
+    label: 'Entretien du véhicule',
+    description: 'Pression des pneus, filtres à air, vidange : comment l\'entretien de votre véhicule influence directement votre consommation.',
+    desc: 'Un véhicule bien entretenu consomme moins. Les bons gestes qui font la différence.',
+  },
+};
+
+const meta = categoryMeta[category as string]!;
+
+const articles = await getCollection('blog', ({ data }) => !data.draft && data.category === category);
+articles.sort((a, b) => b.data.publishedAt.getTime() - a.data.publishedAt.getTime());
+
+const breadcrumb = [
+  { label: 'Accueil', href: '/' },
+  { label: 'Blog', href: '/blog' },
+  { label: meta.label, href: `/categorie/${category}` },
+];
+
+const pageUrl = `https://mon-carburant.com/categorie/${category}/`;
+---
+
+<BaseLayout
+  title={`${meta.label} — Mon Carburant`}
+  description={meta.description}
+  canonical={pageUrl}
+>
+  <div class="category-page">
+    <div class="container">
+      <Breadcrumb items={breadcrumb} />
+
+      <header class="category-header">
+        <h1 class="category-title">{meta.label}</h1>
+        <p class="category-desc">{meta.desc}</p>
+        <p class="category-count">
+          {articles.length} article{articles.length > 1 ? 's' : ''} dans cette catégorie
+        </p>
+      </header>
+
+      {articles.length === 0 ? (
+        <div class="empty-state">
+          <p>Aucun article dans cette catégorie pour l'instant. Revenez bientôt !</p>
+          <a href="/blog" class="btn-primary" style="margin-top: 1rem; display: inline-flex;">
+            Voir tous les articles
+          </a>
+        </div>
+      ) : (
+        <div class="articles-grid">
+          {articles.map((article) => (
+            <ArticleCard article={article} />
+          ))}
+        </div>
+      )}
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .category-page {
+    padding: 2.5rem 0 5rem;
+  }
+
+  .category-header {
+    margin-bottom: 2.5rem;
+    max-width: 48rem;
+  }
+
+  .category-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.625rem, 4vw, 2.25rem);
+    font-weight: 800;
+    color: var(--color-primary);
+    margin: 0 0 0.75rem;
+  }
+
+  .category-desc {
+    font-size: 1.0625rem;
+    color: var(--color-text-secondary);
+    line-height: 1.65;
+    margin: 0 0 0.75rem;
+  }
+
+  .category-count {
+    font-size: 0.875rem;
+    color: var(--color-text-secondary);
+    margin: 0;
+  }
+
+  .articles-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  @media (min-width: 640px) {
+    .articles-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .articles-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .empty-state {
+    text-align: center;
+    padding: 4rem 2rem;
+    color: var(--color-text-secondary);
+    font-size: 1.125rem;
+  }
+</style>

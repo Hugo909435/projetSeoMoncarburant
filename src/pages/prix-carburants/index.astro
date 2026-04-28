@@ -1,0 +1,279 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import FuelSearch from '../../components/FuelSearch.astro';
+import statsNational from '../../data/fuel/stats-national.json';
+import statsByRegion from '../../data/fuel/stats-by-region.json';
+import meta from '../../data/fuel/meta.json';
+
+const FUEL_CONFIG = [
+  { key: 'Gazole',  label: 'Gazole',          color: '#374151' },
+  { key: 'SP95',    label: 'Sans-Plomb 95',   color: '#16a34a' },
+  { key: 'SP98',    label: 'Sans-Plomb 98',   color: '#2563eb' },
+  { key: 'E10',     label: 'E10',             color: '#15803d' },
+  { key: 'E85',     label: 'E85 Bioéthanol',  color: '#E87722' },
+  { key: 'GPLc',    label: 'GPL',             color: '#ca8a04' },
+];
+
+const regions = Object.entries(statsByRegion).map(([slug, data]) => ({ slug, ...data }));
+regions.sort((a, b) => (a['Gazole'] ?? 99) - (b['Gazole'] ?? 99));
+
+const lastUpdate = meta.lastUpdate
+  ? new Date(meta.lastUpdate).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })
+  : null;
+
+const title = 'Prix des carburants en France — Comparateur en temps réel';
+const description = `Comparez les prix du carburant dans toute la France. ${meta.totalStations} stations référencées, prix mis à jour quotidiennement depuis les données officielles.`;
+---
+
+<BaseLayout title={title} description={description} canonical="/prix-carburants/">
+  <main>
+    <!-- Hero -->
+    <section class="fuel-hero">
+      <div class="container">
+        <div class="fuel-hero-inner">
+          <h1>Prix des carburants en France</h1>
+          <p class="fuel-hero-sub">Comparateur en temps réel — {meta.totalStations.toLocaleString('fr-FR')} stations</p>
+          {lastUpdate && (
+            <p class="fuel-update-badge">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              Données du {lastUpdate}
+            </p>
+          )}
+        </div>
+      </div>
+    </section>
+
+    <!-- Prix nationaux -->
+    <section class="container section-gap">
+      <h2 class="section-title">Prix moyens nationaux</h2>
+      <div class="fuel-cards-grid">
+        {FUEL_CONFIG.map(({ key, label, color }) => {
+          const price = statsNational[key as keyof typeof statsNational];
+          return (
+            <a href={`/prix-${key === 'GPLc' ? 'gpl' : key.toLowerCase()}/`} class="fuel-card" style={`--fuel-color: ${color}`}>
+              <span class="fuel-card-marker" aria-hidden="true"></span>
+              <div class="fuel-card-label">{label}</div>
+              <div class="fuel-card-price">
+                {price != null ? price.toFixed(3) : '—'}
+                <span class="fuel-card-unit">€/L</span>
+              </div>
+              <div class="fuel-card-link">Voir les détails →</div>
+            </a>
+          );
+        })}
+      </div>
+    </section>
+
+    <!-- Recherche interactive -->
+    <section class="container section-gap">
+      <FuelSearch />
+    </section>
+
+    <!-- Prix par région -->
+    <section class="container section-gap">
+      <h2 class="section-title">Prix du carburant par région</h2>
+      <div class="table-wrapper">
+        <table class="fuel-table">
+          <thead>
+            <tr>
+              <th scope="col">Région</th>
+              <th scope="col">Gazole</th>
+              <th scope="col">SP95</th>
+              <th scope="col">SP98</th>
+              <th scope="col">E10</th>
+              <th scope="col">E85</th>
+              <th scope="col">GPL</th>
+            </tr>
+          </thead>
+          <tbody>
+            {regions.map(region => {
+              const gazole = region['Gazole'] as number | null;
+              const natGaz = statsNational['Gazole'];
+              const diff = gazole != null && natGaz != null ? ((gazole - natGaz) / natGaz) * 100 : null;
+              return (
+                <tr>
+                  <td>
+                    <a href={`/prix-carburants/region/${region.slug}/`} class="region-link">
+                      {region.name}
+                    </a>
+                  </td>
+                  <td class="price-cell">
+                    {gazole != null ? (
+                      <span>
+                        {gazole.toFixed(3)}
+                        {diff != null && (
+                          <span class={`price-badge ${diff < -5 ? 'badge-green' : diff > 5 ? 'badge-orange' : 'badge-neutral'}`}>
+                            {diff > 0 ? '+' : ''}{diff.toFixed(1)}%
+                          </span>
+                        )}
+                      </span>
+                    ) : '—'}
+                  </td>
+                  <td class="price-cell">{(region['SP95'] as number | null)?.toFixed(3) ?? '—'}</td>
+                  <td class="price-cell">{(region['SP98'] as number | null)?.toFixed(3) ?? '—'}</td>
+                  <td class="price-cell">{(region['E10'] as number | null)?.toFixed(3) ?? '—'}</td>
+                  <td class="price-cell">{(region['E85'] as number | null)?.toFixed(3) ?? '—'}</td>
+                  <td class="price-cell">{(region['GPLc'] as number | null)?.toFixed(3) ?? '—'}</td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Explication -->
+    <section class="container section-gap">
+      <div class="explainer-box">
+        <h2>Comment fonctionne ce comparateur ?</h2>
+        <p>
+          Mon Carburant agrège chaque jour les prix communiqués par les stations-service françaises au ministère de l'Économie,
+          dans le cadre de la loi sur la transparence des prix des carburants. Les données sont issues du flux officiel
+          <a href="https://www.prix-carburants.gouv.fr/" rel="noopener noreferrer" target="_blank">prix-carburants.gouv.fr</a>,
+          publié sous <strong>Licence Ouverte</strong>.
+        </p>
+        <p>
+          Notre algorithme récupère automatiquement le fichier quotidien (J-1), le décompresse, parse les {meta.totalStations.toLocaleString('fr-FR')} stations
+          et calcule les prix moyens nationaux, régionaux et départementaux. Les ruptures de stock sont exclues des calculs.
+          Chaque station affiche la date de sa dernière mise à jour pour plus de transparence.
+        </p>
+        <p>
+          Utilisez le <strong>comparateur ci-dessus</strong> pour trouver les stations les moins chères près de chez vous :
+          saisissez votre code postal ou votre ville. Les résultats affichent les 10 stations les plus proches
+          triées par prix croissant, avec un lien vers Google Maps pour l'itinéraire.
+        </p>
+        <div class="explainer-links">
+          <a href="/prix-carburants/methodologie/">En savoir plus sur notre méthodologie</a>
+          <a href="/blog/astuces-economiser-carburant/">10 astuces pour économiser du carburant</a>
+        </div>
+      </div>
+    </section>
+  </main>
+</BaseLayout>
+
+<style>
+  .fuel-hero {
+    background: linear-gradient(135deg, var(--color-primary) 0%, #1a4a66 100%);
+    color: #fff;
+    padding: 3rem 0 2.5rem;
+    text-align: center;
+  }
+  .fuel-hero-inner h1 {
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    font-weight: 800;
+    margin: 0 0 0.5rem;
+    color: #fff;
+  }
+  .fuel-hero-sub {
+    color: #94a3b8;
+    font-size: 1.125rem;
+    margin: 0 0 1rem;
+  }
+  .fuel-update-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: rgba(255,255,255,0.1);
+    padding: 0.35rem 0.75rem;
+    border-radius: 999px;
+    font-size: 0.8125rem;
+    color: #cbd5e1;
+    margin: 0;
+  }
+  .section-gap { margin-top: 3rem; }
+  .section-title {
+    font-size: 1.375rem;
+    font-weight: 700;
+    color: var(--color-primary);
+    margin: 0 0 1.5rem;
+  }
+  .fuel-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+  @media (min-width: 640px) { .fuel-cards-grid { grid-template-columns: repeat(3, 1fr); } }
+  @media (min-width: 1024px) { .fuel-cards-grid { grid-template-columns: repeat(6, 1fr); } }
+  .fuel-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1.25rem 1rem;
+    background: #fff;
+    border: 2px solid #e5e7eb;
+    border-top: 4px solid var(--fuel-color);
+    border-radius: 0.75rem;
+    text-decoration: none;
+    transition: box-shadow 0.2s, transform 0.15s;
+  }
+  .fuel-card-marker {
+    width: 1.75rem;
+    height: 0.25rem;
+    background: var(--fuel-color);
+    border-radius: 999px;
+  }
+  .fuel-card:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.1); transform: translateY(-2px); }
+  .fuel-card-label { font-size: 0.8125rem; color: var(--color-text-muted); font-weight: 600; }
+  .fuel-card-price {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--fuel-color);
+    display: flex;
+    align-items: baseline;
+    gap: 0.25rem;
+  }
+  .fuel-card-unit { font-size: 0.875rem; font-weight: 500; color: var(--color-text-muted); }
+  .fuel-card-link { font-size: 0.75rem; color: var(--color-text-muted); }
+  .table-wrapper { overflow-x: auto; }
+  .fuel-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+  .fuel-table th {
+    background: var(--color-primary);
+    color: #fff;
+    padding: 0.75rem 1rem;
+    text-align: left;
+    font-size: 0.8125rem;
+    font-weight: 600;
+  }
+  .fuel-table td { padding: 0.7rem 1rem; border-bottom: 1px solid #f1f5f9; }
+  .fuel-table tr:hover td { background: #f8fafc; }
+  .region-link { color: var(--color-primary); text-decoration: none; font-weight: 600; }
+  .region-link:hover { text-decoration: underline; }
+  .price-cell { font-variant-numeric: tabular-nums; }
+  .price-badge {
+    display: inline-block;
+    font-size: 0.7rem;
+    padding: 0.1rem 0.35rem;
+    border-radius: 999px;
+    margin-left: 0.35rem;
+    font-weight: 600;
+  }
+  .badge-green { background: #dcfce7; color: #166534; }
+  .badge-orange { background: #fff7ed; color: #c2410c; }
+  .badge-neutral { background: #f1f5f9; color: #64748b; }
+  .explainer-box {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-left: 4px solid var(--color-accent);
+    border-radius: 0.75rem;
+    padding: 2rem;
+  }
+  .explainer-box h2 { font-size: 1.25rem; color: var(--color-primary); margin: 0 0 1rem; }
+  .explainer-box p { color: #374151; line-height: 1.7; margin: 0 0 1rem; }
+  .explainer-box p:last-of-type { margin-bottom: 1.5rem; }
+  .explainer-box a { color: var(--color-accent); }
+  .explainer-links { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .explainer-links a {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    background: var(--color-primary);
+    color: #fff;
+    border-radius: 0.5rem;
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 600;
+    transition: background 0.2s;
+  }
+  .explainer-links a:hover { background: #1a4a66; }
+</style>

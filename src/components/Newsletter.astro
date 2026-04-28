@@ -1,0 +1,162 @@
+---
+// Bloc d'inscription newsletter — UI uniquement, pas de backend
+interface Props {
+  compact?: boolean;
+}
+
+const { compact = false } = Astro.props;
+---
+
+<section class:list={['newsletter', { compact }]} aria-label="Inscription à la newsletter">
+  {!compact && (
+    <p class="newsletter-eyebrow">Ne ratez rien</p>
+  )}
+  <h2 class:list={['newsletter-title', { 'newsletter-title--compact': compact }]}>
+    Recevez nos conseils chaque semaine
+  </h2>
+  {!compact && (
+    <p class="newsletter-desc">
+      Astuces d'éco-conduite, décryptages fiscaux et comparatifs carburants directement dans votre boîte mail.
+    </p>
+  )}
+  <form class="newsletter-form" novalidate>
+    <div class="newsletter-fields">
+      <label for="newsletter-email" class="sr-only">Votre adresse email</label>
+      <input
+        type="email"
+        id="newsletter-email"
+        name="email"
+        placeholder="votre@email.fr"
+        required
+        autocomplete="email"
+        class="newsletter-input"
+        aria-label="Votre adresse email"
+      />
+      <button type="submit" class="newsletter-btn">
+        Je m'abonne
+      </button>
+    </div>
+    <p class="newsletter-legal">
+      Aucun spam. Désabonnement en un clic. Données protégées conformément à notre
+      <a href="/politique-confidentialite">politique de confidentialité</a>.
+    </p>
+  </form>
+</section>
+
+<style>
+  .newsletter {
+    background: linear-gradient(135deg, var(--color-primary) 0%, #1a4a68 100%);
+    color: #fff;
+    border-radius: 1rem;
+    padding: 3rem 2rem;
+    text-align: center;
+  }
+
+  .newsletter.compact {
+    padding: 2rem 1.5rem;
+  }
+
+  .newsletter-eyebrow {
+    font-size: 0.8125rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-accent);
+    margin: 0 0 0.75rem;
+  }
+
+  .newsletter-title {
+    font-family: var(--font-display);
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: #fff;
+    margin: 0 0 1rem;
+    line-height: 1.2;
+  }
+
+  .newsletter-title--compact {
+    font-size: 1.375rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .newsletter-desc {
+    font-size: 1rem;
+    color: #94a3b8;
+    max-width: 40ch;
+    margin: 0 auto 1.5rem;
+    line-height: 1.6;
+  }
+
+  .newsletter-form {
+    max-width: 480px;
+    margin: 0 auto;
+  }
+
+  .newsletter-fields {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .newsletter-input {
+    flex: 1;
+    min-width: 0;
+    padding: 0.75rem 1rem;
+    border: 2px solid #334155;
+    border-radius: 0.5rem;
+    background: rgba(255 255 255 / 0.1);
+    color: #fff;
+    font-size: 0.9375rem;
+    outline: none;
+    transition: border-color 0.15s ease;
+  }
+
+  .newsletter-input::placeholder {
+    color: #94a3b8;
+  }
+
+  .newsletter-input:focus {
+    border-color: var(--color-accent);
+  }
+
+  .newsletter-btn {
+    flex-shrink: 0;
+    padding: 0.75rem 1.5rem;
+    background: var(--color-accent);
+    color: #fff;
+    border: none;
+    border-radius: 0.5rem;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s ease;
+    white-space: nowrap;
+  }
+
+  .newsletter-btn:hover {
+    background: #d0651a;
+  }
+
+  .newsletter-legal {
+    font-size: 0.75rem;
+    color: #64748b;
+    margin: 0.75rem 0 0;
+    line-height: 1.5;
+  }
+
+  .newsletter-legal a {
+    color: #94a3b8;
+    text-decoration: underline;
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+  }
+</style>

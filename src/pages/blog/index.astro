@@ -1,0 +1,127 @@
+---
+// Listing blog — tous les articles publiés
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ArticleCard from '../../components/ArticleCard.astro';
+
+const allArticles = await getCollection('blog', ({ data }) => !data.draft);
+allArticles.sort((a, b) => b.data.publishedAt.getTime() - a.data.publishedAt.getTime());
+
+const categoryLabels: Record<string, string> = {
+  economies: 'Économies',
+  carburants: 'Carburants',
+  fiscalite: 'Fiscalité',
+  entretien: 'Entretien',
+};
+---
+
+<BaseLayout
+  title="Blog — Tous nos articles sur le carburant"
+  description="Tous nos articles sur le carburant : éco-conduite, fiscalité, entretien, types de carburants. Conseils pratiques pour les automobilistes français."
+  canonical="https://mon-carburant.com/blog/"
+>
+  <div class="blog-page">
+    <div class="container">
+      <header class="blog-header">
+        <h1 class="blog-title">Tous nos articles</h1>
+        <p class="blog-subtitle">
+          {allArticles.length} article{allArticles.length > 1 ? 's' : ''} — conseils, décryptages et guides pratiques
+        </p>
+
+        <!-- Filtres par catégorie -->
+        <nav class="category-filters" aria-label="Filtrer par catégorie">
+          <a href="/blog" class="filter-btn active">Tous</a>
+          {Object.entries(categoryLabels).map(([slug, label]) => (
+            <a href={`/categorie/${slug}`} class="filter-btn">{label}</a>
+          ))}
+        </nav>
+      </header>
+
+      {allArticles.length === 0 ? (
+        <div class="empty-state">
+          <p>Aucun article publié pour le moment. Revenez bientôt !</p>
+        </div>
+      ) : (
+        <div class="blog-grid">
+          {allArticles.map((article) => (
+            <ArticleCard article={article} />
+          ))}
+        </div>
+      )}
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .blog-page {
+    padding: 2.5rem 0 5rem;
+  }
+
+  .blog-header {
+    margin-bottom: 2.5rem;
+  }
+
+  .blog-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    font-weight: 800;
+    color: var(--color-primary);
+    margin: 0 0 0.5rem;
+  }
+
+  .blog-subtitle {
+    color: var(--color-text-secondary);
+    font-size: 1.0625rem;
+    margin: 0 0 1.5rem;
+  }
+
+  .category-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .filter-btn {
+    padding: 0.375rem 0.875rem;
+    border-radius: 9999px;
+    border: 1px solid var(--color-border);
+    background: #fff;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--color-text);
+    text-decoration: none;
+    transition: all 0.15s ease;
+  }
+
+  .filter-btn:hover,
+  .filter-btn.active {
+    background: var(--color-primary);
+    color: #fff;
+    border-color: var(--color-primary);
+  }
+
+  .blog-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  @media (min-width: 640px) {
+    .blog-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .blog-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .empty-state {
+    text-align: center;
+    padding: 4rem 2rem;
+    color: var(--color-text-secondary);
+    font-size: 1.125rem;
+  }
+</style>

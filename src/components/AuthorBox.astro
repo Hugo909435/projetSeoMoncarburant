@@ -1,0 +1,151 @@
+---
+// Encart auteur affiché en fin d'article
+interface AuthorData {
+  name: string;
+  slug: string;
+  bio: string;
+  photo: string;
+  expertise: string[];
+  linkedin?: string;
+}
+
+interface Props {
+  author: AuthorData;
+}
+
+const { author } = Astro.props;
+---
+
+<div class="author-box">
+  <a href={`/auteur/${author.slug}/`} class="author-photo-link" aria-label={`Voir le profil de ${author.name}`}>
+    <img
+      src={author.photo}
+      alt={`Photo de ${author.name}`}
+      width="80"
+      height="80"
+      loading="lazy"
+      decoding="async"
+      class="author-photo"
+      onerror="this.src='/images/authors/placeholder.svg'"
+    />
+  </a>
+  <div class="author-info">
+    <p class="author-label">Rédigé par</p>
+    <a href={`/auteur/${author.slug}/`} class="author-name">{author.name}</a>
+    <p class="author-bio">{author.bio}</p>
+    {author.expertise.length > 0 && (
+      <ul class="author-expertise" aria-label="Domaines d'expertise">
+        {author.expertise.map((exp) => (
+          <li>{exp}</li>
+        ))}
+      </ul>
+    )}
+    {author.linkedin && (
+      <a
+        href={author.linkedin}
+        class="author-linkedin"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label={`Profil LinkedIn de ${author.name}`}
+      >
+        LinkedIn →
+      </a>
+    )}
+  </div>
+</div>
+
+<style>
+  .author-box {
+    display: flex;
+    gap: 1.25rem;
+    align-items: flex-start;
+    background: #f9fafb;
+    border: 1px solid var(--color-border);
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    margin-top: 2.5rem;
+  }
+
+  .author-photo-link {
+    flex-shrink: 0;
+  }
+
+  .author-photo {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--color-accent);
+  }
+
+  .author-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .author-label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-text-secondary);
+    margin: 0;
+    font-weight: 600;
+  }
+
+  .author-name {
+    font-family: var(--font-display);
+    font-size: 1.0625rem;
+    font-weight: 700;
+    color: var(--color-primary);
+    text-decoration: none;
+  }
+
+  .author-name:hover {
+    color: var(--color-accent);
+  }
+
+  .author-bio {
+    font-size: 0.875rem;
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .author-expertise {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.375rem;
+    list-style: none;
+    padding: 0;
+    margin: 0.25rem 0 0;
+  }
+
+  .author-expertise li {
+    background: #e0f2fe;
+    color: #0369a1;
+    padding: 0.2rem 0.625rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 500;
+  }
+
+  .author-linkedin {
+    font-size: 0.875rem;
+    color: var(--color-accent);
+    font-weight: 600;
+    align-self: flex-start;
+  }
+
+  @media (max-width: 480px) {
+    .author-box {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .author-expertise {
+      justify-content: center;
+    }
+  }
+</style>
