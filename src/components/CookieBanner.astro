@@ -1,0 +1,418 @@
+---
+// Bandeau cookies RGPD/CNIL 2024 — vanilla JS, aucune dépendance
+---
+
+<!-- ── Bandeau principal ── -->
+<div id="cookie-banner" class="cb-banner" role="dialog" aria-modal="true" aria-labelledby="cb-title">
+  <div class="cb-inner">
+    <div class="cb-content">
+      <strong id="cb-title" class="cb-heading">🍪 Gestion des cookies</strong>
+      <p class="cb-text">
+        Nous utilisons Google Analytics pour mesurer l'audience de nos pages et améliorer votre expérience.
+        Aucun cookie ne sera déposé sans votre accord préalable.
+        <a href="/politique-confidentialite/" class="cb-link">En savoir plus</a>
+      </p>
+    </div>
+    <div class="cb-actions">
+      <button id="cb-refuse"    class="cb-btn cb-btn--refuse"    type="button">Tout refuser</button>
+      <button id="cb-customize" class="cb-btn cb-btn--customize" type="button">Personnaliser</button>
+      <button id="cb-accept"    class="cb-btn cb-btn--accept"    type="button">Tout accepter</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── Modale de personnalisation ── -->
+<div id="cookie-modal" class="cm-modal" role="dialog" aria-modal="true" aria-labelledby="cm-title">
+  <div id="cm-backdrop" class="cm-backdrop"></div>
+  <div class="cm-panel" role="document">
+    <h2 id="cm-title" class="cm-title">Préférences des cookies</h2>
+
+    <div class="cm-section">
+      <div class="cm-row">
+        <div class="cm-info">
+          <h3 class="cm-cat">Cookies essentiels</h3>
+          <p>Nécessaires au bon fonctionnement du site : mémorisation de vos préférences. Ils ne peuvent pas être désactivés.</p>
+        </div>
+        <span class="cm-always">Toujours actifs</span>
+      </div>
+    </div>
+
+    <div class="cm-section">
+      <div class="cm-row">
+        <div class="cm-info">
+          <h3 class="cm-cat">Cookies d'analyse</h3>
+          <p>Google Analytics 4 mesure les pages visitées, les durées de session et la provenance des visiteurs. Toutes les données sont anonymisées (adresse IP masquée). Aucune donnée personnelle identifiable n'est transmise à Google.</p>
+        </div>
+        <label class="tgl" for="tgl-analytics" aria-label="Activer les cookies d'analyse">
+          <input type="checkbox" id="tgl-analytics" role="switch" class="tgl-input">
+          <span class="tgl-track"><span class="tgl-thumb"></span></span>
+        </label>
+      </div>
+    </div>
+
+    <div class="cm-footer">
+      <button id="cm-save"  class="cb-btn cb-btn--accept" type="button">Enregistrer mes choix</button>
+      <button id="cm-close" class="cb-btn cb-btn--ghost"  type="button">Fermer</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── Bouton de réouverture ── -->
+<button id="cookie-reopen" class="cr-btn" type="button" aria-label="Gérer mes préférences cookies" title="Gérer les cookies">
+  🍪
+</button>
+
+<style>
+  /* ─── État initial (JS les montre ensuite) ─────────────────── */
+  .cb-banner  { display: none; }
+  .cm-modal   { display: none; }
+  .cr-btn     { display: none; }
+
+  /* ─── Banner ───────────────────────────────────────────────── */
+  .cb-banner {
+    position: fixed;
+    inset: auto 0 0 0;
+    z-index: 9000;
+    background: #0F2D3F;
+    box-shadow: 0 -4px 32px rgba(0,0,0,.25);
+    transform: translateY(102%);
+    transition: transform .3s ease;
+  }
+  .cb-banner.is-open    { display: block; }
+  .cb-banner.is-visible { transform: translateY(0); }
+
+  .cb-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 1.25rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+  .cb-content { flex: 1; min-width: 240px; }
+  .cb-heading {
+    display: block;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: .35rem;
+  }
+  .cb-text {
+    font-size: .875rem;
+    color: #94a3b8;
+    line-height: 1.55;
+    margin: 0;
+  }
+  .cb-link { color: #E87722; text-decoration: underline; }
+  .cb-actions {
+    display: flex;
+    gap: .625rem;
+    flex-shrink: 0;
+    flex-wrap: wrap;
+  }
+
+  /* ─── Boutons (conformité CNIL : refuser = même poids visuel qu'accepter) ── */
+  .cb-btn {
+    padding: .625rem 1.125rem;
+    border-radius: .5rem;
+    font-size: .875rem;
+    font-weight: 700;
+    cursor: pointer;
+    border: 2px solid transparent;
+    line-height: 1.2;
+    transition: opacity .15s, background .15s, border-color .15s;
+    white-space: nowrap;
+  }
+  .cb-btn:focus-visible { outline: 3px solid #E87722; outline-offset: 2px; }
+
+  /* Refuser : fond foncé visible, même taille qu'accepter */
+  .cb-btn--refuse {
+    background: #1e4a65;
+    color: #fff;
+    border-color: #1e4a65;
+  }
+  .cb-btn--refuse:hover  { background: #265e80; border-color: #265e80; }
+
+  /* Personnaliser : discret mais visible */
+  .cb-btn--customize {
+    background: transparent;
+    color: #e2e8f0;
+    border-color: rgba(255,255,255,.3);
+  }
+  .cb-btn--customize:hover { border-color: #fff; color: #fff; }
+
+  /* Accepter : orange accent */
+  .cb-btn--accept {
+    background: #E87722;
+    color: #fff;
+    border-color: #E87722;
+  }
+  .cb-btn--accept:hover { opacity: .88; }
+
+  /* Ghost (fermer modale) */
+  .cb-btn--ghost {
+    background: transparent;
+    color: #6B7280;
+    border-color: #e5e7eb;
+  }
+  .cb-btn--ghost:hover { background: #f9fafb; }
+
+  /* ─── Modale ────────────────────────────────────────────────── */
+  .cm-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 9100;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    opacity: 0;
+    transition: opacity .2s ease;
+  }
+  .cm-modal.is-open    { display: flex; }
+  .cm-modal.is-visible { opacity: 1; }
+
+  .cm-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,.55);
+    cursor: pointer;
+  }
+  .cm-panel {
+    position: relative;
+    background: #fff;
+    border-radius: 1rem;
+    padding: 2rem;
+    width: 100%;
+    max-width: 520px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 24px 64px rgba(0,0,0,.3);
+  }
+  .cm-title {
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: #0F2D3F;
+    margin: 0 0 1.5rem;
+  }
+  .cm-section {
+    border: 1px solid #e5e7eb;
+    border-radius: .625rem;
+    padding: 1.125rem 1.25rem;
+    margin-bottom: .875rem;
+  }
+  .cm-row {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  .cm-cat {
+    font-size: .9375rem;
+    font-weight: 700;
+    color: #0F2D3F;
+    margin: 0 0 .375rem;
+  }
+  .cm-info p {
+    font-size: .8125rem;
+    color: #6B7280;
+    line-height: 1.55;
+    margin: 0;
+  }
+  .cm-always {
+    font-size: .75rem;
+    font-weight: 700;
+    color: #059669;
+    background: #d1fae5;
+    padding: .25rem .625rem;
+    border-radius: 999px;
+    white-space: nowrap;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .cm-footer {
+    display: flex;
+    gap: .75rem;
+    margin-top: 1.5rem;
+    flex-wrap: wrap;
+  }
+  .cm-footer .cb-btn--accept { flex: 1; text-align: center; }
+
+  /* ─── Toggle switch ─────────────────────────────────────────── */
+  .tgl { display: inline-flex; cursor: pointer; flex-shrink: 0; margin-top: 1px; }
+  .tgl-input {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+    margin: 0;
+  }
+  .tgl-track {
+    display: block;
+    width: 44px;
+    height: 24px;
+    border-radius: 12px;
+    background: #d1d5db;
+    transition: background .25s;
+    position: relative;
+  }
+  .tgl-thumb {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 1px 4px rgba(0,0,0,.2);
+    transition: transform .25s;
+  }
+  .tgl-input:checked + .tgl-track              { background: #E87722; }
+  .tgl-input:checked + .tgl-track .tgl-thumb   { transform: translateX(20px); }
+  .tgl-input:focus-visible + .tgl-track        { outline: 3px solid #E87722; outline-offset: 2px; }
+
+  /* ─── Bouton de réouverture ─────────────────────────────────── */
+  .cr-btn {
+    position: fixed;
+    bottom: 1.25rem;
+    left: 1.25rem;
+    z-index: 8900;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: #0F2D3F;
+    color: #fff;
+    font-size: 1.25rem;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 2px 12px rgba(0,0,0,.25);
+    align-items: center;
+    justify-content: center;
+    transition: transform .15s, box-shadow .15s;
+    line-height: 1;
+  }
+  .cr-btn.is-open { display: flex; }
+  .cr-btn:hover   { transform: scale(1.1); box-shadow: 0 4px 18px rgba(0,0,0,.3); }
+  .cr-btn:focus-visible { outline: 3px solid #E87722; outline-offset: 2px; }
+
+  /* ─── Responsive mobile ─────────────────────────────────────── */
+  @media (max-width: 600px) {
+    .cb-actions { width: 100%; }
+    .cb-btn     { flex: 1; text-align: center; }
+    .cm-panel   { padding: 1.5rem 1.25rem; }
+    .cr-btn     { bottom: 1rem; left: 1rem; }
+  }
+</style>
+
+<script is:inline>
+(function () {
+  var KEY = 'cookie-consent-mc';
+  var GA  = 'G-34QJT89RZV';
+
+  var $b  = document.getElementById('cookie-banner');
+  var $m  = document.getElementById('cookie-modal');
+  var $r  = document.getElementById('cookie-reopen');
+  var $tg = document.getElementById('tgl-analytics');
+
+  /* ── Persistance ─────────────────────────────────────────────── */
+  function load() {
+    try { return JSON.parse(localStorage.getItem(KEY)); } catch (e) { return null; }
+  }
+  function store(analytics) {
+    var c = { analytics: !!analytics, timestamp: new Date().toISOString(), version: 1 };
+    try { localStorage.setItem(KEY, JSON.stringify(c)); } catch (e) {}
+    return c;
+  }
+
+  /* ── Google Analytics 4 (chargement conditionnel) ───────────── */
+  function loadGA4() {
+    if (document.getElementById('_ga4s')) return;
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { window.dataLayer.push(arguments); }
+    window.gtag = gtag;
+    gtag('js', new Date());
+    gtag('config', GA, { anonymize_ip: true, cookie_flags: 'SameSite=None;Secure' });
+    var s = document.createElement('script');
+    s.id    = '_ga4s';
+    s.async = true;
+    s.src   = 'https://www.googletagmanager.com/gtag/js?id=' + GA;
+    document.head.appendChild(s);
+  }
+
+  /* ── Animations bandeau ──────────────────────────────────────── */
+  function showBanner() {
+    $b.classList.add('is-open');
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () { $b.classList.add('is-visible'); });
+    });
+  }
+  function hideBanner() {
+    $b.classList.remove('is-visible');
+    setTimeout(function () { $b.classList.remove('is-open'); }, 320);
+  }
+
+  /* ── Animations modale ───────────────────────────────────────── */
+  function showModal() {
+    if ($tg) $tg.checked = !!(load() || {}).analytics;
+    $m.classList.add('is-open');
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () {
+        $m.classList.add('is-visible');
+        var first = $m.querySelector('button, input');
+        if (first) first.focus();
+      });
+    });
+  }
+  function hideModal() {
+    $m.classList.remove('is-visible');
+    setTimeout(function () { $m.classList.remove('is-open'); }, 220);
+  }
+
+  /* ── Application du consentement ────────────────────────────── */
+  function apply(c) {
+    hideBanner();
+    hideModal();
+    $r.classList.add('is-open');
+    if (c.analytics) loadGA4();
+  }
+
+  /* ── Initialisation ──────────────────────────────────────────── */
+  var existing = load();
+  if (existing) {
+    $r.classList.add('is-open');
+    if (existing.analytics) loadGA4();
+  } else {
+    showBanner();
+  }
+
+  /* ── Gestionnaires d'événements ──────────────────────────────── */
+  document.getElementById('cb-accept').addEventListener('click', function () {
+    apply(store(true));
+  });
+  document.getElementById('cb-refuse').addEventListener('click', function () {
+    apply(store(false));
+  });
+  document.getElementById('cb-customize').addEventListener('click', function () {
+    hideBanner();
+    setTimeout(showModal, 50);
+  });
+  document.getElementById('cm-save').addEventListener('click', function () {
+    apply(store($tg ? $tg.checked : false));
+  });
+  document.getElementById('cm-close').addEventListener('click', function () {
+    hideModal();
+    if (!load()) setTimeout(showBanner, 260);
+  });
+  document.getElementById('cm-backdrop').addEventListener('click', function () {
+    hideModal();
+    if (!load()) setTimeout(showBanner, 260);
+  });
+  $r.addEventListener('click', showModal);
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && $m.classList.contains('is-open')) {
+      hideModal();
+      if (!load()) setTimeout(showBanner, 260);
+    }
+  });
+})();
+</script>

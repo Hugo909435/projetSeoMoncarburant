@@ -22,10 +22,12 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           <form
             id="contact-form"
             class="contact-form"
-            action="https://formspree.io/f/[VOTRE_ID_FORMSPREE]"
+            action="/contact-handler.php"
             method="POST"
             novalidate
           >
+            <input type="text" name="website" class="honeypot" tabindex="-1" autocomplete="off" aria-hidden="true" />
+
             <div class="form-group">
               <label for="name">Nom complet <span aria-hidden="true">*</span></label>
               <input
@@ -121,7 +123,22 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             </div>
             <div class="info-item">
               <dt>Partenariats</dt>
-              <dd>partenariats@mon-carburant.com</dd>
+              <dd>contact@mon-carburant.com</dd>
+            </div>
+            <div class="info-item">
+              <dt>Réseaux sociaux</dt>
+              <dd class="social-links">
+                <a href="https://www.instagram.com/moncarburant/" target="_blank" rel="noopener noreferrer" aria-label="Instagram Mon Carburant">
+                  <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                    <path d="M7.8 2h8.4A5.8 5.8 0 0 1 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8A5.8 5.8 0 0 1 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2Zm0 2A3.8 3.8 0 0 0 4 7.8v8.4A3.8 3.8 0 0 0 7.8 20h8.4a3.8 3.8 0 0 0 3.8-3.8V7.8A3.8 3.8 0 0 0 16.2 4H7.8Zm4.2 3.3a4.7 4.7 0 1 1 0 9.4 4.7 4.7 0 0 1 0-9.4Zm0 2a2.7 2.7 0 1 0 0 5.4 2.7 2.7 0 0 0 0-5.4Zm5-2.35a1.05 1.05 0 1 1 0 2.1 1.05 1.05 0 0 1 0-2.1Z" />
+                  </svg>
+                </a>
+                <a href="https://x.com/mon_carburant" target="_blank" rel="noopener noreferrer" aria-label="X Mon Carburant">
+                  <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                    <path d="M18.9 2h3.25l-7.1 8.12L23.4 22h-6.54l-5.12-6.7L5.88 22H2.62l7.6-8.7L2.2 2h6.7l4.63 6.12L18.9 2Zm-1.14 17.9h1.8L7.92 4H5.99l11.77 15.9Z" />
+                  </svg>
+                </a>
+              </dd>
             </div>
           </dl>
 
@@ -152,6 +169,14 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   const errorMsg = document.getElementById('form-error');
 
   if (form) {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('contact') === 'success' && successMsg) {
+      successMsg.hidden = false;
+    }
+    if (params.get('contact') === 'error' && errorMsg) {
+      errorMsg.hidden = false;
+    }
+
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
 
@@ -172,8 +197,10 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           body: new FormData(form),
           headers: { Accept: 'application/json' },
         });
+        const contentType = response.headers.get('content-type') || '';
+        const result = contentType.includes('application/json') ? await response.json() : null;
 
-        if (response.ok) {
+        if (response.ok && result?.success) {
           form.reset();
           if (successMsg) successMsg.hidden = false;
         } else {
@@ -193,6 +220,9 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   function clearErrors() {
     document.querySelectorAll<HTMLSpanElement>('.field-error').forEach((el) => {
       el.textContent = '';
+    });
+    document.querySelectorAll<HTMLElement>('[aria-invalid="true"]').forEach((el) => {
+      el.removeAttribute('aria-invalid');
     });
     if (successMsg) successMsg.hidden = true;
     if (errorMsg) errorMsg.hidden = true;
@@ -345,6 +375,15 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     min-height: 1rem;
   }
 
+  .honeypot {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    pointer-events: none;
+  }
+
   .form-rgpd {
     display: flex;
     flex-direction: column;
@@ -434,6 +473,39 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     font-size: 0.9375rem;
     color: var(--color-text);
     margin: 0;
+  }
+
+  .social-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.625rem;
+  }
+
+  .social-links a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border: 1px solid var(--color-border);
+    border-radius: 0.375rem;
+    color: var(--color-accent);
+    text-decoration: none;
+    transition:
+      border-color 0.15s ease,
+      color 0.15s ease,
+      background 0.15s ease;
+  }
+
+  .social-links a:hover {
+    background: #fff7ed;
+    border-color: var(--color-accent);
+  }
+
+  .social-links svg {
+    width: 1.125rem;
+    height: 1.125rem;
+    fill: currentColor;
   }
 
   .contact-faq h3 {

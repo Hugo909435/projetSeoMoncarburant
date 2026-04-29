@@ -45,6 +45,18 @@ const currentYear = new Date().getFullYear();
       <h3>Contact</h3>
       <p>Une question, une suggestion ou une opportunité éditoriale ?</p>
       <a href="/contact" class="footer-cta">Nous contacter</a>
+      <div class="footer-socials" aria-label="Réseaux sociaux">
+        <a href="https://www.instagram.com/moncarburant/" target="_blank" rel="noopener noreferrer" aria-label="Instagram Mon Carburant">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M7.8 2h8.4A5.8 5.8 0 0 1 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8A5.8 5.8 0 0 1 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2Zm0 2A3.8 3.8 0 0 0 4 7.8v8.4A3.8 3.8 0 0 0 7.8 20h8.4a3.8 3.8 0 0 0 3.8-3.8V7.8A3.8 3.8 0 0 0 16.2 4H7.8Zm4.2 3.3a4.7 4.7 0 1 1 0 9.4 4.7 4.7 0 0 1 0-9.4Zm0 2a2.7 2.7 0 1 0 0 5.4 2.7 2.7 0 0 0 0-5.4Zm5-2.35a1.05 1.05 0 1 1 0 2.1 1.05 1.05 0 0 1 0-2.1Z" />
+          </svg>
+        </a>
+        <a href="https://x.com/mon_carburant" target="_blank" rel="noopener noreferrer" aria-label="X Mon Carburant">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M18.9 2h3.25l-7.1 8.12L23.4 22h-6.54l-5.12-6.7L5.88 22H2.62l7.6-8.7L2.2 2h6.7l4.63 6.12L18.9 2Zm-1.14 17.9h1.8L7.92 4H5.99l11.77 15.9Z" />
+          </svg>
+        </a>
+      </div>
     </div>
   </div>
 
@@ -176,6 +188,39 @@ const currentYear = new Date().getFullYear();
   .footer-cta:hover {
     background: #d0651a;
     color: #fff;
+  }
+
+  .footer-socials {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 1rem;
+  }
+
+  .footer-socials a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border: 1px solid #334155;
+    border-radius: 0.375rem;
+    color: #94a3b8;
+    transition:
+      border-color 0.15s ease,
+      color 0.15s ease,
+      background 0.15s ease;
+  }
+
+  .footer-socials a:hover {
+    background: rgba(255 255 255 / 0.08);
+    border-color: var(--color-accent);
+    color: #fff;
+  }
+
+  .footer-socials svg {
+    width: 1.125rem;
+    height: 1.125rem;
+    fill: currentColor;
   }
 
   .footer-bottom {
