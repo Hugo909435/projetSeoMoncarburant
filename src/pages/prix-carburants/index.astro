@@ -277,3 +277,16 @@ const description = `Comparez les prix du carburant dans toute la France. ${meta
   }
   .explainer-links a:hover { background: #1a4a66; }
 </style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const cp = new URLSearchParams(window.location.search).get('cp');
+    if (!cp) return;
+    const input = document.getElementById('fs-query') as HTMLInputElement | null;
+    const btn = document.getElementById('fs-search-btn') as HTMLButtonElement | null;
+    if (input && btn) {
+      input.value = cp;
+      setTimeout(() => btn.click(), 150);
+    }
+  });
+</script>

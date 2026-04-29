@@ -8,10 +8,7 @@ const currentYear = new Date().getFullYear();
     <!-- Colonne 1 : À propos -->
     <div class="footer-col">
       <a href="/" class="footer-logo" aria-label="Mon Carburant — Accueil">
-        <svg width="24" height="24" viewBox="0 0 28 28" fill="none" aria-hidden="true">
-          <rect width="28" height="28" rx="6" fill="#E87722"/>
-          <path d="M14 6C14 6 8 14 8 18a6 6 0 0 0 12 0c0-4-6-12-6-12z" fill="white"/>
-        </svg>
+        <img src="/images/logo-colored.svg" alt="Mon Carburant" class="footer-logo-img" width="36" height="36" />
         <span>Mon<strong>Carburant</strong></span>
       </a>
       <p class="footer-tagline">
@@ -112,6 +109,14 @@ const currentYear = new Date().getFullYear();
     font-size: 1rem;
     font-weight: 500;
     margin-bottom: 0.75rem;
+  }
+
+  .footer-logo-img {
+    display: block;
+    width: 36px;
+    height: 36px;
+    object-fit: contain;
+    border-radius: 6px;
   }
 
   .footer-logo:hover {

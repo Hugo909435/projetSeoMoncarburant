@@ -1,13 +1,15 @@
 ---
-// Page d'accueil
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ArticleCard from '../components/ArticleCard.astro';
 import Newsletter from '../components/Newsletter.astro';
+import statsNational from '../data/fuel/stats-national.json';
+import statsByDepartment from '../data/fuel/stats-by-department.json';
+import fuelMeta from '../data/fuel/meta.json';
+import departmentsData from '../data/departments.json';
 
 const allArticles = await getCollection('blog', ({ data }) => !data.draft);
 allArticles.sort((a, b) => b.data.publishedAt.getTime() - a.data.publishedAt.getTime());
-
 const latestArticles = allArticles.slice(0, 6);
 const popularArticles = allArticles.slice(0, 3);
 
@@ -45,6 +47,28 @@ const categories = [
   },
 ];
 
+const MAIN_FUELS = [
+  { key: 'SP95',   label: 'SP95',   color: '#16a34a' },
+  { key: 'SP98',   label: 'SP98',   color: '#2563eb' },
+  { key: 'Gazole', label: 'Gazole', color: '#374151' },
+  { key: 'E85',    label: 'E85',    color: '#E87722' },
+] as const;
+
+const lastUpdate = fuelMeta.lastUpdate
+  ? new Date(fuelMeta.lastUpdate).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })
+  : null;
+
+const POPULAR_DEPT_NUMS = ['75', '13', '69', '33', '31', '59', '44', '06'];
+const depts = departmentsData as Record<string, { name: string; slug: string }>;
+const deptStats = statsByDepartment as Record<string, Record<string, number | null>>;
+
+const popularDepts = POPULAR_DEPT_NUMS.map(num => ({
+  num,
+  name: depts[num]?.name ?? '',
+  slug: depts[num]?.slug ?? '',
+  gazole: deptStats[num]?.Gazole ?? null,
+})).filter(d => d.name);
+
 const websiteSchema = {
   '@context': 'https://schema.org',
   '@type': 'WebSite',
@@ -56,7 +80,7 @@ const websiteSchema = {
     '@type': 'SearchAction',
     target: {
       '@type': 'EntryPoint',
-      urlTemplate: 'https://mon-carburant.com/blog/?q={search_term_string}',
+      urlTemplate: 'https://mon-carburant.com/prix-carburants/?cp={search_term_string}',
     },
     'query-input': 'required name=search_term_string',
   },
@@ -67,7 +91,7 @@ const organizationSchema = {
   '@type': 'Organization',
   name: 'Mon Carburant',
   url: 'https://mon-carburant.com',
-  logo: 'https://mon-carburant.com/images/logo.png',
+  logo: 'https://mon-carburant.com/images/logo-colored.svg',
   description: 'Média éditorial indépendant spécialisé dans le carburant et l\'économie automobile.',
   foundingDate: '2026',
   areaServed: 'FR',
@@ -104,10 +128,125 @@ const organizationSchema = {
           </div>
           <div class="stat-sep" aria-hidden="true"></div>
           <div class="stat">
-            <strong>4 thématiques</strong>
-            <span>carburants, économies, fiscalité, entretien</span>
+            <strong>{fuelMeta.totalStations.toLocaleString('fr-FR')} stations</strong>
+            <span>référencées en France</span>
           </div>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Intro éditoriale -->
+  <section class="section-intro" aria-label="Notre mission">
+    <div class="container intro-inner">
+      <p>
+        Chaque année, le carburant représente une part significative du budget des ménages français. Avec des prix
+        qui varient du simple au double entre les stations d'autoroute et la grande distribution, il n'est pas rare
+        d'économiser 10 à 20 centimes par litre en choisissant la bonne station. Sur un plein de 50 litres, cela
+        représente jusqu'à 10 euros d'économies — soit plus de 200 euros par an pour un conducteur moyen.
+      </p>
+      <p>
+        <strong>Mon Carburant</strong> est né de cette réalité : l'information sur les prix existe (elle est publiée
+        chaque jour par le gouvernement), mais elle reste peu accessible. Notre mission est de vous aider à naviguer
+        dans cette complexité. Nous agrégeons quotidiennement les données officielles du ministère de l'Économie
+        pour vous proposer un comparateur de prix couvrant plus de {fuelMeta.totalStations.toLocaleString('fr-FR')} stations
+        en France métropolitaine et dans les DOM.
+      </p>
+      <p>
+        Mais notre mission ne s'arrête pas aux chiffres. Nous publions des guides pratiques sur l'éco-conduite,
+        des explications sur la fiscalité du carburant (TICPE, TVA, aides gouvernementales), et des conseils
+        d'entretien pour que votre véhicule consomme le moins possible. Que vous rouliez au diesel, à l'essence,
+        au GPL ou au bioéthanol, vous trouverez ici les informations dont vous avez besoin pour faire les bons
+        choix, sans jargon technique inutile.
+      </p>
+    </div>
+  </section>
+
+  <!-- Widgets carburant -->
+  <section class="section-fuel-home" aria-label="Prix des carburants aujourd'hui">
+    <div class="container">
+      <div class="fuel-home-grid">
+
+        <!-- Gauche : prix nationaux + recherche rapide -->
+        <div class="fuel-home-left">
+
+          <!-- Widget a : Prix moyens nationaux -->
+          <div class="widget-nat">
+            <div class="widget-nat-head">
+              <h2 class="widget-title">Prix moyens nationaux aujourd'hui</h2>
+              {lastUpdate && (
+                <span class="update-tag">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                  {lastUpdate}
+                </span>
+              )}
+            </div>
+            <div class="nat-prices-grid">
+              {MAIN_FUELS.map(({ key, label, color }) => {
+                const price = statsNational[key as keyof typeof statsNational];
+                return (
+                  <div class="nat-price-item" style={`--c: ${color}`}>
+                    <span class="nat-price-label">{label}</span>
+                    <span class="nat-price-value">
+                      {price != null ? price.toFixed(3) : '—'}
+                      <small>€/L</small>
+                    </span>
+                  </div>
+                );
+              })}
+            </div>
+            <a href="/prix-carburants/" class="widget-cta">
+              Voir le comparateur complet →
+            </a>
+          </div>
+
+          <!-- Widget b : Recherche rapide -->
+          <div class="widget-search">
+            <h3 class="widget-title">Trouver les stations les moins chères</h3>
+            <p class="widget-search-desc">Saisissez votre code postal pour comparer les prix près de chez vous.</p>
+            <div class="qs-row">
+              <input
+                type="text"
+                id="qs-cp"
+                class="qs-input"
+                inputmode="numeric"
+                pattern="\d{2,5}"
+                placeholder="Ex : 75001"
+                maxlength="5"
+                aria-label="Code postal"
+              />
+              <button id="qs-btn" class="qs-btn" type="button">
+                Trouver les meilleurs prix
+              </button>
+            </div>
+            <p id="qs-error" class="qs-error" hidden aria-live="polite">
+              Saisissez un code postal valide (2 à 5 chiffres).
+            </p>
+          </div>
+
+        </div>
+
+        <!-- Droite : départements populaires -->
+        <div class="widget-depts">
+          <h2 class="widget-title">Prix Gazole par département</h2>
+          <ul class="dept-list" role="list">
+            {popularDepts.map(d => (
+              <li>
+                <a href={`/prix-carburants/${d.slug}/`} class="dept-item">
+                  <span class="dept-name">
+                    <span class="dept-num">{d.num}</span>
+                    {d.name}
+                  </span>
+                  <span class="dept-price">
+                    {d.gazole != null ? d.gazole.toFixed(3) + ' €/L' : '—'}
+                  </span>
+                </a>
+              </li>
+            ))}
+          </ul>
+          <a href="/prix-carburants/" class="dept-all-link">Voir tous les départements →</a>
+        </div>
+
       </div>
     </div>
   </section>
@@ -220,6 +359,27 @@ const organizationSchema = {
   )}
 </BaseLayout>
 
+<script>
+  const btn = document.getElementById('qs-btn');
+  const input = document.getElementById('qs-cp') as HTMLInputElement | null;
+  const errEl = document.getElementById('qs-error');
+
+  function handleSearch() {
+    const cp = input?.value.trim() ?? '';
+    if (!/^\d{2,5}$/.test(cp)) {
+      if (errEl) errEl.hidden = false;
+      return;
+    }
+    if (errEl) errEl.hidden = true;
+    window.location.href = `/prix-carburants/?cp=${cp}`;
+  }
+
+  btn?.addEventListener('click', handleSearch);
+  input?.addEventListener('keydown', (e: KeyboardEvent) => {
+    if (e.key === 'Enter') handleSearch();
+  });
+</script>
+
 <style>
   /* ── Hero ── */
   .hero {
@@ -311,6 +471,296 @@ const organizationSchema = {
     background: rgba(255 255 255 / 0.15);
   }
 
+  /* ── Intro éditoriale ── */
+  .section-intro {
+    padding: 3rem 0;
+    background: #f9fafb;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .intro-inner {
+    max-width: 72ch;
+  }
+
+  .intro-inner p {
+    font-size: 1rem;
+    line-height: 1.75;
+    color: #374151;
+    margin: 0 0 1rem;
+  }
+
+  .intro-inner p:last-child {
+    margin-bottom: 0;
+  }
+
+  /* ── Widgets carburant ── */
+  .section-fuel-home {
+    padding: 3rem 0;
+  }
+
+  .fuel-home-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  @media (min-width: 1024px) {
+    .fuel-home-grid {
+      grid-template-columns: 1fr 340px;
+      align-items: start;
+    }
+  }
+
+  .fuel-home-left {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .widget-title {
+    font-family: var(--font-display);
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: var(--color-primary);
+    margin: 0 0 1rem;
+  }
+
+  /* Widget a : prix nationaux */
+  .widget-nat {
+    background: #fff;
+    border: 1px solid var(--color-border);
+    border-radius: 0.875rem;
+    padding: 1.5rem;
+  }
+
+  .widget-nat-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .widget-nat-head .widget-title {
+    margin: 0;
+  }
+
+  .update-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 0.75rem;
+    color: #64748b;
+    background: #f1f5f9;
+    padding: 0.25rem 0.625rem;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+
+  .nat-prices-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.875rem;
+    margin-bottom: 1.25rem;
+  }
+
+  @media (min-width: 480px) {
+    .nat-prices-grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  .nat-price-item {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-top: 3px solid var(--c);
+    border-radius: 0.625rem;
+    padding: 0.875rem 1rem;
+  }
+
+  .nat-price-label {
+    display: block;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: #64748b;
+    margin-bottom: 0.375rem;
+  }
+
+  .nat-price-value {
+    font-size: 1.375rem;
+    font-weight: 800;
+    color: var(--c);
+    display: flex;
+    align-items: baseline;
+    gap: 0.2rem;
+  }
+
+  .nat-price-value small {
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: #94a3b8;
+  }
+
+  .widget-cta {
+    display: inline-flex;
+    align-items: center;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: var(--color-accent);
+    text-decoration: none;
+  }
+
+  .widget-cta:hover {
+    text-decoration: underline;
+  }
+
+  /* Widget b : recherche rapide */
+  .widget-search {
+    background: var(--color-primary);
+    border-radius: 0.875rem;
+    padding: 1.5rem;
+    color: #fff;
+  }
+
+  .widget-search .widget-title {
+    color: #fff;
+  }
+
+  .widget-search-desc {
+    font-size: 0.9rem;
+    color: #94a3b8;
+    margin: -0.5rem 0 1rem;
+  }
+
+  .qs-row {
+    display: flex;
+    gap: 0.625rem;
+    flex-wrap: wrap;
+  }
+
+  .qs-input {
+    flex: 1;
+    min-width: 0;
+    padding: 0.7rem 1rem;
+    border: 2px solid rgba(255 255 255 / 0.2);
+    border-radius: 0.5rem;
+    background: rgba(255 255 255 / 0.08);
+    color: #fff;
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .qs-input::placeholder {
+    color: #64748b;
+  }
+
+  .qs-input:focus {
+    border-color: var(--color-accent);
+  }
+
+  .qs-btn {
+    padding: 0.7rem 1.25rem;
+    background: var(--color-accent);
+    color: #fff;
+    border: none;
+    border-radius: 0.5rem;
+    font-size: 0.9375rem;
+    font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.2s;
+  }
+
+  .qs-btn:hover {
+    background: #d0651a;
+  }
+
+  .qs-error {
+    margin: 0.5rem 0 0;
+    font-size: 0.8125rem;
+    color: #fca5a5;
+  }
+
+  /* Widget c : départements */
+  .widget-depts {
+    background: #fff;
+    border: 1px solid var(--color-border);
+    border-radius: 0.875rem;
+    padding: 1.5rem;
+  }
+
+  .dept-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1rem;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .dept-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding: 0.625rem 0;
+    border-bottom: 1px solid #f1f5f9;
+    text-decoration: none;
+    transition: background 0.1s;
+  }
+
+  .dept-list li:last-child .dept-item {
+    border-bottom: none;
+  }
+
+  .dept-item:hover .dept-name {
+    color: var(--color-accent);
+  }
+
+  .dept-name {
+    font-size: 0.9rem;
+    color: var(--color-primary);
+    font-weight: 500;
+    transition: color 0.15s;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .dept-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 2rem;
+    padding: 0.1rem 0.375rem;
+    background: #f1f5f9;
+    color: #475569;
+    border-radius: 0.25rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  .dept-price {
+    font-size: 0.9375rem;
+    font-weight: 700;
+    color: #374151;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .dept-all-link {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--color-accent);
+    text-decoration: none;
+  }
+
+  .dept-all-link:hover {
+    text-decoration: underline;
+  }
+
   /* ── Sections communes ── */
   .section-articles,
   .section-categories,
@@ -368,15 +818,11 @@ const organizationSchema = {
   }
 
   @media (min-width: 640px) {
-    .articles-grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
+    .articles-grid { grid-template-columns: repeat(2, 1fr); }
   }
 
   @media (min-width: 1024px) {
-    .articles-grid {
-      grid-template-columns: repeat(3, 1fr);
-    }
+    .articles-grid { grid-template-columns: repeat(3, 1fr); }
   }
 
   /* ── Catégories ── */
@@ -387,15 +833,11 @@ const organizationSchema = {
   }
 
   @media (min-width: 640px) {
-    .categories-grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
+    .categories-grid { grid-template-columns: repeat(2, 1fr); }
   }
 
   @media (min-width: 1024px) {
-    .categories-grid {
-      grid-template-columns: repeat(4, 1fr);
-    }
+    .categories-grid { grid-template-columns: repeat(4, 1fr); }
   }
 
   .category-card {
@@ -416,10 +858,7 @@ const organizationSchema = {
     border-color: var(--cat-color);
   }
 
-  .cat-icon {
-    font-size: 2rem;
-    line-height: 1;
-  }
+  .cat-icon { font-size: 2rem; line-height: 1; }
 
   .cat-label {
     font-family: var(--font-display);
@@ -455,9 +894,7 @@ const organizationSchema = {
   }
 
   @media (min-width: 768px) {
-    .pilier-feature {
-      grid-template-columns: 1fr 1fr;
-    }
+    .pilier-feature { grid-template-columns: 1fr 1fr; }
   }
 
   .pilier-feature-image {
@@ -590,9 +1027,7 @@ const organizationSchema = {
   }
 
   @media (min-width: 480px) {
-    .popular-img {
-      display: block;
-    }
+    .popular-img { display: block; }
   }
 
   .section-newsletter {

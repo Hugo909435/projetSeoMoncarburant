@@ -24,10 +24,7 @@ function isActive(href: string): boolean {
   <div class="container header-inner">
     <!-- Logo -->
     <a href="/" class="logo" aria-label="Mon Carburant — Retour à l'accueil">
-      <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
-        <rect width="28" height="28" rx="6" fill="#E87722"/>
-        <path d="M14 6C14 6 8 14 8 18a6 6 0 0 0 12 0c0-4-6-12-6-12z" fill="white"/>
-      </svg>
+      <img src="/images/logo-transparent.svg" alt="Mon Carburant" class="logo-img" width="72" height="72" />
       <span class="logo-text">Mon<strong>Carburant</strong></span>
     </a>
 
@@ -88,6 +85,13 @@ function isActive(href: string): boolean {
     color: var(--color-primary);
     flex-shrink: 0;
     text-decoration: none;
+  }
+
+  .logo-img {
+    display: block;
+    width: 72px;
+    height: 72px;
+    object-fit: contain;
   }
 
   .logo:hover {
