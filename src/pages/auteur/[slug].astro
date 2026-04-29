@@ -17,6 +17,7 @@ interface AuthorData {
   slug: string;
   bio: string;
   photo: string;
+  photoAlt?: string;
   expertise: string[];
   email?: string;
   linkedin?: string;
@@ -62,7 +63,7 @@ const personSchema = {
       <div class="author-profile">
         <img
           src={author.photo}
-          alt={`Photo de ${author.name}`}
+          alt={author.photoAlt ?? `Photo de ${author.name}`}
           width="120"
           height="120"
           loading="eager"

@@ -20,6 +20,7 @@ interface AuthorData {
   slug: string;
   bio: string;
   photo: string;
+  photoAlt?: string;
   expertise: string[];
   linkedin?: string;
 }
@@ -120,7 +121,7 @@ const dateFormatted = new Intl.DateTimeFormat('fr-FR', {
             <a href={`/auteur/${author.slug}/`} class="meta-author">
               <img
                 src={author.photo}
-                alt={`Photo de ${author.name}`}
+                alt={author.photoAlt ?? `Photo de ${author.name}`}
                 width="32"
                 height="32"
                 loading="eager"

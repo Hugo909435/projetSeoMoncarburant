@@ -5,6 +5,7 @@ interface AuthorData {
   slug: string;
   bio: string;
   photo: string;
+  photoAlt?: string;
   expertise: string[];
   linkedin?: string;
 }
@@ -20,7 +21,7 @@ const { author } = Astro.props;
   <a href={`/auteur/${author.slug}/`} class="author-photo-link" aria-label={`Voir le profil de ${author.name}`}>
     <img
       src={author.photo}
-      alt={`Photo de ${author.name}`}
+      alt={author.photoAlt ?? `Photo de ${author.name}`}
       width="80"
       height="80"
       loading="lazy"

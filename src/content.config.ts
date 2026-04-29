@@ -52,6 +52,7 @@ const authors = defineCollection({
     slug: z.string(),
     bio: z.string(),
     photo: z.string(),
+    photoAlt: z.string().optional(),
     expertise: z.array(z.string()),
     email: z.string().email().optional(),
     linkedin: z.string().optional(),
