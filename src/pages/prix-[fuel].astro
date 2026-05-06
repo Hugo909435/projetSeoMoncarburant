@@ -85,7 +85,7 @@ function priceToColor(price: number | null): string {
                 {cheapest.map(({ num, price, dept }) => (
                   <li>
                     <a href={`/prix-carburants/${dept.slug}/`} class="ranking-link">
-                      <span class="rank-dept">{dept.num} — {dept.name}</span>
+                      <span class="rank-dept">{dept.num} - {dept.name}</span>
                       <span class="rank-price" style={`color: ${config.color}`}>{(price as number).toFixed(3)} €/L</span>
                     </a>
                   </li>
@@ -98,7 +98,7 @@ function priceToColor(price: number | null): string {
                 {mostExpensive.map(({ num, price, dept }) => (
                   <li>
                     <a href={`/prix-carburants/${dept.slug}/`} class="ranking-link">
-                      <span class="rank-dept">{dept.num} — {dept.name}</span>
+                      <span class="rank-dept">{dept.num} - {dept.name}</span>
                       <span class="rank-price orange">{(price as number).toFixed(3)} €/L</span>
                     </a>
                   </li>

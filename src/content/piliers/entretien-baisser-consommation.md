@@ -18,7 +18,7 @@ ctaDescription: "Comparez les prix du carburant près de chez vous et cumulez le
 draft: false
 faq:
   - question: "Quel entretien permet le plus d'économies de carburant ?"
-    answer: "La pression des pneus reste le levier le plus impactant au quotidien car 40 % des automobilistes roulent avec des pneus sous-gonflés. Mais le remplacement d'un filtre à air très encrassé peut à lui seul réduire la consommation de 6 à 10 %, ce qui en fait le deuxième geste le plus rentable — surtout si vous ne l'avez pas changé depuis 2 ans ou 30 000 km."
+    answer: "La pression des pneus reste le levier le plus impactant au quotidien car 40 % des automobilistes roulent avec des pneus sous-gonflés. Mais le remplacement d'un filtre à air très encrassé peut à lui seul réduire la consommation de 6 à 10 %, ce qui en fait le deuxième geste le plus rentable, surtout si vous ne l'avez pas changé depuis 2 ans ou 30 000 km."
   - question: "À quelle fréquence faire réviser sa voiture pour économiser du carburant ?"
     answer: "Un contrôle complet par an ou tous les 15 000 km est recommandé pour maintenir des performances optimales. Entre deux révisions : vérifiez la pression des pneus chaque mois, l'huile moteur tous les 3 000 km et le filtre à air tous les 2 ans ou 20 000 km. Ces trois points couvrent l'essentiel de l'impact sur la consommation."
   - question: "La climatisation consomme-t-elle vraiment beaucoup ?"
@@ -26,10 +26,10 @@ faq:
   - question: "Un filtre à air encrassé peut-il vraiment augmenter la consommation ?"
     answer: "Oui. Le moteur à explosion a besoin d'un ratio précis air/carburant pour fonctionner efficacement. Si le filtre est obstrué, l'air passe moins bien et le calculateur moteur compense en injectant davantage de carburant. Sur un filtre très encrassé, la perte peut atteindre 6 à 10 % de surconsommation selon les études ADEME. Un filtre neuf coûte entre 10 et 30 € et se change en 10 minutes."
   - question: "Huile 0W-30 ou 5W-40 : laquelle consomme moins ?"
-    answer: "Les huiles à faible viscosité à froid (0W-30, 0W-20) réduisent la friction interne au démarrage et améliorent légèrement la consommation, surtout en usage urbain. Les 5W-40 ou 15W-40 sont plus épaisses et conviennent mieux aux moteurs anciens ou diesels à fort kilométrage. Suivez toujours la préconisation du constructeur — une huile inadaptée peut endommager le moteur et in fine coûter beaucoup plus."
+    answer: "Les huiles à faible viscosité à froid (0W-30, 0W-20) réduisent la friction interne au démarrage et améliorent légèrement la consommation, surtout en usage urbain. Les 5W-40 ou 15W-40 sont plus épaisses et conviennent mieux aux moteurs anciens ou diesels à fort kilométrage. Suivez toujours la préconisation du constructeur : une huile inadaptée peut endommager le moteur et in fine coûter beaucoup plus."
 ---
 
-Un automobiliste français parcourt en moyenne 13 000 à 15 000 km par an. Sur cette distance, un véhicule mal entretenu peut consommer **jusqu'à 20 % de carburant en trop** — soit 200 à 400 € gaspillés chaque année sans même s'en apercevoir.
+Un automobiliste français parcourt en moyenne 13 000 à 15 000 km par an. Sur cette distance, un véhicule mal entretenu peut consommer **jusqu'à 20 % de carburant en trop**, soit 200 à 400 € gaspillés chaque année sans même s'en apercevoir.
 
 La bonne nouvelle : la plupart des gestes d'entretien qui impactent la consommation sont simples, peu coûteux et accessibles à tout le monde. Vous n'avez pas besoin d'être mécanicien pour regagner ces économies. Ce guide rassemble, par ordre d'impact, tous les leviers à activer.
 
@@ -41,11 +41,11 @@ C'est le paradoxe de l'entretien automobile : le geste qui a le plus d'impact su
 
 Un pneu sous-gonflé de 0,5 bar génère une résistance au roulement accrue : le flanc s'écrase davantage à chaque rotation, la chaleur augmente, et le moteur doit travailler plus fort. Résultat : **+5 à 7 % de consommation** par rapport à une pression correcte.
 
-Pour 15 000 km/an à 6 L/100 km et un prix de 1,85 €/L, cela représente **80 à 100 € gaspillés par an** — uniquement à cause de la pression.
+Pour 15 000 km/an à 6 L/100 km et un prix de 1,85 €/L, cela représente **80 à 100 € gaspillés par an**, uniquement à cause de la pression.
 
 **Ce qu'il faut retenir :**
 - Vérifiez la pression chaque mois, toujours à froid (avant de démarrer ou après moins de 2 km)
-- La valeur de référence est sur l'étiquette dans l'encadrement de la portière conducteur — pas sur le flanc du pneu
+- La valeur de référence est sur l'étiquette dans l'encadrement de la portière conducteur, pas sur le flanc du pneu
 - Ajustez à la pression "en charge" lors des grands trajets avec passagers et bagages
 
 Pour le détail complet avec calcul personnalisé, consultez notre guide dédié sur la [pression des pneus et la consommation](/blog/pression-pneus-consommation/).
@@ -60,7 +60,7 @@ L'huile moteur est souvent perçue comme un produit technique réservé aux gara
 
 Sur un bidon d'huile, vous lisez des codes comme **0W-30**, **5W-40** ou **15W-40**. Le premier chiffre (avant le W, pour "winter") indique la fluidité à froid : plus il est bas, moins l'huile est épaisse au démarrage. Le second indique la viscosité à chaud.
 
-Un moteur qui démarre avec une huile fluide (0W-30) surmonte moins de frottements pendant la phase de chauffe — c'est là que la consommation est la plus élevée. L'ADEME estime que passer d'une huile 15W-40 à une huile 5W-30 préconisée peut réduire la consommation de **1 à 3 %**.
+Un moteur qui démarre avec une huile fluide (0W-30) surmonte moins de frottements pendant la phase de chauffe, c'est là que la consommation est la plus élevée. L'ADEME estime que passer d'une huile 15W-40 à une huile 5W-30 préconisée peut réduire la consommation de **1 à 3 %**.
 
 ### Huile de synthèse vs minérale
 
@@ -68,9 +68,9 @@ Les huiles de synthèse restent stables en viscosité plus longtemps que les hui
 
 ### Quand changer l'huile ?
 
-Respectez l'intervalle préconisé par le constructeur — généralement tous les 10 000 à 30 000 km selon le type d'huile et le moteur. Une huile dégradée perd ses propriétés lubrifiantes et fait travailler le moteur davantage. Ne dépassez pas les intervalles préconisés même si l'huile semble encore propre au regard.
+Respectez l'intervalle préconisé par le constructeur, généralement tous les 10 000 à 30 000 km selon le type d'huile et le moteur. Une huile dégradée perd ses propriétés lubrifiantes et fait travailler le moteur davantage. Ne dépassez pas les intervalles préconisés même si l'huile semble encore propre au regard.
 
-**Règle simple :** Utilisez toujours la viscosité et la norme recommandées par le constructeur (visible dans le carnet d'entretien). Ne choisissez jamais une huile plus épaisse "pour protéger" sur un moteur récent — c'est contre-productif.
+**Règle simple :** Utilisez toujours la viscosité et la norme recommandées par le constructeur (visible dans le carnet d'entretien). Ne choisissez jamais une huile plus épaisse "pour protéger" sur un moteur récent, c'est contre-productif.
 
 ---
 
@@ -82,7 +82,7 @@ Le filtre à air est l'un des composants les moins chers de votre voiture (10 à
 
 Le moteur à combustion mélange du carburant et de l'air dans un ratio précis (environ 14,7 grammes d'air pour 1 gramme d'essence, pour un moteur essence). Si le filtre est colmaté, l'air circule moins bien. Le calculateur moteur détecte un appauvrissement du mélange et compense en injectant davantage de carburant.
 
-Sur un filtre très encrassé — courant après 30 000 km sans remplacement —, la surconsommation peut atteindre **6 à 10 %** selon la taille du moteur et l'état du filtre.
+Sur un filtre très encrassé (courant après 30 000 km sans remplacement), la surconsommation peut atteindre **6 à 10 %** selon la taille du moteur et l'état du filtre.
 
 ### Comment vérifier l'état du filtre
 
@@ -120,7 +120,7 @@ Le remplacement est simple sur la plupart des moteurs 4 cylindres en ligne, mais
 
 ## 5. Climatisation : gérer son usage intelligemment
 
-La climatisation est le système qui consomme le plus d'énergie parmi les équipements de confort. Le compresseur de climatisation est entraîné directement par le moteur via une courroie — chaque watt qu'il absorbe est prélevé sur la puissance disponible.
+La climatisation est le système qui consomme le plus d'énergie parmi les équipements de confort. Le compresseur de climatisation est entraîné directement par le moteur via une courroie, et chaque watt qu'il absorbe est prélevé sur la puissance disponible.
 
 ### L'impact chiffré
 
@@ -132,7 +132,7 @@ La climatisation est le système qui consomme le plus d'énergie parmi les équi
 
 **Aérez d'abord, climatisez ensuite.** Lorsque vous montez dans une voiture garée au soleil (habitacle à 50-60°C), ouvrez les fenêtres 1 minute avant d'activer la clim. Vous permettez à la chaleur accumulée de s'évacuer, et le compresseur n'a pas à refroidir tout ce volume d'air surchauffé.
 
-**Réglez à 4-5°C au-dessus de la température extérieure.** Viser 20°C par 38°C sollicite le compresseur à plein régime en continu. À 25°C de consigne, il fonctionne par intermittence — bien plus économique.
+**Réglez à 4-5°C au-dessus de la température extérieure.** Viser 20°C par 38°C sollicite le compresseur à plein régime en continu. À 25°C de consigne, il fonctionne par intermittence, bien plus économique.
 
 **Coupez la clim 5 minutes avant l'arrêt.** L'inertie du froid dans l'habitacle maintient une température confortable, et vous économisez le travail du compresseur.
 
@@ -152,7 +152,7 @@ La résistance de l'air augmente au carré de la vitesse. Un coffre de toit vide
 
 ### Le coffre et l'habitacle surchargés
 
-Chaque 100 kg supplémentaires dans le véhicule augmente la consommation de **0,3 à 0,5 L/100 km** selon les données constructeur. Un coffre transformé en débarras permanent, des outils de chantier, des sacs de sport oubliés — ces charges inutiles s'additionnent.
+Chaque 100 kg supplémentaires dans le véhicule augmente la consommation de **0,3 à 0,5 L/100 km** selon les données constructeur. Un coffre transformé en débarras permanent, des outils de chantier, des sacs de sport oubliés : ces charges inutiles s'additionnent.
 
 ### Les freins qui frottent
 
@@ -181,8 +181,8 @@ Des jantes voilées ou des roues déséquilibrées créent des vibrations qui se
 
 ## Conclusion : l'entretien, premier levier d'économie
 
-L'effet cumulé de tous ces gestes est significatif. Un véhicule dont les pneus sont bien gonflés, le filtre à air propre, l'huile récente et les bougies fonctionnelles peut consommer **15 à 20 % de moins** qu'un véhicule identique négligé — à style de conduite égal.
+L'effet cumulé de tous ces gestes est significatif. Un véhicule dont les pneus sont bien gonflés, le filtre à air propre, l'huile récente et les bougies fonctionnelles peut consommer **15 à 20 % de moins** qu'un véhicule identique négligé, à style de conduite égal.
 
 Le coût total de ces interventions sur une année ? Moins de 100 € pour la plupart des véhicules, amorti en quelques mois par les économies de carburant réalisées.
 
-Pour maximiser encore davantage vos économies, combinez ces gestes d'entretien avec une conduite plus anticipative — et pensez à [comparer les prix du carburant près de chez vous](/prix-carburants/) pour choisir la station la moins chère sur votre trajet.
+Pour maximiser encore davantage vos économies, combinez ces gestes d'entretien avec une conduite plus anticipative, et pensez à [comparer les prix du carburant près de chez vous](/prix-carburants/) pour choisir la station la moins chère sur votre trajet.
