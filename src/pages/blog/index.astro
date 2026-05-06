@@ -10,14 +10,13 @@ allArticles.sort((a, b) => b.data.publishedAt.getTime() - a.data.publishedAt.get
 const categoryLabels: Record<string, string> = {
   economies: 'Économies',
   carburants: 'Carburants',
-  fiscalite: 'Fiscalité',
   entretien: 'Entretien',
 };
 ---
 
 <BaseLayout
   title="Blog — Tous nos articles sur le carburant"
-  description="Tous nos articles sur le carburant : éco-conduite, fiscalité, entretien, types de carburants. Conseils pratiques pour les automobilistes français."
+  description="Tous nos articles sur le carburant : éco-conduite, entretien, types de carburants et comparatifs. Conseils pratiques pour les automobilistes français."
   canonical="https://mon-carburant.com/blog/"
 >
   <div class="blog-page">

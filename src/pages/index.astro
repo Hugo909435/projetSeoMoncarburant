@@ -32,13 +32,6 @@ const categories = [
     color: '#0369a1',
   },
   {
-    slug: 'fiscalite',
-    label: 'Fiscalité automobile',
-    desc: 'TVA, TICPE, bonus-malus, remboursement frais kilométriques : tout sur la fiscalité du carburant.',
-    icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>',
-    color: '#7c3aed',
-  },
-  {
     slug: 'entretien',
     label: 'Entretien du véhicule',
     desc: 'Un véhicule bien entretenu consomme moins. Pneus, filtres, vidanges : les bons gestes.',
@@ -93,6 +86,7 @@ const organizationSchema = {
   url: 'https://mon-carburant.com',
   logo: 'https://mon-carburant.com/images/logo-colored.svg',
   description: 'Média éditorial indépendant spécialisé dans le carburant et l\'économie automobile.',
+  description: 'Média éditorial indépendant spécialisé dans le carburant, les comparatifs de prix et l\'entretien automobile.',
   foundingDate: '2026',
   areaServed: 'FR',
   inLanguage: 'fr-FR',
@@ -105,7 +99,7 @@ const organizationSchema = {
 
 <BaseLayout
   title="Mon Carburant — Économisez sur le carburant, roulez plus malin"
-  description="Conseils pratiques, comparatifs et décryptages pour réduire votre budget carburant. Éco-conduite, fiscalité, entretien : tout pour rouler plus malin."
+  description="Conseils pratiques, comparatifs et décryptages pour réduire votre budget carburant. Éco-conduite, entretien et carburants : tout pour rouler plus malin."
   canonical="https://mon-carburant.com/"
   jsonLd={[websiteSchema, organizationSchema]}
 >
@@ -119,11 +113,14 @@ const organizationSchema = {
           <span class="hero-title-accent">roulez plus malin</span>
         </h1>
         <p class="hero-subtitle">
-          Conseils d'éco-conduite, décryptages fiscaux, comparatifs carburants. Tout pour réduire votre budget mobilité sans changer de vie.
+          Conseils d'éco-conduite, comparatifs carburants et entretien malin. Tout pour réduire votre budget mobilité sans changer de vie.
         </p>
         <div class="hero-actions">
-          <a href="/blog" class="btn-primary">Lire nos articles</a>
-          <a href="/categorie/economies" class="btn-secondary">Économiser maintenant</a>
+          <a href="#comparateur" class="btn-comparateur">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-8 2a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"/></svg>
+            Comparer les prix près de chez moi
+          </a>
+          <a href="/blog" class="btn-secondary">Lire nos articles</a>
         </div>
         <div class="hero-stats" aria-label="Chiffres clés">
           <div class="stat">
@@ -141,7 +138,7 @@ const organizationSchema = {
   </section>
 
   <!-- Widgets carburant -->
-  <section class="section-fuel-home" aria-label="Prix des carburants aujourd'hui">
+  <section id="comparateur" class="section-fuel-home" aria-label="Prix des carburants aujourd'hui">
     <div class="container">
       <div class="fuel-home-grid">
 
@@ -247,10 +244,9 @@ const organizationSchema = {
       </p>
       <p>
         Mais notre mission ne s'arrête pas aux chiffres. Nous publions des guides pratiques sur l'éco-conduite,
-        des explications sur la fiscalité du carburant (TICPE, TVA, aides gouvernementales), et des conseils
-        d'entretien pour que votre véhicule consomme le moins possible. Que vous rouliez au diesel, à l'essence,
-        au GPL ou au bioéthanol, vous trouverez ici les informations dont vous avez besoin pour faire les bons
-        choix, sans jargon technique inutile.
+        des comparatifs entre carburants, et des conseils d'entretien pour que votre véhicule consomme le moins
+        possible. Que vous rouliez au diesel, à l'essence, au GPL ou au bioéthanol, vous trouverez ici les
+        informations dont vous avez besoin pour faire les bons choix, sans jargon technique inutile.
       </p>
     </div>
   </section>
@@ -277,7 +273,7 @@ const organizationSchema = {
     <div class="container">
       <div class="section-header">
         <h2 class="section-title">Nos thématiques</h2>
-        <p class="section-desc">4 angles d'approche pour maîtriser votre budget carburant</p>
+        <p class="section-desc">3 angles d'approche pour maîtriser votre budget carburant</p>
       </div>
       <div class="categories-grid">
         {categories.map((cat) => (
@@ -431,6 +427,26 @@ const organizationSchema = {
     flex-wrap: wrap;
     gap: 0.75rem;
     margin-bottom: 2.5rem;
+  }
+
+  .btn-comparateur {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: #f59e0b;
+    color: #1a1a1a;
+    font-weight: 700;
+    font-size: 1rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.15s;
+    box-shadow: 0 4px 14px rgba(245 158 11 / 0.4);
+  }
+
+  .btn-comparateur:hover {
+    background: #fbbf24;
+    transform: translateY(-1px);
   }
 
   .hero .btn-secondary {

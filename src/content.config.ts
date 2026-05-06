@@ -11,7 +11,7 @@ const articleSchema = z.object({
   publishedAt: z.coerce.date(),
   updatedAt: z.coerce.date().optional(),
   author: z.string(), // slug de l'auteur
-  category: z.enum(['economies', 'carburants', 'fiscalite', 'entretien']),
+  category: z.enum(['economies', 'carburants', 'entretien']),
   tags: z.array(z.string()),
   featuredImage: z.string(),
   imageAlt: z.string(),
@@ -22,6 +22,14 @@ const articleSchema = z.object({
       z.object({
         question: z.string(),
         answer: z.string(),
+      })
+    )
+    .optional(),
+  howToSteps: z
+    .array(
+      z.object({
+        name: z.string(),
+        text: z.string(),
       })
     )
     .optional(),

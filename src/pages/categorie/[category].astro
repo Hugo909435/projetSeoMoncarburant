@@ -9,7 +9,6 @@ export async function getStaticPaths() {
   return [
     { params: { category: 'economies' } },
     { params: { category: 'carburants' } },
-    { params: { category: 'fiscalite' } },
     { params: { category: 'entretien' } },
   ];
 }
@@ -26,11 +25,6 @@ const categoryMeta: Record<string, { label: string; description: string; desc: s
     label: 'Types de carburants',
     description: 'SP95, SP98, E10, diesel B7, E85 superéthanol, GPL, hydrogène : comparatifs et guides pour choisir le bon carburant.',
     desc: 'Comprendre les différences entre les carburants pour faire le meilleur choix selon votre véhicule.',
-  },
-  fiscalite: {
-    label: 'Fiscalité automobile',
-    description: 'TICPE, TVA carburant, bonus-malus, remboursement des frais kilométriques : tout sur la fiscalité du carburant en France.',
-    desc: 'Décryptage de la fiscalité automobile et des aides à la mobilité en France.',
   },
   entretien: {
     label: 'Entretien du véhicule',

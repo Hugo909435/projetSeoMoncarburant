@@ -46,13 +46,13 @@ const {
   imageAlt,
   readingTime,
   faq,
+  howToSteps,
   tags,
 } = article;
 
 const categoryLabels: Record<string, string> = {
   economies: 'Économies',
   carburants: 'Carburants',
-  fiscalite: 'Fiscalité',
   entretien: 'Entretien',
 };
 
@@ -89,6 +89,25 @@ const articleSchema = {
   keywords: tags.join(', '),
 };
 
+const howToSchema = howToSteps && howToSteps.length > 0
+  ? {
+      '@context': 'https://schema.org',
+      '@type': 'HowTo',
+      name: 'Comment vérifier la pression de ses pneus',
+      description: 'Guide pas à pas pour vérifier et corriger la pression de vos pneus en station-service en moins de 5 minutes.',
+      totalTime: 'PT5M',
+      tool: [{ '@type': 'HowToTool', name: 'Gonfleur ou manomètre' }],
+      step: howToSteps.map((s, i) => ({
+        '@type': 'HowToStep',
+        position: i + 1,
+        name: s.name,
+        text: s.text,
+      })),
+    }
+  : null;
+
+const jsonLdSchemas = howToSchema ? [articleSchema, howToSchema] : articleSchema;
+
 const dateFormatted = new Intl.DateTimeFormat('fr-FR', {
   day: 'numeric',
   month: 'long',
@@ -106,7 +125,7 @@ const dateFormatted = new Intl.DateTimeFormat('fr-FR', {
   publishedAt={publishedAt.toISOString()}
   updatedAt={updatedAt?.toISOString()}
   authorName={author?.name}
-  jsonLd={articleSchema}
+  jsonLd={jsonLdSchemas}
 >
   <article class="article-page">
     <div class="container">

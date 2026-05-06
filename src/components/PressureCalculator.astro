@@ -1,0 +1,262 @@
+---
+// Calculateur d'économies liées à la pression des pneus — widget autonome
+---
+
+<div class="pcalc-card" id="calculateur-pression" aria-label="Calculateur d'économies pression pneus">
+  <div class="pcalc-header">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+    </svg>
+    <h3 class="pcalc-title">Calculez votre économie personnalisée</h3>
+  </div>
+  <p class="pcalc-intro">Renseignez votre situation réelle pour obtenir un chiffre précis.</p>
+
+  <div class="pcalc-fields">
+    <div class="pcalc-field">
+      <label for="pcalc-km">Kilométrage annuel</label>
+      <div class="pcalc-input-wrap">
+        <input type="number" id="pcalc-km" value="15000" min="1000" max="150000" step="1000" aria-label="Kilométrage annuel en km" />
+        <span class="pcalc-unit">km / an</span>
+      </div>
+    </div>
+
+    <div class="pcalc-field">
+      <label for="pcalc-conso">Consommation moyenne</label>
+      <div class="pcalc-input-wrap">
+        <input type="number" id="pcalc-conso" value="6.0" min="3" max="25" step="0.1" aria-label="Consommation en litres aux 100 km" />
+        <span class="pcalc-unit">L / 100 km</span>
+      </div>
+    </div>
+
+    <div class="pcalc-field">
+      <label for="pcalc-prix">Prix du carburant</label>
+      <div class="pcalc-input-wrap">
+        <input type="number" id="pcalc-prix" value="1.85" min="0.50" max="3.50" step="0.01" aria-label="Prix du carburant en euros par litre" />
+        <span class="pcalc-unit">€ / L</span>
+      </div>
+    </div>
+
+    <div class="pcalc-field pcalc-field--full">
+      <label for="pcalc-pression">État actuel de vos pneus</label>
+      <select id="pcalc-pression" aria-label="État de pression des pneus">
+        <option value="0">Bien gonflés — pression correcte</option>
+        <option value="0.015">Légèrement sous-gonflés (−0,2 bar) · +1,5 % conso</option>
+        <option value="0.05" selected>Sous-gonflés (−0,5 bar) · +5 % conso</option>
+        <option value="0.08">Très sous-gonflés (−1 bar) · +8 % conso</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="pcalc-result" id="pcalc-result" aria-live="polite"></div>
+</div>
+
+<script>
+  (function () {
+    function fmt(n: number, dec = 0) {
+      return n.toLocaleString('fr-FR', { minimumFractionDigits: dec, maximumFractionDigits: dec });
+    }
+
+    function calculate() {
+      const km    = parseFloat((document.getElementById('pcalc-km') as HTMLInputElement).value)    || 15000;
+      const conso = parseFloat((document.getElementById('pcalc-conso') as HTMLInputElement).value) || 6;
+      const prix  = parseFloat((document.getElementById('pcalc-prix') as HTMLInputElement).value)  || 1.85;
+      const taux  = parseFloat((document.getElementById('pcalc-pression') as HTMLSelectElement).value);
+
+      const litresBon     = (km * conso) / 100;
+      const litresMauvais = (km * conso * (1 + taux)) / 100;
+      const econL = litresMauvais - litresBon;
+      const econE = econL * prix;
+
+      const result = document.getElementById('pcalc-result')!;
+
+      if (taux === 0) {
+        result.innerHTML = `
+          <div class="pcalc-ok">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+            <div>
+              <strong>Vos pneus sont bien gonflés !</strong>
+              <p>Continuez à vérifier chaque mois pour maintenir cet avantage — la pression baisse naturellement d'environ 0,1 bar par mois.</p>
+            </div>
+          </div>`;
+      } else {
+        result.innerHTML = `
+          <div class="pcalc-saving">
+            <div class="pcalc-saving-main">
+              <span class="pcalc-amount">${fmt(econE)} €</span>
+              <span class="pcalc-alabel">économisés par an</span>
+            </div>
+            <div class="pcalc-saving-detail">
+              soit <strong>${fmt(econL)} litres</strong> de carburant non gaspillés
+            </div>
+            <p class="pcalc-saving-note">En gonflant vos pneus à la bonne pression dès aujourd'hui.</p>
+          </div>`;
+      }
+    }
+
+    ['pcalc-km', 'pcalc-conso', 'pcalc-prix', 'pcalc-pression'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.addEventListener('input', calculate);
+    });
+
+    calculate();
+  })();
+</script>
+
+<style>
+  .pcalc-card {
+    background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+    border: 2px solid #0ea5e9;
+    border-radius: 1rem;
+    padding: 1.75rem;
+    margin: 2rem 0;
+  }
+
+  .pcalc-header {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    color: #0369a1;
+    margin-bottom: 0.4rem;
+  }
+
+  .pcalc-title {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: #0369a1;
+    margin: 0;
+  }
+
+  .pcalc-intro {
+    font-size: 0.875rem;
+    color: #475569;
+    margin: 0 0 1.25rem;
+  }
+
+  .pcalc-fields {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+  }
+
+  @media (max-width: 600px) {
+    .pcalc-fields { grid-template-columns: 1fr; }
+  }
+
+  .pcalc-field--full { grid-column: 1 / -1; }
+
+  .pcalc-field label {
+    display: block;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: #1e3a5f;
+    margin-bottom: 0.35rem;
+  }
+
+  .pcalc-input-wrap {
+    display: flex;
+    align-items: center;
+    background: #fff;
+    border: 1.5px solid #bae6fd;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    transition: border-color 0.15s;
+  }
+
+  .pcalc-input-wrap:focus-within { border-color: #0ea5e9; }
+
+  .pcalc-input-wrap input {
+    flex: 1;
+    border: none;
+    outline: none;
+    padding: 0.55rem 0.75rem;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: #0f172a;
+    background: transparent;
+    min-width: 0;
+  }
+
+  .pcalc-unit {
+    padding: 0 0.65rem;
+    font-size: 0.75rem;
+    color: #64748b;
+    white-space: nowrap;
+    border-left: 1px solid #e2e8f0;
+    background: #f8fafc;
+  }
+
+  .pcalc-field select {
+    width: 100%;
+    padding: 0.55rem 0.75rem;
+    border: 1.5px solid #bae6fd;
+    border-radius: 0.5rem;
+    background: #fff;
+    font-size: 0.875rem;
+    color: #0f172a;
+    outline: none;
+    cursor: pointer;
+    transition: border-color 0.15s;
+  }
+
+  .pcalc-field select:focus { border-color: #0ea5e9; }
+
+  /* Résultats */
+  .pcalc-ok {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    background: #dcfce7;
+    border: 1.5px solid #86efac;
+    border-radius: 0.75rem;
+    padding: 1rem 1.25rem;
+    color: #14532d;
+  }
+
+  .pcalc-ok svg { color: #16a34a; flex-shrink: 0; margin-top: 2px; }
+
+  .pcalc-ok strong { display: block; font-size: 1rem; margin-bottom: 0.25rem; }
+
+  .pcalc-ok p { margin: 0; font-size: 0.875rem; }
+
+  .pcalc-saving {
+    background: #fff;
+    border: 2px solid #0ea5e9;
+    border-radius: 0.75rem;
+    padding: 1.25rem 1.5rem;
+    text-align: center;
+  }
+
+  .pcalc-saving-main {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-bottom: 0.4rem;
+  }
+
+  .pcalc-amount {
+    font-size: 2.25rem;
+    font-weight: 800;
+    color: #0369a1;
+    line-height: 1;
+  }
+
+  .pcalc-alabel {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #475569;
+  }
+
+  .pcalc-saving-detail {
+    font-size: 0.9375rem;
+    color: #374151;
+    margin-bottom: 0.5rem;
+  }
+
+  .pcalc-saving-note {
+    font-size: 0.8125rem;
+    color: #64748b;
+    margin: 0;
+  }
+</style>

@@ -27,7 +27,6 @@ export const FUEL_CONFIGS = {
     description: `Le gazole (ou diesel) est le carburant le plus utilisé en France, représentant plus de la moitié des véhicules en circulation.
 Il est produit par raffinage du pétrole brut et contient un mélange de gazole fossile et d'ester méthylique d'acide gras (EMAG, dit B7 ou B10).
 Les moteurs diesel offrent une meilleure efficacité thermique que les moteurs essence, ce qui explique leur popularité pour les longs trajets.
-En France, le gazole est légèrement taxé différemment de l'essence : la TICPE (Taxe Intérieure de Consommation sur les Produits Énergétiques) représente environ 45% du prix à la pompe.
 Pour trouver le meilleur prix, comparez les stations avant votre départ, notamment les grandes surfaces qui pratiquent souvent des tarifs inférieurs aux stations-service de bord de route.`,
     forVehicles: 'Véhicules diesel (voitures, camions, utilitaires)',
   },
