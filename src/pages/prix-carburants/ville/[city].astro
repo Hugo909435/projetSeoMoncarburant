@@ -4,6 +4,7 @@ import departments from '../../../data/departments.json';
 import statsNational from '../../../data/fuel/stats-national.json';
 import meta from '../../../data/fuel/meta.json';
 import { FUEL_COLORS, FUEL_KEYS } from '../../../data/fuel/config';
+import { buildCityIntro } from '../../../utils/city-intro';
 
 export async function getStaticPaths() {
   const cityFiles = import.meta.glob('../../../data/fuel/stations-by-city/*.json', { eager: true });
@@ -35,15 +36,20 @@ const lastUpdate = meta.lastUpdate
   : null;
 
 const gazoleAvg = stats['Gazole'];
-const sp95Avg = stats['SP95'];
-const gazoleDiff = priceDiff(gazoleAvg, 'Gazole');
-const sp95Prices = stations
-  .map((station) => station.prices.SP95)
-  .filter((price) => price != null) as number[];
-const lowestSp95 = sp95Prices.length > 0 ? Math.min(...sp95Prices) : null;
 
 const title = `Prix carburant à ${cityName} — Comparateur Mon Carburant`;
 const description = `Comparez les prix du carburant à ${cityName}. ${count} stations référencées${gazoleAvg ? `, prix moyen Gazole ${gazoleAvg.toFixed(3)}€/L` : ''}. Mis à jour quotidiennement.`;
+
+const introSentences = buildCityIntro({
+  cityName,
+  citySlug,
+  stationCount: count,
+  stats,
+  stations,
+  deptName: dept?.name,
+  deptNum: dept?.num,
+  nationalStats: statsNational as Record<string, number>,
+});
 
 const breadcrumb = [
   { name: 'Accueil', url: '/' },
@@ -54,17 +60,6 @@ if (dept) {
   breadcrumb.splice(2, 0, { name: dept.name, url: `/prix-carburants/${dept.slug}/` });
 }
 
-const uniqueText = [
-  `À ${cityName}, ${count} stations-service proposent leurs tarifs en temps réel.`,
-  gazoleAvg
-    ? `Le prix moyen du Gazole est de ${gazoleAvg.toFixed(3)} €/L${gazoleDiff != null ? ` (${gazoleDiff > 0 ? '+' : ''}${gazoleDiff.toFixed(1)}% vs. la moyenne nationale)` : ''}.`
-    : null,
-  sp95Avg && lowestSp95 != null
-    ? `Le Sans-Plomb 95 est disponible à partir de ${lowestSp95.toFixed(3)} €/L.`
-    : null,
-  'Utilisez notre comparateur pour trouver la station la moins chère et économiser sur chaque plein.',
-  'Données mises à jour quotidiennement depuis les sources officielles du gouvernement français.',
-].filter(Boolean);
 ---
 
 <BaseLayout title={title} description={description} canonical={`/prix-carburants/ville/${citySlug}/`}>
@@ -165,8 +160,8 @@ const uniqueText = [
       <!-- Texte SEO -->
       <section class="section-block seo-text">
         <h2>Carburant à {cityName} : tout savoir</h2>
-        {uniqueText.map((line) => (
-          <p>{line}</p>
+        {introSentences.map((sent) => (
+          <p>{sent}</p>
         ))}
       </section>
     </div>

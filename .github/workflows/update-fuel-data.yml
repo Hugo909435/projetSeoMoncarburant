@@ -58,3 +58,22 @@ jobs:
       - name: Aucun changement détecté
         if: steps.check-changes.outputs.changed == 'false' && inputs.force_rebuild != 'true'
         run: echo "✅ Les données n'ont pas changé depuis la dernière mise à jour."
+
+      - name: Build Astro
+        if: steps.check-changes.outputs.changed == 'true' || inputs.force_rebuild == 'true'
+        run: npx astro build
+        env:
+          NODE_ENV: production
+
+      - name: Déploiement FTP vers Hostinger
+        if: steps.check-changes.outputs.changed == 'true' || inputs.force_rebuild == 'true'
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_HOST }}
+          username: ${{ secrets.FTP_USER }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./dist/
+          server-dir: /public_html/
+          exclude: |
+            **/.git*
+            **/.git*/**

@@ -3,6 +3,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import departments from '../../data/departments.json';
 import statsNational from '../../data/fuel/stats-national.json';
 import meta from '../../data/fuel/meta.json';
+import { buildDeptIntro } from '../../utils/dept-intro';
 
 export async function getStaticPaths() {
   const deptFiles = import.meta.glob('../../data/fuel/stations-by-department/*.json', { eager: true });
@@ -51,19 +52,21 @@ const lastUpdate = meta.lastUpdate
   : null;
 
 const gazoleAvg = stats.Gazole?.avg;
-const gazoleDiff = priceDiff(gazoleAvg, 'Gazole');
-const sp95Avg = stats.SP95?.avg;
 
 const title = `Prix carburant ${dept.name} (${dept.num}) — Comparateur Mon Carburant`;
 const descPrice = gazoleAvg ? `Prix moyen Gazole : ${gazoleAvg.toFixed(3)}€/L.` : '';
 const description = `Comparez les prix du carburant dans le ${dept.name} (${dept.num}). ${count} stations référencées. ${descPrice} Mis à jour quotidiennement.`;
 
-const uniqueText = `Le département du ${dept.name} (${dept.num}) compte ${count} stations-service référencées dans notre comparateur.
-${gazoleAvg ? `Le prix moyen du Gazole s'établit à ${gazoleAvg.toFixed(3)} €/L${gazoleDiff != null ? `, soit ${gazoleDiff > 0 ? '+' : ''}${gazoleDiff.toFixed(1)}% par rapport à la moyenne nationale` : ''}.` : ''}
-${sp95Avg ? `Le Sans-Plomb 95 est proposé en moyenne à ${sp95Avg.toFixed(3)} €/L.` : ''}
-Notre comparateur vous permet de trouver rapidement les stations les moins chères près de chez vous,
-que vous rouliez au Gazole, au SP95, à l'E10 ou à l'E85. Les prix sont mis à jour quotidiennement
-depuis les données officielles du ministère de l'Économie (Licence Ouverte).`;
+const introSentences = buildDeptIntro({
+  deptName: dept.name,
+  deptNum: dept.num,
+  deptRegion: dept.region,
+  stationCount: count,
+  stats,
+  top10Gazole: top10?.Gazole ?? [],
+  top10Sp95: top10?.SP95 ?? [],
+  nationalStats: statsNational as Record<string, number>,
+});
 
 const breadcrumb = [
   { name: 'Accueil', url: '/' },
@@ -251,8 +254,8 @@ const jsonLdBreadcrumb = {
       <!-- Texte unique SEO -->
       <section class="section-block seo-text">
         <h2>Carburant {dept.name} : informations pratiques</h2>
-        {uniqueText.split('\n').filter(l => l.trim()).map(line => (
-          <p>{line}</p>
+        {introSentences.map(sent => (
+          <p>{sent}</p>
         ))}
         <p>
           <a href="/prix-carburants/methodologie/">En savoir plus sur notre méthodologie</a> ·
