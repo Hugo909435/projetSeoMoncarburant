@@ -17,7 +17,7 @@ export async function GET(context: APIContext) {
         pubDate: article.data.publishedAt,
         description: article.data.excerpt,
         link: `/blog/${article.data.slug}/`,
-        categories: [article.data.category, ...article.data.tags],
+        categories: [...new Set([article.data.category, ...article.data.tags])],
         author: `contact@mon-carburant.com (${article.data.author})`,
       })),
     customData: `<language>fr-FR</language><copyright>© ${new Date().getFullYear()} Mon Carburant</copyright>`,
