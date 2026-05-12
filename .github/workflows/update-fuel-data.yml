@@ -66,15 +66,14 @@ jobs:
         env:
           NODE_ENV: production
 
-      - name: Déploiement FTP vers Hostinger
+      - name: Déploiement SFTP vers Hostinger
         if: steps.check-changes.outputs.changed == 'true' || inputs.force_rebuild == 'true'
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        uses: wlixcc/SFTP-Deploy-Action@v1.2.4
         with:
           server: ${{ secrets.FTP_HOST }}
           username: ${{ secrets.FTP_USER }}
           password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: ./dist/
-          server-dir: /public_html/
-          exclude: |
-            **/.git*
-            **/.git*/**
+          port: 65002
+          local_path: ./dist/*
+          remote_path: /public_html/
+          sftp_only: true
