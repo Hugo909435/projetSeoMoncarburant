@@ -53,6 +53,7 @@ jobs:
           git config --local user.name "github-actions[bot]"
           git add src/data/fuel/ public/data/stations-light.json last-update.txt
           git commit -m "chore: mise à jour prix carburant $(date +'%Y-%m-%d')"
+          git pull --rebase origin main
           git push
 
       - name: Aucun changement détecté
