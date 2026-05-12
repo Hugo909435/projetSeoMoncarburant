@@ -74,6 +74,6 @@ jobs:
           username: ${{ secrets.FTP_USER }}
           password: ${{ secrets.FTP_PASSWORD }}
           port: 65002
-          local_path: ./dist/*
+          local_path: ./dist/
           remote_path: /public_html/
           sftp_only: true
