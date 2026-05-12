@@ -75,5 +75,5 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           port: 65002
           local_path: ./dist/
-          remote_path: public_html/
+          remote_path: domains/mon-carburant.com/public_html/
           sftp_only: true
