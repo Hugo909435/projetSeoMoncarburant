@@ -66,14 +66,14 @@ jobs:
         env:
           NODE_ENV: production
 
-      - name: Déploiement SFTP vers Hostinger
+      - name: Déploiement vers Hostinger
         if: steps.check-changes.outputs.changed == 'true' || inputs.force_rebuild == 'true'
-        uses: wlixcc/SFTP-Deploy-Action@v1.2.4
+        uses: appleboy/scp-action@v0.1.7
         with:
-          server: ${{ secrets.FTP_HOST }}
+          host: ${{ secrets.FTP_HOST }}
           username: ${{ secrets.FTP_USER }}
           password: ${{ secrets.FTP_PASSWORD }}
           port: 65002
-          local_path: ./dist/
-          remote_path: domains/mon-carburant.com/public_html/
-          sftp_only: true
+          source: "dist/*"
+          target: "public_html"
+          strip_components: 1
