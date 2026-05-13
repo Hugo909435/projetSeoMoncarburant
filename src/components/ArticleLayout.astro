@@ -93,10 +93,8 @@ const howToSchema = howToSteps && howToSteps.length > 0
   ? {
       '@context': 'https://schema.org',
       '@type': 'HowTo',
-      name: 'Comment vérifier la pression de ses pneus',
-      description: 'Guide pas à pas pour vérifier et corriger la pression de vos pneus en station-service en moins de 5 minutes.',
-      totalTime: 'PT5M',
-      tool: [{ '@type': 'HowToTool', name: 'Gonfleur ou manomètre' }],
+      name: title,
+      description: metaDescription,
       step: howToSteps.map((s, i) => ({
         '@type': 'HowToStep',
         position: i + 1,

@@ -1,0 +1,331 @@
+---
+// Calculateur d'économies de carburant — profil éco-conduite
+---
+
+<div class="ecalc-card" id="calculateur-economies" aria-label="Calculateur d'économies de carburant">
+  <div class="ecalc-header">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+    </svg>
+    <h3 class="ecalc-title">Calculez vos économies personnalisées</h3>
+  </div>
+  <p class="ecalc-intro">Entrez votre situation réelle pour obtenir une estimation honnête.</p>
+
+  <div class="ecalc-fields">
+    <div class="ecalc-field">
+      <label for="ecalc-km">Kilométrage annuel</label>
+      <div class="ecalc-input-wrap">
+        <input type="number" id="ecalc-km" value="15000" min="2000" max="100000" step="1000" aria-label="Kilométrage annuel en km" />
+        <span class="ecalc-unit">km / an</span>
+      </div>
+    </div>
+
+    <div class="ecalc-field">
+      <label for="ecalc-conso">Consommation actuelle</label>
+      <div class="ecalc-input-wrap">
+        <input type="number" id="ecalc-conso" value="7.0" min="3" max="20" step="0.5" aria-label="Consommation moyenne en litres aux 100 km" />
+        <span class="ecalc-unit">L / 100 km</span>
+      </div>
+    </div>
+
+    <div class="ecalc-field">
+      <label for="ecalc-prix">Prix du carburant</label>
+      <div class="ecalc-input-wrap">
+        <input type="number" id="ecalc-prix" value="1.85" min="0.80" max="3.50" step="0.01" aria-label="Prix du carburant en euros par litre" />
+        <span class="ecalc-unit">€ / L</span>
+      </div>
+    </div>
+
+    <div class="ecalc-field ecalc-field--full">
+      <label>Votre niveau d'éco-conduite actuel</label>
+      <div class="ecalc-profiles" role="radiogroup" aria-label="Niveau d'éco-conduite">
+        <label class="ecalc-profile">
+          <input type="radio" name="ecalc-profil" value="0.08" />
+          <span class="ecalc-profile-box">
+            <span class="ecalc-profile-label">Débutant</span>
+            <span class="ecalc-profile-desc">3 à 4 réflexes appliqués</span>
+            <span class="ecalc-profile-gain">−8 % estimé</span>
+          </span>
+        </label>
+        <label class="ecalc-profile">
+          <input type="radio" name="ecalc-profil" value="0.13" checked />
+          <span class="ecalc-profile-box">
+            <span class="ecalc-profile-label">Intermédiaire</span>
+            <span class="ecalc-profile-desc">6 à 8 réflexes maîtrisés</span>
+            <span class="ecalc-profile-gain">−13 % estimé</span>
+          </span>
+        </label>
+        <label class="ecalc-profile">
+          <input type="radio" name="ecalc-profil" value="0.18" />
+          <span class="ecalc-profile-box">
+            <span class="ecalc-profile-label">Avancé</span>
+            <span class="ecalc-profile-desc">Toutes les techniques intégrées</span>
+            <span class="ecalc-profile-gain">−18 % estimé</span>
+          </span>
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <div class="ecalc-result" id="ecalc-result" aria-live="polite"></div>
+</div>
+
+<script>
+  (function () {
+    function fmt(n: number, dec = 0) {
+      return n.toLocaleString('fr-FR', { minimumFractionDigits: dec, maximumFractionDigits: dec });
+    }
+
+    function calculate() {
+      const km    = parseFloat((document.getElementById('ecalc-km') as HTMLInputElement).value)    || 15000;
+      const conso = parseFloat((document.getElementById('ecalc-conso') as HTMLInputElement).value) || 7;
+      const prix  = parseFloat((document.getElementById('ecalc-prix') as HTMLInputElement).value)  || 1.85;
+      const profil = parseFloat((document.querySelector('input[name="ecalc-profil"]:checked') as HTMLInputElement)?.value ?? '0.13');
+
+      const litresActuels  = (km * conso) / 100;
+      const litresOptimaux = litresActuels * (1 - profil);
+      const econL = litresActuels - litresOptimaux;
+      const econE = econL * prix;
+      const budgetActuel = litresActuels * prix;
+
+      const result = document.getElementById('ecalc-result')!;
+      result.innerHTML = `
+        <div class="ecalc-saving">
+          <div class="ecalc-saving-main">
+            <span class="ecalc-amount">${fmt(econE)} €</span>
+            <span class="ecalc-alabel">économisés par an</span>
+          </div>
+          <div class="ecalc-saving-row">
+            <div class="ecalc-saving-item">
+              <span class="ecalc-item-val">${fmt(econL)} L</span>
+              <span class="ecalc-item-lbl">de carburant non gaspillé</span>
+            </div>
+            <div class="ecalc-saving-item">
+              <span class="ecalc-item-val">${fmt(budgetActuel - econE)} €</span>
+              <span class="ecalc-item-lbl">budget carburant annuel restant</span>
+            </div>
+          </div>
+          <p class="ecalc-saving-note">Estimation basée sur les données ADEME. Le gain réel dépend de vos habitudes actuelles et de votre profil de trajet.</p>
+        </div>`;
+    }
+
+    ['ecalc-km', 'ecalc-conso', 'ecalc-prix'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.addEventListener('input', calculate);
+    });
+
+    document.querySelectorAll('input[name="ecalc-profil"]').forEach(el => {
+      el.addEventListener('change', calculate);
+    });
+
+    calculate();
+  })();
+</script>
+
+<style>
+  .ecalc-card {
+    background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+    border: 2px solid #22c55e;
+    border-radius: 1rem;
+    padding: 1.75rem;
+    margin: 2rem 0;
+  }
+
+  .ecalc-header {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    color: #15803d;
+    margin-bottom: 0.4rem;
+  }
+
+  .ecalc-title {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: #15803d;
+    margin: 0;
+  }
+
+  .ecalc-intro {
+    font-size: 0.875rem;
+    color: #475569;
+    margin: 0 0 1.25rem;
+  }
+
+  .ecalc-fields {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+  }
+
+  @media (max-width: 600px) {
+    .ecalc-fields { grid-template-columns: 1fr; }
+  }
+
+  .ecalc-field--full { grid-column: 1 / -1; }
+
+  .ecalc-field > label {
+    display: block;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: #14532d;
+    margin-bottom: 0.35rem;
+  }
+
+  .ecalc-input-wrap {
+    display: flex;
+    align-items: center;
+    background: #fff;
+    border: 1.5px solid #86efac;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    transition: border-color 0.15s;
+  }
+
+  .ecalc-input-wrap:focus-within { border-color: #22c55e; }
+
+  .ecalc-input-wrap input {
+    flex: 1;
+    border: none;
+    outline: none;
+    padding: 0.55rem 0.75rem;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: #0f172a;
+    background: transparent;
+    min-width: 0;
+  }
+
+  .ecalc-unit {
+    padding: 0 0.65rem;
+    font-size: 0.75rem;
+    color: #64748b;
+    white-space: nowrap;
+    border-left: 1px solid #e2e8f0;
+    background: #f8fafc;
+  }
+
+  .ecalc-profiles {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0.75rem;
+  }
+
+  @media (max-width: 560px) {
+    .ecalc-profiles { grid-template-columns: 1fr; }
+  }
+
+  .ecalc-profile {
+    cursor: pointer;
+  }
+
+  .ecalc-profile input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+  .ecalc-profile-box {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    padding: 0.875rem 1rem;
+    border: 2px solid #bbf7d0;
+    border-radius: 0.625rem;
+    background: #fff;
+    transition: border-color 0.15s, background 0.15s;
+    cursor: pointer;
+  }
+
+  .ecalc-profile input[type="radio"]:checked + .ecalc-profile-box {
+    border-color: #22c55e;
+    background: #f0fdf4;
+  }
+
+  .ecalc-profile-box:hover {
+    border-color: #4ade80;
+  }
+
+  .ecalc-profile-label {
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: #14532d;
+  }
+
+  .ecalc-profile-desc {
+    font-size: 0.75rem;
+    color: #475569;
+  }
+
+  .ecalc-profile-gain {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: #15803d;
+    margin-top: 0.2rem;
+  }
+
+  /* Résultat */
+  .ecalc-saving {
+    background: #fff;
+    border: 2px solid #22c55e;
+    border-radius: 0.75rem;
+    padding: 1.25rem 1.5rem;
+    text-align: center;
+    margin-top: 0.25rem;
+  }
+
+  .ecalc-saving-main {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .ecalc-amount {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: #15803d;
+    line-height: 1;
+  }
+
+  .ecalc-alabel {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #475569;
+  }
+
+  .ecalc-saving-row {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .ecalc-saving-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.15rem;
+  }
+
+  .ecalc-item-val {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: #1e293b;
+  }
+
+  .ecalc-item-lbl {
+    font-size: 0.75rem;
+    color: #64748b;
+  }
+
+  .ecalc-saving-note {
+    font-size: 0.8125rem;
+    color: #64748b;
+    margin: 0;
+    font-style: italic;
+  }
+</style>

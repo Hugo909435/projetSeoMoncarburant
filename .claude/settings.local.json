@@ -9,7 +9,9 @@
       "Bash(python -c \"import json,sys; d=json.load\\(sys.stdin\\); print\\(d['version']\\)\")",
       "Bash(cp \"C:/Users/hbeignon/Desktop/projetSeoMoncarburant/Logos/transparent-logo.svg\" \"C:/Users/hbeignon/Desktop/projetSeoMoncarburant/public/images/logo-transparent.svg\")",
       "Bash(cp \"C:/Users/hbeignon/Desktop/projetSeoMoncarburant/Logos/colored-logo.svg\" \"C:/Users/hbeignon/Desktop/projetSeoMoncarburant/public/images/logo-colored.svg\")",
-      "Bash(python3 -c \"import json,sys; cities=json.load\\(sys.stdin\\); dups=[c for c in cities if any\\(c2['slug']==c['slug'].rsplit\\('-',1\\)[0] for c2 in cities if c2['slug']!=c['slug']\\)]; print\\(json.dumps\\(dups, indent=2, ensure_ascii=False\\)\\)\")"
+      "Bash(python3 -c \"import json,sys; cities=json.load\\(sys.stdin\\); dups=[c for c in cities if any\\(c2['slug']==c['slug'].rsplit\\('-',1\\)[0] for c2 in cities if c2['slug']!=c['slug']\\)]; print\\(json.dumps\\(dups, indent=2, ensure_ascii=False\\)\\)\")",
+      "PowerShell(Copy-Item *)",
+      "Bash(git restore *)"
     ]
   }
 }

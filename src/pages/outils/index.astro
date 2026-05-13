@@ -1,0 +1,417 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import FuelSearch from '../../components/FuelSearch.astro';
+import PressureCalculator from '../../components/PressureCalculator.astro';
+import EconomyCalculator from '../../components/EconomyCalculator.astro';
+
+const pageUrl = 'https://mon-carburant.com/outils/';
+
+const tools = [
+  {
+    id: 'comparateur-stations',
+    title: 'Comparateur de stations',
+    description: 'Trouvez les stations les moins chères autour d\'un code postal ou d\'une ville. Résultats triés par prix et distance, itinéraire Google Maps en un clic.',
+    icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>`,
+    tag: 'Prix carburant',
+    color: '#0369a1',
+  },
+  {
+    id: 'calculateur-pression',
+    title: 'Calculateur pression pneus',
+    description: 'Estimez en euros le coût de vos pneus sous-gonflés. Entrez votre kilométrage, votre consommation et le prix du carburant pour obtenir un chiffre personnalisé.',
+    icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>`,
+    tag: 'Entretien',
+    color: '#0ea5e9',
+  },
+  {
+    id: 'calculateur-economies',
+    title: 'Calculateur économies éco-conduite',
+    description: 'Calculez vos économies annuelles selon votre profil d\'éco-conduite. Trois niveaux de pratique, résultat en euros et en litres non gaspillés.',
+    icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>`,
+    tag: 'Économies',
+    color: '#22c55e',
+  },
+];
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: 'Outils gratuits — Mon Carburant',
+  description: 'Comparateur de stations, calculateur pression pneus et calculateur d\'économies éco-conduite.',
+  url: pageUrl,
+  numberOfItems: tools.length,
+  itemListElement: tools.map((t, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    name: t.title,
+    description: t.description,
+    url: `${pageUrl}#${t.id}`,
+  })),
+};
+---
+
+<BaseLayout
+  title="Outils gratuits — Comparer, calculer, économiser"
+  description="Comparateur de stations-service, calculateur pression pneus et calculateur d'économies éco-conduite. Trois outils gratuits pour réduire votre budget carburant."
+  canonical={pageUrl}
+  type="website"
+  jsonLd={jsonLd}
+>
+  <div class="outils-page">
+    <div class="container">
+
+      <!-- Hero -->
+      <header class="outils-hero">
+        <p class="outils-eyebrow">Outils gratuits</p>
+        <h1 class="outils-title">Comparer, calculer, économiser</h1>
+        <p class="outils-subtitle">
+          Trois outils pour agir concrètement sur votre budget carburant : trouver
+          la station la moins chère, quantifier l'impact de vos pneus et estimer
+          vos économies potentielles selon vos habitudes de conduite.
+        </p>
+
+        <!-- Sommaire rapide -->
+        <nav class="outils-nav" aria-label="Accès rapide aux outils">
+          {tools.map((t) => (
+            <a href={`#${t.id}`} class="outils-nav-link" style={`--tool-color: ${t.color}`}>
+              <span class="outils-nav-icon" set:html={t.icon} />
+              <span>{t.title}</span>
+            </a>
+          ))}
+        </nav>
+      </header>
+
+      <!-- Outils -->
+      <div class="outils-list">
+
+        <!-- Outil 1 : Comparateur de stations -->
+        <section id="comparateur-stations" class="outil-section" aria-labelledby="outil-1-title">
+          <div class="outil-header">
+            <div class="outil-icon" style="--tool-color: #0369a1">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+              </svg>
+            </div>
+            <div class="outil-meta">
+              <span class="outil-tag" style="--tool-color: #0369a1">Prix carburant</span>
+              <h2 id="outil-1-title" class="outil-title">Comparateur de stations</h2>
+              <p class="outil-desc">
+                Entrez un code postal ou une ville pour afficher les 10 stations les moins chères
+                à proximité, triées par prix et distance. Le carburant affiché est le Gazole ;
+                les résultats indiquent le prix au litre constaté et la distance estimée.
+              </p>
+            </div>
+          </div>
+          <div class="outil-body">
+            <FuelSearch />
+          </div>
+          <p class="outil-link-hint">
+            Pour naviguer par département ou région : <a href="/prix-carburants/">comparateur de prix complet</a>.
+          </p>
+        </section>
+
+        <hr class="outil-divider" />
+
+        <!-- Outil 2 : Calculateur pression pneus -->
+        <section id="calculateur-pression" class="outil-section" aria-labelledby="outil-2-title">
+          <div class="outil-header">
+            <div class="outil-icon" style="--tool-color: #0ea5e9">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+              </svg>
+            </div>
+            <div class="outil-meta">
+              <span class="outil-tag" style="--tool-color: #0ea5e9">Entretien</span>
+              <h2 id="outil-2-title" class="outil-title">Calculateur pression pneus</h2>
+              <p class="outil-desc">
+                Un pneu sous-gonflé de 0,5 bar génère 2 à 5 % de surconsommation. Cet outil
+                traduit cet écart en euros selon votre kilométrage annuel, votre consommation
+                et le prix du carburant que vous payez.
+              </p>
+            </div>
+          </div>
+          <div class="outil-body">
+            <PressureCalculator />
+          </div>
+          <p class="outil-link-hint">
+            Comprendre les mécanismes en détail : <a href="/blog/pression-pneus-consommation/">guide pression des pneus et consommation</a>.
+          </p>
+        </section>
+
+        <hr class="outil-divider" />
+
+        <!-- Outil 3 : Calculateur économies éco-conduite -->
+        <section id="calculateur-economies" class="outil-section" aria-labelledby="outil-3-title">
+          <div class="outil-header">
+            <div class="outil-icon" style="--tool-color: #22c55e">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+              </svg>
+            </div>
+            <div class="outil-meta">
+              <span class="outil-tag" style="--tool-color: #22c55e">Économies</span>
+              <h2 id="outil-3-title" class="outil-title">Calculateur économies éco-conduite</h2>
+              <p class="outil-desc">
+                Estimez vos économies annuelles selon votre niveau d'éco-conduite : débutant
+                (3 à 4 réflexes), intermédiaire (6 à 8) ou avancé (toutes les techniques).
+                Les fourchettes sont basées sur les données ADEME.
+              </p>
+            </div>
+          </div>
+          <div class="outil-body">
+            <EconomyCalculator />
+          </div>
+          <p class="outil-link-hint">
+            Les 12 techniques détaillées étape par étape : <a href="/blog/eco-conduite-techniques/">guide éco-conduite complet</a>.
+          </p>
+        </section>
+
+      </div>
+
+      <!-- CTA bas de page -->
+      <aside class="outils-cta">
+        <p class="outils-cta-text">
+          Ces chiffres vous ont convaincu ? Retrouvez les guides complets pour mettre en pratique chaque levier.
+        </p>
+        <div class="outils-cta-links">
+          <a href="/piliers/guide-economiser-carburant/" class="outils-cta-btn outils-cta-btn--primary">
+            Guide complet économies carburant
+          </a>
+          <a href="/blog/" class="outils-cta-btn outils-cta-btn--secondary">
+            Tous les articles
+          </a>
+        </div>
+      </aside>
+
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .outils-page {
+    padding-top: 2.5rem;
+    padding-bottom: 5rem;
+  }
+
+  /* Hero */
+  .outils-hero {
+    max-width: 48rem;
+    margin-bottom: 3.5rem;
+  }
+
+  .outils-eyebrow {
+    font-size: 0.8125rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-accent);
+    margin: 0 0 0.75rem;
+  }
+
+  .outils-title {
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    font-weight: 800;
+    line-height: 1.15;
+    color: var(--color-primary);
+    margin: 0 0 1rem;
+  }
+
+  .outils-subtitle {
+    font-size: 1.0625rem;
+    color: var(--color-text-secondary, #64748b);
+    line-height: 1.7;
+    margin: 0 0 2rem;
+  }
+
+  /* Nav sommaire */
+  .outils-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.625rem;
+  }
+
+  .outils-nav-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    border: 1.5px solid var(--tool-color);
+    border-radius: 9999px;
+    color: var(--tool-color);
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background 0.15s, color 0.15s;
+  }
+
+  .outils-nav-link:hover {
+    background: var(--tool-color);
+    color: #fff;
+  }
+
+  .outils-nav-icon {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  /* Liste des outils */
+  .outils-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .outil-divider {
+    border: none;
+    border-top: 1px solid var(--color-border, #e2e8f0);
+    margin: 3rem 0;
+  }
+
+  /* Chaque outil */
+  .outil-section {
+    scroll-margin-top: 5rem;
+  }
+
+  .outil-header {
+    display: flex;
+    gap: 1.25rem;
+    align-items: flex-start;
+    margin-bottom: 1.5rem;
+  }
+
+  .outil-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 0.625rem;
+    background: color-mix(in srgb, var(--tool-color) 12%, #fff);
+    color: var(--tool-color);
+    margin-top: 0.125rem;
+  }
+
+  .outil-meta {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .outil-tag {
+    display: inline-block;
+    padding: 0.2rem 0.625rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    background: color-mix(in srgb, var(--tool-color) 12%, #fff);
+    color: var(--tool-color);
+    margin-bottom: 0.5rem;
+  }
+
+  .outil-title {
+    font-size: 1.375rem;
+    font-weight: 700;
+    color: var(--color-primary);
+    margin: 0 0 0.5rem;
+    line-height: 1.25;
+  }
+
+  .outil-desc {
+    font-size: 0.9375rem;
+    color: var(--color-text-secondary, #64748b);
+    line-height: 1.65;
+    margin: 0;
+    max-width: 52rem;
+  }
+
+  .outil-body {
+    /* Les outils gèrent leur propre marge via margin-top */
+  }
+
+  .outil-link-hint {
+    font-size: 0.875rem;
+    color: var(--color-text-secondary, #64748b);
+    margin: 0.75rem 0 0;
+  }
+
+  .outil-link-hint a {
+    color: var(--color-accent);
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .outil-link-hint a:hover {
+    text-decoration: underline;
+  }
+
+  /* CTA bas de page */
+  .outils-cta {
+    margin-top: 4rem;
+    padding: 2rem 2.5rem;
+    background: linear-gradient(135deg, var(--color-primary) 0%, #0f3a5c 100%);
+    border-radius: 1rem;
+    color: #fff;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+  }
+
+  .outils-cta-text {
+    font-size: 1rem;
+    line-height: 1.6;
+    margin: 0;
+    flex: 1;
+    min-width: 16rem;
+    color: rgba(255 255 255 / 0.9);
+  }
+
+  .outils-cta-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    flex-shrink: 0;
+  }
+
+  .outils-cta-btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.625rem 1.25rem;
+    border-radius: 0.5rem;
+    font-size: 0.9375rem;
+    font-weight: 700;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: opacity 0.15s;
+  }
+
+  .outils-cta-btn:hover {
+    opacity: 0.88;
+  }
+
+  .outils-cta-btn--primary {
+    background: var(--color-accent);
+    color: #fff;
+  }
+
+  .outils-cta-btn--secondary {
+    background: rgba(255 255 255 / 0.12);
+    color: #fff;
+    border: 1px solid rgba(255 255 255 / 0.3);
+  }
+
+  @media (max-width: 640px) {
+    .outil-header {
+      flex-direction: column;
+      gap: 0.875rem;
+    }
+
+    .outils-cta {
+      padding: 1.5rem;
+    }
+  }
+</style>

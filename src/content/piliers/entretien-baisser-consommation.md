@@ -1,12 +1,12 @@
----
+﻿---
 title: "Entretien véhicule : réduire sa consommation de carburant"
 metaTitle: "Entretien véhicule : guide pour réduire sa consommation"
-metaDescription: "Pression des pneus, vidange, filtres : comment bien entretenir son véhicule pour consommer jusqu'à 20% de carburant en moins. Guide complet par Thomas Martin."
+metaDescription: "Pression des pneus, vidange, filtres : comment bien entretenir son véhicule pour consommer jusqu'à 20% de carburant en moins. Guide complet par Hugo Beignon."
 slug: entretien-baisser-consommation
 excerpt: "Un véhicule mal entretenu consomme jusqu'à 20% de carburant en trop. Pneus, huile, filtres : les bons gestes d'entretien pour réduire votre facture à la pompe."
 publishedAt: 2026-05-01
 updatedAt: 2026-05-05
-author: thomas-martin
+author: hugo-beignon
 category: entretien
 tags: [entretien, consommation, pneus, vidange, filtres, economies, huile-moteur, bougies]
 featuredImage: /images/articles/entretien-consommation.webp
