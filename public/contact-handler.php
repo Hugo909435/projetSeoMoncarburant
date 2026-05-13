@@ -77,6 +77,7 @@ $rgpdAccepted = isset($_POST['rgpd']);
 $subjectLabels = [
     'question' => 'Question generale',
     'partenariat' => 'Partenariat editorial',
+    'lien' => 'Achat de lien / article sponsorise',
     'correction' => 'Signalement d erreur',
     'autre' => 'Autre demande',
 ];
