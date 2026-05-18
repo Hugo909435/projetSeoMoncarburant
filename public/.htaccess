@@ -1,0 +1,5 @@
+RewriteEngine On
+
+# Redirection www → non-www (301 permanent)
+RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
+RewriteRule ^ https://%1%{REQUEST_URI} [R=301,L]

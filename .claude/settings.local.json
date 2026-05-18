@@ -11,7 +11,13 @@
       "Bash(cp \"C:/Users/hbeignon/Desktop/projetSeoMoncarburant/Logos/colored-logo.svg\" \"C:/Users/hbeignon/Desktop/projetSeoMoncarburant/public/images/logo-colored.svg\")",
       "Bash(python3 -c \"import json,sys; cities=json.load\\(sys.stdin\\); dups=[c for c in cities if any\\(c2['slug']==c['slug'].rsplit\\('-',1\\)[0] for c2 in cities if c2['slug']!=c['slug']\\)]; print\\(json.dumps\\(dups, indent=2, ensure_ascii=False\\)\\)\")",
       "PowerShell(Copy-Item *)",
-      "Bash(git restore *)"
+      "Bash(git restore *)",
+      "WebFetch(domain:mon-carburant.com)",
+      "WebFetch(domain:www.mon-carburant.com)",
+      "Bash(curl -I -L --max-redirs 5 https://www.mon-carburant.com/)",
+      "Bash(curl -I -L --max-redirs 5 https://mon-carburant.com/)",
+      "Bash(curl -I -L --max-redirs 5 --ssl-no-revoke https://www.mon-carburant.com/)",
+      "Bash(curl -I -L --max-redirs 5 --ssl-no-revoke https://mon-carburant.com/)"
     ]
   }
 }
