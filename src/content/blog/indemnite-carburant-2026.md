@@ -1,14 +1,3 @@
-<!--
-ARTICLE D'ACTUALITÉ - DURÉE DE VIE LIMITÉE
-Publié le 19 mai 2026 — à J-8 de l'ouverture du formulaire (27 mai 2026)
-Fenêtre de trafic principale : 19 mai → fin juillet 2026
-ARCHIVAGE PRÉVU : début août 2026
-Action d'archivage : ajouter un encart "Dispositif terminé le [date]. Voir [article actuel sur les aides en cours]."
-Ne PAS supprimer l'URL (préservation des backlinks acquis).
--->
-
-<!-- TODO : image manquante — créer /public/images/articles/indemnite-carburant-2026.webp (1200×630, WebP, <100 Ko). Idée : capture du simulateur impots.gouv.fr ou billet de 50 € posé sur un volant de voiture. -->
-
 ---
 title: "Indemnité carburant 2026 : conditions, démarches et calendrier"
 metaTitle: "Indemnité carburant 2026 : 50 € (conditions et démarches)"
@@ -23,9 +12,6 @@ tags: ["actualite", "indemnite-carburant", "aide-gouvernementale", "grands-roule
 featuredImage: "/images/articles/indemnite-carburant-2026.webp"
 imageAlt: "Capture du simulateur d'indemnité carburant 2026 sur impots.gouv.fr et billet de 50 euros sur un volant de voiture"
 readingTime: 7
-relatedArticles: ["sp95-vs-sp98", "reduire-consommation-carburant", "eco-conduite-12-techniques"]
-ctaTitle: "Trouvez la station la moins chère près de chez vous"
-ctaDescription: "Notre comparateur référence les prix de plus de 11 000 stations-service en France, mis à jour quotidiennement via les données officielles."
 faq:
   - question: "Qui peut toucher l'indemnité carburant 2026 ?"
     answer: "Environ 2,9 millions de travailleurs modestes français : salariés ou indépendants, avec un revenu fiscal de référence inférieur ou égal à 16 880 € par part, utilisant un véhicule thermique ou hybride non rechargeable pour leur activité professionnelle, et effectuant soit plus de 15 km par trajet domicile-travail, soit plus de 8 000 km par an dans un cadre professionnel."
