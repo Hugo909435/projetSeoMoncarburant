@@ -6,6 +6,9 @@ import tailwindcss from '@tailwindcss/vite';
 export default defineConfig({
   site: 'https://mon-carburant.com',
   output: 'static',
+  redirects: {
+    '/auteur/thomas-martin/': '/auteur/hugo-beignon/',
+  },
   compressHTML: true,
   prefetch: {
     prefetchAll: true,

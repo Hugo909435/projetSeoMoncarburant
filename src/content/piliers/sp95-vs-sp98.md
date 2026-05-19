@@ -5,7 +5,7 @@ metaDescription: "SP95 ou SP98 : différences, prix, voitures concernées. Notre
 slug: "sp95-vs-sp98"
 publishedAt: 2026-05-15
 updatedAt: 2026-05-15
-author: "thomas-martin"
+author: "hugo-beignon"
 category: "carburants"
 excerpt: "SP95 ou SP98 ? Pour 95 % des conducteurs, le SP95 suffit et économise 5 centimes par litre. Différences techniques, véhicules concernés et calculs d'économies réels."
 tags: ["sp95", "sp98", "essence", "comparatif", "indice octane"]
@@ -43,7 +43,7 @@ En mai 2026, le SP95 s'affiche en moyenne à **2,075 €/L** et le SP98 à **2,1
 
 Selon l'UFIP (Union Française des Industries Pétrolières), le SP95 et son équivalent E10 représentent la grande majorité des ventes d'essence en France. Pourtant, la confusion sur l'utilité réelle du SP98 persiste, entretenue par des idées reçues tenaces.
 
-Ce guide — rédigé par [Thomas Martin](/auteur/thomas-martin/), spécialiste carburants et mobilité, mis à jour en mai 2026 — répond à toutes les questions sur ces deux carburants : différences techniques, compatibilité avec votre véhicule, calcul d'impact économique réel, et cas précis où le SP98 est justifié.
+Ce guide — rédigé par [Hugo Beignon](/auteur/hugo-beignon/), spécialiste carburants et mobilité, mis à jour en mai 2026 — répond à toutes les questions sur ces deux carburants : différences techniques, compatibilité avec votre véhicule, calcul d'impact économique réel, et cas précis où le SP98 est justifié.
 
 ---
 

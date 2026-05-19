@@ -79,7 +79,7 @@ metaDescription: "Description SEO (max 160 caractères)"
 slug: "mon-slug-kebab-case"
 excerpt: "Résumé affiché dans les listings (max 200 caractères)"
 publishedAt: 2026-01-15
-author: "thomas-martin"
+author: "hugo-beignon"
 category: "economies"  # economies | carburants | fiscalite | entretien
 tags: ["tag1", "tag2"]
 featuredImage: "/images/articles/mon-image.jpg"

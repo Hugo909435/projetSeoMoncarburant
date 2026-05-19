@@ -6,7 +6,7 @@ slug: "pompe-essence-fonctionnement"
 excerpt: "Une pompe à essence aspire depuis une cuve souterraine, mesure le volume au millilitre et coupe automatiquement à dépression. Mécanisme, sécurités et métrologie expliqués."
 publishedAt: 2026-05-15
 updatedAt: 2026-05-15
-author: "thomas-martin"
+author: "hugo-beignon"
 category: "carburants"
 tags: ["pompe à essence", "station-service", "fonctionnement", "sécurité"]
 featuredImage: "/images/articles/pompe-essence-fonctionnement.webp"
@@ -35,7 +35,7 @@ draft: false
 
 Chaque jour, plus de 10 millions d'automobilistes français font le plein sans jamais se demander comment fonctionne réellement cette machine. Pourtant, derrière le geste banal d'insérer un pistolet dans le réservoir se cache un système mécanique et électronique précis, soumis à des contrôles stricts et conçu pour distribuer le carburant sans erreur de mesure ni risque d'accident.
 
-Cet article, rédigé par [Thomas Martin](/auteur/thomas-martin/) et mis à jour en mai 2026, répond aux questions les plus fréquentes : comment le carburant arrive-t-il jusqu'au pistolet ? Comment la pompe sait-elle s'arrêter au bon moment ? Les litres affichés sont-ils fiables ? Et pourquoi faut-il vraiment couper son moteur ?
+Cet article, rédigé par [Hugo Beignon](/auteur/hugo-beignon/) et mis à jour en mai 2026, répond aux questions les plus fréquentes : comment le carburant arrive-t-il jusqu'au pistolet ? Comment la pompe sait-elle s'arrêter au bon moment ? Les litres affichés sont-ils fiables ? Et pourquoi faut-il vraiment couper son moteur ?
 
 Pour aller plus loin sur le choix entre les carburants distribués à la pompe, consultez notre [guide complet SP95 vs SP98](/piliers/sp95-vs-sp98/).
 

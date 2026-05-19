@@ -17,7 +17,10 @@
       "Bash(curl -I -L --max-redirs 5 https://www.mon-carburant.com/)",
       "Bash(curl -I -L --max-redirs 5 https://mon-carburant.com/)",
       "Bash(curl -I -L --max-redirs 5 --ssl-no-revoke https://www.mon-carburant.com/)",
-      "Bash(curl -I -L --max-redirs 5 --ssl-no-revoke https://mon-carburant.com/)"
+      "Bash(curl -I -L --max-redirs 5 --ssl-no-revoke https://mon-carburant.com/)",
+      "Bash(New-Item -Path \"C:\\\\Users\\\\hbeignon\\\\Desktop\\\\projetSeoMoncarburant\\\\src\\\\content\\\\authors\\\\hugo-beignon.json\" -ItemType File -Force)",
+      "Bash(Out-Null)",
+      "Bash(Write-Host \"done\")"
     ]
   }
 }
