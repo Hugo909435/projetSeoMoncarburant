@@ -15,7 +15,6 @@ interface Props {
   authorName?: string;
   noIndex?: boolean;
   jsonLd?: Record<string, unknown> | Record<string, unknown>[];
-  appendSiteName?: boolean;
 }
 
 const {
@@ -30,19 +29,14 @@ const {
   authorName,
   noIndex = false,
   jsonLd,
-  appendSiteName = true,
 } = Astro.props;
-
-const fullTitle = appendSiteName && !title.includes(SITE_NAME)
-  ? `${title} - ${SITE_NAME}`
-  : title;
 const absoluteImage = image.startsWith('http') ? image : `${SITE_URL}${image}`;
 const absoluteCanonical = canonical.startsWith('http') ? canonical : `${SITE_URL}${canonical}`;
 const schemas = Array.isArray(jsonLd) ? jsonLd : jsonLd ? [jsonLd] : [];
 ---
 
 <!-- Titre et description -->
-<title>{fullTitle}</title>
+<title>{title}</title>
 <meta name="description" content={description} />
 <link rel="canonical" href={absoluteCanonical} />
 
