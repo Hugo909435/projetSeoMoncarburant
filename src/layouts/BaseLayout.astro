@@ -21,6 +21,7 @@ interface Props {
   noIndex?: boolean;
   jsonLd?: Record<string, unknown> | Record<string, unknown>[];
   bodyClass?: string;
+  appendSiteName?: boolean;
 }
 
 const {
@@ -36,6 +37,7 @@ const {
   noIndex,
   jsonLd,
   bodyClass,
+  appendSiteName,
 } = Astro.props;
 ---
 
@@ -58,6 +60,7 @@ const {
       authorName={authorName}
       noIndex={noIndex}
       jsonLd={jsonLd}
+      appendSiteName={appendSiteName}
     />
     <slot name="head" />
   </head>
