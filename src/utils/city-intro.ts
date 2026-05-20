@@ -94,7 +94,7 @@ export function buildCityIntro(p: CityIntroParams): string[] {
       return `Le Gazole y est moins cher qu'en moyenne nationale : ${fmt(gazoleAvg)} €/L, soit ${diffStr} par rapport aux ${fmt(natGazole!)} €/L observés en France.`;
     }
     if (gazoleDiff > 3) {
-      return `Le Gazole s'affiche à ${fmt(gazoleAvg)} €/L en moyenne, ${diffStr} au-dessus de la moyenne nationale (${fmt(natGazole!)} €/L) — pensez à comparer les stations.`;
+      return `Le Gazole s'affiche à ${fmt(gazoleAvg)} €/L en moyenne, ${diffStr} au-dessus de la moyenne nationale (${fmt(natGazole!)} €/L) - pensez à comparer les stations.`;
     }
     const forms = [
       `Le Gazole est proposé à ${fmt(gazoleAvg)} €/L en moyenne, proche de la moyenne nationale (${fmt(natGazole!)} €/L).`,

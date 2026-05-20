@@ -33,7 +33,7 @@ const lastUpdate = meta.lastUpdate
   ? new Date(meta.lastUpdate).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })
   : null;
 
-const title = `Prix du ${config.label} en France — Comparateur Mon Carburant`;
+const title = `Prix du ${config.label} en France - Comparateur Mon Carburant`;
 const description = `Prix du ${config.label} en France : moyenne nationale${nationalAvg ? ` ${nationalAvg.toFixed(3)}€/L` : ''}, classement des départements les moins chers et conseils. Mis à jour quotidiennement.`;
 
 // Heatmap : créer un classement visuel par couleur

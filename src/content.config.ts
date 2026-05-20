@@ -63,6 +63,7 @@ const authors = defineCollection({
     photoAlt: z.string().optional(),
     expertise: z.array(z.string()),
     email: z.string().email().optional(),
+    website: z.string().optional(),
     linkedin: z.string().optional(),
   }),
 });

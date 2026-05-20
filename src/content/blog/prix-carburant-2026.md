@@ -6,7 +6,7 @@ slug: "prix-carburant-2026"
 excerpt: "SP95-E10 à 2,034 €/L, gazole à 2,150 €/L en mai 2026. Hausse due au Brent, à la TICPE et à la convergence diesel/essence. Tableau des prix, évolution 2024–2026 et 5 leviers pour réduire la facture."
 publishedAt: 2026-05-19
 updatedAt: 2026-05-19
-author: "thomas-martin"
+author: "hugo-beignon"
 category: "carburants"
 tags: ["prix carburant", "essence", "diesel", "e85", "actualité 2026", "ticpe"]
 featuredImage: "/images/articles/prix-carburant-2026.webp"

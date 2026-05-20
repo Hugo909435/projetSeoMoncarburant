@@ -6,7 +6,7 @@ slug: "indemnite-carburant-2026"
 excerpt: "Indemnité carburant 2026 : 50 € forfait pour 2,9 millions de travailleurs modestes grands rouleurs. Conditions RFR, distance, démarche impots.gouv.fr dès le 27 mai 2026 et analyse chiffrée."
 publishedAt: 2026-05-19
 updatedAt: 2026-05-19
-author: "thomas-martin"
+author: "hugo-beignon"
 category: "carburants"
 tags: ["actualite", "indemnite-carburant", "aide-gouvernementale", "grands-rouleurs", "2026"]
 featuredImage: "/images/articles/indemnite-carburant-2026.webp"

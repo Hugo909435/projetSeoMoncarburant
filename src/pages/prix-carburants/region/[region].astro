@@ -36,7 +36,7 @@ const lastUpdate = meta.lastUpdate
   ? new Date(meta.lastUpdate).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })
   : null;
 
-const title = `Prix carburant ${regionName} — Comparateur Mon Carburant`;
+const title = `Prix carburant ${regionName} - Comparateur Mon Carburant`;
 const gazoleAvg = regionData['Gazole'] as number | null;
 const description = `Prix du carburant en ${regionName}${gazoleAvg ? ` : Gazole ${gazoleAvg.toFixed(3)}€/L en moyenne` : ''}. Comparez toutes les stations des ${regionDepts.length} départements. Mis à jour quotidiennement.`;
 
