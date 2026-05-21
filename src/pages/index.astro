@@ -3,6 +3,7 @@ import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ArticleCard from '../components/ArticleCard.astro';
 import Newsletter from '../components/Newsletter.astro';
+import FuelSearch from '../components/FuelSearch.astro';
 import statsNational from '../data/fuel/stats-national.json';
 import statsByDepartment from '../data/fuel/stats-by-department.json';
 import fuelMeta from '../data/fuel/meta.json';
@@ -174,29 +175,8 @@ const organizationSchema = {
             </a>
           </div>
 
-          <!-- Widget b : Recherche rapide -->
-          <div class="widget-search">
-            <h3 class="widget-title">Trouver les stations les moins chères</h3>
-            <p class="widget-search-desc">Saisissez votre code postal pour comparer les prix près de chez vous.</p>
-            <div class="qs-row">
-              <input
-                type="text"
-                id="qs-cp"
-                class="qs-input"
-                inputmode="numeric"
-                pattern="\d{2,5}"
-                placeholder="Ex : 75001"
-                maxlength="5"
-                aria-label="Code postal"
-              />
-              <button id="qs-btn" class="qs-btn" type="button">
-                Trouver les meilleurs prix
-              </button>
-            </div>
-            <p id="qs-error" class="qs-error" hidden aria-live="polite">
-              Saisissez un code postal valide (2 à 5 chiffres).
-            </p>
-          </div>
+          <!-- Widget b : Recherche interactive -->
+          <FuelSearch />
 
         </div>
 
@@ -357,27 +337,6 @@ const organizationSchema = {
     </section>
   )}
 </BaseLayout>
-
-<script>
-  const btn = document.getElementById('qs-btn');
-  const input = document.getElementById('qs-cp') as HTMLInputElement | null;
-  const errEl = document.getElementById('qs-error');
-
-  function handleSearch() {
-    const cp = input?.value.trim() ?? '';
-    if (!/^\d{2,5}$/.test(cp)) {
-      if (errEl) errEl.hidden = false;
-      return;
-    }
-    if (errEl) errEl.hidden = true;
-    window.location.href = `/prix-carburants/?cp=${cp}`;
-  }
-
-  btn?.addEventListener('click', handleSearch);
-  input?.addEventListener('keydown', (e: KeyboardEvent) => {
-    if (e.key === 'Enter') handleSearch();
-  });
-</script>
 
 <style>
   /* ── Hero ── */

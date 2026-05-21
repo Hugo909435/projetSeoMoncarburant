@@ -26,6 +26,19 @@
         </div>
       </div>
 
+      <!-- Sélecteur de carburant -->
+      <div class="fs-input-group">
+        <label for="fs-fuel" class="fs-label">Carburant</label>
+        <select id="fs-fuel" class="fs-select">
+          <option value="Gazole" selected>Gazole</option>
+          <option value="SP95">Sans-Plomb 95</option>
+          <option value="SP98">Sans-Plomb 98</option>
+          <option value="E10">E10 (SP95-E10)</option>
+          <option value="E85">E85 (Bioéthanol)</option>
+          <option value="GPLc">GPL</option>
+        </select>
+      </div>
+
       <!-- Boutons -->
       <div class="fs-actions">
         <button id="fs-search-btn" class="fs-btn-primary" type="button">
@@ -135,26 +148,90 @@ function showResults(stations: StationLight[], fuel: string, refLat: number, ref
     })
     .slice(0, 10);
 
-  headerEl.innerHTML = `<strong>${withDist.length}</strong> station${withDist.length > 1 ? 's' : ''} trouvée${withDist.length > 1 ? 's' : ''} près de <em>${label}</em> pour <strong>${fuelLabels[fuel] || fuel}</strong>`;
+  // Lien département
+  let depHtml = '';
+  if (withDist.length > 0) {
+    const firstStation = withDist[0];
+    const depNum = firstStation.dep;
+    const depSlugMap: Record<string, string> = {
+      '85': 'vendee', '44': 'loire-atlantique', '49': 'maine-et-loire', '53': 'mayenne', '72': 'sarthe',
+      '75': 'paris', '13': 'bouches-du-rhone', '69': 'rhone', '33': 'gironde', '31': 'haute-garonne',
+      '59': 'nord', '06': 'alpes-maritimes', '67': 'bas-rhin', '34': 'herault'
+    };
+    const depSlug = depSlugMap[depNum];
+    const depUrl = depSlug ? `/prix-carburants/${depSlug}/` : '/prix-carburants/';
+    depHtml = `
+      <div class="fs-more-results-top">
+        <a href="${depUrl}" class="fs-link-dep">
+          Voir l'intégralité des stations du département (${depNum}) →
+        </a>
+      </div>
+    `;
+  }
+
+  headerEl.innerHTML = `
+    ${depHtml}
+    <div style="margin-top: 1rem">
+      <strong>Top 10</strong> des stations les moins chères près de <em>${label}</em> pour <strong>${fuelLabels[fuel] || fuel}</strong>
+    </div>
+  `;
 
   listEl.innerHTML = withDist.map((s, i) => {
-    const price = s.prices[fuel];
-    const distText = s.dist < 1 ? `${(s.dist * 1000).toFixed(0)} m` : `${s.dist.toFixed(1)} km`;
+    const mainPrice = s.prices[fuel];
+    const distText = s.dist < 1 ? `${(s.dist * 1000).toFixed(0)}m` : `${s.dist.toFixed(1)}km`;
     const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${s.lat},${s.lng}`;
     const isAuto = s.pop === 'autoroute';
+
+    const allPricesRows = Object.entries(fuelLabels)
+      .filter(([f]) => s.prices[f] != null)
+      .map(([f, label]) => `
+        <tr class="${f === fuel ? 'fs-row-active' : ''}">
+          <td class="fs-td-label">${label}</td>
+          <td class="fs-td-val">${s.prices[f].toFixed(3)} €/L</td>
+        </tr>
+      `).join('');
+
     return `
-      <li class="fs-result-item ${i === 0 ? 'fs-result-best' : ''}">
-        <div class="fs-result-rank">${i + 1}</div>
-        <div class="fs-result-body">
-          <div class="fs-result-top">
-            <span class="fs-result-price" style="color:${fuelColors[fuel] || '#374151'}">${price!.toFixed(3)} €/L</span>
-            <span class="fs-result-dist">${distText}</span>
-            ${isAuto ? '<span class="fs-result-badge">Autoroute</span>' : ''}
+      <li class="fs-card ${i === 0 ? 'fs-card-best' : ''}">
+        <div class="fs-card-header">
+          <div class="fs-rank">${i + 1}</div>
+          <div class="fs-info">
+            <h3 class="fs-station-name">${s.adresse || 'Station Service'}</h3>
+            <p class="fs-station-city">${s.cp} ${s.ville}</p>
           </div>
-          <div class="fs-result-addr">${s.adresse || '—'}, ${s.ville} (${s.cp})</div>
-          <a href="${mapsUrl}" class="fs-result-maps" target="_blank" rel="noopener noreferrer">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-            Itinéraire Google Maps
+          <div class="fs-distance">${distText}</div>
+        </div>
+
+        <div class="fs-card-body">
+          <div class="fs-main-price-row">
+            <div class="fs-price-display">
+              <span class="fs-price-label">Prix ${fuelLabels[fuel] || fuel}</span>
+              <span class="fs-price-value" style="color:${fuelColors[fuel] || 'var(--color-primary)'}">
+                ${mainPrice!.toFixed(3)}<small> €/L</small>
+              </span>
+            </div>
+            ${isAuto ? '<span class="fs-badge-auto">Autoroute</span>' : ''}
+          </div>
+
+          <div class="fs-prices-table-wrap">
+            <table class="fs-prices-table">
+              <thead>
+                <tr>
+                  <th class="fs-th-left">Carburant</th>
+                  <th class="fs-th-right">Prix au litre</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${allPricesRows}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="fs-card-footer">
+          <a href="${mapsUrl}" class="fs-maps-link" target="_blank" rel="noopener noreferrer">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            Y aller avec Google Maps
           </a>
         </div>
       </li>
@@ -194,7 +271,7 @@ async function searchByQuery(query: string, fuel: string) {
         ? exactMatch.reduce((a, s) => a + s.lat, 0) / exactMatch.length
         : avgLat;
       const refLng = exactMatch.length > 0
-        ? exactMatch.reduce((a, s) => a + s.lng, 0) / exactMatch.length
+        ? exactMatch.reduce((a, s) => a + s.lat, 0) / exactMatch.length
         : avgLng;
 
       showResults(depStations, fuel, refLat, refLng, q);
@@ -226,18 +303,20 @@ async function searchByQuery(query: string, fuel: string) {
 document.addEventListener('DOMContentLoaded', () => {
   const searchBtn = document.getElementById('fs-search-btn');
   const queryInput = document.getElementById('fs-query') as HTMLInputElement;
+  const fuelSelect = document.getElementById('fs-fuel') as HTMLSelectElement;
 
-  searchBtn?.addEventListener('click', () => {
+  function performSearch() {
     const q = queryInput?.value ?? '';
+    const f = fuelSelect?.value ?? DEFAULT_FUEL;
     if (!q.trim()) { showError('Saisissez un code postal ou une ville.'); return; }
-    searchByQuery(q, DEFAULT_FUEL);
-  });
+    searchByQuery(q, f);
+  }
+
+  searchBtn?.addEventListener('click', performSearch);
 
   queryInput?.addEventListener('keydown', (e: KeyboardEvent) => {
     if (e.key === 'Enter') {
-      const q = queryInput.value;
-      if (!q.trim()) { showError('Saisissez un code postal ou une ville.'); return; }
-      searchByQuery(q, DEFAULT_FUEL);
+      performSearch();
     }
   });
 
@@ -254,20 +333,25 @@ document.addEventListener('DOMContentLoaded', () => {
     box-shadow: 0 4px 24px rgba(15, 45, 63, 0.08);
   }
   .fs-title { font-size: 1.25rem; font-weight: 700; color: var(--color-primary); margin: 0 0 1.5rem; }
-  .fs-controls { display: flex; flex-direction: column; gap: 1.25rem; }
+  .fs-controls { display: grid; grid-template-columns: 1fr; gap: 1.25rem; }
+  @media (min-width: 640px) {
+    .fs-controls { grid-template-columns: 1fr 200px auto; align-items: end; }
+  }
   .fs-label { display: block; font-size: 0.8125rem; font-weight: 600; color: var(--color-text-muted); margin-bottom: 0.4rem; }
   .fs-input-wrap { position: relative; }
   .fs-input-icon { position: absolute; left: 0.75rem; top: 50%; transform: translateY(-50%); color: #9ca3af; pointer-events: none; }
-  .fs-input {
-    width: 100%; padding: 0.7rem 0.75rem 0.7rem 2.5rem;
+  .fs-input, .fs-select {
+    width: 100%; padding: 0.7rem 0.75rem;
     border: 2px solid #e2e8f0; border-radius: 0.5rem; font-size: 1rem;
     outline: none; transition: border-color 0.2s; box-sizing: border-box;
+    background: #fff;
   }
-  .fs-input:focus { border-color: var(--color-primary); }
-  .fs-actions { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+  .fs-input { padding-left: 2.5rem; }
+  .fs-input:focus, .fs-select:focus { border-color: var(--color-primary); }
+  .fs-actions { display: flex; gap: 0.75rem; }
   .fs-btn-primary {
-    flex: 1; min-width: 140px; background: var(--color-accent); color: #fff;
-    border: none; border-radius: 0.5rem; padding: 0.75rem 1.25rem;
+    width: 100%; background: var(--color-accent); color: #fff;
+    border: none; border-radius: 0.5rem; padding: 0.75rem 1.5rem;
     font-size: 1rem; font-weight: 700; cursor: pointer; transition: background 0.2s;
   }
   .fs-btn-primary:hover { background: #d0651a; }
@@ -282,18 +366,254 @@ document.addEventListener('DOMContentLoaded', () => {
   .fs-results { margin-top: 1.5rem; }
   .fs-results-header { font-size: 0.9rem; color: var(--color-text-muted); margin-bottom: 1rem; }
   .fs-results-header strong { color: var(--color-primary); }
-  .fs-results-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.5rem; }
-  .fs-result-item { display: flex; gap: 1rem; padding: 1rem; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 0.625rem; transition: box-shadow 0.15s; }
-  .fs-result-item:hover { box-shadow: 0 2px 12px rgba(0,0,0,0.08); }
-  .fs-result-best { border-color: #fbbf24; background: #fffbeb; }
-  .fs-result-rank { flex-shrink: 0; width: 28px; height: 28px; background: var(--color-primary); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 700; }
-  .fs-result-best .fs-result-rank { background: #d97706; }
-  .fs-result-body { flex: 1; min-width: 0; }
-  .fs-result-top { display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; margin-bottom: 0.25rem; }
-  .fs-result-price { font-size: 1.25rem; font-weight: 800; }
-  .fs-result-dist { font-size: 0.8125rem; color: var(--color-text-muted); font-weight: 600; }
-  .fs-result-badge { font-size: 0.7rem; background: #fef3c7; color: #92400e; padding: 0.1rem 0.5rem; border-radius: 999px; font-weight: 600; }
-  .fs-result-addr { font-size: 0.875rem; color: #374151; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 0.35rem; }
-  .fs-result-maps { display: inline-flex; align-items: center; gap: 0.3rem; font-size: 0.8125rem; color: var(--color-accent); text-decoration: none; font-weight: 600; }
-  .fs-result-maps:hover { text-decoration: underline; }
+  
+  .fs-results-list { 
+    list-style: none; padding: 0; margin: 0; 
+    display: grid; grid-template-columns: 1fr; gap: 1.5rem;
+  }
+  @media (min-width: 1024px) {
+    .fs-results-list { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  .fs-card {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 1rem;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: all 0.2s ease;
+    position: relative;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.04);
+  }
+  .fs-card:hover {
+    border-color: var(--color-accent);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+    transform: translateY(-2px);
+  }
+  .fs-card-best {
+    border: 2px solid #fbbf24;
+    background: #fffdf2;
+  }
+
+  /* Header Card */
+  .fs-card-header {
+    padding: 1.25rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    border-bottom: 1px solid #f1f5f9;
+  }
+  .fs-rank {
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    background: var(--color-primary);
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.875rem;
+    font-weight: 800;
+  }
+  .fs-card-best .fs-rank { background: #d97706; }
+  .fs-info { flex: 1; min-width: 0; }
+  .fs-station-name {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--color-primary);
+    line-height: 1.3;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .fs-station-city {
+    margin: 0.25rem 0 0;
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    font-weight: 500;
+  }
+  .fs-distance {
+    flex-shrink: 0;
+    background: #f1f5f9;
+    color: var(--color-primary);
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 0.25rem 0.6rem;
+    border-radius: 6px;
+  }
+
+  /* Body Card */
+  .fs-card-body { padding: 1.25rem; flex: 1; }
+  
+  .fs-main-price-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.25rem;
+  }
+  .fs-price-display { display: flex; flex-direction: column; }
+  .fs-price-label { font-size: 0.75rem; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.025em; }
+  .fs-price-value { font-size: 2rem; font-weight: 900; line-height: 1; margin-top: 0.25rem; }
+  .fs-price-value small { font-size: 1rem; font-weight: 600; margin-left: 0.1rem; }
+  
+  .fs-badge-auto {
+    background: #fef3c7;
+    color: #92400e;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 0.3rem 0.6rem;
+    border-radius: 999px;
+    text-transform: uppercase;
+  }
+
+  /* Prices Table */
+  .fs-prices-table-wrap {
+    background: #f8fafc;
+    border-radius: 0.75rem;
+    overflow: hidden;
+    border: 1px solid #e2e8f0;
+    margin-top: 1rem;
+  }
+  .fs-prices-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+    table-layout: fixed; /* Force le respect des largeurs */
+  }
+  .fs-prices-table th {
+    background: #f1f5f9;
+    padding: 0.8rem 1rem;
+    font-size: 0.75rem;
+    font-weight: 800;
+    color: #64748b;
+    letter-spacing: 0.025em;
+    text-transform: none;
+    border-bottom: 2px solid #e2e8f0;
+  }
+  .fs-th-left { 
+    text-align: left; 
+    border-right: 1px solid #e2e8f0; 
+  }
+  .fs-th-right { text-align: right; }
+  
+  .fs-prices-table td {
+    padding: 0.8rem 1.25rem;
+    border-bottom: 1px solid #f1f5f9;
+  }
+  .fs-prices-table tr:last-child td { border-bottom: none; }
+  
+  .fs-td-label { 
+    font-weight: 700; 
+    color: var(--color-primary); 
+    text-align: left;
+    border-right: 1px solid #e2e8f0; /* Trait vertical de séparation */
+  }
+  .fs-td-val { 
+    text-align: right; 
+    font-weight: 800; 
+    color: #334155; 
+    white-space: nowrap;
+  }
+  
+  .fs-row-active { background: #fffbeb; }
+  .fs-row-active .fs-td-label { color: var(--color-accent); }
+  .fs-row-active .fs-td-val { color: var(--color-accent); font-weight: 800; }
+
+  /* Footer Card */
+  .fs-card-footer {
+    padding: 1rem 1.25rem;
+    background: #f9fafb;
+    border-top: 1px solid #f1f5f9;
+  }
+  .fs-maps-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    width: 100%;
+    padding: 0.6rem;
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 0.5rem;
+    color: var(--color-primary);
+    font-size: 0.875rem;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+  .fs-maps-link:hover {
+    background: var(--color-primary);
+    color: #fff;
+    border-color: var(--color-primary);
+  }
+
+  /* Search Header refinement */
+  .fs-results-header {
+    text-align: center;
+    margin-bottom: 2rem;
+    font-size: 1rem;
+    padding: 0 1rem;
+  }
+  .fs-results-header strong { font-weight: 800; color: var(--color-accent); }
+  .fs-results-header em { font-style: normal; font-weight: 700; color: var(--color-primary); border-bottom: 2px solid var(--color-accent); }
+
+  .fs-more-results {
+    grid-column: 1 / -1;
+    margin-top: 1.5rem;
+    padding: 1.5rem;
+    background: #f8fafc;
+    border: 1px dashed #cbd5e1;
+    border-radius: 0.75rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+  .fs-more-results p { margin: 0; font-weight: 600; color: var(--color-text-muted); }
+  .fs-btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--color-primary);
+    color: #fff;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    font-weight: 700;
+    font-size: 0.9375rem;
+    transition: all 0.2s;
+    text-decoration: none;
+  }
+  .fs-btn-secondary:hover {
+    background: #1a4a66;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(15, 45, 63, 0.15);
+  }
+
+  .fs-more-results-top {
+    grid-column: 1 / -1;
+    margin-bottom: 0.5rem;
+  }
+  .fs-link-dep {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.6rem 1.25rem;
+    background: var(--color-accent);
+    color: #fff;
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.2s;
+    border: none;
+    box-shadow: 0 2px 8px rgba(232, 119, 34, 0.2);
+  }
+  .fs-link-dep:hover {
+    background: #d0651a;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(232, 119, 34, 0.3);
+  }
 </style>
