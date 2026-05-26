@@ -151,11 +151,11 @@ Aucune prévision n'est certaine. Scénario médian AIE (rapport mai 2026) : Bre
 
 ## Sources et méthodologie
 
-- [prix-carburants.gouv.fr](https://www.prix-carburants.gouv.fr/){rel="noopener nofollow"} — Ministère de l'Économie, déclarations quotidiennes des stations-service.
-- [INSEE, série mensuelle SP95-E10 (010596132)](https://www.insee.fr/fr/statistiques/serie/010596132){rel="noopener nofollow"} — Prix moyens mensuels en métropole.
-- [UFIP — Union française des industries pétrolières](https://www.ufip.fr){rel="noopener nofollow"} — Structure du prix à la pompe et fiscalité pétrolière.
-- [Ministère de la Transition écologique — DGEC](https://www.ecologie.gouv.fr){rel="noopener nofollow"} — Taux TICPE 2026 et trajectoire de convergence diesel/essence.
-- [AIE — Agence internationale de l'énergie, rapport mai 2026](https://www.iea.org){rel="noopener nofollow"} — Prévisions marché pétrolier.
+- [prix-carburants.gouv.fr](https://www.prix-carburants.gouv.fr/) — Ministère de l'Économie, déclarations quotidiennes des stations-service.
+- [INSEE, série mensuelle SP95-E10 (010596132)](https://www.insee.fr/fr/statistiques/serie/010596132) — Prix moyens mensuels en métropole.
+- [UFIP — Union française des industries pétrolières](https://www.ufip.fr) — Structure du prix à la pompe et fiscalité pétrolière.
+- [Ministère de la Transition écologique — DGEC](https://www.ecologie.gouv.fr) — Taux TICPE 2026 et trajectoire de convergence diesel/essence.
+- [AIE — Agence internationale de l'énergie, rapport mai 2026](https://www.iea.org) — Prévisions marché pétrolier.
 
 Les variations historiques mai 2024/mai 2025 sont des estimations d'après les séries mensuelles INSEE et carbu.com, à confirmer lors de la prochaine actualisation.
 

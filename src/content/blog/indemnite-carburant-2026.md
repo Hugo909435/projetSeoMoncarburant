@@ -34,11 +34,11 @@ Le 21 avril 2026, le Premier ministre **Sébastien Lecornu** a annoncé une inde
 
 L'indemnité carburant 2026 est un **forfait unique de 50 € par véhicule** versé par l'État aux travailleurs modestes effectuant de longs trajets professionnels. Elle couvre rétroactivement les mois d'**avril, mai et juin 2026** — soit environ 20 centimes par litre sur une consommation moyenne de trois mois. C'est la DGFiP (direction générale des finances publiques) qui gère les versements.
 
-Le dispositif a été **annoncé le 21 avril 2026** par Sébastien Lecornu lors d'une conférence de presse, puis présenté par **Roland Lescure**, ministre de l'Économie, au JT de 20h sur France 2. Le **décret n° 2026-333** a été publié au JORF le **30 avril 2026**, selon les données de [info.gouv.fr](https://www.info.gouv.fr){rel="noopener nofollow"}.
+Le dispositif a été **annoncé le 21 avril 2026** par Sébastien Lecornu lors d'une conférence de presse, puis présenté par **Roland Lescure**, ministre de l'Économie, au JT de 20h sur France 2. Le **décret n° 2026-333** a été publié au JORF le **30 avril 2026**, selon les données de [info.gouv.fr](https://www.info.gouv.fr).
 
 Ce dispositif diffère fondamentalement de la remise carburant universelle de 2022-2023, qui s'appliquait à la pompe pour tous les automobilistes. Ici, l'aide est **strictement ciblée** sur les travailleurs modestes grands rouleurs : cinq conditions cumulatives, définies par le décret, doivent toutes être remplies.
 
-**L'aide est cumulable avec l'indemnité kilométrique versée par l'employeur.** L'indemnité kilométrique rembourse des frais professionnels réels ; l'indemnité carburant 2026 est une aide d'État distincte. Les deux peuvent être perçues simultanément, d'après la fiche publiée par [economie.gouv.fr](https://www.economie.gouv.fr){rel="noopener nofollow"}.
+**L'aide est cumulable avec l'indemnité kilométrique versée par l'employeur.** L'indemnité kilométrique rembourse des frais professionnels réels ; l'indemnité carburant 2026 est une aide d'État distincte. Les deux peuvent être perçues simultanément, d'après la fiche publiée par [economie.gouv.fr](https://www.economie.gouv.fr).
 
 ## Suis-je éligible aux 50 € ? Les 5 conditions cumulatives
 
@@ -77,7 +77,7 @@ La déclaration est faite **sur l'honneur** lors de la demande. La DGFiP peut pr
 
 ## Comment demander l'aide ? La démarche pas à pas
 
-La demande se fait **exclusivement en ligne** sur impots.gouv.fr — aucun formulaire papier, aucune démarche en mairie ou préfecture n'est prévu, selon les informations publiées par [impots.gouv.fr](https://www.impots.gouv.fr){rel="noopener nofollow"}.
+La demande se fait **exclusivement en ligne** sur impots.gouv.fr — aucun formulaire papier, aucune démarche en mairie ou préfecture n'est prévu, selon les informations publiées par [impots.gouv.fr](https://www.impots.gouv.fr).
 
 1. **Avant le 27 mai 2026** — Vérifier son éligibilité avec le simulateur officiel, déjà disponible sur impots.gouv.fr.
 2. **À partir du 27 mai 2026** — Se connecter à son espace personnel sur impots.gouv.fr (identifiant fiscal + numéro de déclarant).
@@ -103,13 +103,13 @@ La demande se fait **exclusivement en ligne** sur impots.gouv.fr — aucun formu
 
 Le plan annoncé le 21 avril 2026 comprend plusieurs dispositifs sectoriels au-delà de l'aide grands rouleurs.
 
-- **Agriculteurs** : l'aide sur le GNR (gazole non routier) passe à **15 centimes par litre**, selon le décret n° 2026-334 du 30 avril 2026. Détails sur [economie.gouv.fr](https://www.economie.gouv.fr){rel="noopener nofollow"}.
+- **Agriculteurs** : l'aide sur le GNR (gazole non routier) passe à **15 centimes par litre**, selon le décret n° 2026-334 du 30 avril 2026. Détails sur [economie.gouv.fr](https://www.economie.gouv.fr).
 
-- **Pêcheurs** : le soutien au carburant pêche passe de 20 à **30-35 centimes par litre**. Fiche officielle sur [info.gouv.fr](https://www.info.gouv.fr){rel="noopener nofollow"}.
+- **Pêcheurs** : le soutien au carburant pêche passe de 20 à **30-35 centimes par litre**. Fiche officielle sur [info.gouv.fr](https://www.info.gouv.fr).
 
 - **PME du BTP** : nouveau dispositif accordant environ **20 centimes par litre** aux entreprises de moins de 20 salariés du secteur de la construction. Conditions sur economie.gouv.fr.
 
-- **Transporteurs et entreprises dépendantes** : prêt flash carburant via [Bpi France](https://www.bpifrance.fr){rel="noopener nofollow"}, délais Urssaf et reports de cotisations sociales accessibles sur demande directe.
+- **Transporteurs et entreprises dépendantes** : prêt flash carburant via [Bpi France](https://www.bpifrance.fr), délais Urssaf et reports de cotisations sociales accessibles sur demande directe.
 
 ## Notre analyse : les 50 € suffisent-ils vraiment ?
 
@@ -164,10 +164,10 @@ Non, pas intégralement. Avec une hausse de **50 centimes par litre** depuis 202
 
 ## Sources et méthodologie
 
-- [Légifrance — Décret n° 2026-333 du 30 avril 2026](https://www.legifrance.gouv.fr){rel="noopener nofollow"} — texte officiel du dispositif grands rouleurs
-- [info.gouv.fr — Communiqué de Sébastien Lecornu du 21 avril 2026](https://www.info.gouv.fr){rel="noopener nofollow"} — annonce et présentation du plan
-- [economie.gouv.fr — Fiche dispositif indemnité carburant 2026](https://www.economie.gouv.fr){rel="noopener nofollow"} — conditions, montants, cumulabilité
-- [Simulateur officiel d'éligibilité — impots.gouv.fr](https://www.impots.gouv.fr){rel="noopener nofollow"} — vérifier son éligibilité avant le 27 mai 2026
+- [Légifrance — Décret n° 2026-333 du 30 avril 2026](https://www.legifrance.gouv.fr) — texte officiel du dispositif grands rouleurs
+- [info.gouv.fr — Communiqué de Sébastien Lecornu du 21 avril 2026](https://www.info.gouv.fr) — annonce et présentation du plan
+- [economie.gouv.fr — Fiche dispositif indemnité carburant 2026](https://www.economie.gouv.fr) — conditions, montants, cumulabilité
+- [Simulateur officiel d'éligibilité — impots.gouv.fr](https://www.impots.gouv.fr) — vérifier son éligibilité avant le 27 mai 2026
 
 Les calculs de la section "Notre analyse" sont fondés sur le prix moyen de l'essence relevé en avril 2026 (≈ 2,00 €/L) et une estimation de hausse de +50 cts/L par rapport à 2025, d'après les données de prix-carburant.eu compilées depuis prix-carburants.gouv.fr et la série mensuelle INSEE (010596132).
 
