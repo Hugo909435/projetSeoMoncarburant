@@ -3,3 +3,21 @@ RewriteEngine On
 # Redirection www → non-www (301 permanent)
 RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
 RewriteRule ^ https://%1%{REQUEST_URI} [R=301,L]
+
+# Sécurité : En-têtes HTTP
+<IfModule mod_headers.c>
+    # Empêcher le site d'être affiché dans une iframe (protection contre le clickjacking)
+    Header set X-Frame-Options "SAMEORIGIN"
+    
+    # Empêcher le navigateur de deviner le type de contenu (protection contre le MIME sniffing)
+    Header set X-Content-Type-Options "nosniff"
+    
+    # Activer la protection XSS du navigateur
+    Header set X-XSS-Protection "1; mode=block"
+    
+    # Politique de référent (Referrer Policy)
+    Header set Referrer-Policy "strict-origin-when-cross-origin"
+    
+    # HSTS (uniquement si HTTPS est actif, à activer avec prudence)
+    # Header set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+</IfModule>

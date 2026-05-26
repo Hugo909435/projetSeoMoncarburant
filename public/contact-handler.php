@@ -141,7 +141,7 @@ $headers = [
     'Reply-To: ' . $email,
     'Content-Type: text/plain; charset=UTF-8',
     'MIME-Version: 1.0',
-    'X-Mailer: PHP/' . PHP_VERSION,
+    'X-Mailer: PHP',
 ];
 
 $sent = @mail(
