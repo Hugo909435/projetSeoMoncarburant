@@ -22,7 +22,9 @@
       "Bash(Out-Null)",
       "Bash(Write-Host \"done\")",
       "WebSearch",
-      "WebFetch(domain:prix-carburant.eu)"
+      "WebFetch(domain:prix-carburant.eu)",
+      "Bash(curl -s \"https://mon-carburant.com/\" -o /tmp/home.html)",
+      "Read(//tmp/**)"
     ]
   }
 }

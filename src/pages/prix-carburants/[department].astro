@@ -7,7 +7,19 @@ import { buildDeptIntro } from '../../utils/dept-intro';
 
 export async function getStaticPaths() {
   const deptFiles = import.meta.glob('../../data/fuel/stations-by-department/*.json', { eager: true });
+  const cityFiles = import.meta.glob('../../data/fuel/stations-by-city/*.json', { eager: true });
   const deps = departments as Record<string, { num: string; name: string; slug: string; region: string; regionSlug: string; neighbors: string[] }>;
+
+  const deptCitiesMap: Record<string, { name: string; slug: string }[]> = {};
+  for (const [, data] of Object.entries(cityFiles) as [string, any][]) {
+    const { citySlug, cityName, department } = data;
+    if (!citySlug || !cityName || !department) continue;
+    if (!deptCitiesMap[department]) deptCitiesMap[department] = [];
+    deptCitiesMap[department].push({ name: cityName, slug: citySlug });
+  }
+  for (const arr of Object.values(deptCitiesMap)) {
+    arr.sort((a, b) => a.name.localeCompare(b.name, 'fr'));
+  }
 
   return Object.entries(deptFiles).map(([path, data]: [string, any]) => {
     const num = path.match(/\/(\w+)\.json$/)?.[1];
@@ -16,12 +28,12 @@ export async function getStaticPaths() {
     if (!dept) return null;
     return {
       params: { department: dept.slug },
-      props: { deptData: data, dept },
+      props: { deptData: data, dept, deptCities: deptCitiesMap[num] ?? [] },
     };
   }).filter(Boolean);
 }
 
-const { deptData, dept } = Astro.props;
+const { deptData, dept, deptCities } = Astro.props;
 const { stats, stations, top10, count } = deptData;
 const deps = departments as Record<string, { num: string; name: string; slug: string; region: string; regionSlug: string; neighbors: string[] }>;
 
@@ -251,6 +263,20 @@ const jsonLdBreadcrumb = {
         </section>
       )}
 
+      <!-- Villes du département -->
+      {deptCities.length > 0 && (
+        <section class="section-block">
+          <h2>Prix carburant par ville en {dept.name}</h2>
+          <div class="cities-grid">
+            {deptCities.map((city: { name: string; slug: string }) => (
+              <a href={`/prix-carburants/ville/${city.slug}/`} class="city-link">
+                {city.name}
+              </a>
+            ))}
+          </div>
+        </section>
+      )}
+
       <!-- Texte unique SEO -->
       <section class="section-block seo-text">
         <h2>Carburant {dept.name} : informations pratiques</h2>
@@ -329,6 +355,28 @@ const jsonLdBreadcrumb = {
   .pop-badge { font-size: 0.7rem; padding: 0.15rem 0.5rem; border-radius: 999px; font-weight: 600; }
   .pop-auto { background: #fef3c7; color: #92400e; }
   .pop-route { background: #e0f2fe; color: #075985; }
+  .cities-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .city-link {
+    display: inline-block;
+    padding: 0.35rem 0.75rem;
+    background: #f1f5f9;
+    border: 1px solid #e2e8f0;
+    border-radius: 999px;
+    font-size: 0.875rem;
+    color: var(--color-primary);
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.15s;
+  }
+  .city-link:hover {
+    background: var(--color-primary);
+    color: #fff;
+    border-color: var(--color-primary);
+  }
   .btn-show-more {
     background: #fff; border: 2px solid var(--color-primary); color: var(--color-primary);
     padding: 0.6rem 1.5rem; border-radius: 0.5rem; font-weight: 600; cursor: pointer; font-size: 0.9rem;

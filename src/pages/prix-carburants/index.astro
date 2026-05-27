@@ -3,6 +3,8 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import FuelSearch from '../../components/FuelSearch.astro';
 import statsNational from '../../data/fuel/stats-national.json';
 import statsByRegion from '../../data/fuel/stats-by-region.json';
+import statsByDepartment from '../../data/fuel/stats-by-department.json';
+import departmentsData from '../../data/departments.json';
 import meta from '../../data/fuel/meta.json';
 
 const FUEL_CONFIG = [
@@ -16,6 +18,9 @@ const FUEL_CONFIG = [
 
 const regions = Object.entries(statsByRegion).map(([slug, data]) => ({ slug, ...data }));
 regions.sort((a, b) => (a['Gazole'] ?? 99) - (b['Gazole'] ?? 99));
+
+const deps = departmentsData as Record<string, { num: string; name: string; slug: string }>;
+const allDepts = Object.values(deps).sort((a, b) => a.num.localeCompare(b.num, 'fr', { numeric: true }));
 
 const lastUpdate = meta.lastUpdate
   ? new Date(meta.lastUpdate).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })
@@ -119,6 +124,19 @@ const description = `Comparez les prix du carburant dans toute la France. ${meta
             })}
           </tbody>
         </table>
+      </div>
+    </section>
+
+    <!-- Prix par département -->
+    <section class="container section-gap">
+      <h2 class="section-title">Prix du carburant par département</h2>
+      <div class="dept-grid">
+        {allDepts.map(dept => (
+          <a href={`/prix-carburants/${dept.slug}/`} class="dept-pill">
+            <span class="dept-pill-num">{dept.num}</span>
+            <span class="dept-pill-name">{dept.name}</span>
+          </a>
+        ))}
       </div>
     </section>
 
@@ -251,6 +269,45 @@ const description = `Comparez les prix du carburant dans toute la France. ${meta
   .badge-green { background: #dcfce7; color: #166534; }
   .badge-orange { background: #fff7ed; color: #c2410c; }
   .badge-neutral { background: #f1f5f9; color: #64748b; }
+  .dept-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .dept-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.35rem 0.75rem;
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 999px;
+    text-decoration: none;
+    font-size: 0.8125rem;
+    transition: all 0.15s;
+  }
+  .dept-pill:hover {
+    background: var(--color-primary);
+    border-color: var(--color-primary);
+    color: #fff;
+  }
+  .dept-pill-num {
+    font-weight: 700;
+    font-size: 0.75rem;
+    color: #64748b;
+    background: #f1f5f9;
+    padding: 0.1rem 0.35rem;
+    border-radius: 0.25rem;
+  }
+  .dept-pill:hover .dept-pill-num {
+    background: rgba(255,255,255,0.2);
+    color: #fff;
+  }
+  .dept-pill-name {
+    color: var(--color-primary);
+    font-weight: 500;
+  }
+  .dept-pill:hover .dept-pill-name { color: #fff; }
   .explainer-box {
     background: #f8fafc;
     border: 1px solid #e2e8f0;
