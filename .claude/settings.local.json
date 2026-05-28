@@ -29,7 +29,10 @@
       "Bash(git push *)",
       "PowerShell(Head *)",
       "PowerShell(Get-ChildItem \"C:\\\\Users\\\\hbeignon\\\\Desktop\\\\projetSeoMoncarburant\\\\node_modules\\\\@fontsource-variable\\\\inter\\\\files\" | Where-Object { $_.Name -match \"latin\" -and $_.Name -notmatch \"ext\" } | Select-Object Name)",
-      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:4321/)"
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:4321/)",
+      "PowerShell(Get-ChildItem \"C:\\\\Users\\\\hbeignon\\\\Desktop\\\\projetSeoMoncarburant\\\\dist\\\\_astro\\\\\" | Where-Object { $_.Extension -in \".css\",\".js\" } | Select-Object Name, @{N=\"Ko\";E={[math]::Round\\($_.Length/1KB,1\\)}} | Sort-Object Ko -Descending | Select-Object -First 20)",
+      "Bash(gzip -c \"C:/Users/hbeignon/Desktop/projetSeoMoncarburant/dist/index.html\")",
+      "Bash(awk '{printf \"%.1f KB\\\\n\", $1/1024}')"
     ]
   }
 }
