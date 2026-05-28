@@ -380,7 +380,10 @@
   var existing = load();
   if (existing) {
     $r.classList.add('is-open');
-    if (existing.analytics) loadGA4();
+    if (existing.analytics) {
+      // Retarder le chargement de GA4 pour ne pas pénaliser le LCP/FCP
+      setTimeout(loadGA4, 2000);
+    }
   } else {
     showBanner();
   }
