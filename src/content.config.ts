@@ -17,6 +17,9 @@ const articleSchema = z.object({
   imageAlt: z.string(),
   readingTime: z.number(),
   pillar: z.string().optional(), // slug du pilier parent
+  relatedArticles: z.array(z.string()).default([]),
+  ctaTitle: z.string().optional(),
+  ctaDescription: z.string().optional(),
   faq: z
     .array(
       z.object({
@@ -45,11 +48,7 @@ const blog = defineCollection({
 // Articles piliers de silo
 const piliers = defineCollection({
   loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/piliers' }),
-  schema: articleSchema.extend({
-    relatedArticles: z.array(z.string()).default([]), // slugs des satellites
-    ctaTitle: z.string().optional(),
-    ctaDescription: z.string().optional(),
-  }),
+  schema: articleSchema,
 });
 
 // Auteurs
