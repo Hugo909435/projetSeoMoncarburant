@@ -24,7 +24,12 @@
       "WebSearch",
       "WebFetch(domain:prix-carburant.eu)",
       "Bash(curl -s \"https://mon-carburant.com/\" -o /tmp/home.html)",
-      "Read(//tmp/**)"
+      "Read(//tmp/**)",
+      "Bash(git commit *)",
+      "Bash(git push *)",
+      "PowerShell(Head *)",
+      "PowerShell(Get-ChildItem \"C:\\\\Users\\\\hbeignon\\\\Desktop\\\\projetSeoMoncarburant\\\\node_modules\\\\@fontsource-variable\\\\inter\\\\files\" | Where-Object { $_.Name -match \"latin\" -and $_.Name -notmatch \"ext\" } | Select-Object Name)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:4321/)"
     ]
   }
 }

@@ -9,6 +9,7 @@ export default defineConfig({
   trailingSlash: 'always',
   redirects: {
     '/auteur/thomas-martin/': '/auteur/hugo-beignon/',
+    '/piliers/guide-economiser-carburant/': '/piliers/reduire-facture-carburant/',
   },
   compressHTML: true,
   prefetch: {

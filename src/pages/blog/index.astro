@@ -29,9 +29,9 @@ const categoryLabels: Record<string, string> = {
 
         <!-- Filtres par catégorie -->
         <nav class="category-filters" aria-label="Filtrer par catégorie">
-          <a href="/blog" class="filter-btn active">Tous</a>
+          <a href="/blog/" class="filter-btn active">Tous</a>
           {Object.entries(categoryLabels).map(([slug, label]) => (
-            <a href={`/categorie/${slug}`} class="filter-btn">{label}</a>
+            <a href={`/categorie/${slug}/`} class="filter-btn">{label}</a>
           ))}
         </nav>
       </header>

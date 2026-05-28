@@ -1,14 +1,27 @@
 ---
-// FuelSearch — composant interactif de recherche de stations
-// JS vanilla pur, charge les données via fetch sur /data/stations-light.json
+import departments from '../data/departments.json';
+
+// Slug map : numéro département → slug URL
+const deptSlugs = Object.fromEntries(
+  Object.entries(departments as Record<string, { slug: string; num: string }>)
+    .map(([num, d]) => [num, d.slug])
+);
+
+// Liste des slugs ville qui ont une page dédiée
+const cityFiles = import.meta.glob('../data/fuel/stations-by-city/*.json');
+const availableCitySlugs = Object.keys(cityFiles).map(p => p.replace(/^.*\/(.+)\.json$/, '$1'));
 ---
 
-<section class="fuel-search-section" aria-label="Rechercher une station">
+<section
+  class="fuel-search-section"
+  aria-label="Rechercher une station"
+  data-dept-slugs={JSON.stringify(deptSlugs)}
+  data-city-slugs={JSON.stringify(availableCitySlugs)}
+>
   <div class="fuel-search-card">
     <h2 class="fs-title">Trouver les stations les moins chères près de chez moi</h2>
 
     <div class="fs-controls">
-      <!-- Recherche CP / ville -->
       <div class="fs-input-group">
         <label for="fs-query" class="fs-label">Code postal ou ville</label>
         <div class="fs-input-wrap">
@@ -19,14 +32,13 @@
             type="text"
             id="fs-query"
             class="fs-input"
-            placeholder="Ex : 75001 ou Paris"
+            placeholder="Ex : 85000 ou La Roche-sur-Yon"
             maxlength="100"
             autocomplete="postal-code"
           />
         </div>
       </div>
 
-      <!-- Sélecteur de carburant -->
       <div class="fs-input-group">
         <label for="fs-fuel" class="fs-label">Carburant</label>
         <select id="fs-fuel" class="fs-select">
@@ -39,7 +51,6 @@
         </select>
       </div>
 
-      <!-- Boutons -->
       <div class="fs-actions">
         <button id="fs-search-btn" class="fs-btn-primary" type="button">
           Rechercher
@@ -47,284 +58,164 @@
       </div>
     </div>
 
-    <!-- Loading -->
     <div id="fs-loading" class="fs-loading" hidden aria-live="polite">
       <span class="fs-spinner" aria-hidden="true"></span>
       Recherche en cours…
     </div>
 
-    <!-- Erreur -->
     <div id="fs-error" class="fs-error" hidden role="alert"></div>
 
-    <!-- Résultats -->
-    <div id="fs-results" class="fs-results" hidden>
-      <div id="fs-results-header" class="fs-results-header"></div>
-      <ol id="fs-results-list" class="fs-results-list"></ol>
+    <!-- Liste de désambiguïsation (plusieurs villes correspondantes) -->
+    <div id="fs-disambiguation" class="fs-disambiguation" hidden>
+      <p class="fs-disambiguation-label">Plusieurs villes correspondent, laquelle ?</p>
+      <ul id="fs-disambiguation-list" class="fs-disambiguation-list"></ul>
     </div>
   </div>
 </section>
 
 <script>
-// ============================================================
-// FuelSearch — vanilla TypeScript
-// ============================================================
+const section = document.querySelector('.fuel-search-section') as HTMLElement;
+const deptSlugs: Record<string, string> = JSON.parse(section?.dataset.deptSlugs ?? '{}');
+const availableCitySlugs: string[] = JSON.parse(section?.dataset.citySlugs ?? '[]');
+const citySlugSet = new Set(availableCitySlugs);
 
-interface StationLight {
-  id: string;
-  cp: string;
-  ville: string;
-  villeSlug: string;
-  adresse: string;
-  lat: number;
-  lng: number;
-  dep: string;
-  pop: string;
-  prices: Record<string, number>;
-}
+let stationsCache: any[] | null = null;
 
-let stationsCache: StationLight[] | null = null;
-let loadingStations = false;
-const DEFAULT_FUEL = 'Gazole';
-
-// Haversine distance en km
-function haversine(lat1: number, lng1: number, lat2: number, lng2: number): number {
-  const R = 6371;
-  const dLat = (lat2 - lat1) * Math.PI / 180;
-  const dLng = (lng2 - lng1) * Math.PI / 180;
-  const a = Math.sin(dLat / 2) ** 2
-    + Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * Math.sin(dLng / 2) ** 2;
-  return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-}
-
-async function loadStations(): Promise<StationLight[]> {
+async function loadStations(): Promise<any[]> {
   if (stationsCache) return stationsCache;
-  if (loadingStations) {
-    await new Promise<void>(resolve => { const t = setInterval(() => { if (stationsCache) { clearInterval(t); resolve(); } }, 100); });
-    return stationsCache!;
-  }
-  loadingStations = true;
   const resp = await fetch('/data/stations-light.json');
-  if (!resp.ok) throw new Error('Impossible de charger les données des stations');
+  if (!resp.ok) throw new Error('Impossible de charger les données.');
   stationsCache = await resp.json();
-  loadingStations = false;
   return stationsCache!;
 }
 
-function showLoading(show: boolean) {
-  const el = document.getElementById('fs-loading');
-  if (el) el.hidden = !show;
+function normalize(str: string): string {
+  return str.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/['\s-]+/g, '-').replace(/^-|-$/g, '');
 }
 
-function showError(msg: string) {
-  const el = document.getElementById('fs-error');
-  if (!el) return;
+function getDeptNum(cp: string): string {
+  const padded = cp.padStart(5, '0');
+  return (padded.startsWith('97') || padded.startsWith('98')) ? padded.substring(0, 3) : padded.substring(0, 2);
+}
+
+function setLoading(on: boolean) {
+  (document.getElementById('fs-loading') as HTMLElement).hidden = !on;
+}
+
+function setError(msg: string) {
+  const el = document.getElementById('fs-error') as HTMLElement;
   el.textContent = msg;
   el.hidden = !msg;
 }
 
-function showResults(stations: StationLight[], fuel: string, refLat: number, refLng: number, label: string) {
-  const resultsEl = document.getElementById('fs-results');
-  const headerEl = document.getElementById('fs-results-header');
-  const listEl = document.getElementById('fs-results-list');
-  if (!resultsEl || !headerEl || !listEl) return;
-
-  const fuelLabels: Record<string, string> = {
-    Gazole: 'Gazole', SP95: 'SP95', SP98: 'SP98', E10: 'E10', E85: 'E85', GPLc: 'GPL',
-  };
-  const fuelColors: Record<string, string> = {
-    Gazole: '#374151', SP95: '#16a34a', SP98: '#2563eb', E10: '#15803d', E85: '#E87722', GPLc: '#ca8a04',
-  };
-
-  // Filtrer stations avec ce carburant + calculer distance
-  const withDist = stations
-    .filter(s => s.prices[fuel] != null && s.lat && s.lng)
-    .map(s => ({ ...s, dist: haversine(refLat, refLng, s.lat, s.lng) }))
-    .sort((a, b) => {
-      // Trier d'abord par distance (≤ 30km), ensuite par prix
-      const distA = a.dist <= 30 ? 0 : a.dist;
-      const distB = b.dist <= 30 ? 0 : b.dist;
-      if (Math.abs(distA - distB) > 5) return distA - distB;
-      return (a.prices[fuel] ?? 99) - (b.prices[fuel] ?? 99);
-    })
-    .slice(0, 10);
-
-  // Lien département
-  let depHtml = '';
-  if (withDist.length > 0) {
-    const firstStation = withDist[0];
-    const depNum = firstStation.dep;
-    const depSlugMap: Record<string, string> = {
-      '85': 'vendee', '44': 'loire-atlantique', '49': 'maine-et-loire', '53': 'mayenne', '72': 'sarthe',
-      '75': 'paris', '13': 'bouches-du-rhone', '69': 'rhone', '33': 'gironde', '31': 'haute-garonne',
-      '59': 'nord', '06': 'alpes-maritimes', '67': 'bas-rhin', '34': 'herault'
-    };
-    const depSlug = depSlugMap[depNum];
-    const depUrl = depSlug ? `/prix-carburants/${depSlug}/` : '/prix-carburants/';
-    depHtml = `
-      <div class="fs-more-results-top">
-        <a href="${depUrl}" class="fs-link-dep">
-          Voir l'intégralité des stations du département (${depNum}) →
-        </a>
-      </div>
-    `;
-  }
-
-  headerEl.innerHTML = `
-    ${depHtml}
-    <div style="margin-top: 1rem">
-      <strong>Top 10</strong> des stations les moins chères près de <em>${label}</em> pour <strong>${fuelLabels[fuel] || fuel}</strong>
-    </div>
-  `;
-
-  listEl.innerHTML = withDist.map((s, i) => {
-    const mainPrice = s.prices[fuel];
-    const distText = s.dist < 1 ? `${(s.dist * 1000).toFixed(0)}m` : `${s.dist.toFixed(1)}km`;
-    const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${s.lat},${s.lng}`;
-    const isAuto = s.pop === 'autoroute';
-
-    const allPricesRows = Object.entries(fuelLabels)
-      .filter(([f]) => s.prices[f] != null)
-      .map(([f, label]) => `
-        <tr class="${f === fuel ? 'fs-row-active' : ''}">
-          <td class="fs-td-label">${label}</td>
-          <td class="fs-td-val">${s.prices[f].toFixed(3)} €/L</td>
-        </tr>
-      `).join('');
-
-    return `
-      <li class="fs-card ${i === 0 ? 'fs-card-best' : ''}">
-        <div class="fs-card-header">
-          <div class="fs-rank">${i + 1}</div>
-          <div class="fs-info">
-            <h3 class="fs-station-name">${s.adresse || 'Station Service'}</h3>
-            <p class="fs-station-city">${s.cp} ${s.ville}</p>
-          </div>
-          <div class="fs-distance">${distText}</div>
-        </div>
-
-        <div class="fs-card-body">
-          <div class="fs-main-price-row">
-            <div class="fs-price-display">
-              <span class="fs-price-label">Prix ${fuelLabels[fuel] || fuel}</span>
-              <span class="fs-price-value" style="color:${fuelColors[fuel] || 'var(--color-primary)'}">
-                ${mainPrice!.toFixed(3)}<small> €/L</small>
-              </span>
-            </div>
-            ${isAuto ? '<span class="fs-badge-auto">Autoroute</span>' : ''}
-          </div>
-
-          <div class="fs-prices-table-wrap">
-            <table class="fs-prices-table">
-              <thead>
-                <tr>
-                  <th class="fs-th-left">Carburant</th>
-                  <th class="fs-th-right">Prix au litre</th>
-                </tr>
-              </thead>
-              <tbody>
-                ${allPricesRows}
-              </tbody>
-            </table>
-          </div>
-        </div>
-
-        <div class="fs-card-footer">
-          <a href="${mapsUrl}" class="fs-maps-link" target="_blank" rel="noopener noreferrer">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-            Y aller avec Google Maps
-          </a>
-        </div>
-      </li>
-    `;
-  }).join('');
-
-  resultsEl.hidden = false;
+function setDisambiguation(matches: Map<string, string>) {
+  const container = document.getElementById('fs-disambiguation') as HTMLElement;
+  const list = document.getElementById('fs-disambiguation-list') as HTMLElement;
+  list.innerHTML = '';
+  matches.forEach((label, slug) => {
+    const li = document.createElement('li');
+    const a = document.createElement('a');
+    a.href = `/prix-carburants/ville/${slug}/`;
+    a.textContent = label;
+    li.appendChild(a);
+    list.appendChild(li);
+  });
+  container.hidden = false;
 }
 
-async function searchByQuery(query: string, fuel: string) {
-  showLoading(true);
-  showError('');
+function clearState() {
+  setError('');
+  (document.getElementById('fs-disambiguation') as HTMLElement).hidden = true;
+}
+
+async function search() {
+  const queryInput = document.getElementById('fs-query') as HTMLInputElement;
+  const q = queryInput.value.trim();
+  if (!q) { setError('Saisissez un code postal ou une ville.'); return; }
+
+  clearState();
+
+  // --- Code postal ---
+  if (/^\d{2,5}$/.test(q)) {
+    const depNum = getDeptNum(q);
+    const slug = deptSlugs[depNum];
+    if (slug) {
+      window.location.href = `/prix-carburants/${slug}/`;
+    } else {
+      setError('Département non reconnu pour ce code postal.');
+    }
+    return;
+  }
+
+  // --- Nom de ville ---
+  setLoading(true);
   try {
     const stations = await loadStations();
-    const q = query.trim();
+    const qNorm = normalize(q);
 
-    // Par code postal
-    if (/^\d{2,5}$/.test(q)) {
-      const cp = q.padStart(5, '0');
-      const dep = cp.length >= 5 ? cp.substring(0, 2) : q;
-
-      // Chercher stations dans ce département
-      const depStations = stations.filter(s => s.dep === dep || s.dep === cp.substring(0, 3));
-
-      if (depStations.length === 0) {
-        showError(`Aucune station trouvée pour le code postal ${q}. Essayez un autre code.`);
-        return;
+    // Trouver tous les villeSlug correspondants
+    const found = new Map<string, string>(); // slug → label affiché
+    for (const s of stations) {
+      if (!s.villeSlug) continue;
+      const vNorm = normalize(s.ville);
+      if (vNorm === qNorm || vNorm.startsWith(qNorm + '-') || s.villeSlug.startsWith(qNorm)) {
+        if (!found.has(s.villeSlug)) {
+          found.set(s.villeSlug, `${s.ville} (${s.dep})`);
+        }
       }
+    }
 
-      // Centre géographique approximatif
-      const avgLat = depStations.reduce((a, s) => a + s.lat, 0) / depStations.length;
-      const avgLng = depStations.reduce((a, s) => a + s.lng, 0) / depStations.length;
+    if (found.size === 0) {
+      setError(`Aucune ville trouvée pour "${q}". Essayez avec un code postal.`);
+      return;
+    }
 
-      // Affiner si CP complet : chercher stations avec ce CP exact
-      const exactMatch = depStations.filter(s => s.cp === cp);
-      const refLat = exactMatch.length > 0
-        ? exactMatch.reduce((a, s) => a + s.lat, 0) / exactMatch.length
-        : avgLat;
-      const refLng = exactMatch.length > 0
-        ? exactMatch.reduce((a, s) => a + s.lat, 0) / exactMatch.length
-        : avgLng;
+    // Séparer ceux qui ont une page dédiée et les autres
+    const withPage = new Map<string, string>();
+    let fallbackDep: string | null = null;
 
-      showResults(depStations, fuel, refLat, refLng, q);
+    for (const [slug, label] of found) {
+      if (citySlugSet.has(slug)) {
+        withPage.set(slug, label);
+      } else if (!fallbackDep) {
+        // Récupérer le département de la première station sans page
+        const st = stations.find(s => s.villeSlug === slug);
+        if (st) fallbackDep = st.dep;
+      }
+    }
+
+    if (withPage.size === 1) {
+      const [slug] = withPage.keys();
+      window.location.href = `/prix-carburants/ville/${slug}/`;
+    } else if (withPage.size > 1) {
+      setDisambiguation(withPage);
     } else {
-      // Recherche par nom de ville
-      const normalized = q.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
-      const cityStations = stations.filter(s => {
-        const v = s.ville.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
-        return v.includes(normalized) || s.villeSlug.includes(normalized.replace(/\s+/g, '-'));
-      });
-
-      if (cityStations.length === 0) {
-        showError(`Aucune station trouvée pour "${q}". Essayez avec un code postal.`);
-        return;
+      // Pas de page ville → page département
+      const depSlug = fallbackDep ? deptSlugs[fallbackDep] : null;
+      if (depSlug) {
+        window.location.href = `/prix-carburants/${depSlug}/`;
+      } else {
+        setError(`Pas de page disponible pour "${q}". Essayez avec un code postal.`);
       }
-
-      const refLat = cityStations.reduce((a, s) => a + s.lat, 0) / cityStations.length;
-      const refLng = cityStations.reduce((a, s) => a + s.lng, 0) / cityStations.length;
-      showResults(cityStations, fuel, refLat, refLng, q);
     }
   } catch (err: any) {
-    showError(err.message || 'Une erreur est survenue. Réessayez.');
+    setError(err.message || 'Une erreur est survenue.');
   } finally {
-    showLoading(false);
+    setLoading(false);
   }
 }
 
-// Initialisation
 document.addEventListener('DOMContentLoaded', () => {
-  const searchBtn = document.getElementById('fs-search-btn');
-  const queryInput = document.getElementById('fs-query') as HTMLInputElement;
-  const fuelSelect = document.getElementById('fs-fuel') as HTMLSelectElement;
-
-  function performSearch() {
-    const q = queryInput?.value ?? '';
-    const f = fuelSelect?.value ?? DEFAULT_FUEL;
-    if (!q.trim()) { showError('Saisissez un code postal ou une ville.'); return; }
-    searchByQuery(q, f);
-  }
-
-  searchBtn?.addEventListener('click', performSearch);
-
-  queryInput?.addEventListener('keydown', (e: KeyboardEvent) => {
-    if (e.key === 'Enter') {
-      performSearch();
-    }
+  document.getElementById('fs-search-btn')?.addEventListener('click', search);
+  (document.getElementById('fs-query') as HTMLInputElement)?.addEventListener('keydown', (e: KeyboardEvent) => {
+    if (e.key === 'Enter') search();
   });
-
 });
 </script>
 
 <style>
   .fuel-search-section { margin: 0; }
+
   .fuel-search-card {
     background: #fff;
     border: 2px solid #e2e8f0;
@@ -332,288 +223,147 @@ document.addEventListener('DOMContentLoaded', () => {
     padding: 2rem;
     box-shadow: 0 4px 24px rgba(15, 45, 63, 0.08);
   }
-  .fs-title { font-size: 1.25rem; font-weight: 700; color: var(--color-primary); margin: 0 0 1.5rem; }
-  .fs-controls { display: grid; grid-template-columns: 1fr; gap: 1.25rem; }
+
+  .fs-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--color-primary);
+    margin: 0 0 1.5rem;
+  }
+
+  .fs-controls {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+
   @media (min-width: 640px) {
     .fs-controls { grid-template-columns: 1fr 200px auto; align-items: end; }
   }
-  .fs-label { display: block; font-size: 0.8125rem; font-weight: 600; color: var(--color-text-muted); margin-bottom: 0.4rem; }
+
+  .fs-label {
+    display: block;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--color-text-muted);
+    margin-bottom: 0.4rem;
+  }
+
   .fs-input-wrap { position: relative; }
-  .fs-input-icon { position: absolute; left: 0.75rem; top: 50%; transform: translateY(-50%); color: #9ca3af; pointer-events: none; }
+
+  .fs-input-icon {
+    position: absolute;
+    left: 0.75rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #9ca3af;
+    pointer-events: none;
+  }
+
   .fs-input, .fs-select {
-    width: 100%; padding: 0.7rem 0.75rem;
-    border: 2px solid #e2e8f0; border-radius: 0.5rem; font-size: 1rem;
-    outline: none; transition: border-color 0.2s; box-sizing: border-box;
+    width: 100%;
+    padding: 0.7rem 0.75rem;
+    border: 2px solid #e2e8f0;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.2s;
+    box-sizing: border-box;
     background: #fff;
   }
+
   .fs-input { padding-left: 2.5rem; }
   .fs-input:focus, .fs-select:focus { border-color: var(--color-primary); }
-  .fs-actions { display: flex; gap: 0.75rem; }
+
+  .fs-actions { display: flex; }
+
   .fs-btn-primary {
-    width: 100%; background: var(--color-accent); color: #fff;
-    border: none; border-radius: 0.5rem; padding: 0.75rem 1.5rem;
-    font-size: 1rem; font-weight: 700; cursor: pointer; transition: background 0.2s;
-  }
-  .fs-btn-primary:hover { background: #d0651a; }
-  .fs-loading { display: flex; align-items: center; gap: 0.75rem; padding: 1.25rem; color: var(--color-text-muted); font-size: 0.9rem; margin-top: 1rem; }
-  .fs-spinner {
-    display: inline-block; width: 20px; height: 20px;
-    border: 3px solid #e2e8f0; border-top-color: var(--color-accent);
-    border-radius: 50%; animation: spin 0.7s linear infinite;
-  }
-  @keyframes spin { to { transform: rotate(360deg); } }
-  .fs-error { background: #fef2f2; border: 1px solid #fecaca; border-radius: 0.5rem; padding: 0.875rem 1rem; color: #dc2626; font-size: 0.875rem; margin-top: 1rem; }
-  .fs-results { margin-top: 1.5rem; }
-  .fs-results-header { font-size: 0.9rem; color: var(--color-text-muted); margin-bottom: 1rem; }
-  .fs-results-header strong { color: var(--color-primary); }
-  
-  .fs-results-list { 
-    list-style: none; padding: 0; margin: 0; 
-    display: grid; grid-template-columns: 1fr; gap: 1.5rem;
-  }
-  @media (min-width: 1024px) {
-    .fs-results-list { grid-template-columns: repeat(2, 1fr); }
-  }
-
-  .fs-card {
-    background: #fff;
-    border: 1px solid #e2e8f0;
-    border-radius: 1rem;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    transition: all 0.2s ease;
-    position: relative;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.04);
-  }
-  .fs-card:hover {
-    border-color: var(--color-accent);
-    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
-    transform: translateY(-2px);
-  }
-  .fs-card-best {
-    border: 2px solid #fbbf24;
-    background: #fffdf2;
-  }
-
-  /* Header Card */
-  .fs-card-header {
-    padding: 1.25rem;
-    display: flex;
-    align-items: flex-start;
-    gap: 1rem;
-    border-bottom: 1px solid #f1f5f9;
-  }
-  .fs-rank {
-    flex-shrink: 0;
-    width: 32px;
-    height: 32px;
-    background: var(--color-primary);
-    color: #fff;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.875rem;
-    font-weight: 800;
-  }
-  .fs-card-best .fs-rank { background: #d97706; }
-  .fs-info { flex: 1; min-width: 0; }
-  .fs-station-name {
-    margin: 0;
-    font-size: 1rem;
-    font-weight: 700;
-    color: var(--color-primary);
-    line-height: 1.3;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-  .fs-station-city {
-    margin: 0.25rem 0 0;
-    font-size: 0.875rem;
-    color: var(--color-text-muted);
-    font-weight: 500;
-  }
-  .fs-distance {
-    flex-shrink: 0;
-    background: #f1f5f9;
-    color: var(--color-primary);
-    font-size: 0.75rem;
-    font-weight: 700;
-    padding: 0.25rem 0.6rem;
-    border-radius: 6px;
-  }
-
-  /* Body Card */
-  .fs-card-body { padding: 1.25rem; flex: 1; }
-  
-  .fs-main-price-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 1.25rem;
-  }
-  .fs-price-display { display: flex; flex-direction: column; }
-  .fs-price-label { font-size: 0.75rem; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.025em; }
-  .fs-price-value { font-size: 2rem; font-weight: 900; line-height: 1; margin-top: 0.25rem; }
-  .fs-price-value small { font-size: 1rem; font-weight: 600; margin-left: 0.1rem; }
-  
-  .fs-badge-auto {
-    background: #fef3c7;
-    color: #92400e;
-    font-size: 0.7rem;
-    font-weight: 700;
-    padding: 0.3rem 0.6rem;
-    border-radius: 999px;
-    text-transform: uppercase;
-  }
-
-  /* Prices Table */
-  .fs-prices-table-wrap {
-    background: #f8fafc;
-    border-radius: 0.75rem;
-    overflow: hidden;
-    border: 1px solid #e2e8f0;
-    margin-top: 1rem;
-  }
-  .fs-prices-table {
     width: 100%;
-    border-collapse: collapse;
-    font-size: 0.9rem;
-    table-layout: fixed; /* Force le respect des largeurs */
-  }
-  .fs-prices-table th {
-    background: #f1f5f9;
-    padding: 0.8rem 1rem;
-    font-size: 0.75rem;
-    font-weight: 800;
-    color: #64748b;
-    letter-spacing: 0.025em;
-    text-transform: none;
-    border-bottom: 2px solid #e2e8f0;
-  }
-  .fs-th-left { 
-    text-align: left; 
-    border-right: 1px solid #e2e8f0; 
-  }
-  .fs-th-right { text-align: right; }
-  
-  .fs-prices-table td {
-    padding: 0.8rem 1.25rem;
-    border-bottom: 1px solid #f1f5f9;
-  }
-  .fs-prices-table tr:last-child td { border-bottom: none; }
-  
-  .fs-td-label { 
-    font-weight: 700; 
-    color: var(--color-primary); 
-    text-align: left;
-    border-right: 1px solid #e2e8f0; /* Trait vertical de séparation */
-  }
-  .fs-td-val { 
-    text-align: right; 
-    font-weight: 800; 
-    color: #334155; 
-    white-space: nowrap;
-  }
-  
-  .fs-row-active { background: #fffbeb; }
-  .fs-row-active .fs-td-label { color: var(--color-accent); }
-  .fs-row-active .fs-td-val { color: var(--color-accent); font-weight: 800; }
-
-  /* Footer Card */
-  .fs-card-footer {
-    padding: 1rem 1.25rem;
-    background: #f9fafb;
-    border-top: 1px solid #f1f5f9;
-  }
-  .fs-maps-link {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    width: 100%;
-    padding: 0.6rem;
-    background: #fff;
-    border: 1px solid #e2e8f0;
-    border-radius: 0.5rem;
-    color: var(--color-primary);
-    font-size: 0.875rem;
-    font-weight: 700;
-    text-decoration: none;
-    transition: all 0.2s;
-  }
-  .fs-maps-link:hover {
-    background: var(--color-primary);
-    color: #fff;
-    border-color: var(--color-primary);
-  }
-
-  /* Search Header refinement */
-  .fs-results-header {
-    text-align: center;
-    margin-bottom: 2rem;
-    font-size: 1rem;
-    padding: 0 1rem;
-  }
-  .fs-results-header strong { font-weight: 800; color: var(--color-accent); }
-  .fs-results-header em { font-style: normal; font-weight: 700; color: var(--color-primary); border-bottom: 2px solid var(--color-accent); }
-
-  .fs-more-results {
-    grid-column: 1 / -1;
-    margin-top: 1.5rem;
-    padding: 1.5rem;
-    background: #f8fafc;
-    border: 1px dashed #cbd5e1;
-    border-radius: 0.75rem;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
-  }
-  .fs-more-results p { margin: 0; font-weight: 600; color: var(--color-text-muted); }
-  .fs-btn-secondary {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    background: var(--color-primary);
-    color: #fff;
-    padding: 0.75rem 1.5rem;
-    border-radius: 0.5rem;
-    font-weight: 700;
-    font-size: 0.9375rem;
-    transition: all 0.2s;
-    text-decoration: none;
-  }
-  .fs-btn-secondary:hover {
-    background: #1a4a66;
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(15, 45, 63, 0.15);
-  }
-
-  .fs-more-results-top {
-    grid-column: 1 / -1;
-    margin-bottom: 0.5rem;
-  }
-  .fs-link-dep {
-    display: inline-flex;
-    align-items: center;
-    padding: 0.6rem 1.25rem;
     background: var(--color-accent);
     color: #fff;
-    border-radius: 0.5rem;
-    font-size: 0.875rem;
-    font-weight: 700;
-    text-decoration: none;
-    transition: all 0.2s;
     border: none;
-    box-shadow: 0 2px 8px rgba(232, 119, 34, 0.2);
+    border-radius: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s;
+    white-space: nowrap;
   }
-  .fs-link-dep:hover {
-    background: #d0651a;
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(232, 119, 34, 0.3);
+
+  .fs-btn-primary:hover { background: #d0651a; }
+
+  .fs-loading {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem 0 0;
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+  }
+
+  .fs-spinner {
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    border: 3px solid #e2e8f0;
+    border-top-color: var(--color-accent);
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+    flex-shrink: 0;
+  }
+
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .fs-error {
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    border-radius: 0.5rem;
+    padding: 0.875rem 1rem;
+    color: #dc2626;
+    font-size: 0.875rem;
+    margin-top: 1rem;
+  }
+
+  .fs-disambiguation {
+    margin-top: 1.25rem;
+    padding: 1.25rem;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 0.75rem;
+  }
+
+  .fs-disambiguation-label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--color-text-muted);
+    margin: 0 0 0.75rem;
+  }
+
+  .fs-disambiguation-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .fs-disambiguation-list a {
+    display: inline-block;
+    padding: 0.45rem 1rem;
+    background: #fff;
+    border: 2px solid var(--color-primary);
+    border-radius: 999px;
+    color: var(--color-primary);
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.15s;
+  }
+
+  .fs-disambiguation-list a:hover {
+    background: var(--color-primary);
+    color: #fff;
   }
 </style>

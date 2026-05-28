@@ -28,6 +28,8 @@ faq:
 draft: false
 ---
 
+**Vérifiez dès maintenant si vous êtes éligible :** <a href="https://www.impots.gouv.fr/simulateur-aide-carburant-grands-rouleurs" target="_blank" rel="noopener noreferrer">Simulateur officiel d'éligibilité à l'indemnité carburant 2026 — impots.gouv.fr</a>
+
 Le 21 avril 2026, le Premier ministre **Sébastien Lecornu** a annoncé une indemnité carburant de **50 €** destinée à **2,9 millions de travailleurs modestes** français, officialisée par le **décret n° 2026-333 du 30 avril 2026** (publié au Journal officiel). Les demandes ouvrent le **27 mai 2026** exclusivement sur impots.gouv.fr. Voici les cinq conditions précises pour en bénéficier, la démarche pas à pas, et notre analyse chiffrée de ce que représentent vraiment ces 50 € face à la hausse de 50 centimes par litre observée depuis 2025.
 
 ## Qu'est-ce que l'indemnité carburant 2026 ?
@@ -167,7 +169,7 @@ Non, pas intégralement. Avec une hausse de **50 centimes par litre** depuis 202
 - [Légifrance — Décret n° 2026-333 du 30 avril 2026](https://www.legifrance.gouv.fr) — texte officiel du dispositif grands rouleurs
 - [info.gouv.fr — Communiqué de Sébastien Lecornu du 21 avril 2026](https://www.info.gouv.fr) — annonce et présentation du plan
 - [economie.gouv.fr — Fiche dispositif indemnité carburant 2026](https://www.economie.gouv.fr) — conditions, montants, cumulabilité
-- [Simulateur officiel d'éligibilité — impots.gouv.fr](https://www.impots.gouv.fr) — vérifier son éligibilité avant le 27 mai 2026
+- [Simulateur officiel d'éligibilité — impots.gouv.fr](https://www.impots.gouv.fr/simulateur-aide-carburant-grands-rouleurs) — vérifier son éligibilité avant le 27 mai 2026
 
 Les calculs de la section "Notre analyse" sont fondés sur le prix moyen de l'essence relevé en avril 2026 (≈ 2,00 €/L) et une estimation de hausse de +50 cts/L par rapport à 2025, d'après les données de prix-carburant.eu compilées depuis prix-carburants.gouv.fr et la série mensuelle INSEE (010596132).
 
