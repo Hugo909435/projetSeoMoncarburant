@@ -9,8 +9,8 @@ updatedAt: 2026-06-02
 author: "hugo-beignon"
 category: "carburants"
 tags: ["prix carburant", "juin 2026", "essence", "diesel", "brent", "ticpe", "opep"]
-featuredImage: "/images/articles/pourquoi-prix-carburant-eleves-juin-2026.webp"
-imageAlt: "Panneau de prix d'une station-service en France en juin 2026 affichant un tarif SP95-E10 supérieur à 2 euros le litre"
+featuredImage: "/images/articles/pourquoi-prix-carburant-eleves-juin-2026.jpg"
+imageAlt: "Compteur d'une pompe à carburant dans une station-service affichant le montant et le volume distribué"
 readingTime: 5
 relatedArticles: ["prix-carburant-2026", "astuces-economiser-carburant", "eco-conduite-techniques"]
 ctaTitle: "Trouvez la station la moins chère près de chez vous"
