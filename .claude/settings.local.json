@@ -32,7 +32,8 @@
       "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:4321/)",
       "PowerShell(Get-ChildItem \"C:\\\\Users\\\\hbeignon\\\\Desktop\\\\projetSeoMoncarburant\\\\dist\\\\_astro\\\\\" | Where-Object { $_.Extension -in \".css\",\".js\" } | Select-Object Name, @{N=\"Ko\";E={[math]::Round\\($_.Length/1KB,1\\)}} | Sort-Object Ko -Descending | Select-Object -First 20)",
       "Bash(gzip -c \"C:/Users/hbeignon/Desktop/projetSeoMoncarburant/dist/index.html\")",
-      "Bash(awk '{printf \"%.1f KB\\\\n\", $1/1024}')"
+      "Bash(awk '{printf \"%.1f KB\\\\n\", $1/1024}')",
+      "Bash(cp \"/root/.claude/uploads/a6f82567-f11f-41e7-8584-0cd1ba8a2a45/35878213-krzysztofhepnerULJCBY8Tcfgunsplash.jpg\" \"/home/user/projetSeoMoncarburant/public/images/articles/pourquoi-prix-carburant-eleves-juin-2026.jpg\")"
     ]
   }
 }
