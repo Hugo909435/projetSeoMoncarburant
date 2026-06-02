@@ -1,9 +1,9 @@
 ---
 title: "Pourquoi les prix du carburant restent élevés en juin 2026 ?"
 metaTitle: "Prix carburant juin 2026 : pourquoi sont-ils élevés ?"
-metaDescription: "SP95-E10 à plus de 2 €/L en juin 2026 : Brent haut, fiscalité lourde, effet saisonnier. On explique pourquoi les prix restent élevés et ce qui pourrait les faire baisser."
+metaDescription: "SP95-E10 à plus de 2 €/L en juin 2026 : Brent haut, fiscalité lourde, effet saisonnier. Pourquoi les prix restent élevés et ce qui peut les faire baisser."
 slug: "pourquoi-prix-carburant-eleves-juin-2026"
-excerpt: "En juin 2026, le SP95-E10 dépasse 2 €/L. Trois causes cumulées : le Brent maintenu au-dessus de 85 USD, une fiscalité fixe qui amplifie chaque hausse, et un regain saisonnier de la demande. Explication complète."
+excerpt: "En juin 2026, le SP95-E10 dépasse 2 €/L. Trois causes : Brent au-dessus de 85 USD, fiscalité fixe qui amplifie chaque hausse, regain saisonnier de la demande."
 publishedAt: 2026-06-02
 updatedAt: 2026-06-02
 author: "hugo-beignon"
