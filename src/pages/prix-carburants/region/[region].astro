@@ -5,6 +5,8 @@ import statsByDepartment from '../../../data/fuel/stats-by-department.json';
 import departments from '../../../data/departments.json';
 import statsNational from '../../../data/fuel/stats-national.json';
 import meta from '../../../data/fuel/meta.json';
+import LocalIdentity from '../../../components/LocalIdentity.astro';
+import { regionContent } from '../../../data/local-content';
 
 export function getStaticPaths() {
   const regions = statsByRegion as Record<string, { name: string; [key: string]: any }>;
@@ -16,6 +18,7 @@ export function getStaticPaths() {
 
 const { regionSlug, regionData } = Astro.props;
 const regionName = regionData.name;
+const localContent = regionContent[regionSlug];
 
 const deps = departments as Record<string, { num: string; name: string; slug: string; region: string; regionSlug: string }>;
 const depStats = statsByDepartment as Record<string, Record<string, number | null>>;
@@ -72,6 +75,15 @@ const breadcrumb = [
     </section>
 
     <div class="container page-body">
+      <!-- Identité locale -->
+      {localContent && (
+        <LocalIdentity
+          content={localContent}
+          placeName={`la région ${regionName}`}
+          heading={`La région ${regionName}`}
+        />
+      )}
+
       <!-- Stats région -->
       <section class="section-block">
         <h2>Prix moyens en {regionName}</h2>

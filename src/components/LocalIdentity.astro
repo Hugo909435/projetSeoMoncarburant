@@ -1,0 +1,144 @@
+---
+// Bloc « identité locale » : emblème (drapeau ou blason) + contenu éditorial
+// unique (surnom, paragraphes, repères) pour enrichir les pages région / département.
+import type { LocalContent } from '../data/local-content';
+
+interface Props {
+  content: LocalContent;
+  /** Nom du territoire, pour les textes alternatifs accessibles. */
+  placeName: string;
+  /** Titre H2 de la section. */
+  heading: string;
+}
+
+const { content, placeName, heading } = Astro.props;
+const { emblem, emblemType, emblemCaption, nickname, paragraphs, facts } = content;
+const emblemLabel = emblemType === 'drapeau' ? 'Drapeau' : 'Blason';
+---
+
+<section class="section-block local-identity">
+  <h2>{heading}</h2>
+
+  <div class="li-card">
+    {emblem && (
+      <figure class="li-emblem">
+        <img
+          src={emblem}
+          alt={emblemCaption ?? `${emblemLabel} de ${placeName}`}
+          width="120"
+          height="80"
+          loading="lazy"
+          decoding="async"
+        />
+        {emblemCaption && <figcaption>{emblemCaption}</figcaption>}
+      </figure>
+    )}
+
+    <div class="li-body">
+      {nickname && <p class="li-nickname">{nickname}</p>}
+      {paragraphs.map((p) => (
+        <p class="li-text">{p}</p>
+      ))}
+
+      {facts && facts.length > 0 && (
+        <dl class="li-facts">
+          {facts.map((f) => (
+            <div class="li-fact">
+              <dt>{f.label}</dt>
+              <dd>{f.value}</dd>
+            </div>
+          ))}
+        </dl>
+      )}
+    </div>
+  </div>
+</section>
+
+<style>
+  .local-identity .li-card {
+    display: flex;
+    gap: 1.5rem;
+    align-items: flex-start;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+  }
+  @media (max-width: 640px) {
+    .local-identity .li-card {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+  }
+
+  .li-emblem {
+    flex-shrink: 0;
+    margin: 0;
+    width: 120px;
+    text-align: center;
+  }
+  .li-emblem img {
+    width: 120px;
+    height: auto;
+    max-height: 110px;
+    object-fit: contain;
+    border: 1px solid #e2e8f0;
+    border-radius: 0.375rem;
+    background: #fff;
+    padding: 0.25rem;
+  }
+  .li-emblem figcaption {
+    font-size: 0.7rem;
+    color: var(--color-text-muted);
+    margin-top: 0.4rem;
+    line-height: 1.3;
+  }
+
+  .li-body {
+    flex: 1;
+    min-width: 0;
+  }
+  .li-nickname {
+    font-family: var(--font-display);
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--color-primary);
+    margin: 0 0 0.75rem;
+  }
+  .li-text {
+    color: #374151;
+    line-height: 1.7;
+    margin: 0 0 0.75rem;
+  }
+
+  .li-facts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 1rem 0 0;
+  }
+  .li-fact {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 0.5rem;
+    padding: 0.4rem 0.75rem;
+  }
+  @media (max-width: 640px) {
+    .li-facts { justify-content: center; }
+  }
+  .li-fact dt {
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    color: var(--color-text-muted);
+    font-weight: 700;
+    margin: 0;
+  }
+  .li-fact dd {
+    font-size: 0.85rem;
+    color: var(--color-primary);
+    font-weight: 600;
+    margin: 0.1rem 0 0;
+  }
+</style>
