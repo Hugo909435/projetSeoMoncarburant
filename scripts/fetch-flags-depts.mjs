@@ -27,8 +27,8 @@ function stripAccents(s) {
 
 async function download(filename) {
   const url = 'https://commons.wikimedia.org/wiki/Special:FilePath/' + encodeURIComponent(filename);
-  for (let attempt = 0; attempt < 6; attempt++) {
-    await sleep(2500);
+  for (let attempt = 0; attempt < 4; attempt++) {
+    await sleep(6000);
     let res;
     try {
       res = await fetch(url, { headers: { 'User-Agent': 'MonCarburant-flag-fetch/1.0' }, redirect: 'follow' });
