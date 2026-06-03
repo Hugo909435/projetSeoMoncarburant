@@ -68,7 +68,19 @@ jobs:
 
       - name: Déploiement vers Hostinger
         if: steps.check-changes.outputs.changed == 'true' || inputs.force_rebuild == 'true'
+        timeout-minutes: 15
         run: |
           sudo apt-get install -y --no-install-recommends lftp
-          lftp -e "set sftp:auto-confirm yes; set mirror:parallel-transfer-count 5; set net:timeout 30; lcd dist; mirror -R --delete --verbose . domains/mon-carburant.com/public_html/; quit" \
+          # Transferts SFTP plus robustes : moins de parallélisme (évite les blocages
+          # de connexions simultanées côté Hostinger) + timeouts et reconnexions.
+          lftp -e "set sftp:auto-confirm yes; \
+                   set net:timeout 15; \
+                   set net:max-retries 3; \
+                   set net:reconnect-interval-base 5; \
+                   set net:persist-retries 3; \
+                   set mirror:parallel-transfer-count 2; \
+                   set mirror:parallel-directories no; \
+                   lcd dist; \
+                   mirror -R --delete --verbose . domains/mon-carburant.com/public_html/; \
+                   quit" \
             sftp://${{ secrets.FTP_USER }}:${{ secrets.FTP_PASSWORD }}@${{ secrets.FTP_HOST }}:65002
