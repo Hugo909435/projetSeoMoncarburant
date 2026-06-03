@@ -5,6 +5,10 @@ import statsNational from '../../../data/fuel/stats-national.json';
 import meta from '../../../data/fuel/meta.json';
 import { FUEL_COLORS, FUEL_KEYS } from '../../../data/fuel/config';
 import { buildCityIntro } from '../../../utils/city-intro';
+import { buildCityIdentity } from '../../../utils/city-identity';
+import { deptContent } from '../../../data/local-content';
+import LocalIdentity from '../../../components/LocalIdentity.astro';
+import { existsSync } from 'node:fs';
 
 export async function getStaticPaths() {
   const cityFiles = import.meta.glob('../../../data/fuel/stations-by-city/*.json', { eager: true });
@@ -60,6 +64,32 @@ if (dept) {
   breadcrumb.splice(2, 0, { name: dept.name, url: `/prix-carburants/${dept.slug}/` });
 }
 
+// Bloc identité ville : emblème (blason communal si présent, sinon blason du
+// département) + texte géographique factuel généré.
+const dc = dept ? deptContent[dept.num] : undefined;
+const prefValue = dc?.facts?.find((f) => f.label === 'Préfecture')?.value;
+const isPrefecture = !!prefValue && prefValue === cityName;
+const hasCityBlason = existsSync(`public/images/flags/cities/${citySlug}.svg`);
+const cityIdentity = dept
+  ? {
+      emblem: hasCityBlason
+        ? `/images/flags/cities/${citySlug}.svg`
+        : `/images/flags/departments/${dept.num}.svg`,
+      emblemType: 'blason' as const,
+      emblemCaption: hasCityBlason
+        ? `Blason de ${cityName}`
+        : `Blason du département : ${dept.name}`,
+      ...buildCityIdentity({
+        cityName,
+        dept,
+        isPrefecture,
+        stationCount: count,
+        deptNickname: dc?.nickname,
+        deptAxes: dc?.facts?.find((f) => f.label === 'Grands axes')?.value,
+      }),
+    }
+  : null;
+
 ---
 
 <BaseLayout title={title} description={description} canonical={`/prix-carburants/ville/${citySlug}/`}>
@@ -91,6 +121,15 @@ if (dept) {
     </section>
 
     <div class="container page-body">
+      <!-- Identité locale -->
+      {cityIdentity && (
+        <LocalIdentity
+          content={cityIdentity}
+          placeName={cityName}
+          heading={`${cityName} : repères`}
+        />
+      )}
+
       <!-- Stats -->
       <section class="section-block">
         <h2>Prix moyens à {cityName}</h2>
