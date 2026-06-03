@@ -1,4 +1,7 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://mon-carburant.com/sitemap-0.xml
+# Fichiers de données bruts (JSON) — inutiles à indexer, on préserve le budget de crawl
+Disallow: /data/
+
+Sitemap: https://mon-carburant.com/sitemap-index.xml
