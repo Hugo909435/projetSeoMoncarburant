@@ -53,8 +53,8 @@ jobs:
           git config --local user.name "github-actions[bot]"
           git pull origin main
           git add src/data/fuel/ public/data/stations-light.json last-update.txt
-          git commit -m "chore: mise à jour prix carburant $(date +'%Y-%m-%d')"
-          git push
+          git commit -m "chore: mise à jour prix carburant $(date +'%Y-%m-%d')" || echo "Aucune donnée à committer (rebuild forcé)"
+          git push || echo "Rien à pousser"
 
       - name: Aucun changement détecté
         if: steps.check-changes.outputs.changed == 'false' && inputs.force_rebuild != 'true'
