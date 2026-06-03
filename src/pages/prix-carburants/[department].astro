@@ -101,7 +101,7 @@ const jsonLdBreadcrumb = {
 };
 ---
 
-<BaseLayout title={title} description={description} canonical={`/prix-carburants/${dept.slug}/`}>
+<BaseLayout title={title} description={description} canonical={`/prix-carburants/${dept.slug}/`} noIndex={count < 3}>
   <script type="application/ld+json" set:html={JSON.stringify(jsonLdBreadcrumb)} slot="head" />
 
   <main>

@@ -1,0 +1,179 @@
+---
+// Carte interactive des stations-service de France.
+// Chargement différé (lazy) : Leaflet + données ne se chargent QUE lorsque la
+// carte entre dans le viewport, pour ne pas pénaliser les Core Web Vitals de
+// l'accueil. Tuiles OpenStreetMap (gratuites, sans clé). ~10 000 points en
+// clustering. Pins colorés selon le prix du Gazole vs moyenne nationale.
+import statsNational from '../data/fuel/stats-national.json';
+
+const nationalGazole = (statsNational as Record<string, number>)['Gazole'] ?? 0;
+---
+
+<section class="stations-map-section" aria-label="Carte des stations-service">
+  <div class="container">
+    <div class="section-header">
+      <h2 class="section-title">Carte des stations-service en France</h2>
+    </div>
+    <p class="map-intro">
+      Visualisez en un coup d'œil les stations-service autour de vous et leurs tarifs.
+      Les points <strong>verts</strong> indiquent un Gazole moins cher que la moyenne nationale,
+      les <strong>oranges</strong> un prix plus élevé. Cliquez sur une station pour voir le détail
+      des prix. Données officielles mises à jour quotidiennement.
+    </p>
+    <div
+      id="stations-map"
+      class="stations-map"
+      data-national-gazole={nationalGazole}
+      role="application"
+      aria-label="Carte interactive des prix du carburant"
+    >
+      <div class="map-placeholder" id="map-placeholder">
+        <span>🗺️ La carte se charge en défilant jusqu'ici…</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .stations-map-section { padding: 4rem 0; }
+  .map-intro {
+    color: var(--color-text-secondary);
+    line-height: 1.7;
+    max-width: 70ch;
+    margin: 0 0 1.5rem;
+    font-size: 0.95rem;
+  }
+  .stations-map {
+    position: relative;
+    height: 520px;
+    width: 100%;
+    border-radius: 0.875rem;
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+    background: #eef2f5;
+    z-index: 0;
+  }
+  @media (max-width: 640px) { .stations-map { height: 420px; } }
+  .map-placeholder {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-text-secondary);
+    font-size: 0.95rem;
+    text-align: center;
+    padding: 1rem;
+  }
+  /* Pins (divIcon, pas d'image externe) */
+  :global(.fuel-pin) {
+    border-radius: 50%;
+    border: 2px solid #fff;
+    box-shadow: 0 0 0 1px rgba(0 0 0 / 0.25);
+  }
+  :global(.fuel-pin-cheap) { background: #16a34a; }
+  :global(.fuel-pin-exp) { background: #ea580c; }
+  :global(.fuel-pin-na) { background: #94a3b8; }
+  :global(.fuel-popup h4) { margin: 0 0 0.25rem; font-size: 0.95rem; color: #0f2e44; }
+  :global(.fuel-popup .addr) { color: #64748b; font-size: 0.8rem; margin: 0 0 0.5rem; }
+  :global(.fuel-popup table) { border-collapse: collapse; font-size: 0.8rem; }
+  :global(.fuel-popup td) { padding: 0.1rem 0.5rem 0.1rem 0; }
+  :global(.fuel-popup td:last-child) { font-weight: 700; text-align: right; }
+</style>
+
+<script>
+  const mapEl = document.getElementById('stations-map');
+
+  function loadCss(href: string) {
+    return new Promise<void>((resolve) => {
+      const l = document.createElement('link');
+      l.rel = 'stylesheet';
+      l.href = href;
+      l.onload = () => resolve();
+      l.onerror = () => resolve();
+      document.head.appendChild(l);
+    });
+  }
+  function loadScript(src: string) {
+    return new Promise<void>((resolve, reject) => {
+      const s = document.createElement('script');
+      s.src = src;
+      s.async = true;
+      s.onload = () => resolve();
+      s.onerror = () => reject(new Error('load ' + src));
+      document.head.appendChild(s);
+    });
+  }
+
+  let started = false;
+  async function initMap() {
+    if (started || !mapEl) return;
+    started = true;
+    const placeholder = document.getElementById('map-placeholder');
+    try {
+      await Promise.all([
+        loadCss('https://unpkg.com/leaflet@1.9.4/dist/leaflet.css'),
+        loadCss('https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css'),
+        loadCss('https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css'),
+      ]);
+      await loadScript('https://unpkg.com/leaflet@1.9.4/dist/leaflet.js');
+      await loadScript('https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js');
+
+      const L = (window as any).L;
+      const map = L.map(mapEl, { scrollWheelZoom: false }).setView([46.6, 2.5], 6);
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 18,
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+      }).addTo(map);
+
+      const nat = parseFloat(mapEl.dataset.nationalGazole || '0');
+
+      const resp = await fetch('/data/stations-light.json');
+      if (!resp.ok) throw new Error('data');
+      const stations = await resp.json();
+
+      const cluster = L.markerClusterGroup({ chunkedLoading: true, maxClusterRadius: 50 });
+      const fuelLabels: Record<string, string> = {
+        Gazole: 'Gazole', SP95: 'SP95', SP98: 'SP98', E10: 'E10', E85: 'E85', GPLc: 'GPL',
+      };
+
+      for (const s of stations) {
+        if (typeof s.lat !== 'number' || typeof s.lng !== 'number') continue;
+        const gz = s.prices?.Gazole;
+        const cls = gz == null ? 'fuel-pin-na' : gz <= nat ? 'fuel-pin-cheap' : 'fuel-pin-exp';
+        const icon = L.divIcon({
+          className: '',
+          html: `<div class="fuel-pin ${cls}" style="width:12px;height:12px"></div>`,
+          iconSize: [12, 12],
+        });
+        const rows = Object.entries(fuelLabels)
+          .filter(([k]) => s.prices?.[k] != null)
+          .map(([k, lbl]) => `<tr><td>${lbl}</td><td>${s.prices[k].toFixed(3)} €/L</td></tr>`)
+          .join('');
+        const popup =
+          `<div class="fuel-popup"><h4>${s.ville || ''}</h4>` +
+          `<p class="addr">${s.adresse || ''}${s.cp ? ' · ' + s.cp : ''}</p>` +
+          (rows ? `<table>${rows}</table>` : '<em>Prix non communiqués</em>') +
+          `</div>`;
+        cluster.addLayer(L.marker([s.lat, s.lng], { icon }).bindPopup(popup));
+      }
+      map.addLayer(cluster);
+      if (placeholder) placeholder.remove();
+    } catch (e) {
+      if (placeholder) placeholder.innerHTML = '<span>La carte n\'a pas pu être chargée. Réessayez plus tard.</span>';
+    }
+  }
+
+  if (mapEl) {
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver((entries) => {
+        for (const en of entries) {
+          if (en.isIntersecting) { io.disconnect(); initMap(); }
+        }
+      }, { rootMargin: '200px' });
+      io.observe(mapEl);
+    } else {
+      initMap();
+    }
+  }
+</script>

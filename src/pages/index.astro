@@ -4,6 +4,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import ArticleCard from '../components/ArticleCard.astro';
 import Newsletter from '../components/Newsletter.astro';
 import FuelSearch from '../components/FuelSearch.astro';
+import StationsMap from '../components/StationsMap.astro';
 import statsNational from '../data/fuel/stats-national.json';
 import statsByDepartment from '../data/fuel/stats-by-department.json';
 import fuelMeta from '../data/fuel/meta.json';
@@ -204,6 +205,9 @@ const organizationSchema = {
       </div>
     </div>
   </section>
+
+  <!-- Carte interactive des stations -->
+  <StationsMap />
 
   <!-- Intro éditoriale -->
   <section class="section-intro" aria-label="Notre mission">
