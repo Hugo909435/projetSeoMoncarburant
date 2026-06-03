@@ -4,6 +4,8 @@ import departments from '../../data/departments.json';
 import statsNational from '../../data/fuel/stats-national.json';
 import meta from '../../data/fuel/meta.json';
 import { buildDeptIntro } from '../../utils/dept-intro';
+import LocalIdentity from '../../components/LocalIdentity.astro';
+import { deptContent } from '../../data/local-content';
 
 export async function getStaticPaths() {
   const deptFiles = import.meta.glob('../../data/fuel/stations-by-department/*.json', { eager: true });
@@ -35,6 +37,7 @@ export async function getStaticPaths() {
 
 const { deptData, dept, deptCities } = Astro.props;
 const { stats, stations, top10, count } = deptData;
+const localContent = deptContent[dept.num];
 const deps = departments as Record<string, { num: string; name: string; slug: string; region: string; regionSlug: string; neighbors: string[] }>;
 
 const FUELS = ['Gazole', 'SP95', 'SP98', 'E10', 'E85', 'GPLc'] as const;
@@ -127,6 +130,15 @@ const jsonLdBreadcrumb = {
     </section>
 
     <div class="container page-body">
+      <!-- Identité locale -->
+      {localContent && (
+        <LocalIdentity
+          content={localContent}
+          placeName={`le ${dept.name}`}
+          heading={`Le ${dept.name} (${dept.num})`}
+        />
+      )}
+
       <!-- Stats par carburant -->
       <section class="section-block">
         <h2>Prix moyens dans le {dept.name}</h2>
