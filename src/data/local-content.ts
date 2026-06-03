@@ -42,7 +42,7 @@ export const regionContent: Record<string, LocalContent> = {
     nickname: 'Vignobles, moutarde et montagnes du Jura',
     paragraphs: [
       "Terre de grands crus et de la célèbre moutarde de Dijon, la Bourgogne-Franche-Comté marie les coteaux viticoles de la Côte-d'Or aux reliefs boisés du Jura. C'est une région de passage stratégique entre Paris, Lyon et la Suisse.",
-      "Son réseau routier est dominé par l'A6 (Paris–Lyon), l'A31 (axe nord-sud Nancy–Dijon–Beaune) et l'A36 « La Comtoise » qui relie Beaune à Mulhouse. Ces grands axes de transit, très empruntés par les poids lourds et les vacanciers, expliquent une forte présence de stations d'autoroute où il est utile de comparer les tarifs avant de s'engager.",
+      "Son réseau routier est dominé par l'A6 (Paris-Lyon), l'A31 (axe nord-sud Nancy-Dijon-Beaune) et l'A36 « La Comtoise » qui relie Beaune à Mulhouse. Ces grands axes de transit, très empruntés par les poids lourds et les vacanciers, expliquent une forte présence de stations d'autoroute où il est utile de comparer les tarifs avant de s'engager.",
     ],
     facts: [
       { label: 'Préfecture', value: 'Dijon' },
@@ -83,7 +83,7 @@ export const regionContent: Record<string, LocalContent> = {
     emblemCaption: 'Drapeau de la Corse (tête de Maure)',
     nickname: "L'Île de Beauté",
     paragraphs: [
-      "Reconnaissable à sa tête de Maure, la Corse — l'« Île de Beauté » — offre des paysages uniques entre montagne et Méditerranée. Ajaccio et Bastia en sont les deux pôles principaux, reliés par des routes souvent sinueuses qui traversent un relief escarpé.",
+      "Reconnaissable à sa tête de Maure, la Corse, l'« Île de Beauté », offre des paysages uniques entre montagne et Méditerranée. Ajaccio et Bastia en sont les deux pôles principaux, reliés par des routes souvent sinueuses qui traversent un relief escarpé.",
       "L'insularité a un impact direct sur le carburant : l'absence d'autoroute, l'approvisionnement par voie maritime et l'éloignement des raffineries continentales tirent généralement les prix vers le haut par rapport à la moyenne nationale. Comparer les stations avant un long trajet sur l'île, où les points de ravitaillement sont plus espacés, est particulièrement utile.",
     ],
     facts: [
@@ -98,7 +98,7 @@ export const regionContent: Record<string, LocalContent> = {
     nickname: "Aux portes de l'Europe",
     paragraphs: [
       "Née de la fusion de l'Alsace, de la Champagne-Ardenne et de la Lorraine, la région Grand Est partage ses frontières avec quatre pays (Belgique, Luxembourg, Allemagne, Suisse). Strasbourg, siège du Parlement européen, en est la capitale, entre vignobles de Champagne et Route des Vins d'Alsace.",
-      "Cette situation frontalière est déterminante pour le carburant : de nombreux automobilistes comparent les prix français avec ceux du Luxembourg ou de l'Allemagne voisine, traditionnellement attractifs. La région est structurée par l'A4 (Paris–Strasbourg), l'A31 (le « sillon lorrain ») et l'A35 le long du Rhin.",
+      "Cette situation frontalière est déterminante pour le carburant : de nombreux automobilistes comparent les prix français avec ceux du Luxembourg ou de l'Allemagne voisine, traditionnellement attractifs. La région est structurée par l'A4 (Paris-Strasbourg), l'A31 (le « sillon lorrain ») et l'A35 le long du Rhin.",
     ],
     facts: [
       { label: 'Préfecture', value: 'Strasbourg' },
@@ -112,7 +112,7 @@ export const regionContent: Record<string, LocalContent> = {
     nickname: 'Beffrois, Flandre et Côte d’Opale',
     paragraphs: [
       "Entre les beffrois inscrits à l'UNESCO, la culture flamande et ch'ti, les plages de la Côte d'Opale et l'héritage minier, les Hauts-de-France forment la principale porte d'entrée terrestre vers le Royaume-Uni et le Benelux. Lille en est la métropole.",
-      "C'est l'une des régions les plus denses en infrastructures : l'A1 (Paris–Lille), l'A16 (littoral), l'A26 (« l'Autoroute des Anglais ») et l'A23 y canalisent un trafic international permanent. La proximité de la Belgique influence aussi les habitudes de plein, beaucoup d'automobilistes comparant les prix de part et d'autre de la frontière.",
+      "C'est l'une des régions les plus denses en infrastructures : l'A1 (Paris-Lille), l'A16 (littoral), l'A26 (« l'Autoroute des Anglais ») et l'A23 y canalisent un trafic international permanent. La proximité de la Belgique influence aussi les habitudes de plein, beaucoup d'automobilistes comparant les prix de part et d'autre de la frontière.",
     ],
     facts: [
       { label: 'Préfecture', value: 'Lille' },
@@ -140,7 +140,7 @@ export const regionContent: Record<string, LocalContent> = {
     nickname: 'Les deux léopards',
     paragraphs: [
       "Symbolisée par ses léopards d'or sur fond rouge, la Normandie évoque le Mont-Saint-Michel, les plages du Débarquement, le bocage et un patrimoine maritime de premier plan. Rouen en est la préfecture, entre vallée de la Seine et façade Manche.",
-      "Bien reliée à Paris, la région s'appuie sur l'A13 (l'Autoroute de Normandie), complétée par l'A28 et l'A29. Ses grands ouvrages — pont de Normandie et pont de Tancarville — sont à péage, et les flux touristiques vers la côte fleurie rendent utile la comparaison des prix entre l'intérieur et le littoral, notamment l'été.",
+      "Bien reliée à Paris, la région s'appuie sur l'A13 (l'Autoroute de Normandie), complétée par l'A28 et l'A29. Ses grands ouvrages (pont de Normandie et pont de Tancarville) sont à péage, et les flux touristiques vers la côte fleurie rendent utile la comparaison des prix entre l'intérieur et le littoral, notamment l'été.",
     ],
     facts: [
       { label: 'Préfecture', value: 'Rouen' },
@@ -154,7 +154,7 @@ export const regionContent: Record<string, LocalContent> = {
     nickname: 'La plus vaste région de France',
     paragraphs: [
       "Plus grande région de France métropolitaine, la Nouvelle-Aquitaine déploie une diversité remarquable : vignobles bordelais, forêt des Landes, côte atlantique et ses spots de surf, Pays basque et Périgord. Bordeaux en est la capitale.",
-      "Son étendue impose de longues distances et un réseau structurant : l'A10 vers Paris, l'A63 le long de la côte landaise vers l'Espagne, l'A89 (Bordeaux–Lyon) et l'A62 vers Toulouse. Sur ces grands trajets, l'écart entre stations d'autoroute et stations de centre-ville peut représenter plusieurs euros par plein, d'où l'intérêt d'anticiper son ravitaillement.",
+      "Son étendue impose de longues distances et un réseau structurant : l'A10 vers Paris, l'A63 le long de la côte landaise vers l'Espagne, l'A89 (Bordeaux-Lyon) et l'A62 vers Toulouse. Sur ces grands trajets, l'écart entre stations d'autoroute et stations de centre-ville peut représenter plusieurs euros par plein, d'où l'intérêt d'anticiper son ravitaillement.",
     ],
     facts: [
       { label: 'Préfecture', value: 'Bordeaux' },
@@ -168,7 +168,7 @@ export const regionContent: Record<string, LocalContent> = {
     nickname: 'De la croix occitane à la Méditerranée',
     paragraphs: [
       "Marquée par la croix occitane et l'étoile à sept branches, l'Occitanie s'étire des Pyrénées à la Méditerranée, du pays cathare aux plages du Languedoc. Toulouse, la « ville rose » et capitale européenne de l'aéronautique, en est le pôle majeur avec Montpellier.",
-      "La région est un carrefour autoroutier du sud : l'A61 « des Deux Mers » relie l'Atlantique à la Méditerranée, l'A9 « la Languedocienne » longe le littoral vers l'Espagne, et l'A75 — gratuite et franchissant le spectaculaire viaduc de Millau — descend du Massif central. Le tourisme estival y fait grimper la fréquentation des stations littorales.",
+      "La région est un carrefour autoroutier du sud : l'A61 « des Deux Mers » relie l'Atlantique à la Méditerranée, l'A9 « la Languedocienne » longe le littoral vers l'Espagne, et l'A75, gratuite et franchissant le spectaculaire viaduc de Millau, descend du Massif central. Le tourisme estival y fait grimper la fréquentation des stations littorales.",
     ],
     facts: [
       { label: 'Préfecture', value: 'Toulouse' },
@@ -182,7 +182,7 @@ export const regionContent: Record<string, LocalContent> = {
     nickname: 'De Nantes au littoral vendéen',
     paragraphs: [
       "Entre l'estuaire de la Loire, le vignoble nantais, le Puy du Fou et le littoral vendéen, les Pays de la Loire associent dynamisme économique et forte attractivité touristique. Nantes en est la capitale régionale.",
-      "Comme en Bretagne voisine, une partie importante du réseau rapide est constituée de voies express gratuites (axes vers la Vendée et le littoral), aux côtés des autoroutes A11 (vers Paris), A83 (Nantes–Niort) et A87. L'afflux estival vers les plages des Sables-d'Olonne ou de La Baule accentue la demande de carburant sur la côte en haute saison.",
+      "Comme en Bretagne voisine, une partie importante du réseau rapide est constituée de voies express gratuites (axes vers la Vendée et le littoral), aux côtés des autoroutes A11 (vers Paris), A83 (Nantes-Niort) et A87. L'afflux estival vers les plages des Sables-d'Olonne ou de La Baule accentue la demande de carburant sur la côte en haute saison.",
     ],
     facts: [
       { label: 'Préfecture', value: 'Nantes' },
@@ -214,7 +214,7 @@ export const deptContent: Record<string, LocalContent> = {
     nickname: 'Le pays des deux cœurs',
     paragraphs: [
       "La Vendée arbore l'un des emblèmes régionaux les plus identifiables de France : le double cœur vendéen surmonté d'une couronne et d'une croix, héritage des guerres de Vendée. Le département conjugue un littoral très prisé (Les Sables-d'Olonne et le départ du Vendée Globe, l'île de Noirmoutier, Saint-Jean-de-Monts), le Marais poitevin et le célèbre Puy du Fou. La Roche-sur-Yon en est la préfecture.",
-      "Destination touristique majeure, la Vendée voit sa population — et la demande de carburant — exploser l'été sur la côte. Le département est desservi par l'A83 (Nantes–Niort) et l'A87 vers Angers, complétées par un réseau de voies express gratuites typique de l'ouest. Aux abords des stations balnéaires en haute saison, les écarts de prix entre stations peuvent être marqués : la comparaison est alors particulièrement payante.",
+      "Destination touristique majeure, la Vendée voit sa population, et la demande de carburant, exploser l'été sur la côte. Le département est desservi par l'A83 (Nantes-Niort) et l'A87 vers Angers, complétées par un réseau de voies express gratuites typique de l'ouest. Aux abords des stations balnéaires en haute saison, les écarts de prix entre stations peuvent être marqués : la comparaison est alors particulièrement payante.",
     ],
     facts: [
       { label: 'Préfecture', value: 'La Roche-sur-Yon' },
@@ -479,7 +479,7 @@ export const deptContent: Record<string, LocalContent> = {
     emblemCaption: 'Blason des Alpes-Maritimes',
     nickname: 'Le cœur de la Côte d’Azur',
     paragraphs: [
-      "Entre mer et montagne, les Alpes-Maritimes incarnent le glamour de la Côte d'Azur — Nice, Cannes, Antibes — tout en s'élevant rapidement vers l'arrière-pays alpin et le Mercantour. Nice, cinquième ville de France, en est la préfecture.",
+      "Entre mer et montagne, les Alpes-Maritimes incarnent le glamour de la Côte d'Azur (Nice, Cannes, Antibes) tout en s'élevant rapidement vers l'arrière-pays alpin et le Mercantour. Nice, cinquième ville de France, en est la préfecture.",
       "L'A8 « la Provençale » traverse le département d'ouest en est vers l'Italie, souvent saturée en saison. L'attractivité touristique exceptionnelle, notamment l'été et lors des grands événements, tire fréquemment les prix du carburant vers le haut sur le littoral : comparer les stations de l'arrière-pays peut faire la différence.",
     ],
     facts: [
@@ -493,7 +493,7 @@ export const deptContent: Record<string, LocalContent> = {
     emblemCaption: 'Blason du Finistère',
     nickname: 'La pointe de la Bretagne',
     paragraphs: [
-      "À l'extrême ouest de la Bretagne, le Finistère — « la fin des terres » — offre un littoral spectaculaire, des ports de caractère (Brest, Concarneau) et une identité bretonne très vivace. Quimper en est la préfecture.",
+      "À l'extrême ouest de la Bretagne, le Finistère, « la fin des terres », offre un littoral spectaculaire, des ports de caractère (Brest, Concarneau) et une identité bretonne très vivace. Quimper en est la préfecture.",
       "Fidèle à la tradition bretonne, le département est desservi par des voies express gratuites (RN12, RN165) plutôt que par des autoroutes à péage. Les longues distances vers la pointe et l'afflux estival sur la côte rendent utile la comparaison des prix avant de s'éloigner des grandes agglomérations.",
     ],
     facts: [
