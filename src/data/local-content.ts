@@ -515,4 +515,1040 @@ export const deptContent: Record<string, LocalContent> = {
       { label: 'Grands axes', value: 'A8 · A50 · A57' },
     ],
   },
+  '01': {
+    emblem: '/images/flags/departments/01.svg',
+    emblemType: 'blason',
+    emblemCaption: "Blason de l'Ain",
+    nickname: 'De la Bresse au pays de Gex',
+    paragraphs: [
+      "Entre la Bresse et sa célèbre volaille AOP, les étangs de la Dombes, le vignoble du Bugey et le pays de Gex adossé au Jura, l'Ain offre une grande diversité de paysages aux portes de Lyon et de Genève. Bourg-en-Bresse en est la préfecture.",
+      "Le département est traversé par l'A40 (« l'Autoroute Blanche » vers les Alpes et Genève), l'A42 et l'A39. Le pays de Gex, frontalier de la Suisse, est une zone où beaucoup d'automobilistes comparent les prix français et helvétiques avant de faire le plein.",
+    ],
+    facts: [
+      { label: 'Préfecture', value: 'Bourg-en-Bresse' },
+      { label: 'Grands axes', value: 'A40 · A42 · A39' },
+    ],
+  },
+  '02': {
+    emblem: '/images/flags/departments/02.svg',
+    emblemType: 'blason',
+    emblemCaption: "Blason de l'Aisne",
+    nickname: 'Au cœur des Hauts-de-France',
+    paragraphs: [
+      "Marquée par la mémoire de la Première Guerre mondiale (Chemin des Dames) et un riche patrimoine (Laon et sa cathédrale perchée, Saint-Quentin, Soissons), l'Aisne est un département rural et agricole des Hauts-de-France. Laon en est la préfecture.",
+      "Sa position en fait un territoire de transit entre la région parisienne, la Belgique et l'est : l'A26 « des Anglais » et l'A29 le traversent, complétées par la RN2. Sur ces axes de passage, comparer les prix entre aires d'autoroute et stations des villes permet souvent d'économiser.",
+    ],
+    facts: [
+      { label: 'Préfecture', value: 'Laon' },
+      { label: 'Grands axes', value: 'A26 · A29 · RN2' },
+    ],
+  },
+  '2A': {
+    emblem: '/images/flags/departments/2A.svg',
+    emblemType: 'blason',
+    emblemCaption: 'Blason de la Corse-du-Sud',
+    nickname: "De la cité impériale à Bonifacio",
+    paragraphs: [
+      "Berceau de Napoléon à Ajaccio, la Corse-du-Sud séduit par ses golfes, les falaises de Bonifacio, les aiguilles de Bavella et le site de Porto. Ajaccio, la préfecture, est aussi l'un des grands ports de l'île.",
+      "Comme partout en Corse, l'absence d'autoroute et l'insularité (approvisionnement maritime, éloignement des raffineries) tirent généralement les prix du carburant au-dessus de la moyenne nationale. Sur des routes de montagne où les stations sont espacées, anticiper son plein avant un long trajet est vivement conseillé.",
+    ],
+    facts: [
+      { label: 'Préfecture', value: 'Ajaccio' },
+      { label: 'Réseau', value: 'Pas d’autoroute · insularité' },
+    ],
+  },
+  '2B': {
+    emblem: '/images/flags/departments/2B.svg',
+    emblemType: 'blason',
+    emblemCaption: 'Blason de la Haute-Corse',
+    nickname: 'Du Cap Corse à la Balagne',
+    paragraphs: [
+      "Entre le Cap Corse, les plages de la Balagne, la châtaigneraie de la Castagniccia et la vieille ville gênoise de Bastia, la Haute-Corse conjugue mer et montagne avec caractère. Bastia, sa préfecture, est la principale porte maritime de l'île.",
+      "L'insularité pèse sur le carburant : sans autoroute et avec un approvisionnement par bateau, les prix sont souvent plus élevés que sur le continent. Les distances et le relief rendent la comparaison des stations particulièrement utile avant de s'éloigner des grandes villes.",
+    ],
+    facts: [
+      { label: 'Préfecture', value: 'Bastia' },
+      { label: 'Réseau', value: 'Pas d’autoroute · insularité' },
+    ],
+  },
+  '03': {
+    emblem: '/images/flags/departments/03.svg',
+    emblemType: 'blason',
+    emblemCaption: "Blason de l'Allier",
+    nickname: 'Le pays bourbonnais et Vichy',
+    paragraphs: [
+      "Ancien duché de Bourbon, l'Allier marie le thermalisme et l'élégance de Vichy, le dynamisme de Montluçon, le bocage bourbonnais et la rivière Allier. Moulins en est la préfecture.",
+      "Le département est desservi par l'A71 (Paris-Clermont) et la RN7, ainsi que par la RN79 (RCEA), grand axe est-ouest gratuit très fréquenté par les poids lourds. Sur ces itinéraires de transit, les écarts de prix entre stations méritent d'être comparés.",
+    ],
+    facts: [
+      { label: 'Préfecture', value: 'Moulins' },
+      { label: 'Grands axes', value: 'A71 · RN7 · RN79 (RCEA)' },
+    ],
+  },
+  '04': {
+    emblem: '/images/flags/departments/04.svg',
+    emblemType: 'blason',
+    emblemCaption: 'Blason des Alpes-de-Haute-Provence',
+    nickname: 'Lavande et gorges du Verdon',
+    paragraphs: [
+      "Terre de lumière provençale, les Alpes-de-Haute-Provence déroulent les champs de lavande du plateau de Valensole, les spectaculaires gorges du Verdon et les villages perchés autour de Manosque et Digne-les-Bains, la préfecture.",
+      "Peu autoroutier (seule l'A51 dessert l'ouest du département), le territoire repose largement sur des routes de montagne où les stations se font rares. Anticiper son ravitaillement avant de rejoindre les zones touristiques d'altitude est un bon réflexe, surtout en été.",
+    ],
+    facts: [
+      { label: 'Préfecture', value: 'Digne-les-Bains' },
+      { label: 'Grands axes', value: 'A51 · routes de montagne' },
+    ],
+  },
+  '05': {
+    emblem: '/images/flags/departments/05.svg',
+    emblemType: 'blason',
+    emblemCaption: 'Blason des Hautes-Alpes',
+    nickname: 'Au pays du soleil et des sommets',
+    paragraphs: [
+      "Avec Briançon, plus haute ville d'Europe, le parc national des Écrins et les stations de Serre-Chevalier ou Vars, les Hautes-Alpes sont un paradis de la montagne, été comme hiver. Gap en est la préfecture.",
+      "Le réseau s'appuie sur l'A51 au sud puis sur des routes de cols (Lautaret, Izoard). Lors des week-ends de ski et des vacances, le trafic grimpe fortement et les stations-service se raréfient en altitude : comparer les prix avant de monter peut faire la différence.",
+    ],
+    facts: [
+      { label: 'Préfecture', value: 'Gap' },
+      { label: 'Grands axes', value: 'A51 · cols alpins' },
+    ],
+  },
+  '07': {
+    emblem: '/images/flags/departments/07.svg',
+    emblemType: 'blason',
+    emblemCaption: "Blason de l'Ardèche",
+    nickname: 'Gorges, châtaignes et volcans',
+    paragraphs: [
+      "Réputée pour les gorges de l'Ardèche et le Pont d'Arc, la châtaigne AOP et ses paysages volcaniques, l'Ardèche est un haut lieu du tourisme de pleine nature. Privas en est la préfecture, l'une des rares de France sans autoroute ni gare.",
+      "Le département n'a pas d'autoroute traversante : l'A7 longe sa frontière est, le long du Rhône. Sur les routes sinueuses de l'intérieur, où les stations sont espacées, et lors de l'afflux estival vers les gorges, comparer les prix avant de partir est judicieux.",
+    ],
+    facts: [
+      { label: 'Préfecture', value: 'Privas' },
+      { label: 'Grands axes', value: 'A7 (en limite) · routes de l’intérieur' },
+    ],
+  },
+  '08': {
+    emblem: '/images/flags/departments/08.svg',
+    emblemType: 'blason',
+    emblemCaption: 'Blason des Ardennes',
+    nickname: 'La forêt, la Meuse et la frontière',
+    paragraphs: [
+      "Pays de forêts profondes et de méandres de la Meuse, patrie de Rimbaud, les Ardennes cultivent une identité forte aux confins de la Belgique. Charleville-Mézières, avec sa place Ducale, en est la préfecture.",
+      "Frontalier de la Belgique, le département est desservi par l'A34 vers Reims et l'A203 autour de Charleville. La proximité de la frontière incite de nombreux automobilistes à comparer les prix de part et d'autre avant de faire le plein.",
+    ],
+    facts: [
+      { label: 'Préfecture', value: 'Charleville-Mézières' },
+      { label: 'Grands axes', value: 'A34 · A203 · frontière belge' },
+    ],
+  },
+  '09': {
+    emblem: '/images/flags/departments/09.svg',
+    emblemType: 'blason',
+    emblemCaption: "Blason de l'Ariège",
+    nickname: 'Pyrénées et châteaux cathares',
+    paragraphs: [
+      "Entre les châteaux cathares perchés (Montségur), les grottes ornées (Niaux) et les sommets pyrénéens, l'Ariège est un département de montagne authentique et préservé. Foix, dominée par son château comtal, en est la préfecture.",
+      "L'axe principal est la RN20, qui relie Toulouse à l'Andorre et à l'Espagne par la montagne. Sur cet itinéraire transfrontalier et sur les routes de cols, les stations sont espacées : comparer les prix avant de s'engager vers les Pyrénées est recommandé.",
+    ],
+    facts: [
+      { label: 'Préfecture', value: 'Foix' },
+      { label: 'Grands axes', value: 'RN20 (Toulouse-Andorre)' },
+    ],
+  },
+  '10': {
+    emblem: '/images/flags/departments/10.svg',
+    emblemType: 'blason',
+    emblemCaption: "Blason de l'Aube",
+    nickname: 'Champagne et cité médiévale de Troyes',
+    paragraphs: [
+      "Au sud de la Champagne, l'Aube associe le vignoble de la Côte des Bar, les grands lacs (lac d'Orient) et la magnifique cité médiévale de Troyes, célèbre pour ses maisons à colombages et ses magasins d'usine. Troyes en est la préfecture.",
+      "Le département est traversé par l'A5 (Paris-Langres) et l'A26, axes de transit vers l'est et le sud. Sur ces autoroutes, l'écart de prix avec les stations de Troyes et des villes-étapes vaut la comparaison.",
+    ],
+    facts: [
+      { label: 'Préfecture', value: 'Troyes' },
+      { label: 'Grands axes', value: 'A5 · A26' },
+    ],
+  },
+  '11': {
+    emblem: '/images/flags/departments/11.svg',
+    emblemType: 'blason',
+    emblemCaption: "Blason de l'Aude",
+    nickname: 'De Carcassonne aux Corbières',
+    paragraphs: [
+      "Dominée par la cité médiévale de Carcassonne classée à l'UNESCO, l'Aude déroule le vignoble des Corbières, le canal du Midi et les châteaux cathares, entre Méditerranée et Pyrénées. Carcassonne en est la préfecture.",
+      "Carrefour du sud, le département est traversé par l'A61 « des Deux Mers » (Toulouse-Méditerranée) et rejoint l'A9 vers l'Espagne. Sur ces axes très fréquentés l'été, comparer les prix entre autoroute et stations de l'intérieur est avantageux.",
+    ],
+    facts: [
+      { label: 'Préfecture', value: 'Carcassonne' },
+      { label: 'Grands axes', value: 'A61 · A9 (à proximité)' },
+    ],
+  },
+  '12': {
+    emblem: '/images/flags/departments/12.svg',
+    emblemType: 'blason',
+    emblemCaption: "Blason de l'Aveyron",
+    nickname: 'Viaduc de Millau et grands causses',
+    paragraphs: [
+      "Terre de caractère, l'Aveyron abrite le célèbre viaduc de Millau, le village de Conques sur le chemin de Compostelle, les caves de Roquefort et les vastes causses du Larzac. Rodez en est la préfecture.",
+      "Le département est traversé par l'A75, autoroute gratuite (hormis le péage du viaduc de Millau) qui relie Clermont-Ferrand à Béziers. Sur cet axe touristique très emprunté l'été, et sur les routes des causses, comparer les prix reste utile.",
+    ],
+    facts: [
+      { label: 'Préfecture', value: 'Rodez' },
+      { label: 'Grands axes', value: 'A75 (viaduc de Millau)' },
+    ],
+  },
+  '14': {
+    emblem: '/images/flags/departments/14.svg',
+    emblemType: 'blason',
+    emblemCaption: 'Blason du Calvados',
+    nickname: 'Plages du Débarquement et Côte Fleurie',
+    paragraphs: [
+      "Haut lieu de mémoire avec les plages du Débarquement et la tapisserie de Bayeux, le Calvados séduit aussi par la Côte Fleurie (Deauville, Cabourg), le bocage et le cidre. Caen, marquée par Guillaume le Conquérant, en est la préfecture.",
+      "Bien relié à Paris par l'A13 (l'Autoroute de Normandie), complété par l'A84 vers la Bretagne, le département connaît une forte fréquentation touristique l'été et lors des commémorations. Comparer les prix entre l'intérieur et le littoral peut alors être payant.",
+    ],
+    facts: [
+      { label: 'Préfecture', value: 'Caen' },
+      { label: 'Grands axes', value: 'A13 · A84' },
+    ],
+  },
+  '15': {
+    emblem: '/images/flags/departments/15.svg',
+    emblemType: 'blason',
+    emblemCaption: 'Blason du Cantal',
+    nickname: 'Au cœur des volcans d’Auvergne',
+    paragraphs: [
+      "Dominé par le plus grand volcan d'Europe, le Cantal est une terre de moyenne montagne réputée pour ses fromages (cantal, salers), ses estives et ses villages de caractère comme Salers. Aurillac en est la préfecture.",
+      "Le département est traversé du nord au sud par l'A75 gratuite, axe majeur vers le Midi. Ailleurs, le relief impose des routes de montagne où les stations sont espacées : faire le plein avant de traverser les zones les plus isolées est conseillé.",
+    ],
+    facts: [
+      { label: 'Préfecture', value: 'Aurillac' },
+      { label: 'Grands axes', value: 'A75 · routes de montagne' },
+    ],
+  },
+  '16': {
+    emblem: '/images/flags/departments/16.svg',
+    emblemType: 'blason',
+    emblemCaption: 'Blason de la Charente',
+    nickname: 'Le pays du cognac et de la BD',
+    paragraphs: [
+      "Mondialement connue pour son cognac, la Charente l'est aussi pour Angoulême, capitale de la bande dessinée, et pour son fleuve paisible bordé de villages. Angoulême en est la préfecture.",
+      "Le département est traversé par la RN10 (Poitiers-Bordeaux), axe gratuit très emprunté, tandis que l'A10 passe à proximité. Sur ces grands itinéraires nord-sud, comparer les prix entre stations de route et aires d'autoroute permet souvent d'économiser.",
+    ],
+    facts: [
+      { label: 'Préfecture', value: 'Angoulême' },
+      { label: 'Grands axes', value: 'RN10 · A10 (à proximité)' },
+    ],
+  },
+  '17': {
+    emblem: '/images/flags/departments/17.svg',
+    emblemType: 'blason',
+    emblemCaption: 'Blason de la Charente-Maritime',
+    nickname: 'La Rochelle, Ré et Oléron',
+    paragraphs: [
+      "Avec La Rochelle et son Vieux-Port, les îles de Ré et d'Oléron, Royan et les huîtres de Marennes-Oléron, la Charente-Maritime est l'une des destinations balnéaires préférées des Français. La Rochelle en est la préfecture.",
+      "Le département est desservi par l'A10 et l'A837. L'été, l'afflux touristique vers le littoral et les îles fait grimper la demande de carburant : comparer les prix entre l'intérieur et la côte, et anticiper avant de rejoindre les îles, est particulièrement utile.",
+    ],
+    facts: [
+      { label: 'Préfecture', value: 'La Rochelle' },
+      { label: 'Grands axes', value: 'A10 · A837' },
+    ],
+  },
+  '18': {
+    emblem: '/images/flags/departments/18.svg',
+    emblemType: 'blason',
+    emblemCaption: 'Blason du Cher',
+    nickname: 'Bourges, le Berry et le Sancerrois',
+    paragraphs: [
+      "Au cœur de la France, le Cher abrite la majestueuse cathédrale de Bourges classée à l'UNESCO, le vignoble de Sancerre et les paysages du Berry chers à George Sand. Bourges en est la préfecture.",
+      "Le département est desservi par l'A71 (Paris-Clermont) et proche de l'A20. Sur ces axes nord-sud très fréquentés lors des grandes migrations, les écarts de prix entre aires d'autoroute et stations de Bourges valent la comparaison.",
+    ],
+    facts: [
+      { label: 'Préfecture', value: 'Bourges' },
+      { label: 'Grands axes', value: 'A71 · A20 (à proximité)' },
+    ],
+  },
+  '19': {
+    emblem: '/images/flags/departments/19.svg',
+    emblemType: 'blason',
+    emblemCaption: 'Blason de la Corrèze',
+    nickname: 'Brive, Tulle et les villages de charme',
+    paragraphs: [
+      "Entre les plus beaux villages de France (Collonges-la-Rouge, Turenne), le dynamisme de Brive-la-Gaillarde et les hauteurs du plateau de Millevaches, la Corrèze incarne un Limousin authentique. Tulle en est la préfecture.",
+      "Le département est bien relié par l'A20 (gratuite, Vierzon-Toulouse) et l'A89 (Bordeaux-Lyon), qui se croisent près de Brive. Sur ces grands axes de transit, comparer les prix entre stations d'autoroute et stations de ville est un bon réflexe.",
+    ],
+    facts: [
+      { label: 'Préfecture', value: 'Tulle' },
+      { label: 'Grands axes', value: 'A20 · A89' },
+    ],
+  },
+  '21': {
+    emblem: '/images/flags/departments/21.svg',
+    emblemType: 'blason',
+    emblemCaption: "Blason de la Côte-d'Or",
+    nickname: 'Grands crus et capitale des Ducs',
+    paragraphs: [
+      "Cœur historique de la Bourgogne, la Côte-d'Or aligne les grands crus de la côte de Nuits et de Beaune, le patrimoine ducal de Dijon et sa fameuse moutarde. Dijon en est la préfecture.",
+      "Grand carrefour, le département voit se croiser l'A6 (Paris-Lyon), l'A31 (axe nord-sud) et l'A38. Sur ces autoroutes très fréquentées par les vacanciers et les poids lourds, comparer les prix avec les stations de l'agglomération dijonnaise est avantageux.",
+    ],
+    facts: [
+      { label: 'Préfecture', value: 'Dijon' },
+      { label: 'Grands axes', value: 'A6 · A31 · A38' },
+    ],
+  },
+  '22': {
+    emblem: '/images/flags/departments/22.svg',
+    emblemType: 'blason',
+    emblemCaption: "Blason des Côtes-d'Armor",
+    nickname: 'Côte de Granit Rose et cité de Dinan',
+    paragraphs: [
+      "Avec la Côte de Granit Rose, le cap Fréhel, la cité médiévale de Dinan et le port de Paimpol, les Côtes-d'Armor offrent quelques-uns des plus beaux paysages côtiers de Bretagne. Saint-Brieuc en est la préfecture.",
+      "Fidèle à la tradition bretonne, le département est desservi par la RN12, voie express gratuite reliant Rennes à Brest. L'afflux touristique estival sur le littoral rend utile la comparaison des prix entre la côte et l'intérieur.",
+    ],
+    facts: [
+      { label: 'Préfecture', value: 'Saint-Brieuc' },
+      { label: 'Grands axes', value: 'RN12 (gratuite)' },
+    ],
+  },
+  '23': {
+    emblem: '/images/flags/departments/23.svg',
+    emblemType: 'blason',
+    emblemCaption: 'Blason de la Creuse',
+    nickname: 'Aubusson et le plateau de Millevaches',
+    paragraphs: [
+      "L'un des départements les moins peuplés de France, la Creuse séduit par la tapisserie d'Aubusson classée à l'UNESCO, les paysages vallonnés du plateau de Millevaches et une nature préservée. Guéret en est la préfecture.",
+      "Le principal axe est la RN145 (RCEA), liaison gratuite est-ouest très empruntée par les poids lourds entre l'Atlantique et le centre. Dans ce territoire rural où les stations sont espacées, anticiper son plein est recommandé.",
+    ],
+    facts: [
+      { label: 'Préfecture', value: 'Guéret' },
+      { label: 'Grands axes', value: 'RN145 (RCEA)' },
+    ],
+  },
+  '24': {
+    emblem: '/images/flags/departments/24.svg',
+    emblemType: 'blason',
+    emblemCaption: 'Blason de la Dordogne',
+    nickname: 'Le Périgord, ses châteaux et sa gastronomie',
+    paragraphs: [
+      "Le Périgord, c'est la Dordogne : grottes ornées de Lascaux, cité médiévale de Sarlat, châteaux perchés sur la rivière, foie gras et truffe. Périgueux en est la préfecture.",
+      "Le département est traversé par l'A89 (Bordeaux-Lyon), seul grand axe autoroutier. Ailleurs, les routes de campagne desservent un territoire très touristique l'été : comparer les prix entre l'axe autoroutier et les stations des bourgs est judicieux.",
+    ],
+    facts: [
+      { label: 'Préfecture', value: 'Périgueux' },
+      { label: 'Grands axes', value: 'A89' },
+    ],
+  },
+  '25': {
+    emblem: '/images/flags/departments/25.svg',
+    emblemType: 'blason',
+    emblemCaption: 'Blason du Doubs',
+    nickname: 'Besançon, horlogerie et montagnes du Jura',
+    paragraphs: [
+      "Dominé par la citadelle Vauban de Besançon, le Doubs est le pays de l'horlogerie, de l'industrie automobile (Montbéliard, Sochaux) et des paysages du massif du Jura. Besançon en est la préfecture.",
+      "Le département est structuré par l'A36 « La Comtoise » (Beaune-Mulhouse). Frontalier de la Suisse, il compte de nombreux travailleurs transfrontaliers qui comparent les prix des deux côtés de la frontière avant de faire le plein.",
+    ],
+    facts: [
+      { label: 'Préfecture', value: 'Besançon' },
+      { label: 'Grands axes', value: 'A36 · frontière suisse' },
+    ],
+  },
+  '26': {
+    emblem: '/images/flags/departments/26.svg',
+    emblemType: 'blason',
+    emblemCaption: 'Blason de la Drôme',
+    nickname: 'Du nougat de Montélimar à la Provence',
+    paragraphs: [
+      "Porte du Midi, la Drôme déroule la vallée du Rhône, le nougat de Montélimar, les champs de lavande de la Drôme provençale et les reliefs du Vercors. Valence en est la préfecture.",
+      "Le département est traversé par l'A7, l'« autoroute du soleil » et l'un des axes les plus fréquentés d'Europe, surtout lors des grands départs en vacances. Sur cet itinéraire, comparer les prix entre aires d'autoroute et stations de Valence ou Montélimar est très rentable.",
+    ],
+    facts: [
+      { label: 'Préfecture', value: 'Valence' },
+      { label: 'Grands axes', value: 'A7 (couloir rhodanien)' },
+    ],
+  },
+  '27': {
+    emblem: '/images/flags/departments/27.svg',
+    emblemType: 'blason',
+    emblemCaption: "Blason de l'Eure",
+    nickname: 'La Seine, Giverny et la Normandie',
+    paragraphs: [
+      "Entre les méandres de la Seine, les jardins de Monet à Giverny, Les Andelys et leur Château-Gaillard, l'Eure offre une Normandie verdoyante aux portes de l'Île-de-France. Évreux en est la préfecture.",
+      "Le département est desservi par l'A13 (Paris-Caen) et l'A28, axes de transit majeurs vers la Normandie. Sur ces autoroutes, l'écart de prix avec les stations des villes comme Évreux ou Vernon vaut la comparaison.",
+    ],
+    facts: [
+      { label: 'Préfecture', value: 'Évreux' },
+      { label: 'Grands axes', value: 'A13 · A28 · A154' },
+    ],
+  },
+  '28': {
+    emblem: '/images/flags/departments/28.svg',
+    emblemType: 'blason',
+    emblemCaption: "Blason d'Eure-et-Loir",
+    nickname: 'La cathédrale de Chartres et la Beauce',
+    paragraphs: [
+      "Dominé par la flèche de la cathédrale de Chartres, chef-d'œuvre gothique visible de loin dans la plaine, l'Eure-et-Loir s'étend sur la Beauce, le grenier à blé de la France, et le Perche bocager. Chartres en est la préfecture.",
+      "Aux portes de l'Île-de-France, le département est desservi par l'A11 (l'Océane) vers le Mans et Nantes, et par la RN154. Sur l'A11, très empruntée vers l'ouest, comparer les prix entre stations d'autoroute et stations de ville est avantageux.",
+    ],
+    facts: [
+      { label: 'Préfecture', value: 'Chartres' },
+      { label: 'Grands axes', value: 'A11 · RN154 · A10 (à proximité)' },
+    ],
+  },
+  '30': {
+    emblem: '/images/flags/departments/30.svg',
+    emblemType: 'blason',
+    emblemCaption: 'Blason du Gard',
+    nickname: 'Du Pont du Gard à la Camargue',
+    paragraphs: [
+      "Patrimoine romain exceptionnel (Pont du Gard, arènes de Nîmes), Camargue gardoise, Cévennes et garrigues : le Gard concentre une grande richesse entre Provence et Languedoc. Nîmes en est la préfecture.",
+      "Le département est traversé par l'A9 « la Languedocienne » et l'A54, axes majeurs vers l'Espagne et la Provence. L'été, la fréquentation touristique fait grimper la demande : comparer les prix entre l'autoroute et les stations de l'intérieur peut faire la différence.",
+    ],
+    facts: [
+      { label: 'Préfecture', value: 'Nîmes' },
+      { label: 'Grands axes', value: 'A9 · A54' },
+    ],
+  },
+  '32': {
+    emblem: '/images/flags/departments/32.svg',
+    emblemType: 'blason',
+    emblemCaption: 'Blason du Gers',
+    nickname: 'Le pays de d’Artagnan et de l’Armagnac',
+    paragraphs: [
+      "Cœur de la Gascogne, le Gers est une terre de douceur de vivre : Armagnac, foie gras, bastides médiévales et collines verdoyantes, sur les pas de d'Artagnan. Auch, dominée par sa cathédrale, en est la préfecture.",
+      "Département rural sans autoroute traversante majeure, le Gers s'appuie sur la RN124 vers Toulouse. Les stations y étant plus espacées que dans les zones urbaines, comparer les prix et anticiper son plein sont de bons réflexes.",
+    ],
+    facts: [
+      { label: 'Préfecture', value: 'Auch' },
+      { label: 'Grands axes', value: 'RN124 · réseau rural' },
+    ],
+  },
+  '35': {
+    emblem: '/images/flags/departments/35.svg',
+    emblemType: 'blason',
+    emblemCaption: "Blason d'Ille-et-Vilaine",
+    nickname: 'De Rennes à la cité corsaire',
+    paragraphs: [
+      "Porte d'entrée de la Bretagne, l'Ille-et-Vilaine associe le dynamisme de Rennes, la cité corsaire de Saint-Malo, les remparts de Fougères et de Vitré. Rennes en est la préfecture et la capitale régionale.",
+      "Fidèle au modèle breton, le département est desservi par des voies express gratuites (RN12, RN137, RN157) et par l'A84 vers la Normandie. L'afflux estival vers Saint-Malo et la côte d'Émeraude rend utile la comparaison des prix entre l'intérieur et le littoral.",
+    ],
+    facts: [
+      { label: 'Préfecture', value: 'Rennes' },
+      { label: 'Grands axes', value: 'RN12 · RN137 · A84' },
+    ],
+  },
+  '36': {
+    emblem: '/images/flags/departments/36.svg',
+    emblemType: 'blason',
+    emblemCaption: "Blason de l'Indre",
+    nickname: 'Le Berry et les étangs de la Brenne',
+    paragraphs: [
+      "Au cœur du Berry, l'Indre séduit par le parc naturel de la Brenne et ses milliers d'étangs, les paysages chers à George Sand autour de Nohant et la cité de Châteauroux, sa préfecture.",
+      "Le département est traversé par l'A20, autoroute gratuite reliant Vierzon à Limoges et Toulouse, très empruntée lors des départs vers le sud-ouest. Sur cet axe, comparer les prix entre aires et stations de ville est particulièrement intéressant.",
+    ],
+    facts: [
+      { label: 'Préfecture', value: 'Châteauroux' },
+      { label: 'Grands axes', value: 'A20 (gratuite) · RN151' },
+    ],
+  },
+  '37': {
+    emblem: '/images/flags/departments/37.svg',
+    emblemType: 'blason',
+    emblemCaption: "Blason d'Indre-et-Loire",
+    nickname: 'Le jardin de la France et ses châteaux',
+    paragraphs: [
+      "Surnommée le « jardin de la France », l'Indre-et-Loire concentre les plus célèbres châteaux de la Loire (Chenonceau, Amboise, Villandry, Azay-le-Rideau) et les vins de Touraine. Tours en est la préfecture.",
+      "Le département est un carrefour majeur : l'A10 (Paris-Bordeaux), l'A28 et l'A85 s'y croisent. Sur ces axes très fréquentés par les vacanciers, comparer les prix entre aires d'autoroute et stations de l'agglomération tourangelle est avantageux.",
+    ],
+    facts: [
+      { label: 'Préfecture', value: 'Tours' },
+      { label: 'Grands axes', value: 'A10 · A28 · A85' },
+    ],
+  },
+  '39': {
+    emblem: '/images/flags/departments/39.svg',
+    emblemType: 'blason',
+    emblemCaption: 'Blason du Jura',
+    nickname: 'Vin jaune, comté et reculées',
+    paragraphs: [
+      "Pays du vin jaune et du comté, le Jura déploie ses vignobles, ses lacs et cascades, ses reculées spectaculaires et la station de Lons-le-Saunier, sa préfecture. La montagne jurassienne y culmine vers la Suisse.",
+      "Le département est desservi par l'A39 (Dijon-Bourg-en-Bresse). Proche de la frontière suisse, il voit de nombreux automobilistes comparer les prix des deux côtés, tandis que les routes de montagne, aux stations plus rares, invitent à anticiper le plein.",
+    ],
+    facts: [
+      { label: 'Préfecture', value: 'Lons-le-Saunier' },
+      { label: 'Grands axes', value: 'A39 · frontière suisse' },
+    ],
+  },
+  '40': {
+    emblem: '/images/flags/departments/40.svg',
+    emblemType: 'blason',
+    emblemCaption: 'Blason des Landes',
+    nickname: 'La plus grande forêt et l’océan',
+    paragraphs: [
+      "Couvertes par la plus grande forêt artificielle d'Europe, les Landes offrent un littoral atlantique prisé des surfeurs (Hossegor, Capbreton) et le thermalisme de Dax. Mont-de-Marsan en est la préfecture.",
+      "Le département est desservi par l'A63 vers l'Espagne et l'A65 vers Pau. L'été, l'afflux vers les plages fait fortement grimper la demande de carburant sur la côte : comparer les prix entre l'intérieur boisé et le littoral est alors très utile.",
+    ],
+    facts: [
+      { label: 'Préfecture', value: 'Mont-de-Marsan' },
+      { label: 'Grands axes', value: 'A63 · A65' },
+    ],
+  },
+  '41': {
+    emblem: '/images/flags/departments/41.svg',
+    emblemType: 'blason',
+    emblemCaption: 'Blason de Loir-et-Cher',
+    nickname: 'Chambord et la Sologne',
+    paragraphs: [
+      "Le Loir-et-Cher abrite le plus grand des châteaux de la Loire, Chambord, ainsi que Blois, Chaumont, et les vastes forêts giboyeuses de la Sologne. Blois en est la préfecture.",
+      "Le département est traversé par l'A10 (Paris-Bordeaux) et l'A85, axes très empruntés vers le sud-ouest. Sur ces autoroutes, l'écart de prix avec les stations de Blois et de Vendôme vaut largement la comparaison.",
+    ],
+    facts: [
+      { label: 'Préfecture', value: 'Blois' },
+      { label: 'Grands axes', value: 'A10 · A85 · A71' },
+    ],
+  },
+  '42': {
+    emblem: '/images/flags/departments/42.svg',
+    emblemType: 'blason',
+    emblemCaption: 'Blason de la Loire',
+    nickname: 'Saint-Étienne, le Forez et les gorges',
+    paragraphs: [
+      "Marquée par l'histoire industrielle de Saint-Étienne (manufacture d'armes, design, football), la Loire offre aussi les gorges de la Loire, les monts du Forez et la plaine du Roannais. Saint-Étienne en est la préfecture.",
+      "Le département est desservi par l'A72 (vers Clermont-Ferrand), l'A47 (vers Lyon) et l'A89. La métropole stéphanoise applique une ZFE : comparer les prix sur l'ensemble de l'agglomération et le long de ces axes est un bon réflexe.",
+    ],
+    facts: [
+      { label: 'Préfecture', value: 'Saint-Étienne' },
+      { label: 'Grands axes', value: 'A72 · A47 · A89' },
+    ],
+  },
+  '43': {
+    emblem: '/images/flags/departments/43.svg',
+    emblemType: 'blason',
+    emblemCaption: 'Blason de la Haute-Loire',
+    nickname: 'Le Puy-en-Velay et les volcans',
+    paragraphs: [
+      "Point de départ de la Via Podiensis vers Saint-Jacques, le Puy-en-Velay est célèbre pour ses pitons volcaniques coiffés de chapelles et sa lentille verte AOP. La Haute-Loire déroule autour gorges de l'Allier et plateaux volcaniques. Le Puy-en-Velay en est la préfecture.",
+      "Le département s'appuie sur la RN88 et reste proche de l'A75. Sur ce territoire de moyenne montagne aux stations espacées, comparer les prix et anticiper son plein avant les zones isolées est conseillé.",
+    ],
+    facts: [
+      { label: 'Préfecture', value: 'Le Puy-en-Velay' },
+      { label: 'Grands axes', value: 'RN88 · A75 (à proximité)' },
+    ],
+  },
+  '45': {
+    emblem: '/images/flags/departments/45.svg',
+    emblemType: 'blason',
+    emblemCaption: 'Blason du Loiret',
+    nickname: 'Orléans, la Loire et sa forêt',
+    paragraphs: [
+      "Lié à la mémoire de Jeanne d'Arc, le Loiret marie le patrimoine d'Orléans, le Val de Loire classé à l'UNESCO, la plus grande forêt domaniale de France et le canal de Briare. Orléans en est la préfecture.",
+      "Carrefour autoroutier majeur au sud de Paris, le département voit converger l'A10, l'A71, l'A19 et l'A77. Sur ces axes de grand transit, comparer les prix entre aires d'autoroute et stations de l'agglomération orléanaise est avantageux.",
+    ],
+    facts: [
+      { label: 'Préfecture', value: 'Orléans' },
+      { label: 'Grands axes', value: 'A10 · A71 · A19 · A77' },
+    ],
+  },
+  '46': {
+    emblem: '/images/flags/departments/46.svg',
+    emblemType: 'blason',
+    emblemCaption: 'Blason du Lot',
+    nickname: 'Rocamadour et la vallée du Lot',
+    paragraphs: [
+      "Joyau du Quercy, le Lot émerveille avec Rocamadour accrochée à sa falaise, Saint-Cirq-Lapopie, le gouffre de Padirac et le vignoble de Cahors. Cahors, lovée dans un méandre du Lot, en est la préfecture.",
+      "Le département est traversé par l'A20, autoroute gratuite reliant Vierzon à Toulouse, très empruntée lors des départs en vacances. Sur cet axe et sur les routes touristiques des vallées, comparer les prix avant de s'écarter des grands axes est judicieux.",
+    ],
+    facts: [
+      { label: 'Préfecture', value: 'Cahors' },
+      { label: 'Grands axes', value: 'A20 (gratuite)' },
+    ],
+  },
+  '47': {
+    emblem: '/images/flags/departments/47.svg',
+    emblemType: 'blason',
+    emblemCaption: "Blason de Lot-et-Garonne",
+    nickname: 'Le pays du pruneau et des bastides',
+    paragraphs: [
+      "Verger de la France, le Lot-et-Garonne est célèbre pour le pruneau d'Agen, ses bastides médiévales et la vallée fertile de la Garonne. Agen en est la préfecture.",
+      "Le département est traversé par l'A62 (Bordeaux-Toulouse), grand axe du sud-ouest. Sur cette autoroute fréquentée, l'écart de prix avec les stations d'Agen, Marmande ou Villeneuve-sur-Lot mérite d'être comparé.",
+    ],
+    facts: [
+      { label: 'Préfecture', value: 'Agen' },
+      { label: 'Grands axes', value: 'A62' },
+    ],
+  },
+  '48': {
+    emblem: '/images/flags/departments/48.svg',
+    emblemType: 'blason',
+    emblemCaption: 'Blason de la Lozère',
+    nickname: 'Le département le plus préservé de France',
+    paragraphs: [
+      "Le moins peuplé de France, la Lozère est un sanctuaire de nature : gorges du Tarn, mont Lozère, Aubrac, causses et Cévennes classés à l'UNESCO. Mende en est la préfecture.",
+      "Le département est traversé par l'A75 gratuite, qui culmine à plus de 1 100 m d'altitude. Ailleurs, les routes de causses et de montagne comptent peu de stations : faire le plein avant de s'aventurer dans les zones isolées est fortement conseillé.",
+    ],
+    facts: [
+      { label: 'Préfecture', value: 'Mende' },
+      { label: 'Grands axes', value: 'A75 (gratuite)' },
+    ],
+  },
+  '49': {
+    emblem: '/images/flags/departments/49.svg',
+    emblemType: 'blason',
+    emblemCaption: "Blason de Maine-et-Loire",
+    nickname: 'La douceur angevine',
+    paragraphs: [
+      "Pays de la « douceur angevine », le Maine-et-Loire associe le château d'Angers et sa tenture de l'Apocalypse, les vignobles d'Anjou et de Saumur, et le Val de Loire. Angers en est la préfecture.",
+      "Le département est desservi par l'A11 (vers Paris et Nantes), l'A85 et l'A87. Sur ces axes reliant l'ouest au Bassin parisien, comparer les prix entre aires d'autoroute et stations d'Angers ou Cholet est avantageux.",
+    ],
+    facts: [
+      { label: 'Préfecture', value: 'Angers' },
+      { label: 'Grands axes', value: 'A11 · A85 · A87' },
+    ],
+  },
+  '50': {
+    emblem: '/images/flags/departments/50.svg',
+    emblemType: 'blason',
+    emblemCaption: 'Blason de la Manche',
+    nickname: 'Le Mont-Saint-Michel et le Cotentin',
+    paragraphs: [
+      "Avec le Mont-Saint-Michel, la presqu'île du Cotentin, le port de Cherbourg et la plage d'Utah Beach, la Manche déploie un littoral spectaculaire sur près de 350 km. Saint-Lô en est la préfecture.",
+      "Le département est desservi par l'A84 (Caen-Rennes), seul grand axe autoroutier. La forte fréquentation touristique autour du Mont-Saint-Michel et des côtes rend utile la comparaison des prix entre l'intérieur et les sites les plus visités.",
+    ],
+    facts: [
+      { label: 'Préfecture', value: 'Saint-Lô' },
+      { label: 'Grands axes', value: 'A84' },
+    ],
+  },
+  '51': {
+    emblem: '/images/flags/departments/51.svg',
+    emblemType: 'blason',
+    emblemCaption: 'Blason de la Marne',
+    nickname: 'La Champagne et ses bulles',
+    paragraphs: [
+      "Berceau du champagne, la Marne déroule ses coteaux classés à l'UNESCO autour de Reims et d'Épernay, ainsi que la cathédrale du sacre des rois de France. Châlons-en-Champagne en est la préfecture.",
+      "Le département est un carrefour de l'est : l'A4 (Paris-Strasbourg), l'A26 et l'A34 s'y croisent. Sur ces grands axes de transit, comparer les prix entre aires d'autoroute et stations de Reims ou Châlons est un bon moyen d'économiser.",
+    ],
+    facts: [
+      { label: 'Préfecture', value: 'Châlons-en-Champagne' },
+      { label: 'Grands axes', value: 'A4 · A26 · A34' },
+    ],
+  },
+  '52': {
+    emblem: '/images/flags/departments/52.svg',
+    emblemType: 'blason',
+    emblemCaption: 'Blason de la Haute-Marne',
+    nickname: 'Colombey, le lac du Der et les forêts',
+    paragraphs: [
+      "Terre de forêts et de lacs, la Haute-Marne est connue pour Colombey-les-Deux-Églises et le mémorial du général de Gaulle, le grand lac du Der et sa tradition métallurgique. Chaumont en est la préfecture.",
+      "Le département est traversé par l'A5 (Paris-Langres) et l'A31 (Nancy-Dijon). Sur ces axes de transit nord-sud et est-ouest, comparer les prix entre aires d'autoroute et stations des villes est recommandé.",
+    ],
+    facts: [
+      { label: 'Préfecture', value: 'Chaumont' },
+      { label: 'Grands axes', value: 'A5 · A31' },
+    ],
+  },
+  '53': {
+    emblem: '/images/flags/departments/53.svg',
+    emblemType: 'blason',
+    emblemCaption: 'Blason de la Mayenne',
+    nickname: 'Le bocage et la rivière Mayenne',
+    paragraphs: [
+      "Pays de bocage et d'élevage, la Mayenne séduit par sa rivière navigable, ses cités de caractère (Laval, Sainte-Suzanne) et son cadre paisible entre Bretagne et Normandie. Laval en est la préfecture.",
+      "Le département est desservi par l'A81 (Le Mans-Rennes) et l'A88. Sur ces axes reliant l'ouest au Bassin parisien, comparer les prix entre stations d'autoroute et stations de Laval ou Mayenne permet souvent d'économiser.",
+    ],
+    facts: [
+      { label: 'Préfecture', value: 'Laval' },
+      { label: 'Grands axes', value: 'A81 · A88' },
+    ],
+  },
+  '54': {
+    emblem: '/images/flags/departments/54.svg',
+    emblemType: 'blason',
+    emblemCaption: "Blason de Meurthe-et-Moselle",
+    nickname: 'Nancy et le sillon lorrain',
+    paragraphs: [
+      "Avec la place Stanislas de Nancy, joyau du XVIIIe siècle classé à l'UNESCO, et un riche passé sidérurgique, la Meurthe-et-Moselle est un cœur historique de la Lorraine. Nancy en est la préfecture.",
+      "Le département est structuré par l'A31 (le « sillon lorrain ») et l'A33. Sa proximité avec le Luxembourg, où le carburant est traditionnellement moins cher, pousse de nombreux frontaliers à comparer les prix avant de faire le plein.",
+    ],
+    facts: [
+      { label: 'Préfecture', value: 'Nancy' },
+      { label: 'Grands axes', value: 'A31 · A33 · proximité Luxembourg' },
+    ],
+  },
+  '55': {
+    emblem: '/images/flags/departments/55.svg',
+    emblemType: 'blason',
+    emblemCaption: 'Blason de la Meuse',
+    nickname: 'Verdun et la mémoire',
+    paragraphs: [
+      "Marquée à jamais par la bataille de Verdun, la Meuse est une terre de mémoire et de forêts, traversée par la rivière du même nom. Bar-le-Duc, à l'élégant quartier Renaissance, en est la préfecture.",
+      "Le département est desservi par l'A4 (Paris-Strasbourg) et l'A34. Sur l'A4, l'un des grands axes est-ouest du pays, comparer les prix entre aires d'autoroute et stations des villes est un réflexe payant.",
+    ],
+    facts: [
+      { label: 'Préfecture', value: 'Bar-le-Duc' },
+      { label: 'Grands axes', value: 'A4 · A34' },
+    ],
+  },
+  '56': {
+    emblem: '/images/flags/departments/56.svg',
+    emblemType: 'blason',
+    emblemCaption: 'Blason du Morbihan',
+    nickname: 'Le golfe et les mégalithes de Carnac',
+    paragraphs: [
+      "Autour de son golfe parsemé d'îles, le Morbihan rassemble les alignements mégalithiques de Carnac, la presqu'île de Quiberon, Vannes et le port de Lorient. Vannes en est la préfecture.",
+      "Fidèle à la tradition bretonne, le département est desservi par la RN165, voie express gratuite longeant le littoral sud. L'afflux touristique estival vers le golfe et les plages rend utile la comparaison des prix entre la côte et l'intérieur.",
+    ],
+    facts: [
+      { label: 'Préfecture', value: 'Vannes' },
+      { label: 'Grands axes', value: 'RN165 (gratuite)' },
+    ],
+  },
+  '57': {
+    emblem: '/images/flags/departments/57.svg',
+    emblemType: 'blason',
+    emblemCaption: 'Blason de la Moselle',
+    nickname: 'Metz, l’Allemagne et le Luxembourg',
+    paragraphs: [
+      "Au carrefour de trois pays, la Moselle marie le patrimoine de Metz (cathédrale, Centre Pompidou-Metz), l'histoire sidérurgique et une forte culture transfrontalière. Metz en est la préfecture.",
+      "Frontalier de l'Allemagne et du Luxembourg, le département compte de très nombreux travailleurs frontaliers. Structuré par l'A31, l'A4, l'A30 et l'A320, c'est une zone où la comparaison des prix de part et d'autre de la frontière est une habitude bien ancrée.",
+    ],
+    facts: [
+      { label: 'Préfecture', value: 'Metz' },
+      { label: 'Grands axes', value: 'A31 · A4 · A30 · frontières' },
+    ],
+  },
+  '58': {
+    emblem: '/images/flags/departments/58.svg',
+    emblemType: 'blason',
+    emblemCaption: 'Blason de la Nièvre',
+    nickname: 'Le Morvan et Magny-Cours',
+    paragraphs: [
+      "Entre les forêts du Morvan, les bords de Loire et le circuit de Nevers Magny-Cours, la Nièvre est une terre de nature et de sport automobile. Nevers, réputée pour sa faïence, en est la préfecture.",
+      "Le département est desservi par l'A77 le long de la Loire et par la RN7 historique. Sur ces axes reliant le Bassin parisien au sud, comparer les prix entre stations de route et aires d'autoroute est avantageux.",
+    ],
+    facts: [
+      { label: 'Préfecture', value: 'Nevers' },
+      { label: 'Grands axes', value: 'A77 · RN7' },
+    ],
+  },
+  '60': {
+    emblem: '/images/flags/departments/60.svg',
+    emblemType: 'blason',
+    emblemCaption: "Blason de l'Oise",
+    nickname: 'Chantilly, Compiègne et Senlis',
+    paragraphs: [
+      "Aux portes nord de Paris, l'Oise aligne le château et les grandes écuries de Chantilly, le palais de Compiègne, la cathédrale de Beauvais et les forêts royales. Beauvais en est la préfecture.",
+      "Le département est traversé par l'A1 (Paris-Lille) et l'A16, axes très fréquentés, et accueille l'aéroport low-cost de Beauvais. Sur l'A1 notamment, comparer les prix entre aires d'autoroute et stations des villes permet de réelles économies.",
+    ],
+    facts: [
+      { label: 'Préfecture', value: 'Beauvais' },
+      { label: 'Grands axes', value: 'A1 · A16' },
+    ],
+  },
+  '61': {
+    emblem: '/images/flags/departments/61.svg',
+    emblemType: 'blason',
+    emblemCaption: "Blason de l'Orne",
+    nickname: 'Le Perche, les haras et le camembert',
+    paragraphs: [
+      "Terre d'élevage et de chevaux (haras national du Pin), l'Orne est aussi le pays du camembert, des collines du Perche et de la station thermale de Bagnoles-de-l'Orne. Alençon, réputée pour sa dentelle, en est la préfecture.",
+      "Le département est desservi par l'A28 (Rouen-Le Mans) et l'A88. Dans ce territoire rural où les stations sont plus espacées qu'en ville, comparer les prix et anticiper son plein sont de bons réflexes.",
+    ],
+    facts: [
+      { label: 'Préfecture', value: 'Alençon' },
+      { label: 'Grands axes', value: 'A28 · A88' },
+    ],
+  },
+  '63': {
+    emblem: '/images/flags/departments/63.svg',
+    emblemType: 'blason',
+    emblemCaption: 'Blason du Puy-de-Dôme',
+    nickname: 'La chaîne des Puys et Clermont',
+    paragraphs: [
+      "Dominé par la chaîne des Puys classée à l'UNESCO, le Puy-de-Dôme marie volcans, thermalisme et le dynamisme de Clermont-Ferrand, berceau de Michelin. Clermont-Ferrand en est la préfecture.",
+      "Le département est un carrefour : l'A71 (vers Paris), l'A75 (qui démarre vers le Midi) et l'A89 (Bordeaux-Lyon) s'y rejoignent. Sur ces grands axes, comparer les prix entre aires d'autoroute et stations de l'agglomération clermontoise est avantageux.",
+    ],
+    facts: [
+      { label: 'Préfecture', value: 'Clermont-Ferrand' },
+      { label: 'Grands axes', value: 'A71 · A75 · A89' },
+    ],
+  },
+  '64': {
+    emblem: '/images/flags/departments/64.svg',
+    emblemType: 'blason',
+    emblemCaption: 'Blason des Pyrénées-Atlantiques',
+    nickname: 'Pays basque et Béarn',
+    paragraphs: [
+      "Entre l'océan et la montagne, les Pyrénées-Atlantiques réunissent le Pays basque (Biarritz, Bayonne, Saint-Jean-de-Luz) et le Béarn (Pau, vallées pyrénéennes). Pau en est la préfecture.",
+      "Le département est desservi par l'A63 vers l'Espagne et l'A64 vers Toulouse. Frontalier de l'Espagne et très touristique l'été sur la côte basque, c'est une zone où comparer les prix (y compris de l'autre côté de la frontière) est particulièrement pertinent.",
+    ],
+    facts: [
+      { label: 'Préfecture', value: 'Pau' },
+      { label: 'Grands axes', value: 'A63 · A64 · frontière espagnole' },
+    ],
+  },
+  '65': {
+    emblem: '/images/flags/departments/65.svg',
+    emblemType: 'blason',
+    emblemCaption: 'Blason des Hautes-Pyrénées',
+    nickname: 'Lourdes, le Tourmalet et Gavarnie',
+    paragraphs: [
+      "Hauts lieux des Pyrénées, les Hautes-Pyrénées rassemblent le sanctuaire de Lourdes, le col du Tourmalet, le Pic du Midi et le cirque de Gavarnie classé à l'UNESCO. Tarbes en est la préfecture.",
+      "Le département est desservi par l'A64 (Pau-Toulouse) dans sa partie nord. Plus haut, les routes de cols et de stations de ski comptent peu de points de ravitaillement : comparer les prix et faire le plein avant de monter sont vivement conseillés.",
+    ],
+    facts: [
+      { label: 'Préfecture', value: 'Tarbes' },
+      { label: 'Grands axes', value: 'A64 · cols pyrénéens' },
+    ],
+  },
+  '66': {
+    emblem: '/images/flags/departments/66.svg',
+    emblemType: 'blason',
+    emblemCaption: 'Blason des Pyrénées-Orientales',
+    nickname: 'La Catalogne française',
+    paragraphs: [
+      "Baignées de soleil, les Pyrénées-Orientales déroulent la Côte Vermeille (Collioure), le massif du Canigou, la Cerdagne et une forte identité catalane. Perpignan en est la préfecture.",
+      "Le département est traversé par l'A9 « la Catalane », principal axe vers l'Espagne, très saturé l'été. La proximité de la frontière et l'afflux touristique rendent la comparaison des prix, des deux côtés de la frontière comme entre côte et intérieur, particulièrement utile.",
+    ],
+    facts: [
+      { label: 'Préfecture', value: 'Perpignan' },
+      { label: 'Grands axes', value: 'A9 · frontière espagnole' },
+    ],
+  },
+  '68': {
+    emblem: '/images/flags/departments/68.svg',
+    emblemType: 'blason',
+    emblemCaption: 'Blason du Haut-Rhin',
+    nickname: 'Route des Vins et ballons des Vosges',
+    paragraphs: [
+      "Cœur de l'Alsace du sud, le Haut-Rhin marie la Route des Vins et ses villages fleuris, Colmar et sa Petite Venise, la cité industrielle de Mulhouse et les ballons des Vosges. Colmar en est la préfecture.",
+      "Le département est desservi par l'A35 (le long du Rhin) et l'A36. Frontalier de l'Allemagne et de la Suisse, il voit de nombreux automobilistes comparer les prix des trois pays avant de faire le plein.",
+    ],
+    facts: [
+      { label: 'Préfecture', value: 'Colmar' },
+      { label: 'Grands axes', value: 'A35 · A36 · frontières' },
+    ],
+  },
+  '70': {
+    emblem: '/images/flags/departments/70.svg',
+    emblemType: 'blason',
+    emblemCaption: 'Blason de la Haute-Saône',
+    nickname: 'Vosges saônoises et villages thermaux',
+    paragraphs: [
+      "Département rural et verdoyant, la Haute-Saône offre les Vosges saônoises, les stations thermales de Luxeuil-les-Bains et un patrimoine discret entre plaine et collines. Vesoul en est la préfecture.",
+      "Le département est desservi par les RN19 et RN57, et proche de l'A36. Dans ce territoire où les stations sont espacées, comparer les prix et anticiper son plein avant les zones plus isolées sont de bons réflexes.",
+    ],
+    facts: [
+      { label: 'Préfecture', value: 'Vesoul' },
+      { label: 'Grands axes', value: 'RN19 · RN57 · A36 (à proximité)' },
+    ],
+  },
+  '71': {
+    emblem: '/images/flags/departments/71.svg',
+    emblemType: 'blason',
+    emblemCaption: "Blason de Saône-et-Loire",
+    nickname: 'Cluny, le Charolais et le Mâconnais',
+    paragraphs: [
+      "Vaste et variée, la Saône-et-Loire associe le vignoble du Mâconnais, l'abbaye de Cluny, le bœuf charolais et le passé industriel du Creusot. Mâcon en est la préfecture.",
+      "Grand carrefour, le département voit se croiser l'A6 (Paris-Lyon), l'A40 vers les Alpes et la RCEA (N79/N80) vers l'Atlantique. Sur ces axes très fréquentés, comparer les prix entre aires d'autoroute et stations de Mâcon ou Chalon-sur-Saône est avantageux.",
+    ],
+    facts: [
+      { label: 'Préfecture', value: 'Mâcon' },
+      { label: 'Grands axes', value: 'A6 · A40 · RCEA' },
+    ],
+  },
+  '72': {
+    emblem: '/images/flags/departments/72.svg',
+    emblemType: 'blason',
+    emblemCaption: 'Blason de la Sarthe',
+    nickname: 'Les 24 Heures du Mans',
+    paragraphs: [
+      "Mondialement connue pour les 24 Heures du Mans, la Sarthe associe l'automobile, la cité Plantagenêt du Mans, les rillettes et de paisibles vallées. Le Mans en est la préfecture.",
+      "Le département est un carrefour de l'ouest : l'A11 (Paris-Nantes), l'A28 (Rouen-Tours) et l'A81 (vers Rennes) s'y croisent. Sur ces axes, l'écart de prix entre aires d'autoroute et stations de l'agglomération mancelle vaut la comparaison.",
+    ],
+    facts: [
+      { label: 'Préfecture', value: 'Le Mans' },
+      { label: 'Grands axes', value: 'A11 · A28 · A81' },
+    ],
+  },
+  '73': {
+    emblem: '/images/flags/departments/73.svg',
+    emblemType: 'blason',
+    emblemCaption: 'Blason de la Savoie',
+    nickname: 'Au pays des grandes stations de ski',
+    paragraphs: [
+      "Terre des plus grands domaines skiables du monde (Courchevel, Val Thorens, Les Arcs), la Savoie déroule la Tarentaise, la Maurienne et le lac du Bourget. Chambéry en est la préfecture.",
+      "Le département est desservi par l'A43 et l'A41, qui mènent vers l'Italie et les vallées alpines. Lors des week-ends de vacances scolaires, le trafic vers les stations explose et les points de ravitaillement se raréfient en altitude : comparer les prix avant de monter est vivement conseillé.",
+    ],
+    facts: [
+      { label: 'Préfecture', value: 'Chambéry' },
+      { label: 'Grands axes', value: 'A43 · A41 · A430' },
+    ],
+  },
+  '74': {
+    emblem: '/images/flags/departments/74.svg',
+    emblemType: 'blason',
+    emblemCaption: 'Blason de la Haute-Savoie',
+    nickname: 'Du Mont-Blanc au lac d’Annecy',
+    paragraphs: [
+      "Entre le Mont-Blanc et Chamonix, le lac d'Annecy et les rives du Léman (Évian), la Haute-Savoie est un écrin alpin de renommée mondiale, été comme hiver. Annecy en est la préfecture.",
+      "Le département est desservi par l'A40 (« l'Autoroute Blanche ») et l'A41. Frontalier de la Suisse, avec de nombreux travailleurs vers Genève, et très touristique, c'est une zone où comparer les prix (y compris côté suisse) et anticiper avant les stations d'altitude sont particulièrement utiles.",
+    ],
+    facts: [
+      { label: 'Préfecture', value: 'Annecy' },
+      { label: 'Grands axes', value: 'A40 · A41 · proximité Genève' },
+    ],
+  },
+  '76': {
+    emblem: '/images/flags/departments/76.svg',
+    emblemType: 'blason',
+    emblemCaption: 'Blason de la Seine-Maritime',
+    nickname: 'Rouen, Le Havre et les falaises d’Étretat',
+    paragraphs: [
+      "De la cité aux cent clochers de Rouen au grand port du Havre, en passant par les falaises d'Étretat et les stations de la Côte d'Albâtre, la Seine-Maritime conjugue patrimoine et littoral. Rouen en est la préfecture.",
+      "Le département est desservi par l'A13 (vers Paris), l'A28, l'A29 et l'A150. Sur ces axes reliant la vallée de la Seine au littoral, comparer les prix entre aires d'autoroute et stations de Rouen ou du Havre est avantageux.",
+    ],
+    facts: [
+      { label: 'Préfecture', value: 'Rouen' },
+      { label: 'Grands axes', value: 'A13 · A28 · A29 · A150' },
+    ],
+  },
+  '79': {
+    emblem: '/images/flags/departments/79.svg',
+    emblemType: 'blason',
+    emblemCaption: 'Blason des Deux-Sèvres',
+    nickname: 'Le Marais poitevin, la Venise verte',
+    paragraphs: [
+      "Pays du Marais poitevin, la « Venise verte » sillonnée de canaux, les Deux-Sèvres associent nature préservée, élevage et le pôle des mutuelles de Niort. Niort en est la préfecture.",
+      "Le département est desservi par l'A10 (Paris-Bordeaux) et l'A83 (Nantes-Niort). Sur ces axes de transit vers l'Atlantique, comparer les prix entre aires d'autoroute et stations de Niort ou Bressuire permet souvent d'économiser.",
+    ],
+    facts: [
+      { label: 'Préfecture', value: 'Niort' },
+      { label: 'Grands axes', value: 'A10 · A83' },
+    ],
+  },
+  '80': {
+    emblem: '/images/flags/departments/80.svg',
+    emblemType: 'blason',
+    emblemCaption: 'Blason de la Somme',
+    nickname: 'La baie de Somme et la mémoire',
+    paragraphs: [
+      "Entre la magnifique baie de Somme et ses phoques, la cathédrale d'Amiens (la plus vaste de France) et les sites de mémoire de la Grande Guerre, la Somme offre nature et histoire. Amiens en est la préfecture.",
+      "Le département est traversé par l'A1 (Paris-Lille), l'A16 (littoral) et l'A29. Sur ces grands axes de transit international, comparer les prix entre aires d'autoroute et stations d'Amiens ou Abbeville est un réflexe payant.",
+    ],
+    facts: [
+      { label: 'Préfecture', value: 'Amiens' },
+      { label: 'Grands axes', value: 'A1 · A16 · A29' },
+    ],
+  },
+  '81': {
+    emblem: '/images/flags/departments/81.svg',
+    emblemType: 'blason',
+    emblemCaption: 'Blason du Tarn',
+    nickname: 'Albi, Toulouse-Lautrec et le Sidobre',
+    paragraphs: [
+      "Dominé par la cité épiscopale d'Albi classée à l'UNESCO et son musée Toulouse-Lautrec, le Tarn déroule Cordes-sur-Ciel, les rochers du Sidobre et les Monts de Lacaune. Albi en est la préfecture.",
+      "Le département est desservi par l'A68 vers Toulouse et reste proche de l'A75. Sur ces axes et sur les routes des Monts, comparer les prix entre stations d'autoroute et stations d'Albi ou Castres est avantageux.",
+    ],
+    facts: [
+      { label: 'Préfecture', value: 'Albi' },
+      { label: 'Grands axes', value: 'A68 · A75 (à proximité)' },
+    ],
+  },
+  '82': {
+    emblem: '/images/flags/departments/82.svg',
+    emblemType: 'blason',
+    emblemCaption: "Blason de Tarn-et-Garonne",
+    nickname: 'Montauban, Moissac et le chasselas',
+    paragraphs: [
+      "À la confluence du Tarn et de la Garonne, le Tarn-et-Garonne associe la ville rose de Montauban (patrie d'Ingres), l'abbaye de Moissac et le chasselas AOP. Montauban en est la préfecture.",
+      "Le département est traversé par l'A62 (Bordeaux-Toulouse) et l'A20 (vers Paris). Sur ces grands axes du sud-ouest, comparer les prix entre aires d'autoroute et stations de Montauban ou Castelsarrasin est intéressant.",
+    ],
+    facts: [
+      { label: 'Préfecture', value: 'Montauban' },
+      { label: 'Grands axes', value: 'A62 · A20' },
+    ],
+  },
+  '84': {
+    emblem: '/images/flags/departments/84.svg',
+    emblemType: 'blason',
+    emblemCaption: 'Blason du Vaucluse',
+    nickname: 'Avignon, le Ventoux et le Luberon',
+    paragraphs: [
+      "Cœur de la Provence, le Vaucluse réunit le palais des Papes d'Avignon, le mont Ventoux, les villages perchés du Luberon et le vignoble de Châteauneuf-du-Pape. Avignon en est la préfecture.",
+      "Le département est desservi par l'A7 (« autoroute du soleil ») et proche de l'A9. Très touristique, surtout l'été lors du Festival d'Avignon et des séjours en Provence, c'est une zone où comparer les prix entre l'autoroute et l'arrière-pays est avantageux.",
+    ],
+    facts: [
+      { label: 'Préfecture', value: 'Avignon' },
+      { label: 'Grands axes', value: 'A7 · A9 (à proximité)' },
+    ],
+  },
+  '86': {
+    emblem: '/images/flags/departments/86.svg',
+    emblemType: 'blason',
+    emblemCaption: 'Blason de la Vienne',
+    nickname: 'Poitiers et le Futuroscope',
+    paragraphs: [
+      "Connue pour le parc du Futuroscope et le remarquable art roman de Poitiers, la Vienne déroule vallées paisibles et patrimoine médiéval. Poitiers en est la préfecture.",
+      "Le département est desservi par l'A10 (Paris-Bordeaux) et la RN10. Sur ces grands axes nord-sud très empruntés lors des vacances, comparer les prix entre aires d'autoroute et stations de Poitiers ou Châtellerault est un bon réflexe.",
+    ],
+    facts: [
+      { label: 'Préfecture', value: 'Poitiers' },
+      { label: 'Grands axes', value: 'A10 · RN10 · RN147' },
+    ],
+  },
+  '87': {
+    emblem: '/images/flags/departments/87.svg',
+    emblemType: 'blason',
+    emblemCaption: 'Blason de la Haute-Vienne',
+    nickname: 'Limoges, la porcelaine et le Limousin',
+    paragraphs: [
+      "Capitale des arts du feu (porcelaine, émaux), Limoges rayonne sur la Haute-Vienne, terre de lacs, de monts du Limousin et de mémoire avec Oradour-sur-Glane. Limoges en est la préfecture.",
+      "Le département est desservi par l'A20, autoroute gratuite reliant Vierzon à Toulouse, ainsi que par les RN141 et RN145. Sur ces axes de transit, comparer les prix entre stations de route et aires d'autoroute est avantageux.",
+    ],
+    facts: [
+      { label: 'Préfecture', value: 'Limoges' },
+      { label: 'Grands axes', value: 'A20 (gratuite) · RN141 · RN145' },
+    ],
+  },
+  '88': {
+    emblem: '/images/flags/departments/88.svg',
+    emblemType: 'blason',
+    emblemCaption: 'Blason des Vosges',
+    nickname: 'Montagnes, thermalisme et Gérardmer',
+    paragraphs: [
+      "Pays du massif des Vosges, des eaux minérales (Vittel, Contrexéville) et de la station de Gérardmer, le département des Vosges allie nature, thermalisme et tradition (imagerie d'Épinal). Épinal en est la préfecture.",
+      "Le département s'appuie sur les RN57 et RN66 et reste proche de l'A31. Sur les routes de montagne menant aux cols et aux stations, les points de ravitaillement se raréfient : comparer les prix et faire le plein avant de monter sont conseillés.",
+    ],
+    facts: [
+      { label: 'Préfecture', value: 'Épinal' },
+      { label: 'Grands axes', value: 'RN57 · RN66 · A31 (à proximité)' },
+    ],
+  },
+  '89': {
+    emblem: '/images/flags/departments/89.svg',
+    emblemType: 'blason',
+    emblemCaption: "Blason de l'Yonne",
+    nickname: 'Chablis, Vézelay et la Bourgogne du nord',
+    paragraphs: [
+      "Porte nord de la Bourgogne, l'Yonne réunit le vignoble de Chablis, la colline éternelle de Vézelay classée à l'UNESCO, Auxerre et Sens. Auxerre en est la préfecture.",
+      "Le département est traversé par l'A6 (Paris-Lyon) et l'A19. Sur l'A6, l'un des axes les plus fréquentés lors des grands départs, comparer les prix entre aires d'autoroute et stations d'Auxerre ou Sens permet de réelles économies.",
+    ],
+    facts: [
+      { label: 'Préfecture', value: 'Auxerre' },
+      { label: 'Grands axes', value: 'A6 · A19 · RN6' },
+    ],
+  },
+  '90': {
+    emblem: '/images/flags/departments/90.svg',
+    emblemType: 'blason',
+    emblemCaption: 'Blason du Territoire de Belfort',
+    nickname: 'Le Lion de Belfort et la trouée',
+    paragraphs: [
+      "Plus petit département de France métropolitaine hors Île-de-France, le Territoire de Belfort est gardé par le célèbre Lion de Bartholdi et occupe la stratégique trouée de Belfort, entre Vosges et Jura. Belfort en est la préfecture, marquée par l'industrie (Alstom, General Electric).",
+      "Compact et industriel, le département est desservi par l'A36 « La Comtoise ». Proche de la Suisse et de l'Allemagne, il s'inscrit dans une zone où la comparaison des prix de part et d'autre des frontières est courante.",
+    ],
+    facts: [
+      { label: 'Préfecture', value: 'Belfort' },
+      { label: 'Grands axes', value: 'A36' },
+    ],
+  },
 };
