@@ -29,7 +29,7 @@ faq:
 draft: false
 ---
 
-En juin 2026, le SP95-E10 oscille autour de **2,03–2,05 €/L** en moyenne nationale et le gazole atteint **2,15 €/L**, selon les données de [prix-carburants.gouv.fr](https://www.prix-carburants.gouv.fr/). Ces niveaux s'expliquent par la conjonction de trois facteurs : un cours du pétrole maintenu haut par la géopolitique, une fiscalité fixe qui amplifie chaque variation du brut, et un surcroît saisonnier de la demande à l'approche de l'été. Voici ce qui se passe vraiment.
+En juin 2026, le SP95-E10 oscille autour de **2,03–2,05 €/L** en moyenne nationale et le gazole atteint **2,15 €/L**, selon les données de [prix-carburants.gouv.fr](https://www.prix-carburants.gouv.fr/). Les prix se détendent pourtant depuis le début du mois — le gazole est au plus bas depuis la mi-mars et environ une station sur trois affiche désormais le SP95-E10 sous 2 €/L — après le pic provoqué au printemps par le blocage du détroit d'Ormuz, que nous détaillons dans notre article sur la [flambée du prix du carburant en 2026](/blog/pourquoi-le-prix-du-carburant-a-flambe-en-2026/). Même en reflux, les niveaux restent élevés, et c'est ce qui intrigue : ils s'expliquent par la conjonction de trois facteurs structurels : un cours du pétrole encore haut, une fiscalité fixe qui amplifie chaque variation du brut, et un surcroît saisonnier de la demande à l'approche de l'été. Voici ce qui se passe vraiment.
 
 ---
 
@@ -39,7 +39,7 @@ Le carburant vendu à la pompe en France est issu du pétrole brut, dont le prix
 
 Deux événements ont maintenu le baril à ce niveau :
 
-- **Les tensions au Moyen-Orient** : une escalade géopolitique débutée en mars 2026 a ravivé les craintes sur les approvisionnements en provenance de la région, qui représente environ 30 % de la production mondiale.
+- **Les tensions au Moyen-Orient** : le blocage du détroit d'Ormuz par l'Iran début mars 2026 — par où transite environ 20 % du pétrole mondial — a déclenché la flambée du printemps, l'AIE évoquant la plus grande perturbation de l'approvisionnement de l'histoire du marché pétrolier. Nous décortiquons cette cause géopolitique dans notre article dédié à la [flambée des prix en 2026](/blog/pourquoi-le-prix-du-carburant-a-flambe-en-2026/).
 - **Les décisions de l'OPEP+** : le cartel maintient des plafonds de production stricts. Fin mai 2026, aucune décision d'augmentation de l'offre n'a été annoncée, ce qui laisse la demande peser sur les prix.
 
 Un baril à 88 USD avec un taux EUR/USD à 1,08 représente environ 81 €. Chaque hausse de 10 USD sur le brut se traduit par **2 à 3 centimes supplémentaires par litre** à la pompe française.
@@ -81,7 +81,7 @@ Pour une analyse complète des différences entre les carburants, consultez notr
 
 À court terme, deux scénarios pourraient provoquer une baisse sensible à la pompe :
 
-1. **Une désescalade géopolitique** au Moyen-Orient ou un accord de cessez-le-feu ramènerait le Brent sous les 80 USD, soit une baisse estimée à 10–15 c/L.
+1. **Une désescalade géopolitique** : c'est précisément ce qui s'amorce depuis début juin 2026, les négociations entre les États-Unis et l'Iran ayant entamé le reflux du gazole et ramené le SP95-E10 sous 2 € dans une partie des stations. Une sortie de crise durable autour du détroit d'Ormuz ramènerait le Brent sous les 80 USD, soit une baisse estimée à 10–15 c/L.
 2. **Une décision de l'OPEP+** d'augmenter sa production d'un million de barils/jour aurait un effet similaire sur les marchés.
 
 À l'inverse, une aggravation des tensions ou un renforcement des restrictions de production maintiendraient les prix actuels, voire les pousseraient à la hausse.

@@ -185,7 +185,7 @@ Article publié le **19 mai 2026**. Sera actualisé en cas de modification du di
   "dateModified": "2026-05-19T00:00:00+02:00",
   "author": {
     "@type": "Person",
-    "name": "Thomas Martin"
+    "name": "Hugo Beignon"
   },
   "publisher": {
     "@type": "Organization",
