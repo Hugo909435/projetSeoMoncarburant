@@ -39,18 +39,18 @@ Ce guide rassemble l'essentiel : les postes à surveiller, les fréquences indic
 |---|---|
 | Pression des pneus | Mensuelle, à froid |
 | Niveaux (huile, liquide de frein, refroidissement) | Mensuelle, avant grands trajets |
-| Vidange moteur + filtre à huile | 10 000 – 30 000 km ou 1 an |
-| Filtre à air | 20 000 – 40 000 km ou 2 ans |
-| Filtre habitacle | 15 000 – 25 000 km ou 1 an |
+| Vidange moteur + filtre à huile | 10 000-30 000 km ou 1 an |
+| Filtre à air | 20 000-40 000 km ou 2 ans |
+| Filtre habitacle | 15 000-25 000 km ou 1 an |
 | Liquide de frein | Tous les 2 ans |
-| Plaquettes de frein avant | 30 000 – 60 000 km selon conduite |
-| Disques de frein | 60 000 – 120 000 km selon conduite |
-| Courroie de distribution | 60 000 – 120 000 km ou 5 – 10 ans |
-| Batterie | 4 – 6 ans |
+| Plaquettes de frein avant | 30 000-60 000 km selon conduite |
+| Disques de frein | 60 000-120 000 km selon conduite |
+| Courroie de distribution | 60 000-120 000 km ou 5-10 ans |
+| Batterie | 4-6 ans |
 | Pneus (usure + âge) | Selon usure ; remplacement conseillé après 10 ans |
 | Contrôle technique | 4ᵉ anniversaire du véhicule, puis tous les 2 ans |
 
-*Fréquences indicatives — référez-vous toujours au carnet d'entretien de votre véhicule : les préconisations varient selon le moteur, le type d'huile et les conditions d'usage.*
+*Fréquences indicatives, référez-vous toujours au carnet d'entretien de votre véhicule : les préconisations varient selon le moteur, le type d'huile et les conditions d'usage.*
 
 ---
 
@@ -64,7 +64,7 @@ Un entretien régulier n'est pas une dépense facultative : c'est un investissem
 
 **Valeur de revente.** À kilométrage identique, un véhicule dont le carnet d'entretien est complet et à jour se revend en moyenne 10 à 15 % plus cher qu'un exemplaire sans historique. Les acheteurs, professionnels comme particuliers, valorisent la traçabilité des interventions.
 
-Un entretien soigné contribue aussi, indirectement, à alléger la facture à la pompe — un moteur bien réglé consomme moins. Pour aller plus loin sur ce volet, consultez notre guide complet pour [réduire sa facture de carburant](/piliers/reduire-facture-carburant/).
+Un entretien soigné contribue aussi, indirectement, à alléger la facture à la pompe, un moteur bien réglé consomme moins. Pour aller plus loin sur ce volet, consultez notre guide complet pour [réduire sa facture de carburant](/piliers/reduire-facture-carburant/).
 
 ---
 
@@ -72,28 +72,28 @@ Un entretien soigné contribue aussi, indirectement, à alléger la facture à l
 
 ### Le carnet d'entretien : votre référence absolue
 
-Le carnet d'entretien fourni avec votre véhicule liste les opérations à effectuer par intervalles — en kilomètres ou en mois, selon le premier terme échu — et précise les fluides homologués. C'est lui qui prime sur tout conseil générique, y compris celui que vous lisez ici.
+Le carnet d'entretien fourni avec votre véhicule liste les opérations à effectuer par intervalles, en kilomètres ou en mois, selon le premier terme échu, et précise les fluides homologués. C'est lui qui prime sur tout conseil générique, y compris celui que vous lisez ici.
 
-**Les intervalles varient beaucoup selon les motorisations.** Un diesel d'ancienne génération peut nécessiter une vidange tous les 15 000 km, quand un moteur essence récent à huile de synthèse longue durée peut aller jusqu'à 30 000 km. Idem pour la courroie de distribution : 60 000 km sur certains moteurs des années 2000, 150 000 km sur d'autres — voire une chaîne de distribution théoriquement sans limite d'usure sur certaines architectures récentes.
+**Les intervalles varient beaucoup selon les motorisations.** Un diesel d'ancienne génération peut nécessiter une vidange tous les 15 000 km, quand un moteur essence récent à huile de synthèse longue durée peut aller jusqu'à 30 000 km. Idem pour la courroie de distribution : 60 000 km sur certains moteurs des années 2000, 150 000 km sur d'autres, voire une chaîne de distribution théoriquement sans limite d'usure sur certaines architectures récentes.
 
-**Carnet d'entretien type** — à moduler selon votre véhicule :
+**Carnet d'entretien type**, à moduler selon votre véhicule :
 
 | Poste | Fréquence indicative | Remarques |
 |---|---|---|
-| Vidange moteur + filtre à huile | 10 000 – 30 000 km ou 1 an | Selon type d'huile et moteur |
-| Filtre à air moteur | 20 000 – 40 000 km | Avancer en environnement poussiéreux |
-| Filtre à carburant | 30 000 – 60 000 km | Absent sur injection directe récente |
-| Filtre habitacle | 15 000 – 25 000 km ou 1 an | Souvent oublié |
-| Plaquettes de frein avant | 30 000 – 60 000 km | Selon style de conduite |
-| Plaquettes de frein arrière | 50 000 – 80 000 km | Varient selon répartition du freinage |
-| Disques de frein | 60 000 – 120 000 km | Vérifier l'épaisseur résiduelle |
-| Amortisseurs | 80 000 – 100 000 km | Test de rebond régulier conseillé |
-| Courroie de distribution | 60 000 – 150 000 km ou 5 – 10 ans | Rupture = moteur hors service ; ne pas attendre |
-| Courroie accessoires | 60 000 – 100 000 km | Souvent remplacée en même temps que la distrib |
+| Vidange moteur + filtre à huile | 10 000-30 000 km ou 1 an | Selon type d'huile et moteur |
+| Filtre à air moteur | 20 000-40 000 km | Avancer en environnement poussiéreux |
+| Filtre à carburant | 30 000-60 000 km | Absent sur injection directe récente |
+| Filtre habitacle | 15 000-25 000 km ou 1 an | Souvent oublié |
+| Plaquettes de frein avant | 30 000-60 000 km | Selon style de conduite |
+| Plaquettes de frein arrière | 50 000-80 000 km | Varient selon répartition du freinage |
+| Disques de frein | 60 000-120 000 km | Vérifier l'épaisseur résiduelle |
+| Amortisseurs | 80 000-100 000 km | Test de rebond régulier conseillé |
+| Courroie de distribution | 60 000-150 000 km ou 5-10 ans | Rupture = moteur hors service ; ne pas attendre |
+| Courroie accessoires | 60 000-100 000 km | Souvent remplacée en même temps que la distrib |
 | Liquide de frein | Tous les 2 ans | Hygroscopique, se dégrade indépendamment des km |
-| Liquide de refroidissement | 3 – 5 ans | |
-| Bougies d'allumage (essence) | 30 000 – 100 000 km | Les bougies iridium tiennent plus longtemps |
-| Batterie | 4 – 6 ans | Tester avant l'hiver |
+| Liquide de refroidissement | 3-5 ans | |
+| Bougies d'allumage (essence) | 30 000-100 000 km | Les bougies iridium tiennent plus longtemps |
+| Batterie | 4-6 ans | Tester avant l'hiver |
 | FAP (filtre à particules diesel) | Régénération automatique | Remplacement si voyant allumé ; éviter exclusivement les courts trajets urbains |
 | Pneus | Selon usure ; 10 ans d'âge = remplacement conseillé | |
 
@@ -114,8 +114,8 @@ Entre deux révisions chez un professionnel, plusieurs contrôles simples peuven
 
 **Régulièrement :**
 
-- **Éclairage** : feux avant, arrière, stop, clignotants — faites le tour du véhicule ou demandez à quelqu'un. Un feu stop défaillant est un motif de verbalisation et de contre-visite au contrôle technique.
-- **Pneus** : vérifiez l'usure (indicateurs de profondeur intégrés dans la sculpture, seuil légal à 1,6 mm de profondeur) et l'état visuel (hernie, coupure, fissuration du flanc). Une usure irrégulière — plus prononcée au centre ou sur les bords — révèle un problème de pression ou de géométrie.
+- **Éclairage** : feux avant, arrière, stop, clignotants, faites le tour du véhicule ou demandez à quelqu'un. Un feu stop défaillant est un motif de verbalisation et de contre-visite au contrôle technique.
+- **Pneus** : vérifiez l'usure (indicateurs de profondeur intégrés dans la sculpture, seuil légal à 1,6 mm de profondeur) et l'état visuel (hernie, coupure, fissuration du flanc). Une usure irrégulière, plus prononcée au centre ou sur les bords, révèle un problème de pression ou de géométrie.
 - **Voyants du tableau de bord** : ne jamais ignorer un voyant allumé, surtout en orange ou rouge. Un voyant ignoré peut cacher une dégradation progressive qui coûte dix fois plus cher à traiter tardivement.
 
 ---
@@ -131,9 +131,9 @@ La règle applicable en 2026 reste celle définie par le droit français, inchan
 1. **Premier contrôle** : dans les 6 mois précédant le 4ᵉ anniversaire de la première mise en circulation du véhicule.
 2. **Puis tous les 2 ans**, sans interruption.
 
-Source : [service-public.fr — Contrôle technique des voitures particulières](https://www.service-public.fr/particuliers/vosdroits/F1707).
+Source : [service-public.fr, Contrôle technique des voitures particulières](https://www.service-public.fr/particuliers/vosdroits/F1707).
 
-**D'où vient la confusion ?** Une proposition de directive européenne a effectivement envisagé de raccourcir la périodicité pour les véhicules anciens dans l'Union européenne. Cette proposition **n'a pas été adoptée** à la date de mise à jour de ce guide (mai 2026) et n'aurait en tout état de cause pas force de loi en France tant qu'elle n'est pas transposée par le législateur national. Si une telle mesure devait entrer en vigueur, elle ferait l'objet d'une communication officielle via le Journal officiel et les préfectures — pas de publications virales sans source. Ne vous fiez pas aux articles non sourcés qui présentent ce projet comme une réalité.
+**D'où vient la confusion ?** Une proposition de directive européenne a effectivement envisagé de raccourcir la périodicité pour les véhicules anciens dans l'Union européenne. Cette proposition **n'a pas été adoptée** à la date de mise à jour de ce guide (mai 2026) et n'aurait en tout état de cause pas force de loi en France tant qu'elle n'est pas transposée par le législateur national. Si une telle mesure devait entrer en vigueur, elle ferait l'objet d'une communication officielle via le Journal officiel et les préfectures, pas de publications virales sans source. Ne vous fiez pas aux articles non sourcés qui présentent ce projet comme une réalité.
 
 **Astuce pratique** : retrouvez l'échéance de votre prochain contrôle technique sur le certificat d'immatriculation ou en vous connectant à l'espace client de votre centre agréé (DEKRA, Autovision, Bureau Véritas, Auto Sécurité, Contrôle Technique Sécurité, etc.).
 
@@ -141,7 +141,7 @@ Source : [service-public.fr — Contrôle technique des voitures particulières]
 
 Si la périodicité n'a pas changé, la prise en compte des rappels constructeurs au contrôle technique a évolué.
 
-**Depuis janvier 2026 :** un véhicule sous rappel constructeur dit **« stop drive »** — c'est-à-dire un rappel pour lequel le constructeur déconseille formellement de continuer à rouler en raison d'un danger grave — peut se voir infliger une **contre-visite** lors du contrôle technique. Le véhicule ne peut pas passer avec succès tant que le rappel n'est pas traité.
+**Depuis janvier 2026 :** un véhicule sous rappel constructeur dit **« stop drive »**, c'est-à-dire un rappel pour lequel le constructeur déconseille formellement de continuer à rouler en raison d'un danger grave, peut se voir infliger une **contre-visite** lors du contrôle technique. Le véhicule ne peut pas passer avec succès tant que le rappel n'est pas traité.
 
 Le cas le plus connu est celui des **airbags Takata**. Ces dispositifs, montés sur des millions de véhicules de nombreuses marques (Toyota, Honda, BMW, Renault, Volkswagen et bien d'autres) entre les années 2000 et 2010, présentent un défaut grave du gonfleur : en cas de déclenchement, celui-ci peut éclater et propulser des éclats métalliques vers les occupants. Des accidents mortels ont été documentés dans le monde. Le rappel Takata est le plus large de l'histoire automobile en volume de véhicules concernés.
 
@@ -155,19 +155,19 @@ Le remplacement d'un composant sous rappel est toujours **gratuit**, pris en cha
 
 ### Coût du contrôle technique et comment éviter la contre-visite
 
-Le tarif du contrôle technique est **libre** en France. En 2026, comptez généralement entre **80 et 120 €** pour un contrôle technique d'une voiture particulière. Les centres agréés sont en concurrence — il peut valoir la peine de comparer les tarifs dans votre secteur géographique.
+Le tarif du contrôle technique est **libre** en France. En 2026, comptez généralement entre **80 et 120 €** pour un contrôle technique d'une voiture particulière. Les centres agréés sont en concurrence, il peut valoir la peine de comparer les tarifs dans votre secteur géographique.
 
 La contre-visite représente 20 à 30 € supplémentaires et doit être effectuée dans les 2 mois suivant le premier contrôle, après réparation des défaillances majeures.
 
 **Pour éviter la contre-visite, un entretien préventif quelques semaines avant l'échéance est très efficace.** Les motifs de défaillance les plus fréquents lors d'un contrôle technique :
 
-1. **Éclairage** — feux stop, ampoules grillées, orientation des projecteurs hors tolérance
-2. **Pneus** — sculpture insuffisante (sous 1,6 mm), dommages latéraux, hernie
-3. **Freinage** — plaquettes usées, disques voilés, déséquilibre de freinage gauche/droite
-4. **Suspension et direction** — jeu dans la direction assistée, amortisseurs défaillants
-5. **Voyants actifs** — voyant moteur (« check engine ») ou autres témoins d'alerte allumés
-6. **Fuites** — huile, carburant ou liquide de frein visible sous le capot ou sous le véhicule
-7. **Rappel constructeur non traité** — depuis janvier 2026, pour les rappels « stop drive »
+1. **Éclairage**, feux stop, ampoules grillées, orientation des projecteurs hors tolérance
+2. **Pneus**, sculpture insuffisante (sous 1,6 mm), dommages latéraux, hernie
+3. **Freinage**, plaquettes usées, disques voilés, déséquilibre de freinage gauche/droite
+4. **Suspension et direction**, jeu dans la direction assistée, amortisseurs défaillants
+5. **Voyants actifs**, voyant moteur (« check engine ») ou autres témoins d'alerte allumés
+6. **Fuites**, huile, carburant ou liquide de frein visible sous le capot ou sous le véhicule
+7. **Rappel constructeur non traité**, depuis janvier 2026, pour les rappels « stop drive »
 
 Un passage en garage de confiance 3 à 4 semaines avant l'échéance du contrôle technique permet de corriger ces points sans précipitation.
 
@@ -189,12 +189,12 @@ Les freins et les amortisseurs fonctionnent en paires gauche/droite. Changer une
 
 ### Négliger le liquide de frein
 
-Le liquide de frein est hygroscopique : il absorbe naturellement l'humidité de l'air. Avec le temps, son point d'ébullition baisse. En freinage intense — longue descente, conduite sportive, usage intensif en ville — un liquide dégradé peut former des bulles de vapeur dans les conduites hydrauliques (phénomène dit de *vapor lock*) : la pédale devient spongieuse et le freinage perd en efficacité. Le liquide de frein se change **tous les 2 ans**, indépendamment des kilomètres. Comptez 20 à 50 € avec la main-d'œuvre.
+Le liquide de frein est hygroscopique : il absorbe naturellement l'humidité de l'air. Avec le temps, son point d'ébullition baisse. En freinage intense, longue descente, conduite sportive, usage intensif en ville, un liquide dégradé peut former des bulles de vapeur dans les conduites hydrauliques (phénomène dit de *vapor lock*) : la pédale devient spongieuse et le freinage perd en efficacité. Le liquide de frein se change **tous les 2 ans**, indépendamment des kilomètres. Comptez 20 à 50 € avec la main-d'œuvre.
 
 ### Acheter des pièces de sécurité au prix le plus bas sans vérifier la certification
 
-Le marché des pièces détachées de qualité variable est vaste, notamment en ligne. Pour les pièces de sécurité — disques et plaquettes de frein, pneus, amortisseurs, courroie de distribution — les équivalents génériques sans certification homologuée présentent des risques réels. La **DGCCRF** a régulièrement mis en garde contre la commercialisation de pièces automobiles non conformes aux normes de sécurité. Préférez les pièces d'origine constructeur ou des équipementiers reconnus (Bosch, Valeo, Continental, Sachs, Michelin, Bridgestone, etc.).
+Le marché des pièces détachées de qualité variable est vaste, notamment en ligne. Pour les pièces de sécurité, disques et plaquettes de frein, pneus, amortisseurs, courroie de distribution, les équivalents génériques sans certification homologuée présentent des risques réels. La **DGCCRF** a régulièrement mis en garde contre la commercialisation de pièces automobiles non conformes aux normes de sécurité. Préférez les pièces d'origine constructeur ou des équipementiers reconnus (Bosch, Valeo, Continental, Sachs, Michelin, Bridgestone, etc.).
 
 ### Ignorer les petits bruits inhabituels
 
-Un claquement dans un virage (joint de transmission en fin de vie), un grincement métallique au freinage (plaquettes à bout), un sifflement sous le capot (courroie accessoires qui glisse) : ces signaux sonores sont des alertes précoces. Traités tôt, ils coûtent quelques dizaines d'euros. Ignorés, ils se transforment en dégâts qui se comptent en centaines — parfois en immobilisation du véhicule.
+Un claquement dans un virage (joint de transmission en fin de vie), un grincement métallique au freinage (plaquettes à bout), un sifflement sous le capot (courroie accessoires qui glisse) : ces signaux sonores sont des alertes précoces. Traités tôt, ils coûtent quelques dizaines d'euros. Ignorés, ils se transforment en dégâts qui se comptent en centaines, parfois en immobilisation du véhicule.

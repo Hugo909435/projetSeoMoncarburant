@@ -45,22 +45,22 @@ Pour aller plus loin sur le choix entre les carburants distribués à la pompe, 
 
 Une pompe à essence n'est pas un appareil isolé : c'est le point de sortie visible d'un système souterrain complexe. Voici les six étapes que parcourt le carburant depuis la cuve jusqu'à votre réservoir.
 
-**Étape 1 — Stockage en cuve souterraine**
+**Étape 1, Stockage en cuve souterraine**
 Le carburant est stocké dans des cuves enterrées à 1 à 2 mètres sous la surface, en acier ou en polyéthylène haute densité, à double paroi. Chaque cuve contient entre 30 000 et 50 000 litres selon la taille de la station. La double paroi permet la détection immédiate d'une fuite entre les deux enveloppes grâce à des capteurs de pression.
 
-**Étape 2 — Aspiration par la pompe immergée**
-Au fond de chaque cuve est installée une pompe submersible électrique — fabriquée notamment par les fabricants Tokheim, Wayne ou Gilbarco. Cette pompe centrifuge propulse le carburant vers la borne en surface à un débit moyen de 40 à 60 litres par minute. Elle fonctionne uniquement quand une borne est activée, ce qui réduit la chaleur et l'usure.
+**Étape 2, Aspiration par la pompe immergée**
+Au fond de chaque cuve est installée une pompe submersible électrique, fabriquée notamment par les fabricants Tokheim, Wayne ou Gilbarco. Cette pompe centrifuge propulse le carburant vers la borne en surface à un débit moyen de 40 à 60 litres par minute. Elle fonctionne uniquement quand une borne est activée, ce qui réduit la chaleur et l'usure.
 
-**Étape 3 — Filtration**
+**Étape 3, Filtration**
 Avant d'atteindre la borne, le carburant passe par un filtre qui retient les particules solides, les traces de rouille et l'eau libre éventuellement présente dans la cuve. Ce filtre est remplacé périodiquement lors de la maintenance de la station. Il ne modifie pas la composition chimique du carburant.
 
-**Étape 4 — Mesure par le débitmètre**
-Le carburant traverse ensuite un débitmètre — le composant central de la borne. **Le débitmètre est un capteur qui mesure le volume exact de carburant délivré**, par comptage des rotations d'un mécanisme à engrenages ou par impulsions électroniques sur les modèles récents. Chaque impulsion correspond à un volume calibré. Ces données sont transmises en temps réel au calculateur d'affichage.
+**Étape 4, Mesure par le débitmètre**
+Le carburant traverse ensuite un débitmètre, le composant central de la borne. **Le débitmètre est un capteur qui mesure le volume exact de carburant délivré**, par comptage des rotations d'un mécanisme à engrenages ou par impulsions électroniques sur les modèles récents. Chaque impulsion correspond à un volume calibré. Ces données sont transmises en temps réel au calculateur d'affichage.
 
-**Étape 5 — Acheminement via le flexible**
+**Étape 5, Acheminement via le flexible**
 Le carburant arrive au pistolet par un flexible renforcé de 4 à 5 mètres, conçu pour résister à une pression de 10 bar, aux chocs, et aux décharges électrostatiques. Le flexible est relié à la borne par un raccord anti-arrachement : en cas de traction accidentelle, il se détache sans provoquer de fuite.
 
-**Étape 6 — Distribution et coupure automatique**
+**Étape 6, Distribution et coupure automatique**
 Le pistolet libère le carburant dans le réservoir. Quand le niveau de carburant atteint l'extrémité du pistolet, le mécanisme de coupure automatique s'active et interrompt le débit. L'affichage se fige sur le volume et le prix exacts à payer.
 
 ---
@@ -83,15 +83,15 @@ Le pistolet libère le carburant dans le réservoir. Quand le niveau de carburan
 
 ## Comment marche le système de coupure automatique ?
 
-La coupure automatique est le mécanisme le plus ingénieux d'une pompe à essence — et il repose sur un principe purement mécanique, sans électronique.
+La coupure automatique est le mécanisme le plus ingénieux d'une pompe à essence, et il repose sur un principe purement mécanique, sans électronique.
 
 Le fonctionnement suit cinq étapes :
 
 1. **Un petit conduit d'air** est intégré à l'extrémité du pistolet. Ce conduit aspire de l'air en permanence pendant la distribution, créant une légère dépression interne.
-2. **Tant que de l'air circule** dans ce conduit, une membrane interne reste en position ouverte et la gâchette reste verrouillée — la distribution continue.
+2. **Tant que de l'air circule** dans ce conduit, une membrane interne reste en position ouverte et la gâchette reste verrouillée, la distribution continue.
 3. **Quand le carburant atteint le bout du pistolet**, il bouche l'orifice d'aspiration. L'air ne peut plus entrer.
 4. **La dépression s'effondre** : sans circulation d'air, la membrane change de position sous l'effet d'un ressort.
-5. **La membrane libère un cran mécanique** qui déverrouille la gâchette. Celle-ci retombe instantanément, fermant la vanne — la distribution s'arrête.
+5. **La membrane libère un cran mécanique** qui déverrouille la gâchette. Celle-ci retombe instantanément, fermant la vanne, la distribution s'arrête.
 
 ```
 Conduit d'air ouvert  →  Dépression active  →  Membrane ouverte  →  Gâchette verrouillée
@@ -107,7 +107,7 @@ Ce mécanisme, inventé aux États-Unis dans les années 1930 et perfectionné d
 
 **Oui. Les pompes à essence en France sont contrôlées chaque année par les agents de la métrologie légale**, rattachés à la DGCCRF (Direction Générale de la Concurrence, de la Consommation et de la Répression des Fraudes).
 
-La tolérance maximale autorisée est de **±0,5 %** du volume affiché, conformément à la directive européenne sur les instruments de mesure (MID 2014/32/UE). Sur un plein de 50 litres, cela représente ±0,25 litre — soit quelques centimes d'écart maximum.
+La tolérance maximale autorisée est de **±0,5 %** du volume affiché, conformément à la directive européenne sur les instruments de mesure (MID 2014/32/UE). Sur un plein de 50 litres, cela représente ±0,25 litre, soit quelques centimes d'écart maximum.
 
 La procédure de contrôle se déroule ainsi :
 - Un agent mesure le volume réel distribué à l'aide d'une éprouvette étalonnée à 20°C.
@@ -140,7 +140,7 @@ Le système VRS aspire les vapeurs d'hydrocarbures qui s'échappent du réservoi
 
 ## Pompes connectées et open data : la révolution silencieuse
 
-Depuis la loi de 2007 sur la transparence des prix des carburants, toutes les stations-service françaises ont l'obligation de transmettre leurs prix à l'État via la plateforme prix-carburants.gouv.fr. Ces données — mises à jour plusieurs fois par jour — sont disponibles en open data au format XML et JSON.
+Depuis la loi de 2007 sur la transparence des prix des carburants, toutes les stations-service françaises ont l'obligation de transmettre leurs prix à l'État via la plateforme prix-carburants.gouv.fr. Ces données, mises à jour plusieurs fois par jour, sont disponibles en open data au format XML et JSON.
 
 Cette obligation a changé le rapport des automobilistes au marché du carburant. Les comparateurs de prix, dont notre [comparateur de stations-service](/prix-carburants/), utilisent cette API officielle pour afficher en temps réel les prix dans votre secteur. Le délai entre la mise à jour en caisse et l'affichage en ligne est généralement inférieur à 2 heures.
 
@@ -163,14 +163,14 @@ Partiellement vrai, avec un effet marginal. Le carburant est légèrement plus d
 Faux. La composition du carburant est identique qu'il soit distribué en libre-service ou par un pompiste. La qualité est définie en amont par le raffineur et la norme EN 228, pas par le mode de distribution.
 
 **5. "Un plein à ras bord abîme le moteur"**
-Partiellement vrai. Remplir le réservoir jusqu'au déclenchement répété de la coupure automatique peut surcharger le filtre à charbon actif (canister), qui capte les vapeurs d'essence à l'arrêt. Sur les véhicules récents, ce filtre est dimensionné pour supporter des pleins normaux — les dommages nécessitent des habitudes répétées de sur-remplissage. Un arrêt au premier déclenchement automatique est la bonne pratique.
+Partiellement vrai. Remplir le réservoir jusqu'au déclenchement répété de la coupure automatique peut surcharger le filtre à charbon actif (canister), qui capte les vapeurs d'essence à l'arrêt. Sur les véhicules récents, ce filtre est dimensionné pour supporter des pleins normaux, les dommages nécessitent des habitudes répétées de sur-remplissage. Un arrêt au premier déclenchement automatique est la bonne pratique.
 
 ---
 
 ## Pour aller plus loin
 
-- **Choisir entre SP95 et SP98** — Maintenant que vous savez ce qui se passe dans la pompe, comprendre les différences entre les carburants distribués est l'étape suivante : [SP95 vs SP98 : guide complet 2026](/piliers/sp95-vs-sp98/).
-- **Comparer les prix en temps réel** — Trouver la station la moins chère dans votre secteur : [comparateur de prix carburant](/prix-carburants/).
-- **Réduire sa consommation** — La pompe distribue le carburant ; l'éco-conduite en réduit les passages : [12 techniques d'éco-conduite prouvées](/blog/eco-conduite-techniques/).
-- **L'entretien qui réduit la consommation** — Des pneus bien gonflés et un filtre à air propre font une différence mesurable : [pression des pneus et consommation](/blog/pression-pneus-consommation/).
-- **Tous les leviers pour consommer moins** — Au-delà de la conduite : [réduire sa consommation de carburant, 6 leviers complémentaires](/blog/reduire-consommation-carburant/).
+- **Choisir entre SP95 et SP98**, Maintenant que vous savez ce qui se passe dans la pompe, comprendre les différences entre les carburants distribués est l'étape suivante : [SP95 vs SP98 : guide complet 2026](/piliers/sp95-vs-sp98/).
+- **Comparer les prix en temps réel**, Trouver la station la moins chère dans votre secteur : [comparateur de prix carburant](/prix-carburants/).
+- **Réduire sa consommation**, La pompe distribue le carburant ; l'éco-conduite en réduit les passages : [12 techniques d'éco-conduite prouvées](/blog/eco-conduite-techniques/).
+- **L'entretien qui réduit la consommation**, Des pneus bien gonflés et un filtre à air propre font une différence mesurable : [pression des pneus et consommation](/blog/pression-pneus-consommation/).
+- **Tous les leviers pour consommer moins**, Au-delà de la conduite : [réduire sa consommation de carburant, 6 leviers complémentaires](/blog/reduire-consommation-carburant/).

@@ -29,7 +29,7 @@ faq:
   - question: "Combien coûte la différence SP95/SP98 sur un plein ?"
     answer: "Avec un écart moyen de 5 centimes par litre en mai 2026 et un plein de 50 litres, le SP98 coûte environ 2,60 € de plus que le SP95 par plein, soit environ 47 € de surcoût annuel pour 15 000 km."
   - question: "Puis-je mélanger SP95 et SP98 dans le réservoir ?"
-    answer: "Oui, sans aucun risque pour le moteur. Le mélange ne pose aucun problème mécanique ni chimique — les deux sont des essences sans plomb conformes à la norme EN 228."
+    answer: "Oui, sans aucun risque pour le moteur. Le mélange ne pose aucun problème mécanique ni chimique, les deux sont des essences sans plomb conformes à la norme EN 228."
 draft: false
 ---
 
@@ -37,13 +37,13 @@ draft: false
 **En bref :** Le SP95 et le SP98 sont deux essences sans plomb qui se distinguent par leur indice d'octane (95 vs 98). Pour 95 % des voitures essence en France, le SP95 suffit et permet d'économiser environ 5 centimes par litre. Le SP98 n'est nécessaire que pour les voitures haut de gamme, sportives ou très anciennes dont le constructeur l'exige explicitement.
 </div>
 
-Chaque semaine, des millions d'automobilistes français se retrouvent devant le même dilemme à la station-service : SP95 ou SP98 ? La différence de prix est visible — mais la différence de performance, elle, reste floue pour la plupart.
+Chaque semaine, des millions d'automobilistes français se retrouvent devant le même dilemme à la station-service : SP95 ou SP98 ? La différence de prix est visible, mais la différence de performance, elle, reste floue pour la plupart.
 
-En mai 2026, le SP95 s'affiche en moyenne à **2,075 €/L** et le SP98 à **2,127 €/L** en France, selon les données officielles de prix-carburants.gouv.fr. Un écart de **5 centimes par litre**, soit 2,60 € de plus par plein de 50 litres — ou environ **47 € de surcoût annuel** pour un conducteur qui parcourt 15 000 km.
+En mai 2026, le SP95 s'affiche en moyenne à **2,075 €/L** et le SP98 à **2,127 €/L** en France, selon les données officielles de prix-carburants.gouv.fr. Un écart de **5 centimes par litre**, soit 2,60 € de plus par plein de 50 litres, ou environ **47 € de surcoût annuel** pour un conducteur qui parcourt 15 000 km.
 
 Selon l'UFIP (Union Française des Industries Pétrolières), le SP95 et son équivalent E10 représentent la grande majorité des ventes d'essence en France. Pourtant, la confusion sur l'utilité réelle du SP98 persiste, entretenue par des idées reçues tenaces.
 
-Ce guide — rédigé par [Hugo Beignon](/auteur/hugo-beignon/), spécialiste carburants et mobilité, mis à jour en mai 2026 — répond à toutes les questions sur ces deux carburants : différences techniques, compatibilité avec votre véhicule, calcul d'impact économique réel, et cas précis où le SP98 est justifié.
+Ce guide, rédigé par [Hugo Beignon](/auteur/hugo-beignon/), spécialiste carburants et mobilité, mis à jour en mai 2026, répond à toutes les questions sur ces deux carburants : différences techniques, compatibilité avec votre véhicule, calcul d'impact économique réel, et cas précis où le SP98 est justifié.
 
 ---
 
@@ -58,7 +58,7 @@ Ce guide — rédigé par [Hugo Beignon](/auteur/hugo-beignon/), spécialiste ca
 | Indice d'octane (RON) | 95 | 98 |
 | Bioéthanol maximum | 5 % | 5 % |
 | Prix moyen France (mai 2026) | 2,075 €/L | 2,127 €/L |
-| Écart de prix | — | +5,2 cts/L |
+| Écart de prix |, | +5,2 cts/L |
 | Compatibilité véhicules | Quasi-universelle | Quasi-universelle |
 | Gain énergétique vs SP95 | Référence | +1 à 2 % sur moteurs optimisés |
 | Disponibilité en station | ~99 % des stations | ~90 % des stations |
@@ -72,13 +72,13 @@ Pour connaître les prix en temps réel dans votre secteur, consultez notre [com
 
 **L'indice d'octane mesure la résistance d'une essence à l'auto-allumage (cliquetis) dans un moteur sous compression.**
 
-Ce phénomène — appelé cliquetis ou détonation — survient quand le mélange air/carburant s'enflamme spontanément sous l'effet de la compression, avant que la bougie n'ait créé son étincelle. On l'entend sous la forme d'un bruit de cognement métallique. À court terme, il entraîne une perte de puissance. À long terme, répété, il peut endommager les pistons, les bielles et la culasse.
+Ce phénomène, appelé cliquetis ou détonation, survient quand le mélange air/carburant s'enflamme spontanément sous l'effet de la compression, avant que la bougie n'ait créé son étincelle. On l'entend sous la forme d'un bruit de cognement métallique. À court terme, il entraîne une perte de puissance. À long terme, répété, il peut endommager les pistons, les bielles et la culasse.
 
-Un carburant à indice d'octane élevé résiste mieux à cette inflammation prématurée. C'est pourquoi les moteurs à fort rapport de compression — conçus pour produire plus de puissance ou d'efficacité — exigent un carburant plus résistant.
+Un carburant à indice d'octane élevé résiste mieux à cette inflammation prématurée. C'est pourquoi les moteurs à fort rapport de compression, conçus pour produire plus de puissance ou d'efficacité, exigent un carburant plus résistant.
 
 **En Europe, l'indice utilisé est le RON (Research Octane Number)**, calculé en laboratoire dans des conditions de régime bas. Il ne faut pas le confondre avec le MON (Motor Octane Number), utilisé aux États-Unis, qui donne des valeurs inférieures de 8 à 12 points. Le "95" affiché à la pompe correspond à un RON 95, et le "98" à un RON 98, conformément à la norme EN 228.
 
-**Un indice d'octane plus élevé n'est pas synonyme d'une meilleure essence dans l'absolu.** C'est un carburant adapté à des moteurs qui en ont besoin. Pour un moteur conçu pour du RON 95, utiliser du SP98 n'apporte aucun bénéfice mesurable — le calculateur moteur n'a pas de cartographie prévue pour en tirer parti.
+**Un indice d'octane plus élevé n'est pas synonyme d'une meilleure essence dans l'absolu.** C'est un carburant adapté à des moteurs qui en ont besoin. Pour un moteur conçu pour du RON 95, utiliser du SP98 n'apporte aucun bénéfice mesurable, le calculateur moteur n'a pas de cartographie prévue pour en tirer parti.
 
 Les principaux fabricants de carburants (TotalEnergies, BP, Shell, Esso) commercialisent parfois des versions "premium" enrichies en additifs (SP95+, V-Power, Ultimate…). Ces formulations contiennent des agents détergents et anti-oxydants supplémentaires, au-delà de l'indice d'octane. Leur intérêt réel reste débattu, mais ils ne remplacent pas la recommandation constructeur sur l'indice d'octane à respecter.
 
@@ -88,15 +88,15 @@ Les principaux fabricants de carburants (TotalEnergies, BP, Shell, Esso) commerc
 
 La réponse officielle se trouve dans **votre carnet d'entretien** ou **sur l'étiquette à l'intérieur de la trappe à essence**. Les constructeurs y indiquent systématiquement le carburant recommandé ou exigé. Voici un arbre de décision pratique si vous n'avez pas ces documents sous la main :
 
-**Étape 1 — Votre voiture est-elle une sportive ou haut de gamme pur ?**
+**Étape 1, Votre voiture est-elle une sportive ou haut de gamme pur ?**
 - Porsche, Ferrari, Lamborghini, BMW M, Mercedes AMG, Audi RS → **SP98 requis ou fortement recommandé**
 - Tout autre véhicule → étape 2
 
-**Étape 2 — Votre voiture est-elle antérieure à 1990 ?**
+**Étape 2, Votre voiture est-elle antérieure à 1990 ?**
 - Avant 1990, moteur sans catalyseur → **SP98 ou additif lubrifiant anti-recul soupapes requis**
 - De 1990 à aujourd'hui → étape 3
 
-**Étape 3 — Que dit le carnet d'entretien ou la trappe à essence ?**
+**Étape 3, Que dit le carnet d'entretien ou la trappe à essence ?**
 - "95 RON minimum" ou "SP95" → **SP95 ou E10 suffisent**
 - "98 RON recommandé" ou "SP98" → **SP98 préférable**
 - Aucune mention particulière → **SP95 ou E10 conviennent**
@@ -129,9 +129,9 @@ En mai 2026, l'écart entre SP95 et SP98 est de **5,2 centimes par litre** (sour
 | Surcoût annuel SP98 vs SP95 | 900 × 0,052 € = **46,80 €** |
 | Surcoût par plein (50 L) | 50 × 0,052 € = **2,60 €** |
 
-Ce surcoût est-il compensé par des économies de consommation ? Sur un moteur ordinaire conçu pour du SP95, le SP98 peut améliorer la consommation de 1 à 2 % au maximum. Sur 900 litres, cela représente 9 à 18 litres économisés — soit **19 à 37 € d'économies**. Bien en dessous du surcoût de 47 €. **Le bilan financier est négatif pour la grande majorité des automobilistes.**
+Ce surcoût est-il compensé par des économies de consommation ? Sur un moteur ordinaire conçu pour du SP95, le SP98 peut améliorer la consommation de 1 à 2 % au maximum. Sur 900 litres, cela représente 9 à 18 litres économisés, soit **19 à 37 € d'économies**. Bien en dessous du surcoût de 47 €. **Le bilan financier est négatif pour la grande majorité des automobilistes.**
 
-La seule situation où le SP98 est économiquement rentable : les moteurs haute performance dont la cartographie d'injection exploite pleinement le RON 98 pour réduire la consommation de plus de 3 %. C'est le cas de certains moteurs Porsche, BMW M et Mercedes AMG — mais pas des moteurs de série.
+La seule situation où le SP98 est économiquement rentable : les moteurs haute performance dont la cartographie d'injection exploite pleinement le RON 98 pour réduire la consommation de plus de 3 %. C'est le cas de certains moteurs Porsche, BMW M et Mercedes AMG, mais pas des moteurs de série.
 
 ---
 
@@ -139,11 +139,11 @@ La seule situation où le SP98 est économiquement rentable : les moteurs haute 
 
 **1. "Le SP98 fait consommer moins"**
 
-Partiellement vrai, mais marginal et rarement rentable. Sur un moteur spécifiquement optimisé pour le RON 98 (turbo à fort rapport de compression), la différence de consommation peut atteindre 1 à 3 %. Sur un moteur standard conçu pour du SP95, la différence est indétectable — le calculateur moteur n'a pas de cartographie avancée pour en tirer parti. Dans tous les cas de figure, le surcoût du SP98 dépasse largement les économies de consommation générées.
+Partiellement vrai, mais marginal et rarement rentable. Sur un moteur spécifiquement optimisé pour le RON 98 (turbo à fort rapport de compression), la différence de consommation peut atteindre 1 à 3 %. Sur un moteur standard conçu pour du SP95, la différence est indétectable, le calculateur moteur n'a pas de cartographie avancée pour en tirer parti. Dans tous les cas de figure, le surcoût du SP98 dépasse largement les économies de consommation générées.
 
 **2. "Le SP98 nettoie le moteur"**
 
-Faux. Tous les carburants vendus en France contiennent des additifs détergents depuis les années 2000, conformément aux spécifications de la norme EN 228 et aux recommandations de l'ADEME. Certains carburants "premium" (TotalEnergies Excellium, BP Ultimate, Esso Synergy Supreme+) ajoutent des agents nettoyants supplémentaires — mais c'est une option commerciale, pas une caractéristique intrinsèque du SP98 en tant que catégorie.
+Faux. Tous les carburants vendus en France contiennent des additifs détergents depuis les années 2000, conformément aux spécifications de la norme EN 228 et aux recommandations de l'ADEME. Certains carburants "premium" (TotalEnergies Excellium, BP Ultimate, Esso Synergy Supreme+) ajoutent des agents nettoyants supplémentaires, mais c'est une option commerciale, pas une caractéristique intrinsèque du SP98 en tant que catégorie.
 
 **3. "Le SP95 abîme les vieux moteurs"**
 
@@ -151,7 +151,7 @@ Vrai uniquement pour les moteurs d'avant 1990 conçus pour l'essence au plomb. C
 
 **4. "Mélanger SP95 et SP98 est dangereux"**
 
-Faux. Les deux carburants sont chimiquement compatibles — ce sont deux essences sans plomb à base hydrocarburée, toutes deux conformes à la norme EN 228. Le mélange ne pose aucun problème mécanique ni chimique. En pratique, il arrive régulièrement qu'un plein de SP98 soit effectué sur un fond de SP95, ou l'inverse : le moteur ne le remarque pas.
+Faux. Les deux carburants sont chimiquement compatibles, ce sont deux essences sans plomb à base hydrocarburée, toutes deux conformes à la norme EN 228. Le mélange ne pose aucun problème mécanique ni chimique. En pratique, il arrive régulièrement qu'un plein de SP98 soit effectué sur un fond de SP95, ou l'inverse : le moteur ne le remarque pas.
 
 **5. "Le SP98 augmente la puissance"**
 
@@ -161,7 +161,7 @@ Vrai uniquement sur les moteurs qui en ont besoin. Les calculateurs moteur des v
 
 ## Voitures qui doivent utiliser le SP98
 
-Certains véhicules exigent ou recommandent fortement le SP98. La liste suivante n'est pas exhaustive — consultez toujours le carnet d'entretien ou l'étiquette de la trappe à essence.
+Certains véhicules exigent ou recommandent fortement le SP98. La liste suivante n'est pas exhaustive, consultez toujours le carnet d'entretien ou l'étiquette de la trappe à essence.
 
 **Véhicules haut de gamme et sportifs (SP98 requis ou fortement recommandé) :**
 - **Porsche** : 911 (toutes versions), Cayenne GTS, Macan Turbo, Panamera GTS
@@ -195,7 +195,7 @@ Le **SP95-E10** est fréquemment confondu avec le SP95 classique. Les différenc
 
 L'E10 est le carburant essence le moins cher des trois, mais il n'est pas compatible avec tous les véhicules. Les voitures d'avant 2000, certains deux-roues motorisés, et quelques modèles spécifiques y sont incompatibles en raison de matériaux du circuit carburant (joints, durites) sensibles aux taux d'éthanol élevés. Vérifiez la compatibilité sur le site officiel du ministère de la Transition écologique ou sur la liste sav-iml.com avant de l'utiliser.
 
-Sa densité énergétique légèrement inférieure au SP95 (l'éthanol contient 34 % moins d'énergie par litre que l'essence fossile) peut entraîner une surconsommation de 1 à 2 % sur les véhicules compatibles — rarement perceptible au quotidien, et largement compensée par le différentiel de prix.
+Sa densité énergétique légèrement inférieure au SP95 (l'éthanol contient 34 % moins d'énergie par litre que l'essence fossile) peut entraîner une surconsommation de 1 à 2 % sur les véhicules compatibles, rarement perceptible au quotidien, et largement compensée par le différentiel de prix.
 
 ---
 
@@ -204,7 +204,7 @@ Sa densité énergétique légèrement inférieure au SP95 (l'éthanol contient 
 Le choix entre SP95 et SP98 n'est qu'un paramètre parmi d'autres pour maîtriser votre budget carburant. Voici les leviers complémentaires les plus efficaces, par ordre d'impact :
 
 **1. Comparer les prix avant de faire le plein**
-L'écart entre la station la moins chère et la plus chère dans un rayon de 5 km dépasse souvent 10 à 15 centimes par litre — bien davantage que la différence SP95/SP98. Notre [comparateur de prix carburant](/prix-carburants/) référence plus de 11 000 stations avec une mise à jour quotidienne via les données officielles de prix-carburants.gouv.fr.
+L'écart entre la station la moins chère et la plus chère dans un rayon de 5 km dépasse souvent 10 à 15 centimes par litre, bien davantage que la différence SP95/SP98. Notre [comparateur de prix carburant](/prix-carburants/) référence plus de 11 000 stations avec une mise à jour quotidienne via les données officielles de prix-carburants.gouv.fr.
 
 **2. Adopter les techniques d'éco-conduite**
 C'est le levier le plus impactant : réduire sa consommation de 15 à 20 % sans changer de véhicule ni de carburant. Anticipation des freinages, passage des rapports précoce, vitesse de croisière stable : [guide complet éco-conduite en 12 techniques](/blog/eco-conduite-techniques/).
@@ -216,4 +216,4 @@ Un pneu sous-gonflé de 0,5 bar augmente la consommation de 2 à 5 %. Vérificat
 Coffre allégé, galerie de toit retirée hors usage, climatisation modulée selon la vitesse : 6 leviers complémentaires chiffrés dans notre article [réduire sa consommation de carburant](/blog/reduire-consommation-carburant/).
 
 **5. Comprendre le mécanisme de distribution**
-Savoir comment fonctionne une pompe à essence — débitmètre, coupure automatique, métrologie légale — permet d'éviter les erreurs et de mieux comprendre ce que vous achetez. [Comment fonctionne une pompe à essence ?](/blog/pompe-essence-fonctionnement/)
+Savoir comment fonctionne une pompe à essence, débitmètre, coupure automatique, métrologie légale, permet d'éviter les erreurs et de mieux comprendre ce que vous achetez. [Comment fonctionne une pompe à essence ?](/blog/pompe-essence-fonctionnement/)
