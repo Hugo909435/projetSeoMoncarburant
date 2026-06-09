@@ -3,7 +3,7 @@ title: "Courroie de distribution : remplacement, coûts et risques (2026)"
 metaTitle: "Courroie de distribution : remplacement et risques 2026"
 metaDescription: "À quel kilométrage remplacer la courroie de distribution ? Quels risques si on l'oublie ? Coûts, intervalles et signes d'alerte : guide complet 2026."
 slug: "courroie-distribution-remplacement"
-excerpt: "La courroie de distribution est la seule pièce d'entretien dont la rupture détruit le moteur instantanément sur la quasi-totalité des véhicules récents. Coût préventif : 300-900 €. Coût après rupture : 3 000-8 000 €. Guide complet sur les intervalles, les coûts et les risques."
+excerpt: "La courroie de distribution est la pièce la plus risquée à négliger. Sa rupture détruit le moteur instantanément. Coût préventif : 300-900 €. Coût après rupture : 3 000-8 000 €."
 publishedAt: 2026-06-09
 updatedAt: 2026-06-09
 author: "hugo-beignon"
