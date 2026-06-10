@@ -24,7 +24,7 @@ function diffPct(local: number, national: number) {
   return ((local - national) / national) * 100;
 }
 
-// Deterministic variant 0–3 from city slug char codes
+// Deterministic variant 0-3 from city slug char codes
 function cityVariant(slug: string): number {
   return slug.split('').reduce((s, c) => s + c.charCodeAt(0), 0) % 4;
 }

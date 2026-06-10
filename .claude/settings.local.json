@@ -35,7 +35,12 @@
       "Bash(awk '{printf \"%.1f KB\\\\n\", $1/1024}')",
       "Bash(cp \"/root/.claude/uploads/a6f82567-f11f-41e7-8584-0cd1ba8a2a45/35878213-krzysztofhepnerULJCBY8Tcfgunsplash.jpg\" \"/home/user/projetSeoMoncarburant/public/images/articles/pourquoi-prix-carburant-eleves-juin-2026.jpg\")",
       "Bash(cp \"/root/.claude/uploads/3ca016a1-2c81-5e31-8dd5-09e564c6e459/3c9fcd25-CC86B744A0AD4C938B52F86DEC091689.jpeg\" /home/user/projetSeoMoncarburant/public/images/articles/courroie-distribution-remplacement.jpg && file /home/user/projetSeoMoncarburant/public/images/articles/courroie-distribution-remplacement.jpg)",
-      "Bash(cp \"/root/.claude/uploads/3ca016a1-2c81-5e31-8dd5-09e564c6e459/3c9fcd25-CC86B744A0AD4C938B52F86DEC091689.jpeg\" /home/user/projetSeoMoncarburant/public/images/articles/courroie-distribution-remplacement.jpg && ls -la /home/user/projetSeoMoncarburant/public/images/articles/courroie-distribution-remplacement.jpg && file /home/user/projetSeoMoncarburant/public/images/articles/courroie-distribution-remplacement.jpg)"
+      "Bash(cp \"/root/.claude/uploads/3ca016a1-2c81-5e31-8dd5-09e564c6e459/3c9fcd25-CC86B744A0AD4C938B52F86DEC091689.jpeg\" /home/user/projetSeoMoncarburant/public/images/articles/courroie-distribution-remplacement.jpg && ls -la /home/user/projetSeoMoncarburant/public/images/articles/courroie-distribution-remplacement.jpg && file /home/user/projetSeoMoncarburant/public/images/articles/courroie-distribution-remplacement.jpg)",
+      "Read(//c/Users/hbeignon/.claude/skills/seo/**)",
+      "Bash(python scripts/google_auth.py --check)",
+      "Bash(python scripts/backlinks_auth.py --check)",
+      "Bash(python scripts/drift_history.py \"https://mon-carburant.com/\")",
+      "PowerShell(Set-Content *)"
     ]
   }
 }

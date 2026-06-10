@@ -1,215 +1,349 @@
----
-import BaseLayout from '../../../layouts/BaseLayout.astro';
-import statsByRegion from '../../../data/fuel/stats-by-region.json';
-import statsByDepartment from '../../../data/fuel/stats-by-department.json';
-import departments from '../../../data/departments.json';
-import statsNational from '../../../data/fuel/stats-national.json';
-import meta from '../../../data/fuel/meta.json';
-import LocalIdentity from '../../../components/LocalIdentity.astro';
-import { regionContent } from '../../../data/local-content';
+﻿---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import FuelSearch from '../../components/FuelSearch.astro';
+import statsNational from '../../data/fuel/stats-national.json';
+import statsByRegion from '../../data/fuel/stats-by-region.json';
+import statsByDepartment from '../../data/fuel/stats-by-department.json';
+import departmentsData from '../../data/departments.json';
+import meta from '../../data/fuel/meta.json';
 
-export function getStaticPaths() {
-  const regions = statsByRegion as Record<string, { name: string; [key: string]: any }>;
-  return Object.entries(regions).map(([slug, data]) => ({
-    params: { region: slug },
-    props: { regionSlug: slug, regionData: data },
-  }));
-}
+const FUEL_CONFIG = [
+  { key: 'Gazole',  label: 'Gazole',          color: '#374151' },
+  { key: 'SP95',    label: 'Sans-Plomb 95',   color: '#16a34a' },
+  { key: 'SP98',    label: 'Sans-Plomb 98',   color: '#2563eb' },
+  { key: 'E10',     label: 'E10',             color: '#15803d' },
+  { key: 'E85',     label: 'E85 Bioéthanol',  color: '#E87722' },
+  { key: 'GPLc',    label: 'GPL',             color: '#ca8a04' },
+];
 
-const { regionSlug, regionData } = Astro.props;
-const regionName = regionData.name;
-const localContent = regionContent[regionSlug];
+const regions = Object.entries(statsByRegion).map(([slug, data]) => ({ slug, ...data }));
+regions.sort((a, b) => (a['Gazole'] ?? 99) - (b['Gazole'] ?? 99));
 
-const deps = departments as Record<string, { num: string; name: string; slug: string; region: string; regionSlug: string }>;
-const depStats = statsByDepartment as Record<string, Record<string, number | null>>;
-
-const regionDepts = Object.values(deps).filter(d => d.regionSlug === regionSlug);
-regionDepts.sort((a, b) => a.name.localeCompare(b.name));
-
-const FUELS = ['Gazole', 'SP95', 'SP98', 'E10', 'E85', 'GPLc'] as const;
-const FUEL_COLORS: Record<string, string> = { Gazole: '#374151', SP95: '#16a34a', SP98: '#2563eb', E10: '#15803d', E85: '#E87722', GPLc: '#ca8a04' };
-
-function priceDiff(price: number | null, fuelKey: string) {
-  const nat = statsNational[fuelKey as keyof typeof statsNational];
-  if (price == null || nat == null) return null;
-  return ((price - nat) / nat) * 100;
-}
+const deps = departmentsData as Record<string, { num: string; name: string; slug: string }>;
+const allDepts = Object.values(deps).sort((a, b) => a.num.localeCompare(b.num, 'fr', { numeric: true }));
 
 const lastUpdate = meta.lastUpdate
   ? new Date(meta.lastUpdate).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })
   : null;
 
-const title = `Prix carburant ${regionName} - Comparateur Mon Carburant`;
-const gazoleAvg = regionData['Gazole'] as number | null;
-const description = `Prix du carburant en ${regionName}${gazoleAvg ? ` : Gazole ${gazoleAvg.toFixed(3)}€/L en moyenne` : ''}. Comparez toutes les stations des ${regionDepts.length} départements. Mis à jour quotidiennement.`;
-
-const breadcrumb = [
-  { name: 'Accueil', url: '/' },
-  { name: 'Prix carburants', url: '/prix-carburants/' },
-  { name: regionName, url: `/prix-carburants/region/${regionSlug}/` },
-];
-
-const jsonLdBreadcrumb = {
-  '@context': 'https://schema.org',
-  '@type': 'BreadcrumbList',
-  itemListElement: breadcrumb.map((item, i) => ({
-    '@type': 'ListItem',
-    position: i + 1,
-    name: item.name,
-    item: `https://mon-carburant.com${item.url}`,
-  })),
-};
+const title = 'Prix des carburants en France : comparateur en temps réel';
+const description = `Comparez les prix du carburant dans toute la France. ${meta.totalStations} stations référencées, prix mis à jour quotidiennement depuis les données officielles.`;
 ---
 
-<BaseLayout title={title} description={description} canonical={`/prix-carburants/region/${regionSlug}/`}>
-  <script type="application/ld+json" set:html={JSON.stringify(jsonLdBreadcrumb)} slot="head" />
+<BaseLayout title={title} description={description} canonical="/prix-carburants/">
   <div>
-    <!-- Breadcrumb -->
-    <div class="container" style="padding-top:1rem">
-      <nav aria-label="Fil d'ariane" class="breadcrumb-nav">
-        {breadcrumb.map((item, i) => (
-          <>
-            {i > 0 && <span aria-hidden="true"> › </span>}
-            {i < breadcrumb.length - 1
-              ? <a href={item.url}>{item.name}</a>
-              : <span aria-current="page">{item.name}</span>
-            }
-          </>
-        ))}
-      </nav>
-    </div>
-
-    <section class="region-hero">
+    <!-- Hero -->
+    <section class="fuel-hero">
       <div class="container">
-        <h1>Prix des carburants en {regionName}</h1>
-        <p class="region-subtitle">{regionDepts.length} départements · {lastUpdate && `Données du ${lastUpdate}`}</p>
+        <div class="fuel-hero-inner">
+          <h1>Prix des carburants en France</h1>
+          <p class="fuel-hero-sub">Comparateur en temps réel · {meta.totalStations.toLocaleString('fr-FR')} stations</p>
+          {lastUpdate && (
+            <p class="fuel-update-badge">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              Données du {lastUpdate}
+            </p>
+          )}
+        </div>
       </div>
     </section>
 
-    <div class="container page-body">
-      <!-- Identité locale -->
-      {localContent && (
-        <LocalIdentity
-          content={localContent}
-          placeName={`la région ${regionName}`}
-          heading={`La région ${regionName}`}
-        />
-      )}
-
-      <!-- Stats région -->
-      <section class="section-block">
-        <h2>Prix moyens en {regionName}</h2>
-        <div class="fuel-stats-grid">
-          {FUELS.map(fuel => {
-            const avg = regionData[fuel] as number | null;
-            const diff = priceDiff(avg, fuel);
-            return (
-              <div class="fuel-stat-card" style={`--fuel-color: ${FUEL_COLORS[fuel]}`}>
-                <div class="fsc-label">{fuel === 'GPLc' ? 'GPL' : fuel}</div>
-                <div class="fsc-price">
-                  {avg != null ? avg.toFixed(3) : '—'}
-                  {avg != null && <span class="fsc-unit">€/L</span>}
-                </div>
-                {diff != null && (
-                  <div class={`fsc-diff ${diff < -5 ? 'badge-green' : diff > 5 ? 'badge-orange' : 'badge-neutral'}`}>
-                    {diff > 0 ? '+' : ''}{diff.toFixed(1)}% France
-                  </div>
-                )}
+    <!-- Prix nationaux -->
+    <section class="container section-gap">
+      <h2 class="section-title">Prix moyens nationaux</h2>
+      <div class="fuel-cards-grid">
+        {FUEL_CONFIG.map(({ key, label, color }) => {
+          const price = statsNational[key as keyof typeof statsNational];
+          return (
+            <a href={`/prix-${key === 'GPLc' ? 'gpl' : key.toLowerCase()}/`} class="fuel-card" style={`--fuel-color: ${color}`}>
+              <span class="fuel-card-marker" aria-hidden="true"></span>
+              <div class="fuel-card-label">{label}</div>
+              <div class="fuel-card-price">
+                {price != null ? price.toFixed(3) : 'n/d'}
+                <span class="fuel-card-unit">€/L</span>
               </div>
-            );
-          })}
-        </div>
-      </section>
-
-      <!-- Départements -->
-      <section class="section-block">
-        <h2>Prix par département en {regionName}</h2>
-        <div class="table-wrapper">
-          <table class="dept-table">
-            <thead>
-              <tr>
-                <th>Département</th>
-                <th>Gazole</th>
-                <th>SP95</th>
-                <th>SP98</th>
-                <th>E10</th>
-                <th>E85</th>
-                <th>GPL</th>
-              </tr>
-            </thead>
-            <tbody>
-              {regionDepts.map(dept => {
-                const ds = depStats[dept.num] ?? {};
-                const gz = ds['Gazole'] as number | null;
-                const diff = priceDiff(gz, 'Gazole');
-                return (
-                  <tr>
-                    <td>
-                      <a href={`/prix-carburants/${dept.slug}/`} class="dept-link">
-                        <strong>{dept.num}</strong> - {dept.name}
-                      </a>
-                    </td>
-                    <td class="price-cell">
-                      {gz != null ? (
-                        <span>
-                          {gz.toFixed(3)}
-                          {diff != null && (
-                            <span class={`price-badge ${diff < -5 ? 'badge-green' : diff > 5 ? 'badge-orange' : 'badge-neutral'}`}>
-                              {diff > 0 ? '+' : ''}{diff.toFixed(1)}%
-                            </span>
-                          )}
-                        </span>
-                      ) : '—'}
-                    </td>
-                    <td class="price-cell">{(ds['SP95'] as number | null)?.toFixed(3) ?? '—'}</td>
-                    <td class="price-cell">{(ds['SP98'] as number | null)?.toFixed(3) ?? '—'}</td>
-                    <td class="price-cell">{(ds['E10'] as number | null)?.toFixed(3) ?? '—'}</td>
-                    <td class="price-cell">{(ds['E85'] as number | null)?.toFixed(3) ?? '—'}</td>
-                    <td class="price-cell">{(ds['GPLc'] as number | null)?.toFixed(3) ?? '—'}</td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </div>
-      </section>
-
-      <div class="back-link">
-        <a href="/prix-carburants/">← Comparateur national</a>
+              <div class="fuel-card-link">Voir les détails →</div>
+            </a>
+          );
+        })}
       </div>
-    </div>
+    </section>
+
+    <!-- Recherche interactive -->
+    <section class="container section-gap">
+      <FuelSearch />
+    </section>
+
+    <!-- Prix par région -->
+    <section class="container section-gap">
+      <h2 class="section-title">Prix du carburant par région</h2>
+      <div class="table-wrapper">
+        <table class="fuel-table">
+          <thead>
+            <tr>
+              <th scope="col">Région</th>
+              <th scope="col">Gazole</th>
+              <th scope="col">SP95</th>
+              <th scope="col">SP98</th>
+              <th scope="col">E10</th>
+              <th scope="col">E85</th>
+              <th scope="col">GPL</th>
+            </tr>
+          </thead>
+          <tbody>
+            {regions.map(region => {
+              const gazole = region['Gazole'] as number | null;
+              const natGaz = statsNational['Gazole'];
+              const diff = gazole != null && natGaz != null ? ((gazole - natGaz) / natGaz) * 100 : null;
+              return (
+                <tr>
+                  <td>
+                    <a href={`/prix-carburants/region/${region.slug}/`} class="region-link">
+                      {region.name}
+                    </a>
+                  </td>
+                  <td class="price-cell">
+                    {gazole != null ? (
+                      <span>
+                        {gazole.toFixed(3)}
+                        {diff != null && (
+                          <span class={`price-badge ${diff < -5 ? 'badge-green' : diff > 5 ? 'badge-orange' : 'badge-neutral'}`}>
+                            {diff > 0 ? '+' : ''}{diff.toFixed(1)}%
+                          </span>
+                        )}
+                      </span>
+                    ) : 'n/d'}
+                  </td>
+                  <td class="price-cell">{(region['SP95'] as number | null)?.toFixed(3) ?? 'n/d'}</td>
+                  <td class="price-cell">{(region['SP98'] as number | null)?.toFixed(3) ?? 'n/d'}</td>
+                  <td class="price-cell">{(region['E10'] as number | null)?.toFixed(3) ?? 'n/d'}</td>
+                  <td class="price-cell">{(region['E85'] as number | null)?.toFixed(3) ?? 'n/d'}</td>
+                  <td class="price-cell">{(region['GPLc'] as number | null)?.toFixed(3) ?? 'n/d'}</td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Prix par département -->
+    <section class="container section-gap">
+      <h2 class="section-title">Prix du carburant par département</h2>
+      <div class="dept-grid">
+        {allDepts.map(dept => (
+          <a href={`/prix-carburants/${dept.slug}/`} class="dept-pill">
+            <span class="dept-pill-num">{dept.num}</span>
+            <span class="dept-pill-name">{dept.name}</span>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <!-- Explication -->
+    <section class="container section-gap">
+      <div class="explainer-box">
+        <h2>Comment fonctionne ce comparateur ?</h2>
+        <p>
+          Mon Carburant agrège chaque jour les prix communiqués par les stations-service françaises au ministère de l'Économie,
+          dans le cadre de la loi sur la transparence des prix des carburants. Les données sont issues du flux officiel
+          <a href="https://www.prix-carburants.gouv.fr/" rel="noopener noreferrer" target="_blank">prix-carburants.gouv.fr</a>,
+          publié sous <strong>Licence Ouverte</strong>.
+        </p>
+        <p>
+          Notre algorithme récupère automatiquement le fichier quotidien (J-1), le décompresse, parse les {meta.totalStations.toLocaleString('fr-FR')} stations
+          et calcule les prix moyens nationaux, régionaux et départementaux. Les ruptures de stock sont exclues des calculs.
+          Chaque station affiche la date de sa dernière mise à jour pour plus de transparence.
+        </p>
+        <p>
+          Utilisez le <strong>comparateur ci-dessus</strong> pour trouver les stations les moins chères près de chez vous :
+          saisissez votre code postal ou votre ville. Les résultats affichent les 10 stations les plus proches
+          triées par prix croissant, avec un lien vers Google Maps pour l'itinéraire.
+        </p>
+        <div class="explainer-links">
+          <a href="/prix-carburants/methodologie/">En savoir plus sur notre méthodologie</a>
+          <a href="/blog/astuces-economiser-carburant/">10 astuces pour économiser du carburant</a>
+        </div>
+      </div>
+    </section>
   </div>
 </BaseLayout>
 
 <style>
-  .breadcrumb-nav { font-size: 0.875rem; color: var(--color-text-muted); }
-  .breadcrumb-nav a { color: var(--color-primary); text-decoration: none; }
-  .breadcrumb-nav a:hover { text-decoration: underline; }
-  .region-hero { background: var(--color-primary); color: #fff; padding: 2.5rem 0 2rem; }
-  .region-hero h1 { font-size: clamp(1.5rem, 3vw, 2.25rem); font-weight: 800; color: #fff; margin: 0 0 0.5rem; }
-  .region-subtitle { color: #94a3b8; margin: 0; }
-  .page-body { padding-top: 2rem; padding-bottom: 3rem; }
-  .section-block { margin-bottom: 3rem; }
-  .section-block h2 { font-size: 1.25rem; font-weight: 700; color: var(--color-primary); margin: 0 0 1.25rem; border-bottom: 2px solid #e5e7eb; padding-bottom: 0.5rem; }
-  .fuel-stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem; }
-  @media (min-width: 768px) { .fuel-stats-grid { grid-template-columns: repeat(6, 1fr); } }
-  .fuel-stat-card { background: #fff; border: 2px solid #e5e7eb; border-top: 3px solid var(--fuel-color); border-radius: 0.5rem; padding: 1rem; }
-  .fsc-label { font-size: 0.75rem; color: var(--color-text-muted); font-weight: 700; margin-bottom: 0.25rem; }
-  .fsc-price { font-size: 1.25rem; font-weight: 800; color: var(--fuel-color); display: flex; align-items: baseline; gap: 0.2rem; }
-  .fsc-unit { font-size: 0.7rem; color: var(--color-text-muted); }
-  .fsc-diff { font-size: 0.7rem; padding: 0.15rem 0.4rem; border-radius: 999px; margin-top: 0.25rem; display: inline-block; font-weight: 600; }
+  .fuel-hero {
+    background: linear-gradient(135deg, var(--color-primary) 0%, #1a4a66 100%);
+    color: #fff;
+    padding: 3rem 0 2.5rem;
+    text-align: center;
+  }
+  .fuel-hero-inner h1 {
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    font-weight: 800;
+    margin: 0 0 0.5rem;
+    color: #fff;
+  }
+  .fuel-hero-sub {
+    color: #94a3b8;
+    font-size: 1.125rem;
+    margin: 0 0 1rem;
+  }
+  .fuel-update-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: rgba(255,255,255,0.1);
+    padding: 0.35rem 0.75rem;
+    border-radius: 999px;
+    font-size: 0.8125rem;
+    color: #cbd5e1;
+    margin: 0;
+  }
+  .section-gap { margin-top: 3rem; }
+  .section-title {
+    font-size: 1.375rem;
+    font-weight: 700;
+    color: var(--color-primary);
+    margin: 0 0 1.5rem;
+  }
+  .fuel-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+  @media (min-width: 640px) { .fuel-cards-grid { grid-template-columns: repeat(3, 1fr); } }
+  @media (min-width: 1024px) { .fuel-cards-grid { grid-template-columns: repeat(6, 1fr); } }
+  .fuel-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1.25rem 1rem;
+    background: #fff;
+    border: 2px solid #e5e7eb;
+    border-top: 4px solid var(--fuel-color);
+    border-radius: 0.75rem;
+    text-decoration: none;
+    transition: box-shadow 0.2s, transform 0.15s;
+  }
+  .fuel-card-marker {
+    width: 1.75rem;
+    height: 0.25rem;
+    background: var(--fuel-color);
+    border-radius: 999px;
+  }
+  .fuel-card:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.1); transform: translateY(-2px); }
+  .fuel-card-label { font-size: 0.8125rem; color: var(--color-text-muted); font-weight: 600; }
+  .fuel-card-price {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--fuel-color);
+    display: flex;
+    align-items: baseline;
+    gap: 0.25rem;
+  }
+  .fuel-card-unit { font-size: 0.875rem; font-weight: 500; color: var(--color-text-muted); }
+  .fuel-card-link { font-size: 0.75rem; color: var(--color-text-muted); }
+  .table-wrapper { overflow-x: auto; }
+  .fuel-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+  .fuel-table th {
+    background: var(--color-primary);
+    color: #fff;
+    padding: 0.75rem 1rem;
+    text-align: left;
+    font-size: 0.8125rem;
+    font-weight: 600;
+  }
+  .fuel-table td { padding: 0.7rem 1rem; border-bottom: 1px solid #f1f5f9; }
+  .fuel-table tr:hover td { background: #f8fafc; }
+  .region-link { color: var(--color-primary); text-decoration: none; font-weight: 600; }
+  .region-link:hover { text-decoration: underline; }
+  .price-cell { font-variant-numeric: tabular-nums; }
+  .price-badge {
+    display: inline-block;
+    font-size: 0.7rem;
+    padding: 0.1rem 0.35rem;
+    border-radius: 999px;
+    margin-left: 0.35rem;
+    font-weight: 600;
+  }
   .badge-green { background: #dcfce7; color: #166534; }
   .badge-orange { background: #fff7ed; color: #c2410c; }
   .badge-neutral { background: #f1f5f9; color: #64748b; }
-  .table-wrapper { overflow-x: auto; }
-  .dept-table { width: 100%; border-collapse: collapse; font-size: 0.875rem; }
-  .dept-table th { background: #f1f5f9; color: var(--color-primary); padding: 0.6rem 1rem; text-align: left; font-size: 0.8rem; }
-  .dept-table td { padding: 0.65rem 1rem; border-bottom: 1px solid #f1f5f9; }
-  .dept-table tr:hover td { background: #f8fafc; }
-  .dept-link { color: var(--color-primary); text-decoration: none; font-weight: 500; }
-  .dept-link:hover { text-decoration: underline; }
-  .price-cell { font-variant-numeric: tabular-nums; }
-  .price-badge { display: inline-block; font-size: 0.7rem; padding: 0.1rem 0.35rem; border-radius: 999px; margin-left: 0.35rem; font-weight: 600; }
-  .back-link a { color: var(--color-accent); font-weight: 600; text-decoration: none; }
-  .back-link a:hover { text-decoration: underline; }
+  .dept-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .dept-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.35rem 0.75rem;
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 999px;
+    text-decoration: none;
+    font-size: 0.8125rem;
+    transition: all 0.15s;
+  }
+  .dept-pill:hover {
+    background: var(--color-primary);
+    border-color: var(--color-primary);
+    color: #fff;
+  }
+  .dept-pill-num {
+    font-weight: 700;
+    font-size: 0.75rem;
+    color: #64748b;
+    background: #f1f5f9;
+    padding: 0.1rem 0.35rem;
+    border-radius: 0.25rem;
+  }
+  .dept-pill:hover .dept-pill-num {
+    background: rgba(255,255,255,0.2);
+    color: #fff;
+  }
+  .dept-pill-name {
+    color: var(--color-primary);
+    font-weight: 500;
+  }
+  .dept-pill:hover .dept-pill-name { color: #fff; }
+  .explainer-box {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-left: 4px solid var(--color-accent);
+    border-radius: 0.75rem;
+    padding: 2rem;
+  }
+  .explainer-box h2 { font-size: 1.25rem; color: var(--color-primary); margin: 0 0 1rem; }
+  .explainer-box p { color: #374151; line-height: 1.7; margin: 0 0 1rem; }
+  .explainer-box p:last-of-type { margin-bottom: 1.5rem; }
+  .explainer-box a { color: var(--color-accent); }
+  .explainer-links { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .explainer-links a {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    background: var(--color-primary);
+    color: #fff;
+    border-radius: 0.5rem;
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 600;
+    transition: background 0.2s;
+  }
+  .explainer-links a:hover { background: #1a4a66; }
 </style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const cp = new URLSearchParams(window.location.search).get('cp');
+    if (!cp) return;
+    const input = document.getElementById('fs-query') as HTMLInputElement | null;
+    const btn = document.getElementById('fs-search-btn') as HTMLButtonElement | null;
+    if (input && btn) {
+      input.value = cp;
+      setTimeout(() => btn.click(), 150);
+    }
+  });
+</script>

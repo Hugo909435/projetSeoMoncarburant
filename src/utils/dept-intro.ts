@@ -30,7 +30,7 @@ function diffPct(local: number, national: number) {
   return ((local - national) / national) * 100;
 }
 
-// Deterministic variant 0–3 from dept number string, cycles evenly across adjacent depts
+// Deterministic variant 0-3 from dept number string, cycles evenly across adjacent depts
 function deptVariant(num: string): number {
   return num.split('').reduce((s, c) => s + c.charCodeAt(0), 0) % 4;
 }

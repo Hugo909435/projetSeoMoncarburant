@@ -1,4 +1,4 @@
----
+﻿---
 import statsNational from '../data/fuel/stats-national.json';
 
 interface Props {
@@ -34,7 +34,7 @@ const price = statsNational[fuel];
       <p class="cpb-price">
         {price != null
           ? <strong>{price.toFixed(3)} €/L</strong>
-          : <strong>—</strong>
+          : <strong>n/d</strong>
         }
         <span class="cpb-note">moyenne nationale</span>
       </p>

@@ -77,9 +77,8 @@ const schemas = Array.isArray(jsonLd) ? jsonLd : jsonLd ? [jsonLd] : [];
 <meta name="twitter:image" content={absoluteImage} />
 <meta name="twitter:image:alt" content={imageAlt} />
 
-<!-- Hreflang -->
+<!-- Hreflang : site monolingue FR, x-default inutile -->
 <link rel="alternate" hreflang="fr-FR" href={absoluteCanonical} />
-<link rel="alternate" hreflang="x-default" href={absoluteCanonical} />
 
 <!-- RSS -->
 <link
