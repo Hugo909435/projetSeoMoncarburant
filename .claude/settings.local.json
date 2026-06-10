@@ -40,7 +40,9 @@
       "Bash(python scripts/google_auth.py --check)",
       "Bash(python scripts/backlinks_auth.py --check)",
       "Bash(python scripts/drift_history.py \"https://mon-carburant.com/\")",
-      "PowerShell(Set-Content *)"
+      "PowerShell(Set-Content *)",
+      "Bash(xxd)",
+      "Bash(git checkout *)"
     ]
   }
 }
