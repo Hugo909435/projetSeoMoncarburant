@@ -3,9 +3,17 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 import FuelSearch from '../../../components/FuelSearch.astro';
 import statsNational from '../../../data/fuel/stats-national.json';
 import statsByRegion from '../../../data/fuel/stats-by-region.json';
-import statsByDepartment from '../../../data/fuel/stats-by-department.json';
 import departmentsData from '../../../data/departments.json';
 import meta from '../../../data/fuel/meta.json';
+
+export function getStaticPaths() {
+  return Object.entries(statsByRegion).map(([slug, data]) => ({
+    params: { region: slug },
+    props: { regionSlug: slug, regionData: data },
+  }));
+}
+
+const { regionSlug, regionData } = Astro.props;
 
 const FUEL_CONFIG = [
   { key: 'Gazole',  label: 'Gazole',          color: '#374151' },
@@ -16,28 +24,29 @@ const FUEL_CONFIG = [
   { key: 'GPLc',    label: 'GPL',             color: '#ca8a04' },
 ];
 
-const regions = Object.entries(statsByRegion).map(([slug, data]) => ({ slug, ...data }));
-regions.sort((a, b) => (a['Gazole'] ?? 99) - (b['Gazole'] ?? 99));
-
-const deps = departmentsData as Record<string, { num: string; name: string; slug: string }>;
-const allDepts = Object.values(deps).sort((a, b) => a.num.localeCompare(b.num, 'fr', { numeric: true }));
+const deps = departmentsData as Record<string, { num: string; name: string; slug: string; region: string; regionSlug: string; neighbors: string[] }>;
+const regionDepts = Object.values(deps)
+  .filter(d => d.regionSlug === regionSlug)
+  .sort((a, b) => a.num.localeCompare(b.num, 'fr', { numeric: true }));
 
 const lastUpdate = meta.lastUpdate
   ? new Date(meta.lastUpdate).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })
   : null;
 
-const title = 'Prix des carburants en France : comparateur en temps réel';
-const description = `Comparez les prix du carburant dans toute la France. ${meta.totalStations} stations référencées, prix mis à jour quotidiennement depuis les données officielles.`;
+const regionName = regionData.name;
+const title = `Prix des carburants en ${regionName} : comparateur en temps réel`;
+const description = `Comparez les prix du carburant en ${regionName}. Gazole, SP95, SP98, E10, E85, GPL. Mis à jour quotidiennement depuis les données officielles.`;
 ---
 
-<BaseLayout title={title} description={description} canonical="/prix-carburants/">
+<BaseLayout title={title} description={description} canonical={`/prix-carburants/region/${regionSlug}/`}>
   <div>
     <!-- Hero -->
     <section class="fuel-hero">
       <div class="container">
         <div class="fuel-hero-inner">
-          <h1>Prix des carburants en France</h1>
-          <p class="fuel-hero-sub">Comparateur en temps réel · {meta.totalStations.toLocaleString('fr-FR')} stations</p>
+          <p class="fuel-hero-breadcrumb"><a href="/prix-carburants/">France</a> › {regionName}</p>
+          <h1>Prix des carburants en {regionName}</h1>
+          <p class="fuel-hero-sub">Comparateur en temps réel · données officielles</p>
           {lastUpdate && (
             <p class="fuel-update-badge">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
@@ -48,22 +57,28 @@ const description = `Comparez les prix du carburant dans toute la France. ${meta
       </div>
     </section>
 
-    <!-- Prix nationaux -->
+    <!-- Prix régionaux -->
     <section class="container section-gap">
-      <h2 class="section-title">Prix moyens nationaux</h2>
+      <h2 class="section-title">Prix moyens en {regionName}</h2>
       <div class="fuel-cards-grid">
         {FUEL_CONFIG.map(({ key, label, color }) => {
-          const price = statsNational[key as keyof typeof statsNational];
+          const price = regionData[key as keyof typeof regionData] as number | null;
+          const nat = statsNational[key as keyof typeof statsNational] as number | null;
+          const diff = price != null && nat != null ? ((price - nat) / nat) * 100 : null;
           return (
-            <a href={`/prix-${key === 'GPLc' ? 'gpl' : key.toLowerCase()}/`} class="fuel-card" style={`--fuel-color: ${color}`}>
+            <div class="fuel-card" style={`--fuel-color: ${color}`}>
               <span class="fuel-card-marker" aria-hidden="true"></span>
               <div class="fuel-card-label">{label}</div>
               <div class="fuel-card-price">
                 {price != null ? price.toFixed(3) : 'n/d'}
                 <span class="fuel-card-unit">€/L</span>
               </div>
-              <div class="fuel-card-link">Voir les détails →</div>
-            </a>
+              {diff != null && (
+                <div class={`price-badge ${diff < -2 ? 'badge-green' : diff > 2 ? 'badge-orange' : 'badge-neutral'}`}>
+                  {diff > 0 ? '+' : ''}{diff.toFixed(1)}% vs France
+                </div>
+              )}
+            </div>
           );
         })}
       </div>
@@ -74,71 +89,20 @@ const description = `Comparez les prix du carburant dans toute la France. ${meta
       <FuelSearch />
     </section>
 
-    <!-- Prix par région -->
-    <section class="container section-gap">
-      <h2 class="section-title">Prix du carburant par région</h2>
-      <div class="table-wrapper">
-        <table class="fuel-table">
-          <thead>
-            <tr>
-              <th scope="col">Région</th>
-              <th scope="col">Gazole</th>
-              <th scope="col">SP95</th>
-              <th scope="col">SP98</th>
-              <th scope="col">E10</th>
-              <th scope="col">E85</th>
-              <th scope="col">GPL</th>
-            </tr>
-          </thead>
-          <tbody>
-            {regions.map(region => {
-              const gazole = region['Gazole'] as number | null;
-              const natGaz = statsNational['Gazole'];
-              const diff = gazole != null && natGaz != null ? ((gazole - natGaz) / natGaz) * 100 : null;
-              return (
-                <tr>
-                  <td>
-                    <a href={`/prix-carburants/region/${region.slug}/`} class="region-link">
-                      {region.name}
-                    </a>
-                  </td>
-                  <td class="price-cell">
-                    {gazole != null ? (
-                      <span>
-                        {gazole.toFixed(3)}
-                        {diff != null && (
-                          <span class={`price-badge ${diff < -5 ? 'badge-green' : diff > 5 ? 'badge-orange' : 'badge-neutral'}`}>
-                            {diff > 0 ? '+' : ''}{diff.toFixed(1)}%
-                          </span>
-                        )}
-                      </span>
-                    ) : 'n/d'}
-                  </td>
-                  <td class="price-cell">{(region['SP95'] as number | null)?.toFixed(3) ?? 'n/d'}</td>
-                  <td class="price-cell">{(region['SP98'] as number | null)?.toFixed(3) ?? 'n/d'}</td>
-                  <td class="price-cell">{(region['E10'] as number | null)?.toFixed(3) ?? 'n/d'}</td>
-                  <td class="price-cell">{(region['E85'] as number | null)?.toFixed(3) ?? 'n/d'}</td>
-                  <td class="price-cell">{(region['GPLc'] as number | null)?.toFixed(3) ?? 'n/d'}</td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      </div>
-    </section>
-
-    <!-- Prix par département -->
-    <section class="container section-gap">
-      <h2 class="section-title">Prix du carburant par département</h2>
-      <div class="dept-grid">
-        {allDepts.map(dept => (
-          <a href={`/prix-carburants/${dept.slug}/`} class="dept-pill">
-            <span class="dept-pill-num">{dept.num}</span>
-            <span class="dept-pill-name">{dept.name}</span>
-          </a>
-        ))}
-      </div>
-    </section>
+    <!-- Départements de la région -->
+    {regionDepts.length > 0 && (
+      <section class="container section-gap">
+        <h2 class="section-title">Départements de {regionName}</h2>
+        <div class="dept-grid">
+          {regionDepts.map(dept => (
+            <a href={`/prix-carburants/${dept.slug}/`} class="dept-pill">
+              <span class="dept-pill-num">{dept.num}</span>
+              <span class="dept-pill-name">{dept.name}</span>
+            </a>
+          ))}
+        </div>
+      </section>
+    )}
 
     <!-- Explication -->
     <section class="container section-gap">
@@ -151,18 +115,13 @@ const description = `Comparez les prix du carburant dans toute la France. ${meta
           publié sous <strong>Licence Ouverte</strong>.
         </p>
         <p>
-          Notre algorithme récupère automatiquement le fichier quotidien (J-1), le décompresse, parse les {meta.totalStations.toLocaleString('fr-FR')} stations
-          et calcule les prix moyens nationaux, régionaux et départementaux. Les ruptures de stock sont exclues des calculs.
-          Chaque station affiche la date de sa dernière mise à jour pour plus de transparence.
-        </p>
-        <p>
           Utilisez le <strong>comparateur ci-dessus</strong> pour trouver les stations les moins chères près de chez vous :
           saisissez votre code postal ou votre ville. Les résultats affichent les 10 stations les plus proches
-          triées par prix croissant, avec un lien vers Google Maps pour l'itinéraire.
+          triées par prix croissant.
         </p>
         <div class="explainer-links">
-          <a href="/prix-carburants/methodologie/">En savoir plus sur notre méthodologie</a>
-          <a href="/blog/astuces-economiser-carburant/">10 astuces pour économiser du carburant</a>
+          <a href="/prix-carburants/">Voir toutes les régions</a>
+          <a href="/prix-carburants/methodologie/">Notre méthodologie</a>
         </div>
       </div>
     </section>
@@ -182,6 +141,12 @@ const description = `Comparez les prix du carburant dans toute la France. ${meta
     margin: 0 0 0.5rem;
     color: #fff;
   }
+  .fuel-hero-breadcrumb {
+    font-size: 0.875rem;
+    color: #94a3b8;
+    margin: 0 0 0.5rem;
+  }
+  .fuel-hero-breadcrumb a { color: #94a3b8; text-decoration: underline; }
   .fuel-hero-sub {
     color: #94a3b8;
     font-size: 1.125rem;
