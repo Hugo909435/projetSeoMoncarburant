@@ -104,7 +104,7 @@ const jsonLdBreadcrumb = {
 <BaseLayout title={title} description={description} canonical={`/prix-carburants/${dept.slug}/`} noIndex={count < 3}>
   <script type="application/ld+json" set:html={JSON.stringify(jsonLdBreadcrumb)} slot="head" />
 
-  <main>
+  <div>
     <!-- Breadcrumb -->
     <div class="container" style="padding-top:1rem">
       <nav aria-label="Fil d'ariane" class="breadcrumb-nav">
@@ -301,7 +301,7 @@ const jsonLdBreadcrumb = {
         </p>
       </section>
     </div>
-  </main>
+  </div>
 </BaseLayout>
 
 <script>

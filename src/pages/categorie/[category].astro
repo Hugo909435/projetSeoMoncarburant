@@ -43,8 +43,8 @@ piliers.sort((a, b) => b.data.publishedAt.getTime() - a.data.publishedAt.getTime
 
 const breadcrumb = [
   { label: 'Accueil', href: '/' },
-  { label: 'Blog', href: '/blog' },
-  { label: meta.label, href: `/categorie/${category}` },
+  { label: 'Blog', href: '/blog/' },
+  { label: meta.label, href: `/categorie/${category}/` },
 ];
 
 const pageUrl = `https://mon-carburant.com/categorie/${category}/`;

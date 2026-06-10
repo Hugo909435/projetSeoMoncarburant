@@ -90,10 +90,22 @@ const cityIdentity = dept
     }
   : null;
 
+const jsonLdBreadcrumb = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: breadcrumb.map((item, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    name: item.name,
+    item: `https://mon-carburant.com${item.url}`,
+  })),
+};
+
 ---
 
 <BaseLayout title={title} description={description} canonical={`/prix-carburants/ville/${citySlug}/`} noIndex={count < 3}>
-  <main>
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLdBreadcrumb)} slot="head" />
+  <div>
     <!-- Breadcrumb -->
     <div class="container" style="padding-top:1rem">
       <nav aria-label="Fil d'ariane" class="breadcrumb-nav">
@@ -204,7 +216,7 @@ const cityIdentity = dept
         ))}
       </section>
     </div>
-  </main>
+  </div>
 </BaseLayout>
 
 <style>

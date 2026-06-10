@@ -51,7 +51,7 @@ function priceToColor(price: number | null): string {
 ---
 
 <BaseLayout title={title} description={description} canonical={`/prix-${fuelSlug}/`}>
-  <main>
+  <div>
     <!-- Hero -->
     <section class="fuel-type-hero" style={`--fuel-color: ${config.color}`}>
       <div class="container">
@@ -166,7 +166,7 @@ function priceToColor(price: number | null): string {
         </div>
       </section>
     </div>
-  </main>
+  </div>
 </BaseLayout>
 
 <style>
