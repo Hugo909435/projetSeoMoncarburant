@@ -1,9 +1,9 @@
 ---
 title: "Stop & Start : économies réelles ou mythe ?"
-metaTitle: "Stop & Start : vraies économies ou mythe ? Chiffres et réalité (2026)"
-metaDescription: "Le Stop & Start réduit-il vraiment votre consommation ? Chiffres ADEME, conditions d'efficacité, inconvénients cachés et conseils pratiques pour économiser en 2026."
+metaTitle: "Stop & Start : économies réelles ou mythe ? (2026)"
+metaDescription: "Le Stop & Start réduit-il votre consommation ? Chiffres ADEME, conditions d'efficacité réelle, inconvénients cachés et conseils pratiques."
 slug: "stop-start-economies-reelles-ou-mythe"
-excerpt: "Le Stop & Start coupe le moteur à chaque arrêt pour éviter le ralenti inutile. En ville, les économies sont réelles : 3 à 8 % selon l'ADEME. Mais hors agglomération, le gain devient marginal. Mode d'emploi honnête."
+excerpt: "Le Stop & Start coupe le moteur à chaque arrêt pour éviter le ralenti. En ville : 3 à 8 % d'économies selon l'ADEME. Sur route, le gain est nul. Mode d'emploi honnête."
 publishedAt: 2026-06-15
 author: "hugo-beignon"
 category: "economies"
