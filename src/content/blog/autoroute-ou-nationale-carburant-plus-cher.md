@@ -1,7 +1,7 @@
 ---
-title: "Autoroute ou nationale : où le carburant coûte-t-il vraiment plus cher ?"
+title: "Autoroute ou nationale : où le carburant coûte-t-il plus cher ?"
 metaTitle: "Autoroute ou nationale : où le carburant est-il plus cher ?"
-metaDescription: "Stations d'autoroute vs nationale : 15 à 25 c/L d'écart en moyenne. Analyse des prix réels, causes de la différence et astuces pour payer moins sur vos longs trajets."
+metaDescription: "Stations d'autoroute vs nationale : 15 à 25 c/L d'écart en moyenne. Prix réels, causes et astuces pour payer moins cher."
 slug: "autoroute-ou-nationale-carburant-plus-cher"
 excerpt: "Les stations d'autoroute affichent 15 à 25 c/L de plus que les stations de nationale ou de supermarché. Combien ça coûte vraiment sur un plein, et comment éviter la surtaxe du péage."
 publishedAt: 2026-06-17
