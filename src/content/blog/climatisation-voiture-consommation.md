@@ -1,6 +1,6 @@
 ---
 title: "Climatisation voiture : combien ça consomme vraiment ?"
-metaTitle: "Climatisation voiture : combien ça consomme vraiment ? (2026)"
+metaTitle: "Climatisation voiture : combien ça consomme ? (2026)"
 metaDescription: "La clim augmente votre consommation de 10 à 20 % en ville. Chiffres réels, impact selon la vitesse, et astuces concrètes pour limiter la facture cet été."
 slug: "climatisation-voiture-consommation"
 excerpt: "La climatisation peut ajouter 0,5 à 2 L/100 km selon les conditions. En ville, l'impact atteint 20 %. Sur autoroute, il descend à 5 %. Voici comment limiter la note sans fondre dans l'habitacle."
