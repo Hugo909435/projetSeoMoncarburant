@@ -25,3 +25,30 @@ composés et les plages de chiffres.
 
 Avant tout commit de contenu, vérifier l'absence de tirets longs, par exemple :
 `grep -rn $'—\|–' src/content/`
+
+### ❌ Limites de caractères dans le frontmatter
+
+Les champs suivants ont des **limites strictes** imposées par le schéma Astro.
+Un dépassement fait planter le build.
+
+| Champ            | Limite max |
+|------------------|-----------|
+| `metaTitle`      | 60 caractères |
+| `metaDescription`| 160 caractères |
+
+**Avant tout commit d'article**, vérifier les longueurs :
+```bash
+# Vérifier metaTitle (max 60 car.)
+grep '^metaTitle:' src/content/blog/*.md src/content/piliers/*.md | while IFS= read -r line; do
+  val=$(echo "$line" | sed 's/^[^:]*:metaTitle: *"\{0,1\}//;s/"\{0,1\} *$//')
+  len=${#val}
+  [ "$len" -gt 60 ] && echo "ERREUR ($len car.) : $line"
+done
+
+# Vérifier metaDescription (max 160 car.)
+grep '^metaDescription:' src/content/blog/*.md src/content/piliers/*.md | while IFS= read -r line; do
+  val=$(echo "$line" | sed 's/^[^:]*:metaDescription: *"\{0,1\}//;s/"\{0,1\} *$//')
+  len=${#val}
+  [ "$len" -gt 160 ] && echo "ERREUR ($len car.) : $line"
+done
+```
