@@ -1,0 +1,419 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import statsNational from '../../../data/fuel/stats-national.json';
+import brandsIndex from '../../../data/fuel/brands.json';
+import departmentsData from '../../../data/departments.json';
+import meta from '../../../data/fuel/meta.json';
+
+export async function getStaticPaths() {
+  const brandFiles = import.meta.glob('../../../data/fuel/stations-by-brand/*.json', { eager: true });
+  return Object.entries(brandFiles).map(([path, data]: [string, any]) => {
+    const slug = path.match(/\/([^/]+)\.json$/)?.[1];
+    if (!slug) return null;
+    return { params: { brand: slug }, props: { brandData: data } };
+  }).filter(Boolean);
+}
+
+const { brandData } = Astro.props;
+const { slug, name, stats, top10, count, departments: deptNums } = brandData;
+
+const FUELS = ['Gazole', 'SP95', 'SP98', 'E10', 'E85', 'GPLc'] as const;
+const FUEL_COLORS: Record<string, string> = {
+  Gazole: '#374151', SP95: '#16a34a', SP98: '#2563eb', E10: '#15803d', E85: '#E87722', GPLc: '#ca8a04',
+};
+const FUEL_LABELS: Record<string, string> = {
+  Gazole: 'Gazole', SP95: 'SP95', SP98: 'SP98', E10: 'E10', E85: 'E85', GPLc: 'GPL',
+};
+
+const deps = departmentsData as Record<string, { num: string; name: string; slug: string }>;
+
+function priceDiff(avg: number | null, fuelKey: string) {
+  const nat = statsNational[fuelKey as keyof typeof statsNational];
+  if (avg == null || nat == null) return null;
+  return ((avg - nat) / nat) * 100;
+}
+
+function diffClass(diff: number | null) {
+  if (diff == null) return 'badge-neutral';
+  if (diff < -2) return 'badge-green';
+  if (diff > 2) return 'badge-orange';
+  return 'badge-neutral';
+}
+
+const lastUpdate = meta.lastUpdate
+  ? new Date(meta.lastUpdate).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })
+  : null;
+
+// Prix Gazole moyen de l'enseigne pour le titre/description
+const gazoleAvg = stats.Gazole?.avg;
+const gazoleNat = statsNational['Gazole'];
+const gazolediff = gazoleAvg && gazoleNat ? ((gazoleAvg - gazoleNat) / gazoleNat * 100) : null;
+const gazolediffStr = gazolediff != null
+  ? (gazolediff < 0 ? `${Math.abs(gazolediff).toFixed(1)}% moins cher que la moyenne nationale` : `dans la moyenne nationale`)
+  : '';
+
+const title = `Prix carburant ${name} aujourd'hui - Comparateur Mon Carburant`;
+const descPrix = gazoleAvg ? `Gazole : ${gazoleAvg.toFixed(3)} €/L en moyenne (${gazolediffStr}).` : '';
+const description = `Comparez les prix du carburant dans les ${count} stations ${name} en France. ${descPrix} Données mises à jour quotidiennement.`;
+
+// Top 3 enseignes pour la navigation croisée (exclure l'enseigne courante)
+const siblingBrands = (brandsIndex as { slug: string; name: string; count: number }[])
+  .filter(b => b.slug !== slug)
+  .slice(0, 6);
+
+// Départements couverts avec leurs noms
+const deptsCovered = (deptNums as string[])
+  .map(num => deps[num])
+  .filter(Boolean)
+  .sort((a, b) => a.name.localeCompare(b.name, 'fr'));
+
+const breadcrumb = [
+  { name: 'Accueil', url: '/' },
+  { name: 'Prix carburants', url: '/prix-carburants/' },
+  { name: `Stations ${name}`, url: `/prix-carburants/enseigne/${slug}/` },
+];
+
+const jsonLdBreadcrumb = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: breadcrumb.map((item, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    name: item.name,
+    item: `https://mon-carburant.com${item.url}`,
+  })),
+};
+---
+
+<BaseLayout title={title} description={description} canonical={`/prix-carburants/enseigne/${slug}/`}>
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLdBreadcrumb)} slot="head" />
+
+  <div>
+    <!-- Breadcrumb -->
+    <div class="container" style="padding-top:1rem">
+      <nav aria-label="Fil d'ariane" class="breadcrumb-nav">
+        {breadcrumb.map((item, i) => (
+          <>
+            {i > 0 && <span aria-hidden="true"> › </span>}
+            {i < breadcrumb.length - 1
+              ? <a href={item.url}>{item.name}</a>
+              : <span aria-current="page">{item.name}</span>
+            }
+          </>
+        ))}
+      </nav>
+    </div>
+
+    <!-- Hero -->
+    <section class="brand-hero">
+      <div class="container">
+        <h1>Prix carburant {name} en France</h1>
+        <p class="brand-subtitle">{count} stations référencées · {deptsCovered.length} départements</p>
+        {lastUpdate && <p class="update-info">Données du {lastUpdate}</p>}
+      </div>
+    </section>
+
+    <div class="container page-body">
+
+      <!-- Stats par carburant -->
+      <section class="section-block">
+        <h2>Prix moyens {name} en France</h2>
+        <div class="fuel-stats-grid">
+          {FUELS.map(fuel => {
+            const s = stats[fuel];
+            const avg = s?.avg ?? null;
+            const diff = priceDiff(avg, fuel);
+            return (
+              <div class="fuel-stat-card" style={`--fuel-color: ${FUEL_COLORS[fuel]}`}>
+                <div class="fsc-label">{FUEL_LABELS[fuel]}</div>
+                <div class="fsc-price">
+                  {avg != null ? avg.toFixed(3) : 'n/d'}
+                  {avg != null && <span class="fsc-unit">€/L</span>}
+                </div>
+                {diff != null && (
+                  <div class={`fsc-diff ${diffClass(diff)}`}>
+                    {diff > 0 ? '+' : ''}{diff.toFixed(1)}% vs. France
+                  </div>
+                )}
+                {s?.min != null && s?.max != null && (
+                  <div class="fsc-range">{s.min.toFixed(3)} - {s.max.toFixed(3)}</div>
+                )}
+              </div>
+            );
+          })}
+        </div>
+        {gazolediff != null && gazolediff < -1 && (
+          <p class="brand-insight">
+            Les stations {name} affichent un Gazole en moyenne{' '}
+            <strong>{Math.abs(gazolediff).toFixed(1)}% moins cher</strong> que la moyenne nationale
+            ({gazoleAvg?.toFixed(3)} €/L vs {gazoleNat?.toFixed(3)} €/L).
+          </p>
+        )}
+      </section>
+
+      <!-- Top 10 moins chères -->
+      {(top10.Gazole?.length > 0 || top10.SP95?.length > 0) && (
+        <section class="section-block">
+          <h2>Top 10 stations {name} les moins chères de France</h2>
+          <div class="top10-tabs">
+            {top10.Gazole?.length > 0 && (
+              <div class="top10-group">
+                <h3 class="top10-title" style="color:#374151">Gazole</h3>
+                <table class="stations-table">
+                  <thead>
+                    <tr><th>Station</th><th>Ville</th><th>Prix Gazole</th></tr>
+                  </thead>
+                  <tbody>
+                    {top10.Gazole.map((s: any) => (
+                      <tr>
+                        <td class="station-addr">{s.adresse || 'n/d'}</td>
+                        <td><a href={`/prix-carburants/${deps[s.dep]?.slug ?? s.dep}/`} class="dept-link">{s.ville}</a></td>
+                        <td class="price-highlight">{s.prices.Gazole?.toFixed(3) ?? 'n/d'} €/L</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+            {top10.SP95?.length > 0 && (
+              <div class="top10-group">
+                <h3 class="top10-title" style="color:#16a34a">Sans-Plomb 95</h3>
+                <table class="stations-table">
+                  <thead>
+                    <tr><th>Station</th><th>Ville</th><th>Prix SP95</th></tr>
+                  </thead>
+                  <tbody>
+                    {top10.SP95.map((s: any) => (
+                      <tr>
+                        <td class="station-addr">{s.adresse || 'n/d'}</td>
+                        <td><a href={`/prix-carburants/${deps[s.dep]?.slug ?? s.dep}/`} class="dept-link">{s.ville}</a></td>
+                        <td class="price-highlight">{s.prices.SP95?.toFixed(3) ?? 'n/d'} €/L</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </div>
+        </section>
+      )}
+
+      <!-- Toutes les stations (30 premières + bouton "voir plus") -->
+      <section class="section-block">
+        <h2>Toutes les stations {name} ({count})</h2>
+        <div class="table-wrapper">
+          <table class="stations-table full-table" id="brand-stations-table">
+            <thead>
+              <tr>
+                <th>Adresse</th>
+                <th>Ville</th>
+                <th>Dept</th>
+                <th>Gazole</th>
+                <th>SP95</th>
+                <th>E10</th>
+                <th>SP98</th>
+                <th>E85</th>
+              </tr>
+            </thead>
+            <tbody>
+              {brandData.stations.slice(0, 30).map((s: any) => (
+                <tr>
+                  <td class="station-addr">{s.adresse || 'n/d'}</td>
+                  <td>{s.ville}</td>
+                  <td>
+                    <a href={`/prix-carburants/${deps[s.dep]?.slug ?? s.dep}/`} class="dept-pill-link">
+                      {s.dep}
+                    </a>
+                  </td>
+                  <td>{s.prices.Gazole?.toFixed(3) ?? 'n/d'}</td>
+                  <td>{s.prices.SP95?.toFixed(3) ?? 'n/d'}</td>
+                  <td>{s.prices.E10?.toFixed(3) ?? 'n/d'}</td>
+                  <td>{s.prices.SP98?.toFixed(3) ?? 'n/d'}</td>
+                  <td>{s.prices.E85?.toFixed(3) ?? 'n/d'}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        {brandData.stations.length > 30 && (
+          <div style="text-align:center;margin-top:1rem">
+            <button
+              id="brand-show-more"
+              class="btn-show-more"
+              data-stations={JSON.stringify(brandData.stations.slice(30).map((s: any) => ({
+                adresse: s.adresse, ville: s.ville, dep: s.dep, prices: s.prices
+              })))}
+            >
+              Afficher les {brandData.stations.length - 30} stations restantes ↓
+            </button>
+          </div>
+        )}
+      </section>
+
+      <!-- Départements couverts -->
+      {deptsCovered.length > 0 && (
+        <section class="section-block">
+          <h2>Stations {name} par département</h2>
+          <p class="dept-intro">Cliquez sur un département pour voir tous les prix de carburant dans votre zone.</p>
+          <div class="dept-grid">
+            {deptsCovered.map(dept => (
+              <a href={`/prix-carburants/${dept.slug}/`} class="dept-pill">
+                <span class="dept-pill-num">{dept.num}</span>
+                <span class="dept-pill-name">{dept.name}</span>
+              </a>
+            ))}
+          </div>
+        </section>
+      )}
+
+      <!-- Autres enseignes -->
+      {siblingBrands.length > 0 && (
+        <section class="section-block">
+          <h2>Comparer avec d'autres enseignes</h2>
+          <div class="brand-grid">
+            {siblingBrands.map(b => (
+              <a href={`/prix-carburants/enseigne/${b.slug}/`} class="brand-card">
+                <span class="brand-card-name">{b.name}</span>
+                <span class="brand-card-count">{b.count} stations</span>
+              </a>
+            ))}
+          </div>
+        </section>
+      )}
+
+      <!-- Texte SEO -->
+      <section class="section-block seo-text">
+        <h2>Trouver les stations {name} les moins chères</h2>
+        <p>
+          Mon Carburant référence l'ensemble des <strong>{count} stations {name}</strong> présentes en France,
+          réparties dans {deptsCovered.length} départements. Les prix affichés proviennent du flux officiel
+          du ministère de l'Économie et sont mis à jour quotidiennement.
+        </p>
+        {gazoleAvg && (
+          <p>
+            Au {lastUpdate}, le prix moyen du Gazole dans les stations {name} est de{' '}
+            <strong>{gazoleAvg.toFixed(3)} €/L</strong>
+            {gazolediff != null && gazolediff < -1 && (
+              <>, soit <strong>{Math.abs(gazolediff).toFixed(1)}% en dessous de la moyenne nationale</strong></>
+            )}.
+            Les prix varient de {stats.Gazole?.min.toFixed(3)} à {stats.Gazole?.max.toFixed(3)} €/L selon les stations.
+          </p>
+        )}
+        <p>
+          Pour trouver la station {name} la moins chère près de chez vous, utilisez notre{' '}
+          <a href="/prix-carburants/">comparateur national</a> ou recherchez directement par{' '}
+          <a href="/prix-carburants/">code postal ou ville</a>.
+        </p>
+        <p>
+          <a href="/prix-carburants/methodologie/">En savoir plus sur notre méthodologie</a> ·
+          <a href="/prix-carburants/">Comparateur national</a>
+        </p>
+      </section>
+
+    </div>
+  </div>
+</BaseLayout>
+
+<script>
+  const btn = document.getElementById('brand-show-more');
+  if (btn) {
+    btn.addEventListener('click', () => {
+      const extra = JSON.parse((btn as HTMLButtonElement).dataset.stations || '[]');
+      const tbody = document.querySelector('#brand-stations-table tbody');
+      if (!tbody) return;
+      const deps: Record<string, string> = {};
+      extra.forEach((s: any) => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td class="station-addr">${s.adresse || 'n/d'}</td>
+          <td>${s.ville}</td>
+          <td><span class="dept-pill-link">${s.dep}</span></td>
+          <td>${s.prices?.Gazole?.toFixed(3) ?? 'n/d'}</td>
+          <td>${s.prices?.SP95?.toFixed(3) ?? 'n/d'}</td>
+          <td>${s.prices?.E10?.toFixed(3) ?? 'n/d'}</td>
+          <td>${s.prices?.SP98?.toFixed(3) ?? 'n/d'}</td>
+          <td>${s.prices?.E85?.toFixed(3) ?? 'n/d'}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+      btn.remove();
+    });
+  }
+</script>
+
+<style>
+  .breadcrumb-nav { font-size:0.875rem; color:var(--color-text-muted); margin-bottom:0.5rem; }
+  .breadcrumb-nav a { color:var(--color-primary); text-decoration:none; }
+  .breadcrumb-nav a:hover { text-decoration:underline; }
+
+  .brand-hero { background:var(--color-primary); color:#fff; padding:2.5rem 0 2rem; }
+  .brand-hero h1 { font-size:clamp(1.5rem,3.5vw,2.25rem); font-weight:800; color:#fff; margin:0 0 0.5rem; }
+  .brand-subtitle { color:#94a3b8; margin:0 0 0.5rem; }
+  .update-info { font-size:0.8125rem; color:#64748b; margin:0; }
+
+  .page-body { padding-top:2rem; padding-bottom:3rem; }
+  .section-block { margin-bottom:3rem; }
+  .section-block h2 { font-size:1.25rem; font-weight:700; color:var(--color-primary); margin:0 0 1.25rem; border-bottom:2px solid #e5e7eb; padding-bottom:0.5rem; }
+
+  .fuel-stats-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:0.75rem; }
+  @media(min-width:768px){ .fuel-stats-grid { grid-template-columns:repeat(6,1fr); } }
+  .fuel-stat-card { background:#fff; border:2px solid #e5e7eb; border-top:3px solid var(--fuel-color); border-radius:0.5rem; padding:1rem; }
+  .fsc-label { font-size:0.75rem; color:var(--color-text-muted); font-weight:700; margin-bottom:0.25rem; }
+  .fsc-price { font-size:1.25rem; font-weight:800; color:var(--fuel-color); display:flex; align-items:baseline; gap:0.2rem; }
+  .fsc-unit { font-size:0.7rem; font-weight:500; color:var(--color-text-muted); }
+  .fsc-diff { font-size:0.7rem; padding:0.15rem 0.4rem; border-radius:999px; margin-top:0.25rem; display:inline-block; font-weight:600; }
+  .fsc-range { font-size:0.7rem; color:var(--color-text-muted); margin-top:0.25rem; }
+  .badge-green { background:#dcfce7; color:#166534; }
+  .badge-orange { background:#fff7ed; color:#c2410c; }
+  .badge-neutral { background:#f1f5f9; color:#64748b; }
+
+  .brand-insight { background:#f0fdf4; border:1px solid #bbf7d0; border-left:4px solid #16a34a; border-radius:0.5rem; padding:1rem 1.25rem; margin-top:1.25rem; color:#166534; font-size:0.9375rem; }
+
+  .top10-tabs { display:grid; grid-template-columns:1fr; gap:1.5rem; }
+  @media(min-width:768px){ .top10-tabs { grid-template-columns:1fr 1fr; } }
+  .top10-title { font-size:1rem; font-weight:700; margin:0 0 0.75rem; }
+
+  .table-wrapper { overflow-x:auto; }
+  .stations-table { width:100%; border-collapse:collapse; font-size:0.875rem; }
+  .stations-table th { background:#f1f5f9; color:var(--color-primary); padding:0.6rem 0.75rem; text-align:left; font-size:0.8rem; }
+  .stations-table td { padding:0.55rem 0.75rem; border-bottom:1px solid #f1f5f9; }
+  .stations-table tr:hover td { background:#f8fafc; }
+  .station-addr { max-width:200px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .price-highlight { font-weight:700; color:#16a34a; }
+  .dept-link { color:var(--color-primary); text-decoration:none; font-weight:500; }
+  .dept-link:hover { text-decoration:underline; }
+  .dept-pill-link { font-size:0.75rem; font-weight:700; color:var(--color-primary); background:#f1f5f9; padding:0.15rem 0.4rem; border-radius:0.25rem; }
+
+  .dept-intro { color:var(--color-text-muted); font-size:0.875rem; margin:-0.5rem 0 1rem; }
+  .dept-grid { display:flex; flex-wrap:wrap; gap:0.5rem; }
+  .dept-pill { display:inline-flex; align-items:center; gap:0.4rem; padding:0.35rem 0.75rem; background:#fff; border:1px solid #e2e8f0; border-radius:999px; text-decoration:none; font-size:0.8125rem; transition:all 0.15s; }
+  .dept-pill:hover { background:var(--color-primary); border-color:var(--color-primary); color:#fff; }
+  .dept-pill-num { font-weight:700; font-size:0.75rem; color:#64748b; background:#f1f5f9; padding:0.1rem 0.35rem; border-radius:0.25rem; }
+  .dept-pill:hover .dept-pill-num { background:rgba(255,255,255,0.2); color:#fff; }
+  .dept-pill-name { color:var(--color-primary); font-weight:500; }
+  .dept-pill:hover .dept-pill-name { color:#fff; }
+
+  .brand-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:0.75rem; }
+  @media(min-width:640px){ .brand-grid { grid-template-columns:repeat(3,1fr); } }
+  .brand-card { display:flex; flex-direction:column; gap:0.25rem; padding:1rem; background:#fff; border:1px solid #e2e8f0; border-radius:0.75rem; text-decoration:none; transition:all 0.15s; }
+  .brand-card:hover { border-color:var(--color-primary); box-shadow:0 2px 8px rgba(0,0,0,0.08); }
+  .brand-card-name { font-weight:700; color:var(--color-primary); font-size:0.9375rem; }
+  .brand-card-count { font-size:0.75rem; color:var(--color-text-muted); }
+
+  .btn-show-more { background:#fff; border:2px solid var(--color-primary); color:var(--color-primary); padding:0.6rem 1.5rem; border-radius:0.5rem; font-weight:600; cursor:pointer; font-size:0.9rem; transition:all 0.2s; }
+  .btn-show-more:hover { background:var(--color-primary); color:#fff; }
+
+  .seo-text p { color:#374151; line-height:1.7; margin-bottom:0.75rem; }
+  .seo-text a { color:var(--color-accent); }
+
+  .full-table th:nth-child(5), .full-table td:nth-child(5),
+  .full-table th:nth-child(6), .full-table td:nth-child(6),
+  .full-table th:nth-child(7), .full-table td:nth-child(7),
+  .full-table th:nth-child(8), .full-table td:nth-child(8) { display:none; }
+  @media(min-width:768px){
+    .full-table th:nth-child(5), .full-table td:nth-child(5),
+    .full-table th:nth-child(6), .full-table td:nth-child(6),
+    .full-table th:nth-child(7), .full-table td:nth-child(7),
+    .full-table th:nth-child(8), .full-table td:nth-child(8) { display:table-cell; }
+  }
+</style>

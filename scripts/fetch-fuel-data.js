@@ -5,7 +5,7 @@
  * Licence : Licence Ouverte / Open Licence
  */
 
-import { existsSync, mkdirSync, readFileSync, writeFileSync, copyFileSync } from 'fs';
+import { existsSync, mkdirSync, readdirSync, unlinkSync, readFileSync, writeFileSync, copyFileSync } from 'fs';
 import { resolve, dirname } from 'path';
 import { fileURLToPath } from 'url';
 import AdmZip from 'adm-zip';
@@ -17,7 +17,9 @@ const ROOT = resolve(__dirname, '..');
 const DATA_DIR = resolve(ROOT, 'src/data/fuel');
 const DEPT_DIR = resolve(DATA_DIR, 'stations-by-department');
 const CITY_DIR = resolve(DATA_DIR, 'stations-by-city');
+const BRAND_DIR = resolve(DATA_DIR, 'stations-by-brand');
 const PUBLIC_DATA_DIR = resolve(ROOT, 'public/data');
+const BRAND_MAP_FILE = resolve(ROOT, 'src/data/station-brands.json');
 
 const SOURCE_URL = 'https://donnees.roulez-eco.fr/opendata/jour';
 const CHECK_ONLY = process.argv.includes('--check');
@@ -31,8 +33,62 @@ function slugifyCity(name) {
   return slugify(name, { lower: true, strict: true, locale: 'fr' });
 }
 
+// Normalisation des noms d'enseigne issus du XML gouvernemental
+const BRAND_MAP = {
+  'leclerc': { slug: 'leclerc', name: 'E.Leclerc' },
+  'e.leclerc': { slug: 'leclerc', name: 'E.Leclerc' },
+  'e-leclerc': { slug: 'leclerc', name: 'E.Leclerc' },
+  'e. leclerc': { slug: 'leclerc', name: 'E.Leclerc' },
+  'carrefour': { slug: 'carrefour', name: 'Carrefour' },
+  'carrefour market': { slug: 'carrefour', name: 'Carrefour' },
+  'carrefour contact': { slug: 'carrefour', name: 'Carrefour' },
+  'carrefour express': { slug: 'carrefour', name: 'Carrefour' },
+  'intermarché': { slug: 'intermarche', name: 'Intermarché' },
+  'intermarche': { slug: 'intermarche', name: 'Intermarché' },
+  'total': { slug: 'total', name: 'Total' },
+  'totalenergies': { slug: 'total', name: 'Total' },
+  'total energies': { slug: 'total', name: 'Total' },
+  'total access': { slug: 'total-access', name: 'Total Access' },
+  'totalaccess': { slug: 'total-access', name: 'Total Access' },
+  'esso': { slug: 'esso', name: 'Esso' },
+  'esso express': { slug: 'esso', name: 'Esso' },
+  'esso-express': { slug: 'esso', name: 'Esso' },
+  'elan': { slug: 'elan', name: 'Élan' },
+  'élan': { slug: 'elan', name: 'Élan' },
+  'avia': { slug: 'avia', name: 'Avia' },
+  'eni': { slug: 'eni', name: 'Eni' },
+  'as 24': { slug: 'as24', name: 'AS 24' },
+  'as24': { slug: 'as24', name: 'AS 24' },
+  'netto': { slug: 'netto', name: 'Netto' },
+  'bp': { slug: 'bp', name: 'BP' },
+  'shell': { slug: 'shell', name: 'Shell' },
+  'costco': { slug: 'costco', name: 'Costco' },
+  'géant casino': { slug: 'casino', name: 'Casino' },
+  'geant casino': { slug: 'casino', name: 'Casino' },
+  'casino': { slug: 'casino', name: 'Casino' },
+  'super casino': { slug: 'casino', name: 'Casino' },
+  'auchan': { slug: 'auchan', name: 'Auchan' },
+  'super u': { slug: 'super-u', name: 'Super U' },
+  'hyper u': { slug: 'super-u', name: 'Super U' },
+  'u express': { slug: 'super-u', name: 'Super U' },
+  'u': { slug: 'super-u', name: 'Super U' },
+  'station u': { slug: 'super-u', name: 'Super U' },
+  'la station u': { slug: 'super-u', name: 'Super U' },
+  'système u': { slug: 'super-u', name: 'Super U' },
+  'systeme u': { slug: 'super-u', name: 'Super U' },
+  'total contact': { slug: 'total', name: 'Total' },
+  'lidl': { slug: 'lidl', name: 'Lidl' },
+  'monoprix': { slug: 'monoprix', name: 'Monoprix' },
+};
+
+function normalizeEnseigne(raw) {
+  if (!raw) return null;
+  const key = raw.toLowerCase().trim();
+  return BRAND_MAP[key] ?? { slug: slugify(key, { lower: true, strict: true }), name: raw.trim() };
+}
+
 function ensureDirs() {
-  for (const dir of [DATA_DIR, DEPT_DIR, CITY_DIR, PUBLIC_DATA_DIR]) {
+  for (const dir of [DATA_DIR, DEPT_DIR, CITY_DIR, BRAND_DIR, PUBLIC_DATA_DIR]) {
     if (!existsSync(dir)) mkdirSync(dir, { recursive: true });
   }
 }
@@ -74,7 +130,7 @@ function parseXml(buffer) {
     ignoreAttributes: false,
     attributeNamePrefix: '@_',
     parseAttributeValue: true,
-    isArray: (name) => ['pdv', 'prix', 'service', 'rupture', 'jour', 'horaire'].includes(name),
+    isArray: (name) => ['pdv', 'prix', 'service', 'rupture', 'jour', 'horaire', 'enseigne'].includes(name),
     allowBooleanAttributes: true,
   });
 
@@ -102,7 +158,7 @@ function normalizePrice(valeur) {
   return v > 10 ? Math.round(v) / 1000 : Math.round(v * 1000) / 1000;
 }
 
-function processStations(rawStations, departments) {
+function processStations(rawStations, departments, brandMap) {
   const stations = [];
 
   for (const pdv of rawStations) {
@@ -164,6 +220,10 @@ function processStations(rawStations, departments) {
     // Horaires automate 24/24
     const automate = pdv.horaires?.['@_automate-24-24'] === 1 || pdv.horaires?.['@_automate-24-24'] === '1';
 
+    // Enseigne — source : station-brands.json (généré par fetch-brand-map.js)
+    const stationId = String(pdv['@_id']);
+    const brand = brandMap[stationId] ?? null;
+
     const station = {
       id: String(pdv['@_id']),
       cp,
@@ -179,6 +239,8 @@ function processStations(rawStations, departments) {
       pop: pdv['@_pop'] === 'A' ? 'autoroute' : 'route',
       automate,
       services,
+      enseigne: brand?.name ?? null,
+      enseigneSlug: brand?.slug ?? null,
       prices,
       priceUpdates,
     };
@@ -249,6 +311,8 @@ function stationToLight(s) {
     lng: s.lng,
     dep: s.dep,
     pop: s.pop,
+    enseigne: s.enseigne ?? null,
+    enseigneSlug: s.enseigneSlug ?? null,
     prices: s.prices,
   };
 }
@@ -289,7 +353,16 @@ async function main() {
     process.exit(0);
   }
 
-  const stations = processStations(rawStations, departments);
+  // Charger le mapping enseigne (optionnel — généré par fetch-brand-map.js)
+  let brandMap = {};
+  if (existsSync(BRAND_MAP_FILE)) {
+    brandMap = JSON.parse(readFileSync(BRAND_MAP_FILE, 'utf-8'));
+    console.log(`🏷️  Mapping enseigne chargé : ${Object.keys(brandMap).length} stations`);
+  } else {
+    console.log('ℹ️  Pas de mapping enseigne (lance npm run fetch-brands pour l\'activer)');
+  }
+
+  const stations = processStations(rawStations, departments, brandMap);
   console.log(`✅ ${stations.length} stations valides après traitement`);
 
   ensureDirs();
@@ -405,6 +478,62 @@ async function main() {
     cityCount++;
   }
   console.log(`🏙️  ${cityCount} fichiers ville générés`);
+
+  // Fichiers par enseigne
+  const byBrand = {};
+  for (const s of stations) {
+    if (!s.enseigneSlug) continue;
+    if (!byBrand[s.enseigneSlug]) byBrand[s.enseigneSlug] = { name: s.enseigne, stations: [] };
+    byBrand[s.enseigneSlug].stations.push(s);
+  }
+
+  // Purger les anciens fichiers enseigne avant d'écrire les nouveaux
+  if (existsSync(BRAND_DIR)) {
+    for (const f of readdirSync(BRAND_DIR)) {
+      if (f.endsWith('.json')) unlinkSync(resolve(BRAND_DIR, f));
+    }
+  }
+
+  let brandCount = 0;
+  const brandsIndex = [];
+  for (const [brandSlug, { name: brandName, stations: sts }] of Object.entries(byBrand)) {
+    if (sts.length < 5) continue;
+
+    const brandStats = {};
+    for (const fuel of FUELS) {
+      const cs = computeStats(sts, fuel);
+      brandStats[fuel] = cs;
+    }
+
+    const top10 = {};
+    for (const fuel of ['Gazole', 'SP95']) {
+      top10[fuel] = sts
+        .filter(s => s.prices[fuel] != null)
+        .sort((a, b) => a.prices[fuel] - b.prices[fuel])
+        .slice(0, 10)
+        .map(stationToLight);
+    }
+
+    const deptsCovered = [...new Set(sts.map(s => s.dep))].sort();
+
+    const payload = {
+      slug: brandSlug,
+      name: brandName,
+      stats: brandStats,
+      top10,
+      stations: sts.map(stationToLight),
+      count: sts.length,
+      departments: deptsCovered,
+    };
+
+    writeFileSync(resolve(BRAND_DIR, `${brandSlug}.json`), JSON.stringify(payload));
+    brandsIndex.push({ slug: brandSlug, name: brandName, count: sts.length });
+    brandCount++;
+  }
+
+  brandsIndex.sort((a, b) => b.count - a.count);
+  writeFileSync(resolve(DATA_DIR, 'brands.json'), JSON.stringify(brandsIndex, null, 2));
+  console.log(`🏪 ${brandCount} fichiers enseigne générés`);
 
   // stations-light.json pour le composant FuelSearch (max ~5Mo)
   const lightStations = stations.map(stationToLight);

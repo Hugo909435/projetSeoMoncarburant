@@ -11,7 +11,8 @@
     "astro": "astro",
     "deploy": "node scripts/fetch-fuel-data.js && astro build",
     "fetch-fuel": "node scripts/fetch-fuel-data.js",
-    "fetch-fuel:check": "node scripts/fetch-fuel-data.js --check"
+    "fetch-fuel:check": "node scripts/fetch-fuel-data.js --check",
+    "fetch-brands": "node scripts/fetch-brand-map.js"
   },
   "dependencies": {
     "@astrojs/mdx": "^4.0.0",
