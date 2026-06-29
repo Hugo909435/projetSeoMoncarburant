@@ -7,6 +7,7 @@ import { buildDeptIntro } from '../../utils/dept-intro';
 import LocalIdentity from '../../components/LocalIdentity.astro';
 import { deptContent } from '../../data/local-content';
 import BrandLogo from '../../components/BrandLogo.astro';
+import { resolveBrandLogo } from '../../utils/brand-logo';
 
 export async function getStaticPaths() {
   const deptFiles = import.meta.glob('../../data/fuel/stations-by-department/*.json', { eager: true });
@@ -258,7 +259,7 @@ const jsonLdBreadcrumb = {
         {count > 30 && (
           <div style="text-align:center; margin-top:1rem">
             <button id="show-more-btn" class="btn-show-more" data-stations={JSON.stringify(stations.slice(30).map((s: any) => ({
-              adresse: s.adresse, ville: s.ville, cp: s.cp, pop: s.pop, prices: s.prices, enseigne: s.enseigne, enseigneSlug: s.enseigneSlug
+              adresse: s.adresse, ville: s.ville, cp: s.cp, pop: s.pop, prices: s.prices, enseigne: s.enseigne, enseigneSlug: s.enseigneSlug, logo: resolveBrandLogo(s.enseigneSlug)
             })))}>
               Afficher toutes les {count} stations ↓
             </button>
@@ -319,8 +320,8 @@ const jsonLdBreadcrumb = {
       if (!tbody) return;
       extraStations.forEach((s: any) => {
         const tr = document.createElement('tr');
-        const brandHtml = s.enseigneSlug
-          ? `<span class="brand-logo-wrap"><img src="/images/brands/${s.enseigneSlug}.svg" alt="${s.enseigne || s.enseigneSlug}" class="brand-logo-img" loading="lazy" onerror="this.style.display='none';this.nextSibling.style.display='inline-block'"/><span class="brand-logo-text" style="display:none">${s.enseigne || s.enseigneSlug}</span></span>`
+        const brandHtml = s.enseigneSlug && s.logo
+          ? `<span class="brand-logo-wrap"><img src="${s.logo}" alt="${s.enseigne || s.enseigneSlug}" class="brand-logo-img" loading="lazy" onerror="this.style.display='none';this.nextSibling.style.display='inline-block'"/><span class="brand-logo-text" style="display:none">${s.enseigne || s.enseigneSlug}</span></span>`
           : `<span class="brand-unknown">${s.enseigne || 'n/d'}</span>`;
         tr.innerHTML = `
           <td class="brand-cell">${brandHtml}</td>

@@ -1,5 +1,5 @@
 ---
-import { existsSync } from 'node:fs';
+import { resolveBrandLogo } from '../utils/brand-logo';
 
 interface Props {
   slug: string;
@@ -7,17 +7,8 @@ interface Props {
 }
 const { slug, name } = Astro.props;
 
-// Résolution du fichier logo au build : on accepte plusieurs formats
-// (certaines enseignes ont un SVG vectoriel, d'autres un PNG fourni).
-// Ordre de préférence : svg (vectoriel, net) puis png puis webp.
-const exts = ['svg', 'png', 'webp'];
-let src: string | null = null;
-for (const ext of exts) {
-  if (existsSync(`public/images/brands/${slug}.${ext}`)) {
-    src = `/images/brands/${slug}.${ext}`;
-    break;
-  }
-}
+// Résolution du fichier logo au build (svg vectoriel, sinon png/webp fourni).
+const src = resolveBrandLogo(slug);
 ---
 
 {src ? (
