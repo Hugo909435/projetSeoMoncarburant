@@ -1,0 +1,42 @@
+---
+interface Props {
+  slug: string;
+  name: string;
+}
+const { slug, name } = Astro.props;
+---
+
+<span class="brand-logo-wrap">
+  <img
+    src={`/images/brands/${slug}.svg`}
+    alt={name}
+    class="brand-logo-img"
+    loading="lazy"
+    decoding="async"
+    onerror="this.style.display='none';this.nextElementSibling.style.display='inline-block'"
+  />
+  <span class="brand-logo-text" style="display:none">{name}</span>
+</span>
+
+<style>
+  .brand-logo-wrap {
+    display: inline-flex;
+    align-items: center;
+    vertical-align: middle;
+  }
+  .brand-logo-img {
+    height: 20px;
+    width: auto;
+    border-radius: 3px;
+    display: block;
+  }
+  .brand-logo-text {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--color-primary);
+    background: #f1f5f9;
+    border-radius: 3px;
+    padding: 0.1rem 0.4rem;
+    white-space: nowrap;
+  }
+</style>

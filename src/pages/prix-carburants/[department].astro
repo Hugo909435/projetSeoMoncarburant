@@ -6,6 +6,7 @@ import meta from '../../data/fuel/meta.json';
 import { buildDeptIntro } from '../../utils/dept-intro';
 import LocalIdentity from '../../components/LocalIdentity.astro';
 import { deptContent } from '../../data/local-content';
+import BrandLogo from '../../components/BrandLogo.astro';
 
 export async function getStaticPaths() {
   const deptFiles = import.meta.glob('../../data/fuel/stations-by-department/*.json', { eager: true });
@@ -178,11 +179,12 @@ const jsonLdBreadcrumb = {
               {top10.Gazole?.length > 0 ? (
                 <table class="stations-table">
                   <thead>
-                    <tr><th>Station</th><th>Ville</th><th>Prix Gazole</th></tr>
+                    <tr><th>Marque</th><th>Station</th><th>Ville</th><th>Prix Gazole</th></tr>
                   </thead>
                   <tbody>
                     {top10.Gazole.map((s: any) => (
                       <tr>
+                        <td class="brand-cell">{s.enseigneSlug ? <BrandLogo slug={s.enseigneSlug} name={s.enseigne ?? s.enseigneSlug} /> : <span class="brand-unknown">{s.enseigne ?? 'n/d'}</span>}</td>
                         <td class="station-addr">{s.adresse || 'n/d'}</td>
                         <td>{s.ville} ({s.cp})</td>
                         <td class="price-highlight">{s.prices.Gazole?.toFixed(3) ?? 'n/d'} €/L</td>
@@ -197,11 +199,12 @@ const jsonLdBreadcrumb = {
               {top10.SP95?.length > 0 ? (
                 <table class="stations-table">
                   <thead>
-                    <tr><th>Station</th><th>Ville</th><th>Prix SP95</th></tr>
+                    <tr><th>Marque</th><th>Station</th><th>Ville</th><th>Prix SP95</th></tr>
                   </thead>
                   <tbody>
                     {top10.SP95.map((s: any) => (
                       <tr>
+                        <td class="brand-cell">{s.enseigneSlug ? <BrandLogo slug={s.enseigneSlug} name={s.enseigne ?? s.enseigneSlug} /> : <span class="brand-unknown">{s.enseigne ?? 'n/d'}</span>}</td>
                         <td class="station-addr">{s.adresse || 'n/d'}</td>
                         <td>{s.ville} ({s.cp})</td>
                         <td class="price-highlight">{s.prices.SP95?.toFixed(3) ?? 'n/d'} €/L</td>
@@ -222,6 +225,7 @@ const jsonLdBreadcrumb = {
           <table class="stations-table full-table" id="all-stations-table">
             <thead>
               <tr>
+                <th>Marque</th>
                 <th>Adresse</th>
                 <th>Ville</th>
                 <th>Type</th>
@@ -236,6 +240,7 @@ const jsonLdBreadcrumb = {
             <tbody>
               {stations.slice(0, 30).map((s: any) => (
                 <tr>
+                  <td class="brand-cell">{s.enseigneSlug ? <BrandLogo slug={s.enseigneSlug} name={s.enseigne ?? s.enseigneSlug} /> : <span class="brand-unknown">{s.enseigne ?? 'n/d'}</span>}</td>
                   <td class="station-addr">{s.adresse || 'n/d'}</td>
                   <td>{s.ville} ({s.cp})</td>
                   <td><span class={`pop-badge ${s.pop === 'autoroute' ? 'pop-auto' : 'pop-route'}`}>{s.pop === 'autoroute' ? 'Autoroute' : 'Route'}</span></td>
@@ -253,7 +258,7 @@ const jsonLdBreadcrumb = {
         {count > 30 && (
           <div style="text-align:center; margin-top:1rem">
             <button id="show-more-btn" class="btn-show-more" data-stations={JSON.stringify(stations.slice(30).map((s: any) => ({
-              adresse: s.adresse, ville: s.ville, cp: s.cp, pop: s.pop, prices: s.prices
+              adresse: s.adresse, ville: s.ville, cp: s.cp, pop: s.pop, prices: s.prices, enseigne: s.enseigne, enseigneSlug: s.enseigneSlug
             })))}>
               Afficher toutes les {count} stations ↓
             </button>
@@ -314,7 +319,11 @@ const jsonLdBreadcrumb = {
       if (!tbody) return;
       extraStations.forEach((s: any) => {
         const tr = document.createElement('tr');
+        const brandHtml = s.enseigneSlug
+          ? `<span class="brand-logo-wrap"><img src="/images/brands/${s.enseigneSlug}.svg" alt="${s.enseigne || s.enseigneSlug}" class="brand-logo-img" loading="lazy" onerror="this.style.display='none';this.nextSibling.style.display='inline-block'"/><span class="brand-logo-text" style="display:none">${s.enseigne || s.enseigneSlug}</span></span>`
+          : `<span class="brand-unknown">${s.enseigne || 'n/d'}</span>`;
         tr.innerHTML = `
+          <td class="brand-cell">${brandHtml}</td>
           <td class="station-addr">${s.adresse || 'n/d'}</td>
           <td>${s.ville} (${s.cp})</td>
           <td><span class="pop-badge ${s.pop === 'autoroute' ? 'pop-auto' : 'pop-route'}">${s.pop === 'autoroute' ? 'Autoroute' : 'Route'}</span></td>
@@ -367,6 +376,8 @@ const jsonLdBreadcrumb = {
   .pop-badge { font-size: 0.7rem; padding: 0.15rem 0.5rem; border-radius: 999px; font-weight: 600; }
   .pop-auto { background: #fef3c7; color: #92400e; }
   .pop-route { background: #e0f2fe; color: #075985; }
+  .brand-cell { white-space: nowrap; padding: 0.4rem 0.75rem; }
+  .brand-unknown { font-size: 0.7rem; color: #64748b; background: #f1f5f9; border-radius: 3px; padding: 0.1rem 0.4rem; }
   .cities-grid {
     display: flex;
     flex-wrap: wrap;

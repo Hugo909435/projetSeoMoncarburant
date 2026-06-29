@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
+import BrandLogo from '../../../components/BrandLogo.astro';
 import statsNational from '../../../data/fuel/stats-national.json';
 import brandsIndex from '../../../data/fuel/brands.json';
 import departmentsData from '../../../data/departments.json';
@@ -107,6 +108,9 @@ const jsonLdBreadcrumb = {
     <!-- Hero -->
     <section class="brand-hero">
       <div class="container">
+        <div class="brand-hero-top">
+          <BrandLogo slug={slug} name={name} />
+        </div>
         <h1>Prix carburant {name} en France</h1>
         <p class="brand-subtitle">{count} stations référencées · {deptsCovered.length} départements</p>
         {lastUpdate && <p class="update-info">Données du {lastUpdate}</p>}
@@ -273,6 +277,7 @@ const jsonLdBreadcrumb = {
           <div class="brand-grid">
             {siblingBrands.map(b => (
               <a href={`/prix-carburants/enseigne/${b.slug}/`} class="brand-card">
+                <BrandLogo slug={b.slug} name={b.name} />
                 <span class="brand-card-name">{b.name}</span>
                 <span class="brand-card-count">{b.count} stations</span>
               </a>
@@ -347,6 +352,8 @@ const jsonLdBreadcrumb = {
   .breadcrumb-nav a:hover { text-decoration:underline; }
 
   .brand-hero { background:var(--color-primary); color:#fff; padding:2.5rem 0 2rem; }
+  .brand-hero-top { margin-bottom:0.75rem; }
+  .brand-hero-top :global(.brand-logo-img) { height:28px; border-radius:5px; }
   .brand-hero h1 { font-size:clamp(1.5rem,3.5vw,2.25rem); font-weight:800; color:#fff; margin:0 0 0.5rem; }
   .brand-subtitle { color:#94a3b8; margin:0 0 0.5rem; }
   .update-info { font-size:0.8125rem; color:#64748b; margin:0; }

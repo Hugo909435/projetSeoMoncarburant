@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
+import BrandLogo from '../../../components/BrandLogo.astro';
 import departments from '../../../data/departments.json';
 import statsNational from '../../../data/fuel/stats-national.json';
 import meta from '../../../data/fuel/meta.json';
@@ -174,6 +175,7 @@ const jsonLdBreadcrumb = {
           <table class="stations-table">
             <thead>
               <tr>
+                <th>Marque</th>
                 <th>Adresse</th>
                 <th>CP</th>
                 <th>Gazole</th>
@@ -186,6 +188,7 @@ const jsonLdBreadcrumb = {
             <tbody>
               {stations.map((s) => (
                 <tr>
+                  <td class="brand-cell">{s.enseigneSlug ? <BrandLogo slug={s.enseigneSlug} name={s.enseigne ?? s.enseigneSlug} /> : <span class="brand-unknown">{s.enseigne ?? 'n/d'}</span>}</td>
                   <td class="station-addr">{s.adresse || 'n/d'}</td>
                   <td>{s.cp}</td>
                   <td>{s.prices.Gazole?.toFixed(3) ?? 'n/d'}</td>
@@ -248,6 +251,8 @@ const jsonLdBreadcrumb = {
   .stations-table td { padding: 0.55rem 0.75rem; border-bottom: 1px solid #f1f5f9; }
   .stations-table tr:hover td { background: #f8fafc; }
   .station-addr { max-width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .brand-cell { white-space: nowrap; padding: 0.4rem 0.75rem; }
+  .brand-unknown { font-size: 0.7rem; color: #64748b; background: #f1f5f9; border-radius: 3px; padding: 0.1rem 0.4rem; }
   .nav-links { display: flex; gap: 1rem; flex-wrap: wrap; }
   .nav-link {
     background: #f1f5f9; border: 1px solid #e2e8f0; border-radius: 0.5rem;
