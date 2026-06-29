@@ -1,22 +1,40 @@
 ---
+import { existsSync } from 'node:fs';
+
 interface Props {
   slug: string;
   name: string;
 }
 const { slug, name } = Astro.props;
+
+// Résolution du fichier logo au build : on accepte plusieurs formats
+// (certaines enseignes ont un SVG vectoriel, d'autres un PNG fourni).
+// Ordre de préférence : svg (vectoriel, net) puis png puis webp.
+const exts = ['svg', 'png', 'webp'];
+let src: string | null = null;
+for (const ext of exts) {
+  if (existsSync(`public/images/brands/${slug}.${ext}`)) {
+    src = `/images/brands/${slug}.${ext}`;
+    break;
+  }
+}
 ---
 
-<span class="brand-logo-wrap">
-  <img
-    src={`/images/brands/${slug}.svg`}
-    alt={name}
-    class="brand-logo-img"
-    loading="lazy"
-    decoding="async"
-    onerror="this.style.display='none';this.nextElementSibling.style.display='inline-block'"
-  />
-  <span class="brand-logo-text" style="display:none">{name}</span>
-</span>
+{src ? (
+  <span class="brand-logo-wrap">
+    <img
+      src={src}
+      alt={name}
+      class="brand-logo-img"
+      loading="lazy"
+      decoding="async"
+      onerror="this.style.display='none';this.nextElementSibling.style.display='inline-block'"
+    />
+    <span class="brand-logo-text" style="display:none">{name}</span>
+  </span>
+) : (
+  <span class="brand-logo-text">{name}</span>
+)}
 
 <style>
   .brand-logo-wrap {
