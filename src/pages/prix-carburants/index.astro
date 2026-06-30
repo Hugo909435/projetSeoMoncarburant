@@ -59,7 +59,7 @@ const description = `Comparez les prix du carburant dans toute la France. ${meta
               <span class="fuel-card-marker" aria-hidden="true"></span>
               <div class="fuel-card-label">{label}</div>
               <div class="fuel-card-price">
-                {price != null ? price.toFixed(3) : 'n/d'}
+                {price != null ? price.toFixed(3) : '-'}
                 <span class="fuel-card-unit">€/L</span>
               </div>
               <div class="fuel-card-link">Voir les détails →</div>
@@ -112,13 +112,13 @@ const description = `Comparez les prix du carburant dans toute la France. ${meta
                           </span>
                         )}
                       </span>
-                    ) : 'n/d'}
+                    ) : '-'}
                   </td>
-                  <td class="price-cell">{(region['SP95'] as number | null)?.toFixed(3) ?? 'n/d'}</td>
-                  <td class="price-cell">{(region['SP98'] as number | null)?.toFixed(3) ?? 'n/d'}</td>
-                  <td class="price-cell">{(region['E10'] as number | null)?.toFixed(3) ?? 'n/d'}</td>
-                  <td class="price-cell">{(region['E85'] as number | null)?.toFixed(3) ?? 'n/d'}</td>
-                  <td class="price-cell">{(region['GPLc'] as number | null)?.toFixed(3) ?? 'n/d'}</td>
+                  <td class="price-cell">{(region['SP95'] as number | null)?.toFixed(3) ?? '-'}</td>
+                  <td class="price-cell">{(region['SP98'] as number | null)?.toFixed(3) ?? '-'}</td>
+                  <td class="price-cell">{(region['E10'] as number | null)?.toFixed(3) ?? '-'}</td>
+                  <td class="price-cell">{(region['E85'] as number | null)?.toFixed(3) ?? '-'}</td>
+                  <td class="price-cell">{(region['GPLc'] as number | null)?.toFixed(3) ?? '-'}</td>
                 </tr>
               );
             })}

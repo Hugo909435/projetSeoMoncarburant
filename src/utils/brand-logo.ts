@@ -1,19 +1,18 @@
 import { existsSync } from 'node:fs';
 
-// Formats acceptés pour un logo d'enseigne, par ordre de préférence
-// (vectoriel d'abord, puis raster fourni).
 const BRAND_LOGO_EXTS = ['svg', 'png', 'webp'] as const;
 
-/**
- * Résout au build le chemin public du logo d'une enseigne selon le format
- * réellement présent dans public/images/brands/. Retourne null si aucun
- * fichier n'existe (l'appelant affiche alors le nom en texte).
- */
+// Enseignes qui partagent le même logo qu'une autre enseigne.
+const BRAND_LOGO_ALIASES: Record<string, string> = {
+  'total-access': 'total',
+};
+
 export function resolveBrandLogo(slug: string | null | undefined): string | null {
   if (!slug) return null;
+  const resolved = BRAND_LOGO_ALIASES[slug] ?? slug;
   for (const ext of BRAND_LOGO_EXTS) {
-    if (existsSync(`public/images/brands/${slug}.${ext}`)) {
-      return `/images/brands/${slug}.${ext}`;
+    if (existsSync(`public/images/brands/${resolved}.${ext}`)) {
+      return `/images/brands/${resolved}.${ext}`;
     }
   }
   return null;

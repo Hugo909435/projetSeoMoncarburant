@@ -70,7 +70,7 @@ const description = `Comparez les prix du carburant en ${regionName}. Gazole, SP
               <span class="fuel-card-marker" aria-hidden="true"></span>
               <div class="fuel-card-label">{label}</div>
               <div class="fuel-card-price">
-                {price != null ? price.toFixed(3) : 'n/d'}
+                {price != null ? price.toFixed(3) : '-'}
                 <span class="fuel-card-unit">€/L</span>
               </div>
               {diff != null && (

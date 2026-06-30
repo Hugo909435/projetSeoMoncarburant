@@ -154,7 +154,7 @@ const jsonLdBreadcrumb = {
               <div class="fuel-stat-card" style={`--fuel-color: ${FUEL_COLORS[fuel]}`}>
                 <div class="fsc-label">{fuel === 'GPLc' ? 'GPL' : fuel}</div>
                 <div class="fsc-price">
-                  {avg != null ? avg.toFixed(3) : 'n/d'}
+                  {avg != null ? avg.toFixed(3) : '-'}
                   {avg != null && <span class="fsc-unit">€/L</span>}
                 </div>
                 {diff != null && (
@@ -188,14 +188,14 @@ const jsonLdBreadcrumb = {
             <tbody>
               {stations.map((s) => (
                 <tr>
-                  <td class="brand-cell">{s.enseigneSlug ? <BrandLogo slug={s.enseigneSlug} name={s.enseigne ?? s.enseigneSlug} /> : <span class="brand-unknown">{s.enseigne ?? 'n/d'}</span>}</td>
-                  <td class="station-addr">{s.adresse || 'n/d'}</td>
+                  <td class="brand-cell">{s.enseigneSlug ? <BrandLogo slug={s.enseigneSlug} name={s.enseigne ?? s.enseigneSlug} /> : <span class="brand-unknown">{s.enseigne ?? '-'}</span>}</td>
+                  <td class="station-addr">{s.adresse || '-'}</td>
                   <td>{s.cp}</td>
-                  <td>{s.prices.Gazole?.toFixed(3) ?? 'n/d'}</td>
-                  <td>{s.prices.SP95?.toFixed(3) ?? 'n/d'}</td>
-                  <td>{s.prices.E10?.toFixed(3) ?? 'n/d'}</td>
-                  <td>{s.prices.E85?.toFixed(3) ?? 'n/d'}</td>
-                  <td>{s.prices.GPLc?.toFixed(3) ?? 'n/d'}</td>
+                  <td>{s.prices.Gazole?.toFixed(3) ?? '-'}</td>
+                  <td>{s.prices.SP95?.toFixed(3) ?? '-'}</td>
+                  <td>{s.prices.E10?.toFixed(3) ?? '-'}</td>
+                  <td>{s.prices.E85?.toFixed(3) ?? '-'}</td>
+                  <td>{s.prices.GPLc?.toFixed(3) ?? '-'}</td>
                 </tr>
               ))}
             </tbody>

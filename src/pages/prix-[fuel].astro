@@ -67,7 +67,7 @@ function priceToColor(price: number | null): string {
         <div class="national-price-box" style={`--fuel-color: ${config.color}`}>
           <div class="np-label">Prix moyen national</div>
           <div class="np-price">
-            {nationalAvg != null ? nationalAvg.toFixed(3) : 'n/d'}
+            {nationalAvg != null ? nationalAvg.toFixed(3) : '-'}
             <span class="np-unit">€/L</span>
           </div>
           <div class="np-sub">Moyenne de {meta.totalStations.toLocaleString('fr-FR')} stations</div>

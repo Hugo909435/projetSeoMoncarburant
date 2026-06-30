@@ -4,7 +4,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import ArticleCard from '../components/ArticleCard.astro';
 import Newsletter from '../components/Newsletter.astro';
 import FuelSearch from '../components/FuelSearch.astro';
-import StationsMap from '../components/StationsMap.astro';
+import HeroMap from '../components/HeroMap.astro';
 import statsNational from '../data/fuel/stats-national.json';
 import statsByDepartment from '../data/fuel/stats-by-department.json';
 import fuelMeta from '../data/fuel/meta.json';
@@ -125,41 +125,8 @@ const webAppSchema = {
   canonical="https://mon-carburant.com/"
   jsonLd={[websiteSchema, organizationSchema, webAppSchema]}
 >
-  <!-- Hero -->
-  <section class="hero" aria-label="Introduction">
-    <div class="container hero-inner">
-      <div class="hero-content">
-        <p class="hero-eyebrow">Comparateur de prix carburant · France</p>
-        <h1 class="hero-title">
-          Trouvez la station la moins chère<br />
-          <span class="hero-title-accent">près de chez vous</span>
-        </h1>
-        <p class="hero-subtitle">
-          Comparez les prix carburant de {fuelMeta.totalStations.toLocaleString('fr-FR')} stations en France. Données officielles mises à jour quotidiennement : SP95, SP98, Gazole, E85.
-        </p>
-        <div class="hero-actions">
-          <a href="#comparateur" class="btn-comparateur">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-8 2a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"/></svg>
-            Comparer les prix près de chez moi
-          </a>
-        </div>
-        <div class="hero-stats" aria-label="Chiffres clés">
-          <div class="stat">
-            <strong>15 à 30%</strong>
-            <span>d'économies possibles avec l'éco-conduite</span>
-          </div>
-          <div class="stat-sep" aria-hidden="true"></div>
-          <div class="stat">
-            <strong>{fuelMeta.totalStations.toLocaleString('fr-FR')} stations</strong>
-            <span>référencées en France</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Carte interactive des stations -->
-  <StationsMap />
+  <!-- Hero avec carte interactive -->
+  <HeroMap />
 
   <!-- Widgets carburant -->
   <section id="comparateur" class="section-fuel-home" aria-label="Prix des carburants aujourd'hui">

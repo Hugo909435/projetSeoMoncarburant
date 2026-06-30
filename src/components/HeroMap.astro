@@ -1,0 +1,579 @@
+---
+import statsNational from '../data/fuel/stats-national.json';
+import departmentsData from '../data/departments.json';
+import fuelMeta from '../data/fuel/meta.json';
+
+const nationalGazole = (statsNational as Record<string, number>)['Gazole'] ?? 0;
+const depts = departmentsData as Record<string, { name: string; slug: string }>;
+
+const deptMap: Record<string, { slug: string; name: string }> = {};
+for (const [num, d] of Object.entries(depts)) {
+  deptMap[num] = { slug: d.slug, name: d.name };
+}
+
+const cityFiles = import.meta.glob('../data/fuel/stations-by-city/*.json');
+const citySlugs: string[] = Object.keys(cityFiles).map(p => p.replace(/^.*\/(.+)\.json$/, '$1'));
+---
+
+<section class="hm-section" aria-labelledby="hm-title">
+
+  <!-- En-tête hero avec barre de recherche -->
+  <div class="hm-top">
+    <div class="container">
+      <p class="hm-eyebrow">Comparateur de prix carburant · France</p>
+      <h1 id="hm-title" class="hm-title">
+        Trouvez la station la moins chère<br />
+        <span class="hm-accent">près de chez vous</span>
+      </h1>
+      <p class="hm-subtitle">
+        {fuelMeta.totalStations.toLocaleString('fr-FR')} stations référencées &middot; Données officielles &middot; Mise à jour quotidienne
+      </p>
+
+      <form id="hm-form" class="hm-form" role="search" aria-label="Recherche par ville ou code postal" novalidate>
+        <div class="hm-input-wrap">
+          <svg class="hm-icon" width="20" height="20" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+          </svg>
+          <input
+            id="hm-input"
+            type="search"
+            class="hm-input"
+            placeholder="Votre ville ou code postal (ex : Lyon, 69000...)"
+            autocomplete="off"
+            autocorrect="off"
+            spellcheck="false"
+            aria-label="Ville ou code postal"
+          />
+        </div>
+        <button type="submit" class="hm-btn" aria-label="Lancer la recherche">
+          Voir les stations
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </button>
+      </form>
+
+      <p id="hm-status" class="hm-status" role="status" aria-live="polite" aria-atomic="true"></p>
+    </div>
+  </div>
+
+  <!-- Carte Leaflet -->
+  <div class="hm-map-wrap">
+    <div class="container">
+      <div
+        id="hm-map"
+        class="hm-map"
+        data-nat={nationalGazole}
+        data-depts={JSON.stringify(deptMap)}
+        data-city-slugs={JSON.stringify(citySlugs)}
+        role="application"
+        aria-label="Carte interactive des stations-service en France"
+      >
+        <div class="hm-loading" id="hm-loading">
+          <svg class="hm-spinner" viewBox="0 0 50 50" aria-hidden="true">
+            <circle cx="25" cy="25" r="20" fill="none" stroke-width="5"/>
+          </svg>
+          <span>Chargement des stations...</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Légende des couleurs -->
+  <div class="hm-legend">
+    <div class="container">
+      <ul class="hm-legend-list">
+        <li><span class="hm-dot hm-dot-cheap"></span>Gazole moins cher que la moyenne nationale</li>
+        <li><span class="hm-dot hm-dot-exp"></span>Gazole plus cher que la moyenne nationale</li>
+        <li><span class="hm-dot hm-dot-na"></span>Prix non communiqués</li>
+        <li class="hm-legend-tip">Cliquez sur un point pour voir les prix détaillés</li>
+      </ul>
+    </div>
+  </div>
+
+</section>
+
+<style>
+  .hm-section {
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ── En-tête hero ── */
+  .hm-top {
+    background: linear-gradient(135deg, var(--color-primary) 0%, #1a4a68 100%);
+    padding: 3rem 0 2.25rem;
+    color: #fff;
+  }
+
+  .hm-eyebrow {
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-accent);
+    margin: 0 0 0.75rem;
+  }
+
+  .hm-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.75rem, 4.5vw, 3rem);
+    font-weight: 800;
+    line-height: 1.15;
+    color: #fff;
+    margin: 0 0 0.875rem;
+  }
+
+  .hm-accent { color: var(--color-accent); }
+
+  .hm-subtitle {
+    font-size: 0.9375rem;
+    color: #94a3b8;
+    margin: 0 0 1.75rem;
+    line-height: 1.6;
+  }
+
+  /* ── Formulaire de recherche ── */
+  .hm-form {
+    display: flex;
+    gap: 0.625rem;
+    max-width: 700px;
+  }
+
+  @media (max-width: 520px) {
+    .hm-form { flex-direction: column; }
+  }
+
+  .hm-input-wrap {
+    position: relative;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .hm-icon {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #94a3b8;
+    pointer-events: none;
+    flex-shrink: 0;
+  }
+
+  .hm-input {
+    width: 100%;
+    padding: 0.875rem 1rem 0.875rem 3rem;
+    border: 2px solid rgba(255 255 255 / 0.18);
+    border-radius: 0.625rem;
+    background: rgba(255 255 255 / 0.09);
+    color: #fff;
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.2s, background 0.2s;
+    box-sizing: border-box;
+    -webkit-appearance: none;
+  }
+
+  .hm-input::placeholder { color: #64748b; }
+  .hm-input:focus {
+    border-color: var(--color-accent);
+    background: rgba(255 255 255 / 0.13);
+  }
+  .hm-input::-webkit-search-cancel-button { -webkit-appearance: none; }
+
+  .hm-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.875rem 1.5rem;
+    background: var(--color-accent);
+    color: #fff;
+    border: none;
+    border-radius: 0.625rem;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.2s, transform 0.15s;
+    box-shadow: 0 4px 14px rgba(232 119 34 / 0.4);
+    flex-shrink: 0;
+  }
+
+  .hm-btn:hover { background: #c05a17; transform: translateY(-1px); }
+  .hm-btn:active { transform: none; }
+
+  .hm-status {
+    min-height: 1.4rem;
+    margin: 0.625rem 0 0;
+    font-size: 0.875rem;
+    color: #94a3b8;
+    transition: color 0.2s;
+  }
+  .hm-status.is-error { color: #fca5a5; }
+  .hm-status.is-ok { color: #86efac; }
+
+  /* ── Carte ── */
+  .hm-map-wrap {
+    background: #fff;
+    padding: 2rem 0;
+  }
+
+  .hm-map {
+    position: relative;
+    width: 100%;
+    height: 520px;
+    background: #e8f0f5;
+    z-index: 0;
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: 0 8px 32px rgba(0 0 0 / 0.18);
+  }
+
+  @media (max-width: 640px) { .hm-map { height: 400px; border-radius: 0.75rem; } }
+
+  .hm-loading {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    color: #64748b;
+    font-size: 0.9375rem;
+    background: #e8f0f5;
+    z-index: 10;
+  }
+
+  .hm-spinner {
+    width: 44px;
+    height: 44px;
+    animation: hm-spin 0.9s linear infinite;
+  }
+
+  .hm-spinner circle {
+    stroke: var(--color-accent);
+    stroke-linecap: round;
+    stroke-dasharray: 75 100;
+  }
+
+  @keyframes hm-spin { to { transform: rotate(360deg); } }
+
+  /* ── Légende ── */
+  .hm-legend {
+    background: #f8fafc;
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+    padding: 0.625rem 0;
+  }
+
+  .hm-legend-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.375rem 1.25rem;
+    font-size: 0.8rem;
+    color: #64748b;
+  }
+
+  .hm-legend-list li { display: flex; align-items: center; gap: 0.375rem; }
+
+  .hm-dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    box-shadow: 0 0 0 1px rgba(0 0 0 / 0.18);
+    flex-shrink: 0;
+  }
+  .hm-dot-cheap { background: #16a34a; }
+  .hm-dot-exp   { background: #ea580c; }
+  .hm-dot-na    { background: #94a3b8; }
+
+  .hm-legend-tip { margin-left: auto; font-style: italic; }
+  @media (max-width: 640px) { .hm-legend-tip { display: none; } }
+
+  /* ── Pins Leaflet ── */
+  :global(.fuel-pin) {
+    border-radius: 50%;
+    border: 2px solid #fff;
+    box-shadow: 0 0 0 1px rgba(0 0 0 / 0.25);
+    transition: transform 0.1s;
+  }
+  :global(.fuel-pin:hover) { transform: scale(1.4); }
+  :global(.fuel-pin-cheap) { background: #16a34a; }
+  :global(.fuel-pin-exp)   { background: #ea580c; }
+  :global(.fuel-pin-na)    { background: #94a3b8; }
+
+  /* ── Popup Leaflet ── */
+  :global(.hm-popup .leaflet-popup-content-wrapper) {
+    border-radius: 0.75rem;
+    box-shadow: 0 6px 24px rgba(0 0 0 / 0.14);
+    padding: 0;
+    overflow: hidden;
+  }
+  :global(.hm-popup .leaflet-popup-content) {
+    margin: 0;
+    min-width: 210px;
+    max-width: 260px;
+  }
+  :global(.hm-popup .leaflet-popup-tip-container) { margin-top: -1px; }
+
+  :global(.popup-body) { padding: 0.875rem 1rem 0.75rem; }
+
+  :global(.popup-brand) {
+    display: block;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-accent);
+    margin-bottom: 0.1rem;
+  }
+  :global(.popup-city) {
+    display: block;
+    font-size: 0.9375rem;
+    font-weight: 700;
+    color: #0f2e44;
+    margin-bottom: 0.2rem;
+    text-transform: capitalize;
+  }
+  :global(.popup-addr) {
+    font-size: 0.775rem;
+    color: #64748b;
+    margin: 0 0 0.625rem;
+    line-height: 1.4;
+  }
+  :global(.popup-prices) {
+    border-collapse: collapse;
+    font-size: 0.8rem;
+    width: 100%;
+    margin-bottom: 0;
+  }
+  :global(.popup-prices td) { padding: 0.1rem 0.4rem 0.1rem 0; color: #374151; }
+  :global(.popup-prices td:last-child) { font-weight: 700; text-align: right; color: #0f2e44; }
+
+  :global(.popup-cta) {
+    display: block;
+    background: var(--color-accent);
+    color: #fff !important;
+    text-decoration: none !important;
+    text-align: center;
+    font-size: 0.8125rem;
+    font-weight: 700;
+    padding: 0.55rem 1rem;
+    transition: background 0.15s;
+  }
+  :global(.popup-cta:hover) { background: #c05a17; color: #fff !important; }
+</style>
+
+<script>
+  const mapEl  = document.getElementById('hm-map') as HTMLElement | null;
+  const formEl = document.getElementById('hm-form') as HTMLFormElement | null;
+  const inputEl  = document.getElementById('hm-input') as HTMLInputElement | null;
+  const statusEl = document.getElementById('hm-status') as HTMLElement | null;
+  const loadingEl = document.getElementById('hm-loading') as HTMLElement | null;
+
+  if (!mapEl) throw new Error('hm-map introuvable');
+
+  const nat = parseFloat(mapEl.dataset.nat || '0');
+  const deptMap: Record<string, { slug: string; name: string }> = JSON.parse(mapEl.dataset.depts || '{}');
+  const citySlugsSet = new Set<string>(JSON.parse(mapEl.dataset.citySlugs || '[]'));
+
+  function loadCss(href: string): Promise<void> {
+    return new Promise(resolve => {
+      const l = document.createElement('link');
+      l.rel = 'stylesheet'; l.href = href;
+      l.onload = () => resolve(); l.onerror = () => resolve();
+      document.head.appendChild(l);
+    });
+  }
+
+  function loadScript(src: string): Promise<void> {
+    return new Promise((resolve, reject) => {
+      const s = document.createElement('script');
+      s.src = src; s.async = true;
+      s.onload = () => resolve();
+      s.onerror = () => reject(new Error('Impossible de charger : ' + src));
+      document.head.appendChild(s);
+    });
+  }
+
+  function norm(s: string): string {
+    return s.toLowerCase().normalize('NFD')
+      .replace(/[̀-ͯ]/g, '')
+      .replace(/[\s'\-]+/g, '-')
+      .replace(/[^a-z0-9\-]/g, '')
+      .replace(/^-|-$/g, '');
+  }
+
+  function toDisplay(s: string): string {
+    return s.toLowerCase().replace(/(?:^|[\s\-])(\w)/g, c => c.toUpperCase());
+  }
+
+  function setStatus(msg: string, type: 'ok' | 'error' | '' = '') {
+    if (!statusEl) return;
+    statusEl.textContent = msg;
+    statusEl.className = 'hm-status' + (type ? ' is-' + type : '');
+  }
+
+  type Station = {
+    lat: number; lng: number;
+    ville: string; villeSlug: string;
+    adresse: string; cp: string; dep: string;
+    enseigne?: string;
+    prices?: Record<string, number>;
+  };
+
+  const FUEL_LABELS: Record<string, string> = {
+    Gazole: 'Gazole', SP95: 'SP95', SP98: 'SP98',
+    E10: 'E10', E85: 'E85', GPLc: 'GPL',
+  };
+
+  function buildPopup(s: Station): string {
+    const rows = Object.entries(FUEL_LABELS)
+      .filter(([k]) => s.prices?.[k] != null)
+      .map(([k, lbl]) => `<tr><td>${lbl}</td><td>${(s.prices![k] as number).toFixed(3)} €/L</td></tr>`)
+      .join('');
+
+    const dept = deptMap[s.dep];
+    const hasCityPage = s.villeSlug && citySlugsSet.has(s.villeSlug);
+    const ctaUrl = hasCityPage
+      ? `/prix-carburants/ville/${s.villeSlug}/`
+      : dept ? `/prix-carburants/${dept.slug}/` : null;
+    const ctaLabel = hasCityPage
+      ? `Voir les stations à ${toDisplay(s.ville || '')} &rarr;`
+      : dept ? `Voir le département ${dept.name} &rarr;` : null;
+
+    const noPrice = `<p style="font-size:.78rem;color:#64748b;margin:0 0 .5rem">Prix non communiqués</p>`;
+
+    return (
+      `<div class="popup-body">` +
+      (s.enseigne ? `<span class="popup-brand">${s.enseigne}</span>` : '') +
+      `<span class="popup-city">${toDisplay(s.ville || '')}</span>` +
+      `<p class="popup-addr">${s.adresse || ''}${s.cp ? ' &middot; ' + s.cp : ''}</p>` +
+      (rows ? `<table class="popup-prices">${rows}</table>` : noPrice) +
+      `</div>` +
+      (ctaUrl && ctaLabel ? `<a href="${ctaUrl}" class="popup-cta">${ctaLabel}</a>` : '')
+    );
+  }
+
+  let stations: Station[] = [];
+  let leafletMap: any = null;
+  let mapReady = false;
+  let pendingSearch: string | null = null;
+
+  function doSearch(raw: string) {
+    const q = raw.trim();
+    if (!q) return;
+
+    if (!mapReady) {
+      pendingSearch = q;
+      setStatus('La carte se charge, votre recherche sera lancée dans un instant...');
+      return;
+    }
+
+    let matched: Station[] = [];
+
+    if (/^\d{2,5}$/.test(q)) {
+      const padded = q.padStart(5, '0');
+      const dep = (padded.startsWith('97') || padded.startsWith('98')) ? padded.slice(0, 3) : padded.slice(0, 2);
+      matched = stations.filter(s => s.dep === dep);
+      if (matched.length === 0) matched = stations.filter(s => s.cp?.startsWith(q.slice(0, 2)));
+    } else {
+      const qn = norm(q);
+      matched = stations.filter(s => {
+        const slug = s.villeSlug || norm(s.ville || '');
+        return slug === qn || slug.startsWith(qn + '-') || slug.startsWith(qn);
+      });
+      if (matched.length === 0) {
+        matched = stations.filter(s => (s.villeSlug || norm(s.ville || '')).includes(qn));
+      }
+    }
+
+    if (matched.length === 0) {
+      setStatus('Aucune station trouvée. Vérifiez l\'orthographe ou essayez un code postal.', 'error');
+      return;
+    }
+
+    const lats = matched.map(s => s.lat).filter(v => typeof v === 'number');
+    const lngs = matched.map(s => s.lng).filter(v => typeof v === 'number');
+    if (lats.length === 0) { setStatus('Localisation introuvable.', 'error'); return; }
+
+    const minLat = Math.min(...lats), maxLat = Math.max(...lats);
+    const minLng = Math.min(...lngs), maxLng = Math.max(...lngs);
+
+    if (maxLat - minLat < 0.05 && maxLng - minLng < 0.05) {
+      leafletMap.flyTo([lats[0], lngs[0]], 14, { animate: true, duration: 1 });
+    } else {
+      leafletMap.flyToBounds([[minLat, minLng], [maxLat, maxLng]], {
+        padding: [48, 48], maxZoom: 14, animate: true, duration: 1,
+      });
+    }
+
+    const displayName = toDisplay(matched[0]?.ville || q);
+    const n = matched.length;
+    setStatus(`${n.toLocaleString('fr-FR')} station${n > 1 ? 's' : ''} trouvée${n > 1 ? 's' : ''} pour « ${displayName} »`, 'ok');
+  }
+
+  async function initMap() {
+    try {
+      await Promise.all([
+        loadCss('/vendor/leaflet/leaflet.css'),
+        loadCss('/vendor/leaflet/MarkerCluster.css'),
+        loadCss('/vendor/leaflet/MarkerCluster.Default.css'),
+      ]);
+      await loadScript('/vendor/leaflet/leaflet.js');
+      await loadScript('/vendor/leaflet/leaflet.markercluster.js');
+
+      const L = (window as any).L;
+      leafletMap = L.map(mapEl, { scrollWheelZoom: false }).setView([46.6, 2.5], 6);
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 18,
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+      }).addTo(leafletMap);
+
+      const resp = await fetch('/data/stations-light.json');
+      if (!resp.ok) throw new Error('Impossible de charger les données de stations.');
+      stations = await resp.json();
+
+      const cluster = L.markerClusterGroup({ chunkedLoading: true, maxClusterRadius: 50 });
+
+      for (const s of stations) {
+        if (typeof s.lat !== 'number' || typeof s.lng !== 'number') continue;
+        const gz = s.prices?.Gazole;
+        const cls = gz == null ? 'fuel-pin-na' : gz <= nat ? 'fuel-pin-cheap' : 'fuel-pin-exp';
+        const icon = L.divIcon({
+          className: '',
+          html: `<div class="fuel-pin ${cls}" style="width:12px;height:12px" title="${s.ville || ''}"></div>`,
+          iconSize: [12, 12],
+        });
+        cluster.addLayer(
+          L.marker([s.lat, s.lng], { icon })
+            .bindPopup(buildPopup(s), { className: 'hm-popup', maxWidth: 270 })
+        );
+      }
+
+      leafletMap.addLayer(cluster);
+      if (loadingEl) loadingEl.remove();
+      mapReady = true;
+
+      if (pendingSearch) { doSearch(pendingSearch); pendingSearch = null; }
+    } catch (err) {
+      if (loadingEl) loadingEl.innerHTML = '<span style="color:#64748b">La carte n\'a pas pu se charger.</span>';
+      console.error(err);
+    }
+  }
+
+  formEl?.addEventListener('submit', e => {
+    e.preventDefault();
+    doSearch(inputEl?.value || '');
+  });
+
+  initMap();
+</script>

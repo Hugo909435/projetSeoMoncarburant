@@ -131,7 +131,7 @@ const jsonLdBreadcrumb = {
               <div class="fuel-stat-card" style={`--fuel-color: ${FUEL_COLORS[fuel]}`}>
                 <div class="fsc-label">{FUEL_LABELS[fuel]}</div>
                 <div class="fsc-price">
-                  {avg != null ? avg.toFixed(3) : 'n/d'}
+                  {avg != null ? avg.toFixed(3) : '-'}
                   {avg != null && <span class="fsc-unit">€/L</span>}
                 </div>
                 {diff != null && (
@@ -170,9 +170,9 @@ const jsonLdBreadcrumb = {
                   <tbody>
                     {top10.Gazole.map((s: any) => (
                       <tr>
-                        <td class="station-addr">{s.adresse || 'n/d'}</td>
+                        <td class="station-addr">{s.adresse || '-'}</td>
                         <td><a href={`/prix-carburants/${deps[s.dep]?.slug ?? s.dep}/`} class="dept-link">{s.ville}</a></td>
-                        <td class="price-highlight">{s.prices.Gazole?.toFixed(3) ?? 'n/d'} €/L</td>
+                        <td class="price-highlight">{s.prices.Gazole?.toFixed(3) ?? '-'} €/L</td>
                       </tr>
                     ))}
                   </tbody>
@@ -189,9 +189,9 @@ const jsonLdBreadcrumb = {
                   <tbody>
                     {top10.SP95.map((s: any) => (
                       <tr>
-                        <td class="station-addr">{s.adresse || 'n/d'}</td>
+                        <td class="station-addr">{s.adresse || '-'}</td>
                         <td><a href={`/prix-carburants/${deps[s.dep]?.slug ?? s.dep}/`} class="dept-link">{s.ville}</a></td>
-                        <td class="price-highlight">{s.prices.SP95?.toFixed(3) ?? 'n/d'} €/L</td>
+                        <td class="price-highlight">{s.prices.SP95?.toFixed(3) ?? '-'} €/L</td>
                       </tr>
                     ))}
                   </tbody>
@@ -222,18 +222,18 @@ const jsonLdBreadcrumb = {
             <tbody>
               {brandData.stations.slice(0, 30).map((s: any) => (
                 <tr>
-                  <td class="station-addr">{s.adresse || 'n/d'}</td>
+                  <td class="station-addr">{s.adresse || '-'}</td>
                   <td>{s.ville}</td>
                   <td>
                     <a href={`/prix-carburants/${deps[s.dep]?.slug ?? s.dep}/`} class="dept-pill-link">
                       {s.dep}
                     </a>
                   </td>
-                  <td>{s.prices.Gazole?.toFixed(3) ?? 'n/d'}</td>
-                  <td>{s.prices.SP95?.toFixed(3) ?? 'n/d'}</td>
-                  <td>{s.prices.E10?.toFixed(3) ?? 'n/d'}</td>
-                  <td>{s.prices.SP98?.toFixed(3) ?? 'n/d'}</td>
-                  <td>{s.prices.E85?.toFixed(3) ?? 'n/d'}</td>
+                  <td>{s.prices.Gazole?.toFixed(3) ?? '-'}</td>
+                  <td>{s.prices.SP95?.toFixed(3) ?? '-'}</td>
+                  <td>{s.prices.E10?.toFixed(3) ?? '-'}</td>
+                  <td>{s.prices.SP98?.toFixed(3) ?? '-'}</td>
+                  <td>{s.prices.E85?.toFixed(3) ?? '-'}</td>
                 </tr>
               ))}
             </tbody>
@@ -330,14 +330,14 @@ const jsonLdBreadcrumb = {
       extra.forEach((s: any) => {
         const tr = document.createElement('tr');
         tr.innerHTML = `
-          <td class="station-addr">${s.adresse || 'n/d'}</td>
+          <td class="station-addr">${s.adresse || '-'}</td>
           <td>${s.ville}</td>
           <td><span class="dept-pill-link">${s.dep}</span></td>
-          <td>${s.prices?.Gazole?.toFixed(3) ?? 'n/d'}</td>
-          <td>${s.prices?.SP95?.toFixed(3) ?? 'n/d'}</td>
-          <td>${s.prices?.E10?.toFixed(3) ?? 'n/d'}</td>
-          <td>${s.prices?.SP98?.toFixed(3) ?? 'n/d'}</td>
-          <td>${s.prices?.E85?.toFixed(3) ?? 'n/d'}</td>
+          <td>${s.prices?.Gazole?.toFixed(3) ?? '-'}</td>
+          <td>${s.prices?.SP95?.toFixed(3) ?? '-'}</td>
+          <td>${s.prices?.E10?.toFixed(3) ?? '-'}</td>
+          <td>${s.prices?.SP98?.toFixed(3) ?? '-'}</td>
+          <td>${s.prices?.E85?.toFixed(3) ?? '-'}</td>
         `;
         tbody.appendChild(tr);
       });

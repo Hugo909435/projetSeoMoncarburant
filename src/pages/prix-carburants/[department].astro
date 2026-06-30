@@ -153,7 +153,7 @@ const jsonLdBreadcrumb = {
               <div class="fuel-stat-card" style={`--fuel-color: ${FUEL_COLORS[fuel]}`}>
                 <div class="fsc-label">{fuel === 'GPLc' ? 'GPL' : fuel}</div>
                 <div class="fsc-price">
-                  {avg != null ? avg.toFixed(3) : 'n/d'}
+                  {avg != null ? avg.toFixed(3) : '-'}
                   {avg != null && <span class="fsc-unit">€/L</span>}
                 </div>
                 {diff != null && (
@@ -185,10 +185,10 @@ const jsonLdBreadcrumb = {
                   <tbody>
                     {top10.Gazole.map((s: any) => (
                       <tr>
-                        <td class="brand-cell">{s.enseigneSlug ? <BrandLogo slug={s.enseigneSlug} name={s.enseigne ?? s.enseigneSlug} /> : <span class="brand-unknown">{s.enseigne ?? 'n/d'}</span>}</td>
-                        <td class="station-addr">{s.adresse || 'n/d'}</td>
+                        <td class="brand-cell">{s.enseigneSlug ? <BrandLogo slug={s.enseigneSlug} name={s.enseigne ?? s.enseigneSlug} /> : <span class="brand-unknown">{s.enseigne ?? '-'}</span>}</td>
+                        <td class="station-addr">{s.adresse || '-'}</td>
                         <td>{s.ville} ({s.cp})</td>
-                        <td class="price-highlight">{s.prices.Gazole?.toFixed(3) ?? 'n/d'} €/L</td>
+                        <td class="price-highlight">{s.prices.Gazole?.toFixed(3) ?? '-'} €/L</td>
                       </tr>
                     ))}
                   </tbody>
@@ -205,10 +205,10 @@ const jsonLdBreadcrumb = {
                   <tbody>
                     {top10.SP95.map((s: any) => (
                       <tr>
-                        <td class="brand-cell">{s.enseigneSlug ? <BrandLogo slug={s.enseigneSlug} name={s.enseigne ?? s.enseigneSlug} /> : <span class="brand-unknown">{s.enseigne ?? 'n/d'}</span>}</td>
-                        <td class="station-addr">{s.adresse || 'n/d'}</td>
+                        <td class="brand-cell">{s.enseigneSlug ? <BrandLogo slug={s.enseigneSlug} name={s.enseigne ?? s.enseigneSlug} /> : <span class="brand-unknown">{s.enseigne ?? '-'}</span>}</td>
+                        <td class="station-addr">{s.adresse || '-'}</td>
                         <td>{s.ville} ({s.cp})</td>
-                        <td class="price-highlight">{s.prices.SP95?.toFixed(3) ?? 'n/d'} €/L</td>
+                        <td class="price-highlight">{s.prices.SP95?.toFixed(3) ?? '-'} €/L</td>
                       </tr>
                     ))}
                   </tbody>
@@ -241,16 +241,16 @@ const jsonLdBreadcrumb = {
             <tbody>
               {stations.slice(0, 30).map((s: any) => (
                 <tr>
-                  <td class="brand-cell">{s.enseigneSlug ? <BrandLogo slug={s.enseigneSlug} name={s.enseigne ?? s.enseigneSlug} /> : <span class="brand-unknown">{s.enseigne ?? 'n/d'}</span>}</td>
-                  <td class="station-addr">{s.adresse || 'n/d'}</td>
+                  <td class="brand-cell">{s.enseigneSlug ? <BrandLogo slug={s.enseigneSlug} name={s.enseigne ?? s.enseigneSlug} /> : <span class="brand-unknown">{s.enseigne ?? '-'}</span>}</td>
+                  <td class="station-addr">{s.adresse || '-'}</td>
                   <td>{s.ville} ({s.cp})</td>
                   <td><span class={`pop-badge ${s.pop === 'autoroute' ? 'pop-auto' : 'pop-route'}`}>{s.pop === 'autoroute' ? 'Autoroute' : 'Route'}</span></td>
-                  <td>{s.prices.Gazole?.toFixed(3) ?? 'n/d'}</td>
-                  <td>{s.prices.SP95?.toFixed(3) ?? 'n/d'}</td>
-                  <td>{s.prices.SP98?.toFixed(3) ?? 'n/d'}</td>
-                  <td>{s.prices.E10?.toFixed(3) ?? 'n/d'}</td>
-                  <td>{s.prices.E85?.toFixed(3) ?? 'n/d'}</td>
-                  <td>{s.prices.GPLc?.toFixed(3) ?? 'n/d'}</td>
+                  <td>{s.prices.Gazole?.toFixed(3) ?? '-'}</td>
+                  <td>{s.prices.SP95?.toFixed(3) ?? '-'}</td>
+                  <td>{s.prices.SP98?.toFixed(3) ?? '-'}</td>
+                  <td>{s.prices.E10?.toFixed(3) ?? '-'}</td>
+                  <td>{s.prices.E85?.toFixed(3) ?? '-'}</td>
+                  <td>{s.prices.GPLc?.toFixed(3) ?? '-'}</td>
                 </tr>
               ))}
             </tbody>
@@ -322,18 +322,18 @@ const jsonLdBreadcrumb = {
         const tr = document.createElement('tr');
         const brandHtml = s.enseigneSlug && s.logo
           ? `<span class="brand-logo-wrap"><img src="${s.logo}" alt="${s.enseigne || s.enseigneSlug}" class="brand-logo-img" loading="lazy" onerror="this.style.display='none';this.nextSibling.style.display='inline-block'"/><span class="brand-logo-text" style="display:none">${s.enseigne || s.enseigneSlug}</span></span>`
-          : `<span class="brand-unknown">${s.enseigne || 'n/d'}</span>`;
+          : `<span class="brand-unknown">${s.enseigne || '-'}</span>`;
         tr.innerHTML = `
           <td class="brand-cell">${brandHtml}</td>
-          <td class="station-addr">${s.adresse || 'n/d'}</td>
+          <td class="station-addr">${s.adresse || '-'}</td>
           <td>${s.ville} (${s.cp})</td>
           <td><span class="pop-badge ${s.pop === 'autoroute' ? 'pop-auto' : 'pop-route'}">${s.pop === 'autoroute' ? 'Autoroute' : 'Route'}</span></td>
-          <td>${s.prices?.Gazole?.toFixed(3) ?? 'n/d'}</td>
-          <td>${s.prices?.SP95?.toFixed(3) ?? 'n/d'}</td>
-          <td>${s.prices?.SP98?.toFixed(3) ?? 'n/d'}</td>
-          <td>${s.prices?.E10?.toFixed(3) ?? 'n/d'}</td>
-          <td>${s.prices?.E85?.toFixed(3) ?? 'n/d'}</td>
-          <td>${s.prices?.GPLc?.toFixed(3) ?? 'n/d'}</td>
+          <td>${s.prices?.Gazole?.toFixed(3) ?? '-'}</td>
+          <td>${s.prices?.SP95?.toFixed(3) ?? '-'}</td>
+          <td>${s.prices?.SP98?.toFixed(3) ?? '-'}</td>
+          <td>${s.prices?.E10?.toFixed(3) ?? '-'}</td>
+          <td>${s.prices?.E85?.toFixed(3) ?? '-'}</td>
+          <td>${s.prices?.GPLc?.toFixed(3) ?? '-'}</td>
         `;
         tbody.appendChild(tr);
       });
