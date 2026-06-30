@@ -74,10 +74,11 @@ jobs:
           # Transferts SFTP plus robustes : moins de parallélisme (évite les blocages
           # de connexions simultanées côté Hostinger) + timeouts et reconnexions.
           lftp -e "set sftp:auto-confirm yes; \
-                   set net:timeout 15; \
-                   set net:max-retries 3; \
-                   set net:reconnect-interval-base 5; \
-                   set net:persist-retries 3; \
+                   set net:timeout 30; \
+                   set net:max-retries 6; \
+                   set net:reconnect-interval-base 10; \
+                   set net:reconnect-interval-multiplier 1.5; \
+                   set net:persist-retries 5; \
                    set mirror:parallel-transfer-count 2; \
                    set mirror:parallel-directories no; \
                    lcd dist; \
