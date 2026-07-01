@@ -12,7 +12,7 @@ tags: ["économies carburant", "budget carburant", "prix carburant", "réduire f
 featuredImage: "/images/articles/guide-economiser-carburant.webp"
 imageAlt: "Automobiliste comparant les prix du carburant à la pompe pour réduire sa facture en 2026"
 readingTime: 11
-relatedArticles: ["reduire-consommation-carburant", "eco-conduite-techniques", "indemnite-carburant-2026"]
+relatedArticles: ["indemnite-carburant-2026", "e85-superethanol-vaut-il-le-coup", "entretien-baisser-consommation"]
 ctaTitle: "Trouvez le carburant le moins cher près de chez vous"
 ctaDescription: "Notre comparateur référence les prix de plus de 11 000 stations-service en France, mis à jour quotidiennement via les données officielles."
 faq:
@@ -43,7 +43,7 @@ Les prix fluctuent quotidiennement. Tous les chiffres cités dans ce guide sont 
 
 ## Levier n°1, Consommer moins de carburant
 
-Passer de 7 à 6 L/100 km réduit la facture de 14 %, sans toucher au prix payé à la pompe. Pour un automobiliste moyen, ça représente 250 à 300 € de moins par an aux tarifs du printemps 2026. Cette baisse s'obtient par l'éco-conduite (anticipation, gestion des régimes moteur, vitesse sur autoroute) et par l'entretien courant, pression des pneus, filtre à air, huile moteur. L'ADEME chiffre à 20 % la réduction de consommation obtenue en abaissant seul la vitesse de 130 à 110 km/h sur autoroute. Toutes les techniques, avec les économies chiffrées mesure par mesure, sont dans les deux guides dédiés : [Réduire sa consommation de carburant : tous les leviers](/blog/reduire-consommation-carburant/) et [Éco-conduite : 12 techniques pour consommer moins](/blog/eco-conduite-techniques/).
+Passer de 7 à 6 L/100 km réduit la facture de 14 %, sans toucher au prix payé à la pompe. Pour un automobiliste moyen, ça représente 250 à 300 € de moins par an aux tarifs du printemps 2026. Cette baisse s'obtient par l'éco-conduite (anticipation, gestion des régimes moteur, vitesse sur autoroute) et par l'entretien courant, pression des pneus, filtre à air, huile moteur. L'ADEME chiffre à 20 % la réduction de consommation obtenue en abaissant seul la vitesse de 130 à 110 km/h sur autoroute. Pour le détail entretien, mesure par mesure, voir notre guide [entretien véhicule : réduire sa consommation](/piliers/entretien-baisser-consommation/).
 
 ## Levier n°2, Payer le litre au meilleur prix
 
@@ -131,7 +131,7 @@ Généralement dans les stations de grande distribution, E.Leclerc, Intermarché
 
 ### De combien peut-on baisser sa consommation de carburant ?
 
-Une conduite souple et un véhicule bien entretenu permettent de réduire la consommation de 10 à 20 %. Rouler à 110 km/h plutôt que 130 km/h sur autoroute représente seul 20 % d'économies sur ce type de trajet (ADEME). Les techniques détaillées sont dans nos guides [éco-conduite](/blog/eco-conduite-techniques/) et [réduire sa consommation](/blog/reduire-consommation-carburant/).
+Une conduite souple et un véhicule bien entretenu permettent de réduire la consommation de 10 à 20 %. Rouler à 110 km/h plutôt que 130 km/h sur autoroute représente seul 20 % d'économies sur ce type de trajet (ADEME). Les techniques d'entretien détaillées sont dans notre guide [réduire sa consommation par l'entretien](/piliers/entretien-baisser-consommation/).
 
 ### Existe-t-il des aides pour le carburant en 2026 ?
 

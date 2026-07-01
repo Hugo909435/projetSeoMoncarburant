@@ -12,7 +12,7 @@ featuredImage: "/images/articles/climatisation-voiture-consommation.webp"
 imageAlt: "Main d'un conducteur réglant la climatisation sur le tableau de bord d'une voiture en été"
 readingTime: 8
 pillar: "reduire-facture-carburant"
-relatedArticles: ["eco-conduite-techniques", "reduire-consommation-carburant", "stop-start-economies-reelles-ou-mythe"]
+relatedArticles: ["stop-start-economies-reelles-ou-mythe", "autoroute-ou-nationale-carburant-plus-cher", "reduire-facture-carburant"]
 ctaTitle: "Trouvez le carburant le moins cher près de chez vous"
 ctaDescription: "Notre comparateur référence les prix de plus de 11 000 stations-service en France. Mise à jour quotidienne via les données officielles."
 faq:
@@ -154,4 +154,4 @@ La climatisation n'est pas l'ennemi de votre budget carburant, mais c'est un pos
 
 Les leviers pour limiter l'addition sont simples et ne demandent aucun renoncement : aérer avant de climatiser, régler à 22 °C plutôt qu'à 16, entretenir le circuit, et choisir entre vitres et clim selon la vitesse. Aucun de ces gestes ne vous fera transpirer.
 
-Pour aller plus loin sur les économies de carburant au quotidien, consultez notre guide [réduire sa facture de carburant](/piliers/reduire-facture-carburant/) et nos [techniques d'éco-conduite](/blog/eco-conduite-techniques/) qui, combinées à un bon usage de la clim, peuvent réduire votre consommation de 15 à 25 % sur l'ensemble de l'année.
+Pour aller plus loin sur les économies de carburant au quotidien, consultez notre guide [réduire sa facture de carburant](/piliers/reduire-facture-carburant/), qui détaille les techniques d'éco-conduite pouvant, combinées à un bon usage de la clim, réduire votre consommation de 15 à 25 % sur l'ensemble de l'année.

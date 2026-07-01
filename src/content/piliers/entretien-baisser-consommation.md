@@ -12,7 +12,7 @@ tags: [entretien, consommation, pneus, vidange, filtres, economies, huile-moteur
 featuredImage: /images/articles/entretien-consommation.webp
 imageAlt: "Mécanicien effectuant la révision complète d'un véhicule en atelier"
 readingTime: 12
-relatedArticles: [pression-pneus-consommation]
+relatedArticles: [courroie-distribution-remplacement, controle-technique-preparation, climatisation-voiture-consommation]
 ctaTitle: "Trouvez aussi les stations les moins chères"
 ctaDescription: "Comparez les prix du carburant près de chez vous et cumulez les économies."
 draft: false
@@ -48,7 +48,7 @@ Pour 15 000 km/an à 6 L/100 km et un prix de 1,85 €/L, cela représente **80 
 - La valeur de référence est sur l'étiquette dans l'encadrement de la portière conducteur, pas sur le flanc du pneu
 - Ajustez à la pression "en charge" lors des grands trajets avec passagers et bagages
 
-Pour le détail complet avec calcul personnalisé, consultez notre guide dédié sur la [pression des pneus et la consommation](/blog/pression-pneus-consommation/).
+Vérifiez la pression chaque mois : c'est gratuit, ça prend deux minutes à la station, et c'est le geste qui a le plus d'impact sur votre facture.
 
 ---
 

@@ -12,7 +12,7 @@ featuredImage: "/images/articles/stop-start-economies-reelles-ou-mythe.webp"
 imageAlt: "Tableau de bord d'une voiture affichant le voyant Stop & Start actif à un feu rouge en ville"
 readingTime: 7
 pillar: "reduire-facture-carburant"
-relatedArticles: ["eco-conduite-techniques", "reduire-consommation-carburant", "pression-pneus-consommation"]
+relatedArticles: ["climatisation-voiture-consommation", "autoroute-ou-nationale-carburant-plus-cher", "reduire-facture-carburant"]
 ctaTitle: "Réduisez votre facture carburant dès maintenant"
 ctaDescription: "Notre comparateur référence les prix de plus de 11 000 stations-service en France. Mise à jour quotidienne via les données officielles."
 faq:
@@ -121,4 +121,4 @@ Les coûts d'entretien, notamment la batterie AGM plus chère à remplacer, sont
 
 Verdict final : ni mythe, ni révolution. Un outil honnête, efficace dans un contexte précis, et dont la valeur réelle dépend de vos trajets quotidiens.
 
-Pour aller plus loin sur les leviers concrets pour réduire votre facture carburant, consultez notre guide complet [réduire sa facture de carburant](/piliers/reduire-facture-carburant/). Et pour maîtriser les techniques de conduite qui font vraiment la différence, découvrez notre article sur l'[éco-conduite : les techniques qui marchent vraiment](/blog/eco-conduite-techniques/).
+Pour aller plus loin sur les leviers concrets pour réduire votre facture carburant, dont les techniques d'éco-conduite qui font vraiment la différence, consultez notre guide complet [réduire sa facture de carburant](/piliers/reduire-facture-carburant/).

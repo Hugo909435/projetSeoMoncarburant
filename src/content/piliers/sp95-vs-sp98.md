@@ -12,7 +12,7 @@ tags: ["sp95", "sp98", "essence", "comparatif", "indice octane"]
 featuredImage: "/images/articles/sp95-vs-sp98.webp"
 imageAlt: "Deux pistolets de pompe à essence SP95 et SP98 côte à côte dans une station-service française"
 readingTime: 9
-relatedArticles: [pompe-essence-fonctionnement, reduire-consommation-carburant]
+relatedArticles: [pompe-essence-fonctionnement, prix-carburant-2026]
 ctaTitle: "Trouvez le SP95 ou SP98 le moins cher près de chez vous"
 ctaDescription: "Notre comparateur référence les prix de plus de 11 000 stations-service en France. Mise à jour quotidienne via les données officielles."
 faq:
@@ -207,13 +207,13 @@ Le choix entre SP95 et SP98 n'est qu'un paramètre parmi d'autres pour maîtrise
 L'écart entre la station la moins chère et la plus chère dans un rayon de 5 km dépasse souvent 10 à 15 centimes par litre, bien davantage que la différence SP95/SP98. Notre [comparateur de prix carburant](/prix-carburants/) référence plus de 11 000 stations avec une mise à jour quotidienne via les données officielles de prix-carburants.gouv.fr.
 
 **2. Adopter les techniques d'éco-conduite**
-C'est le levier le plus impactant : réduire sa consommation de 15 à 20 % sans changer de véhicule ni de carburant. Anticipation des freinages, passage des rapports précoce, vitesse de croisière stable : [guide complet éco-conduite en 12 techniques](/blog/eco-conduite-techniques/).
+C'est le levier le plus impactant : réduire sa consommation de 15 à 20 % sans changer de véhicule ni de carburant. Anticipation des freinages, passage des rapports précoce, vitesse de croisière stable : [guide complet pour réduire sa facture de carburant](/piliers/reduire-facture-carburant/).
 
 **3. Maintenir la pression des pneus**
-Un pneu sous-gonflé de 0,5 bar augmente la consommation de 2 à 5 %. Vérification mensuelle à la station, à froid, en se référant à l'étiquette dans l'encadrement de la portière. [Guide complet pression des pneus et consommation](/blog/pression-pneus-consommation/).
+Un pneu sous-gonflé de 0,5 bar augmente la consommation de 2 à 5 %. Vérification mensuelle à la station, à froid, en se référant à l'étiquette dans l'encadrement de la portière. [Guide complet entretien véhicule et consommation](/piliers/entretien-baisser-consommation/).
 
 **4. Réduire les charges et l'aérodynamisme**
-Coffre allégé, galerie de toit retirée hors usage, climatisation modulée selon la vitesse : 6 leviers complémentaires chiffrés dans notre article [réduire sa consommation de carburant](/blog/reduire-consommation-carburant/).
+Coffre allégé, galerie de toit retirée hors usage, climatisation modulée selon la vitesse : leviers complémentaires chiffrés dans notre article [climatisation et consommation](/blog/climatisation-voiture-consommation/).
 
 **5. Comprendre le mécanisme de distribution**
 Savoir comment fonctionne une pompe à essence, débitmètre, coupure automatique, métrologie légale, permet d'éviter les erreurs et de mieux comprendre ce que vous achetez. [Comment fonctionne une pompe à essence ?](/blog/pompe-essence-fonctionnement/)

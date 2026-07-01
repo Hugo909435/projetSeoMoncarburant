@@ -385,6 +385,27 @@ async function main() {
   const statsNational = buildNationalStats(stations);
   writeFileSync(resolve(DATA_DIR, 'stats-national.json'), JSON.stringify(statsNational, null, 2));
 
+  // Historique des prix nationaux (1 point/jour, fenêtre glissante) pour le graphique de tendance
+  const HISTORY_FILE = resolve(DATA_DIR, 'price-history.json');
+  const HISTORY_MAX_DAYS = 90;
+  const today = new Date().toISOString().slice(0, 10);
+  let priceHistory = [];
+  if (existsSync(HISTORY_FILE)) {
+    try {
+      priceHistory = JSON.parse(readFileSync(HISTORY_FILE, 'utf-8'));
+    } catch {
+      priceHistory = [];
+    }
+  }
+  priceHistory = priceHistory.filter((entry) => entry.date !== today);
+  priceHistory.push({ date: today, prices: statsNational });
+  priceHistory.sort((a, b) => a.date.localeCompare(b.date));
+  if (priceHistory.length > HISTORY_MAX_DAYS) {
+    priceHistory = priceHistory.slice(priceHistory.length - HISTORY_MAX_DAYS);
+  }
+  writeFileSync(HISTORY_FILE, JSON.stringify(priceHistory, null, 2));
+  console.log(`📈 Historique des prix : ${priceHistory.length} jour(s) conservé(s)`);
+
   // Stats par département
   const statsByDep = buildDepStats(byDep);
   writeFileSync(resolve(DATA_DIR, 'stats-by-department.json'), JSON.stringify(statsByDep, null, 2));

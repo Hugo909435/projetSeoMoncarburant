@@ -12,7 +12,7 @@ featuredImage: "/images/articles/e85-superethanol-vaut-il-le-coup.webp"
 imageAlt: "Pompe E85 superéthanol en station-service française avec affichage du prix au litre"
 readingTime: 8
 pillar: "sp95-vs-sp98"
-relatedArticles: ["compatibilite-sp95-e10", "prix-carburant-2026", "reduire-consommation-carburant"]
+relatedArticles: ["compatibilite-sp95-e10", "prix-carburant-2026", "melanger-sp95-sp98"]
 ctaTitle: "Trouvez une station E85 au meilleur prix"
 ctaDescription: "Notre comparateur référence les prix de plus de 11 000 stations-service en France, mis à jour quotidiennement via les données officielles."
 faq:

@@ -13,7 +13,7 @@ featuredImage: "/images/articles/courroie-distribution-remplacement.webp"
 imageAlt: "Courroie de distribution et galets tendeurs visibles sur un moteur ouvert en atelier"
 readingTime: 9
 pillar: "entretien-voiture-guide"
-relatedArticles: ["pression-pneus-consommation", "astuces-economiser-carburant"]
+relatedArticles: ["controle-technique-preparation", "stop-start-economies-reelles-ou-mythe"]
 ctaTitle: "Gardez votre véhicule en état"
 ctaDescription: "Un entretien bien suivi, c'est moins de risques et moins de dépenses imprévues. Consultez nos guides pratiques pour entretenir votre voiture au meilleur coût."
 faq:

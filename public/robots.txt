@@ -1,7 +1,7 @@
 User-agent: *
 Allow: /
 
-# Fichiers de données bruts (JSON) — inutiles à indexer, on préserve le budget de crawl
+# Fichiers de données bruts (JSON), inutiles à indexer : on préserve le budget de crawl
 Disallow: /data/
 
 Sitemap: https://mon-carburant.com/sitemap-index.xml

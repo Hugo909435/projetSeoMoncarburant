@@ -133,8 +133,8 @@ L'indemnité carburant 2026 cible les ménages modestes contraints de rouler pou
 
 Pour réduire la facture sur le long terme, deux leviers complémentaires méritent attention :
 
-- [Éco-conduite : 12 techniques pour réduire sa consommation](/blog/eco-conduite-techniques/), des économies réelles de 15 à 20 % sans changer de véhicule
-- [Réduire sa consommation de carburant : tous les leviers](/blog/reduire-consommation-carburant/), entretien, charge, choix du carburant, itinéraires
+- [Réduire sa facture de carburant : le guide complet](/piliers/reduire-facture-carburant/), éco-conduite, des économies réelles de 15 à 20 % sans changer de véhicule
+- [Entretien véhicule : réduire sa consommation de carburant](/piliers/entretien-baisser-consommation/), pneus, filtres, huile moteur, itinéraires
 
 Comparer les prix avant chaque plein sur [notre comparateur de 11 000 stations](/prix-carburants/) représente également un levier sous-estimé : sur 15 000 km par an, choisir systématiquement la station à 10 centimes moins chère économise environ **90 € annuels**, soit presque le double de l'indemnité. Si vous utilisez de l'essence, consultez aussi [notre comparatif SP95 vs SP98](/piliers/sp95-vs-sp98/) : pour 95 % des véhicules, le SP95 suffit et évite de payer 8 centimes de plus par litre.
 

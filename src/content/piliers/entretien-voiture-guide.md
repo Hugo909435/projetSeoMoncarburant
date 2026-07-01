@@ -12,7 +12,7 @@ tags: ["entretien voiture", "contrôle technique", "carnet d'entretien", "vidang
 featuredImage: "/images/articles/entretien-voiture-guide.webp"
 imageAlt: "Mécanicien réalisant l'entretien d'une voiture dans un atelier en France"
 readingTime: 11
-relatedArticles: ["pression-pneus-consommation", "reduire-facture-carburant"]
+relatedArticles: ["stop-start-economies-reelles-ou-mythe", "climatisation-voiture-consommation"]
 ctaTitle: "Roulez l'esprit tranquille"
 ctaDescription: "Un véhicule bien entretenu consomme moins et tombe moins en panne. Découvrez nos guides pratiques pour entretenir votre voiture au meilleur coût."
 faq:
@@ -107,7 +107,7 @@ Entre deux révisions chez un professionnel, plusieurs contrôles simples peuven
 
 **Chaque mois ou avant un long trajet :**
 
-- **Pression des pneus** : c'est le geste le plus impactant sur la sécurité et la consommation, le plus simple à réaliser, et pourtant négligé par 40 % des automobilistes selon la Sécurité routière. Une pression insuffisante de 0,5 bar allonge la distance de freinage, réduit la tenue de route et accélère l'usure irrégulière des pneus. Notre guide sur la [pression des pneus et son impact sur la consommation](/blog/pression-pneus-consommation/) vous explique comment vérifier, ajuster et à quelle valeur de référence vous fier selon votre véhicule.
+- **Pression des pneus** : c'est le geste le plus impactant sur la sécurité et la consommation, le plus simple à réaliser, et pourtant négligé par 40 % des automobilistes selon la Sécurité routière. Une pression insuffisante de 0,5 bar allonge la distance de freinage, réduit la tenue de route et accélère l'usure irrégulière des pneus. Notre [guide entretien pour réduire sa consommation](/piliers/entretien-baisser-consommation/) vous explique comment vérifier, ajuster et à quelle valeur de référence vous fier selon votre véhicule.
 - **Niveau d'huile moteur** : entre les deux repères de la jauge, jamais au-dessous du minimum.
 - **Niveau de liquide de refroidissement** : entre min et max dans le vase d'expansion, moteur froid.
 - **Niveaux liquide de frein et lave-glace** : vérifications visuelles rapides via les réservoirs transparents sous le capot.

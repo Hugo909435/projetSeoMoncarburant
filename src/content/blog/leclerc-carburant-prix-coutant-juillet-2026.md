@@ -12,7 +12,7 @@ tags: ["leclerc", "prix coûtant", "carburant", "bon plan", "juillet 2026", "gra
 featuredImage: "/images/articles/leclerc-carburant-prix-coutant-juillet-2026.webp"
 imageAlt: "Station-service E.Leclerc avec panneau d'affichage des prix du carburant"
 readingTime: 3
-relatedArticles: ["prix-carburant-2026", "pourquoi-prix-carburant-eleves-juin-2026", "carburant-vacances-ete-moins-cher"]
+relatedArticles: ["prix-carburant-2026", "pourquoi-prix-carburant-eleves-juin-2026", "intermarche-carburant-prix-coutant-2026"]
 ctaTitle: "Trouvez la station Leclerc la moins chère près de chez vous"
 ctaDescription: "Notre comparateur référence les prix de plus de 11 000 stations-service en France, mis à jour quotidiennement via les données officielles."
 faq:

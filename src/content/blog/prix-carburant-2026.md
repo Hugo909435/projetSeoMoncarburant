@@ -12,7 +12,7 @@ tags: ["prix carburant", "essence", "diesel", "e85", "actualité 2026", "ticpe"]
 featuredImage: "/images/articles/prix-carburant-2026.webp"
 imageAlt: "Panneau d'affichage des prix d'une station-service française avec les tarifs SP95, SP98, diesel et E85 en 2026"
 readingTime: 8
-relatedArticles: ["sp95-vs-sp98", "reduire-consommation-carburant", "eco-conduite-techniques"]
+relatedArticles: ["sp95-vs-sp98", "reduire-facture-carburant", "indemnite-carburant-2026"]
 ctaTitle: "Trouvez la station la moins chère près de chez vous"
 ctaDescription: "Notre comparateur référence les prix de plus de 11 000 stations-service en France, mis à jour quotidiennement via les données officielles."
 faq:
@@ -99,9 +99,9 @@ Dans les trois scénarios, la hausse de l'accise gazole reste certaine : la loi 
 
 1. **Choisir le bon carburant pour son moteur.** La grande majorité des véhicules essence n'ont aucun bénéfice mesurable à passer du SP95-E10 au SP98, et le SP98 coûte environ 8 centimes de plus par litre en mai 2026. Les véhicules flex-fuel et ceux équipés d'un boîtier homologué peuvent passer à l'E85 : malgré une surconsommation de 25%, le coût aux 100 km reste 40% inférieur à celui du SP95-E10 aux prix actuels. [Comparatif SP95 vs SP98](/piliers/sp95-vs-sp98/).
 
-2. **Adopter l'éco-conduite.** Relâcher l'accélérateur 100 mètres avant un ralentissement au lieu de freiner réduit la consommation de 10 à 15% en ville. Sur autoroute, rouler à 110 km/h au lieu de 130 économise environ 20% de carburant. Ces deux réflexes représentent 200 à 350 € d'économie annuelle sur 15 000 km. [12 techniques détaillées](/blog/eco-conduite-techniques/).
+2. **Adopter l'éco-conduite.** Relâcher l'accélérateur 100 mètres avant un ralentissement au lieu de freiner réduit la consommation de 10 à 15% en ville. Sur autoroute, rouler à 110 km/h au lieu de 130 économise environ 20% de carburant. Ces deux réflexes représentent 200 à 350 € d'économie annuelle sur 15 000 km. [Guide complet détaillé](/piliers/reduire-facture-carburant/).
 
-3. **Entretenir sa voiture régulièrement.** Des pneus sous-gonflés de 0,5 bar augmentent la consommation de 2%. Un filtre à air colmaté coûte 3 à 5% de plus. Un entretien à jour représente 5 à 8% d'économie sans aucun changement de comportement. [Pression des pneus et consommation](/blog/pression-pneus-consommation/).
+3. **Entretenir sa voiture régulièrement.** Des pneus sous-gonflés de 0,5 bar augmentent la consommation de 2%. Un filtre à air colmaté coûte 3 à 5% de plus. Un entretien à jour représente 5 à 8% d'économie sans aucun changement de comportement. [Pression des pneus et consommation, guide complet](/piliers/entretien-baisser-consommation/).
 
 4. **Comparer les prix avant de faire le plein.** L'écart entre la station la moins chère et la plus chère d'une même zone dépasse régulièrement 15 centimes par litre, selon les données de [prix-carburants.gouv.fr](https://www.prix-carburants.gouv.fr/). Sur un plein de 50 litres, c'est 7,50 € d'écart. Notre [comparateur de prix](/prix-carburants/) agrège ces données en temps réel pour plus de 11 000 stations.
 

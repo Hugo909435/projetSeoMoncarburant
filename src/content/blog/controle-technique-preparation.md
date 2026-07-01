@@ -13,7 +13,7 @@ featuredImage: "/images/articles/controle-technique-preparation.webp"
 imageAlt: "Mécanicien vérifiant le moteur d'une voiture, capot ouvert, avant le contrôle technique"
 readingTime: 4
 pillar: "entretien-voiture-guide"
-relatedArticles: ["courroie-distribution-remplacement", "pression-pneus-consommation"]
+relatedArticles: ["courroie-distribution-remplacement", "stop-start-economies-reelles-ou-mythe"]
 ctaTitle: "Passez le contrôle technique sans stress"
 ctaDescription: "Un entretien suivi limite les mauvaises surprises. Consultez nos guides pratiques pour entretenir votre voiture au meilleur coût."
 faq:

@@ -171,6 +171,5 @@ Partiellement vrai. Remplir le réservoir jusqu'au déclenchement répété de l
 
 - **Choisir entre SP95 et SP98**, Maintenant que vous savez ce qui se passe dans la pompe, comprendre les différences entre les carburants distribués est l'étape suivante : [SP95 vs SP98 : guide complet 2026](/piliers/sp95-vs-sp98/).
 - **Comparer les prix en temps réel**, Trouver la station la moins chère dans votre secteur : [comparateur de prix carburant](/prix-carburants/).
-- **Réduire sa consommation**, La pompe distribue le carburant ; l'éco-conduite en réduit les passages : [12 techniques d'éco-conduite prouvées](/blog/eco-conduite-techniques/).
-- **L'entretien qui réduit la consommation**, Des pneus bien gonflés et un filtre à air propre font une différence mesurable : [pression des pneus et consommation](/blog/pression-pneus-consommation/).
-- **Tous les leviers pour consommer moins**, Au-delà de la conduite : [réduire sa consommation de carburant, 6 leviers complémentaires](/blog/reduire-consommation-carburant/).
+- **Réduire sa consommation**, La pompe distribue le carburant ; l'éco-conduite en réduit les passages : [réduire sa facture de carburant, le guide complet](/piliers/reduire-facture-carburant/).
+- **L'entretien qui réduit la consommation**, Des pneus bien gonflés et un filtre à air propre font une différence mesurable : [entretien véhicule, réduire sa consommation](/piliers/entretien-baisser-consommation/).

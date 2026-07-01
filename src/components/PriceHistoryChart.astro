@@ -1,0 +1,133 @@
+---
+// Graphique d'évolution des prix carburant (SVG statique, sans JS client)
+import priceHistory from '../data/fuel/price-history.json';
+import { FUEL_COLORS, type FuelStatKey } from '../data/fuel/config';
+
+interface Props {
+  fuels?: FuelStatKey[];
+  title?: string;
+}
+
+const { fuels = ['Gazole', 'SP95', 'SP98', 'E10'], title = 'Évolution du prix moyen à la pompe' } = Astro.props;
+
+const history = priceHistory as { date: string; prices: Partial<Record<FuelStatKey, number>> }[];
+
+const width = 640;
+const height = 280;
+const padding = { top: 16, right: 16, bottom: 32, left: 44 };
+const plotWidth = width - padding.left - padding.right;
+const plotHeight = height - padding.top - padding.bottom;
+
+const values = history.flatMap((entry) => fuels.map((f) => entry.prices[f]).filter((v): v is number => v != null));
+const min = values.length ? Math.min(...values) : 0;
+const max = values.length ? Math.max(...values) : 1;
+const yMin = Math.floor((min - 0.02) * 100) / 100;
+const yMax = Math.ceil((max + 0.02) * 100) / 100;
+
+function xAt(i: number) {
+  return history.length <= 1 ? padding.left : padding.left + (i / (history.length - 1)) * plotWidth;
+}
+function yAt(price: number) {
+  return padding.top + plotHeight - ((price - yMin) / (yMax - yMin)) * plotHeight;
+}
+
+const lines = fuels.map((fuel) => {
+  const points = history
+    .map((entry, i) => (entry.prices[fuel] != null ? `${xAt(i)},${yAt(entry.prices[fuel]!)}` : null))
+    .filter(Boolean)
+    .join(' ');
+  const last = [...history].reverse().find((e) => e.prices[fuel] != null);
+  return { fuel, points, color: FUEL_COLORS[fuel], last: last?.prices[fuel] ?? null };
+});
+
+const dateFormatter = new Intl.DateTimeFormat('fr-FR', { day: 'numeric', month: 'short' });
+const firstDate = history[0] ? dateFormatter.format(new Date(history[0].date)) : null;
+const lastDate = history[history.length - 1] ? dateFormatter.format(new Date(history[history.length - 1].date)) : null;
+---
+
+{history.length >= 2 && (
+  <figure class="price-chart">
+    <figcaption class="price-chart-caption">
+      {title} : {fuels.join(', ')} en France du {firstDate} au {lastDate} ({history.length} jours,
+      source data.economie.gouv.fr, mise à jour quotidienne).
+    </figcaption>
+    <svg viewBox={`0 0 ${width} ${height}`} role="img" aria-label={`Graphique d'évolution des prix ${fuels.join(', ')}`}>
+      <line x1={padding.left} y1={padding.top} x2={padding.left} y2={height - padding.bottom} class="axis" />
+      <line x1={padding.left} y1={height - padding.bottom} x2={width - padding.right} y2={height - padding.bottom} class="axis" />
+
+      <text x={padding.left - 8} y={padding.top + 4} text-anchor="end" class="axis-label">{yMax.toFixed(2)} €</text>
+      <text x={padding.left - 8} y={height - padding.bottom} text-anchor="end" class="axis-label">{yMin.toFixed(2)} €</text>
+      <text x={padding.left} y={height - 6} text-anchor="start" class="axis-label">{firstDate}</text>
+      <text x={width - padding.right} y={height - 6} text-anchor="end" class="axis-label">{lastDate}</text>
+
+      {lines.map((line) => (
+        <polyline points={line.points} fill="none" stroke={line.color} stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round" />
+      ))}
+    </svg>
+    <ul class="price-chart-legend">
+      {lines.map((line) => (
+        <li>
+          <span class="legend-dot" style={`background:${line.color}`}></span>
+          {line.fuel} {line.last != null && <strong>{line.last.toFixed(3)} €/L</strong>}
+        </li>
+      ))}
+    </ul>
+  </figure>
+)}
+
+<style>
+  .price-chart {
+    margin: 2rem 0;
+    padding: 1.5rem;
+    border: 1px solid var(--color-border);
+    border-radius: 0.75rem;
+    background: #fafafa;
+  }
+
+  .price-chart-caption {
+    font-size: 0.875rem;
+    color: var(--color-text-secondary);
+    margin-bottom: 1rem;
+  }
+
+  .price-chart svg {
+    width: 100%;
+    height: auto;
+    overflow: visible;
+  }
+
+  .axis {
+    stroke: #d1d5db;
+    stroke-width: 1;
+  }
+
+  .axis-label {
+    font-size: 11px;
+    fill: var(--color-text-secondary);
+  }
+
+  .price-chart-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.25rem;
+    list-style: none;
+    padding: 0;
+    margin: 1rem 0 0;
+    font-size: 0.875rem;
+    color: var(--color-text);
+  }
+
+  .price-chart-legend li {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .legend-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+    flex-shrink: 0;
+  }
+</style>

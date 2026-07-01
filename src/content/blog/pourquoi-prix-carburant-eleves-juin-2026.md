@@ -12,7 +12,7 @@ tags: ["prix carburant", "juin 2026", "essence", "diesel", "brent", "ticpe", "op
 featuredImage: "/images/articles/pourquoi-prix-carburant-eleves-juin-2026.webp"
 imageAlt: "Compteur d'une pompe à carburant dans une station-service affichant le montant et le volume distribué"
 readingTime: 5
-relatedArticles: ["prix-carburant-2026", "astuces-economiser-carburant", "eco-conduite-techniques"]
+relatedArticles: ["prix-carburant-2026", "pourquoi-le-prix-du-carburant-a-flambe-en-2026", "indemnite-carburant-2026"]
 ctaTitle: "Trouvez la station la moins chère près de chez vous"
 ctaDescription: "Notre comparateur référence les prix de plus de 11 000 stations-service en France, mis à jour quotidiennement via les données officielles."
 faq:
@@ -95,7 +95,7 @@ Ce qui ne changera pas : la hausse structurelle du gazole et le poids de la fisc
 Face à des prix structurellement élevés, la marge de manœuvre côté comportement reste réelle :
 
 - **Comparer les stations** avant de faire le plein : l'écart peut dépasser 15 c/L sur une même zone géographique.
-- **Adopter l'éco-conduite** : rouler à 110 km/h sur autoroute au lieu de 130 km/h économise environ 20 % de carburant. Notre guide des [12 techniques d'éco-conduite](/blog/eco-conduite-techniques/) détaille les gestes les plus efficaces.
+- **Adopter l'éco-conduite** : rouler à 110 km/h sur autoroute au lieu de 130 km/h économise environ 20 % de carburant. Notre [guide complet pour réduire sa facture de carburant](/piliers/reduire-facture-carburant/) détaille les gestes les plus efficaces.
 - **Vérifier la pression des pneus** : un pneu sous-gonflé de 0,5 bar génère 2 % de surconsommation.
 - **Profiter des opérations à prix coûtant** des grandes surfaces, annoncées généralement 3 à 5 jours à l'avance, notamment en octobre-novembre.
 
