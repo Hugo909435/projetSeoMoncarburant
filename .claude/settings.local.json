@@ -42,7 +42,13 @@
       "Bash(python scripts/drift_history.py \"https://mon-carburant.com/\")",
       "PowerShell(Set-Content *)",
       "Bash(xxd)",
-      "Bash(git checkout *)"
+      "Bash(git checkout *)",
+      "Bash(openssl s_client -connect mon-carburant.com:443 -servername mon-carburant.com)",
+      "Bash(openssl x509 *)",
+      "Bash(curl -sv -o /dev/null --max-time 15 https://mon-carburant.com/)",
+      "Bash(curl -sk -o /dev/null -w \"TTFB: %{time_starttransfer}s total: %{time_total}s size: %{size_download}o\\\\n\" https://mon-carburant.com/)",
+      "Bash(curl -sk https://mon-carburant.com/sitemap-0.xml)",
+      "Bash(curl -sk https://mon-carburant.com/prix-carburants/ville/marseille/)"
     ]
   }
 }

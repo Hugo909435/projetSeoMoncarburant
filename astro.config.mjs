@@ -48,6 +48,32 @@ try {
   // données absentes : sitemap complet par défaut.
 }
 
+// Dates réelles des articles (blog + piliers) : le sitemap doit refléter la
+// date de publication/mise à jour propre à chaque article plutôt que la date
+// de build du site. Un <lastmod> identique sur toutes les URLs à chaque build
+// est un signal que Google apprend à ignorer.
+// Map "/blog/{slug}/" ou "/piliers/{slug}/" -> Date
+const articleLastmods = new Map();
+for (const sectionDir of ['blog', 'piliers']) {
+  const dir = new URL(`./src/content/${sectionDir}/`, import.meta.url);
+  let files = [];
+  try {
+    files = readdirSync(dir).filter((f) => f.endsWith('.md') || f.endsWith('.mdx'));
+  } catch {
+    continue;
+  }
+  for (const f of files) {
+    const raw = readFileSync(new URL(f, dir), 'utf-8');
+    const slugMatch = raw.match(/^slug:\s*"?([^"\r\n]+)"?/m);
+    const updatedMatch = raw.match(/^updatedAt:\s*"?([^"\r\n]+)"?/m);
+    const publishedMatch = raw.match(/^publishedAt:\s*"?([^"\r\n]+)"?/m);
+    const dateStr = (updatedMatch ?? publishedMatch)?.[1];
+    if (slugMatch && dateStr) {
+      articleLastmods.set(`${SITE}/${sectionDir}/${slugMatch[1].trim()}/`, new Date(dateStr.trim()));
+    }
+  }
+}
+
 export default defineConfig({
   site: 'https://mon-carburant.com',
   output: 'static',
@@ -65,7 +91,8 @@ export default defineConfig({
     sitemap({
       filter: (page) => !page.includes('/404') && !weakUrls.has(page),
       serialize(item) {
-        item.lastmod = siteLastmod.toISOString();
+        const articleDate = articleLastmods.get(item.url);
+        item.lastmod = (articleDate ?? siteLastmod).toISOString();
         if (item.url === 'https://mon-carburant.com/') {
           item.changefreq = 'daily';
           item.priority = 1.0;
