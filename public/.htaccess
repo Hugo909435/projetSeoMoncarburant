@@ -20,11 +20,25 @@ RewriteRule ^ https://%1%{REQUEST_URI} [R=301,L]
     Header set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com https://unpkg.com; style-src 'self' 'unsafe-inline' https://unpkg.com; img-src 'self' data: blob: https://*.tile.openstreetmap.org; font-src 'self'; connect-src 'self' https://www.google-analytics.com https://analytics.google.com https://region1.google-analytics.com https://unpkg.com; frame-ancestors 'none'; object-src 'none'; base-uri 'self';"
 </IfModule>
 
-# Cache : Assets Astro hachés (JS, CSS) → 1 an immuable
+# Cache : Assets Astro hachés (JS, CSS, fonts) → 1 an immuable
+# Note : <FilesMatch> ne teste que le nom de fichier (basename), jamais le
+# chemin. Un pattern "^_astro/..." ne matche donc jamais rien : on scope via
+# SetEnvIf sur Request_URI à la place.
 <IfModule mod_headers.c>
-    <FilesMatch "^_astro/.*\.(js|css|woff2?|ttf|otf|eot)$">
-        Header set Cache-Control "public, max-age=31536000, immutable"
-    </FilesMatch>
+    SetEnvIf Request_URI "^/_astro/" IS_HASHED_ASSET
+    Header set Cache-Control "public, max-age=31536000, immutable" env=IS_HASHED_ASSET
+
+    # Vendor JS/CSS (Leaflet) : non hachés mais versionnés manuellement.
+    # Si mis à jour, renommer le dossier/fichier pour invalider le cache.
+    SetEnvIf Request_URI "^/vendor/" IS_VENDOR_ASSET
+    Header set Cache-Control "public, max-age=31536000, immutable" env=IS_VENDOR_ASSET
+</IfModule>
+
+# Compression texte (HTML, CSS, JS, JSON, SVG)
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/css text/plain text/xml
+    AddOutputFilterByType DEFLATE application/javascript application/json
+    AddOutputFilterByType DEFLATE image/svg+xml application/xml
 </IfModule>
 
 # Cache : Images → 1 mois

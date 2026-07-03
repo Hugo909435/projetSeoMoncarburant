@@ -5,6 +5,7 @@ import statsNational from '../../../data/fuel/stats-national.json';
 import brandsIndex from '../../../data/fuel/brands.json';
 import departmentsData from '../../../data/departments.json';
 import meta from '../../../data/fuel/meta.json';
+import { formatMaj } from '../../../utils/format-maj';
 
 export async function getStaticPaths() {
   const brandFiles = import.meta.glob('../../../data/fuel/stations-by-brand/*.json', { eager: true });
@@ -217,6 +218,7 @@ const jsonLdBreadcrumb = {
                 <th>E10</th>
                 <th>SP98</th>
                 <th>E85</th>
+                <th title="Date de la dernière déclaration de prix par la station">Déclaré</th>
               </tr>
             </thead>
             <tbody>
@@ -234,6 +236,7 @@ const jsonLdBreadcrumb = {
                   <td>{s.prices.E10?.toFixed(3) ?? '-'}</td>
                   <td>{s.prices.SP98?.toFixed(3) ?? '-'}</td>
                   <td>{s.prices.E85?.toFixed(3) ?? '-'}</td>
+                  <td class="station-maj" title={s.maj ?? ''}>{formatMaj(s.maj)}</td>
                 </tr>
               ))}
             </tbody>
@@ -245,7 +248,7 @@ const jsonLdBreadcrumb = {
               id="brand-show-more"
               class="btn-show-more"
               data-stations={JSON.stringify(brandData.stations.slice(30).map((s: any) => ({
-                adresse: s.adresse, ville: s.ville, dep: s.dep, prices: s.prices
+                adresse: s.adresse, ville: s.ville, dep: s.dep, prices: s.prices, maj: s.maj
               })))}
             >
               Afficher les {brandData.stations.length - 30} stations restantes ↓
@@ -320,6 +323,8 @@ const jsonLdBreadcrumb = {
 </BaseLayout>
 
 <script>
+  import { formatMaj } from '../../../utils/format-maj';
+
   const btn = document.getElementById('brand-show-more');
   if (btn) {
     btn.addEventListener('click', () => {
@@ -338,6 +343,7 @@ const jsonLdBreadcrumb = {
           <td>${s.prices?.E10?.toFixed(3) ?? '-'}</td>
           <td>${s.prices?.SP98?.toFixed(3) ?? '-'}</td>
           <td>${s.prices?.E85?.toFixed(3) ?? '-'}</td>
+          <td class="station-maj" title="${s.maj ?? ''}">${formatMaj(s.maj)}</td>
         `;
         tbody.appendChild(tr);
       });
@@ -386,6 +392,7 @@ const jsonLdBreadcrumb = {
   .stations-table td { padding:0.55rem 0.75rem; border-bottom:1px solid #f1f5f9; }
   .stations-table tr:hover td { background:#f8fafc; }
   .station-addr { max-width:200px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .station-maj { white-space: nowrap; font-size: 0.75rem; color: #64748b; }
   .price-highlight { font-weight:700; color:#16a34a; }
   .dept-link { color:var(--color-primary); text-decoration:none; font-weight:500; }
   .dept-link:hover { text-decoration:underline; }

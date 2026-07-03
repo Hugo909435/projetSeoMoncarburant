@@ -544,26 +544,41 @@ const citySlugs: string[] = Object.keys(cityFiles).map(p => p.replace(/^.*\/(.+)
 
       const cluster = L.markerClusterGroup({ chunkedLoading: true, maxClusterRadius: 50 });
 
-      for (const s of stations) {
-        if (typeof s.lat !== 'number' || typeof s.lng !== 'number') continue;
-        const gz = s.prices?.Gazole;
-        const cls = gz == null ? 'fuel-pin-na' : gz <= nat ? 'fuel-pin-cheap' : 'fuel-pin-exp';
-        const icon = L.divIcon({
-          className: '',
-          html: `<div class="fuel-pin ${cls}" style="width:12px;height:12px" title="${s.ville || ''}"></div>`,
-          iconSize: [12, 12],
-        });
-        cluster.addLayer(
-          L.marker([s.lat, s.lng], { icon })
-            .bindPopup(buildPopup(s), { className: 'hm-popup', maxWidth: 270 })
-        );
+      // ~9 900 stations : construire tous les marqueurs d'un coup est une
+      // tâche longue unique qui plombe le TBT. On découpe en lots répartis
+      // sur plusieurs frames pour laisser respirer le thread principal.
+      const CHUNK_SIZE = 800;
+      let i = 0;
+      function addChunk() {
+        const end = Math.min(i + CHUNK_SIZE, stations.length);
+        for (; i < end; i++) {
+          const s = stations[i];
+          if (typeof s.lat !== 'number' || typeof s.lng !== 'number') continue;
+          const gz = s.prices?.Gazole;
+          const cls = gz == null ? 'fuel-pin-na' : gz <= nat ? 'fuel-pin-cheap' : 'fuel-pin-exp';
+          const icon = L.divIcon({
+            className: '',
+            html: `<div class="fuel-pin ${cls}" style="width:12px;height:12px" title="${s.ville || ''}"></div>`,
+            iconSize: [12, 12],
+          });
+          cluster.addLayer(
+            L.marker([s.lat, s.lng], { icon })
+              .bindPopup(buildPopup(s), { className: 'hm-popup', maxWidth: 270 })
+          );
+        }
+
+        if (i < stations.length) {
+          setTimeout(addChunk, 0);
+          return;
+        }
+
+        leafletMap.addLayer(cluster);
+        if (loadingEl) loadingEl.remove();
+        mapReady = true;
+
+        if (pendingSearch) { doSearch(pendingSearch); pendingSearch = null; }
       }
-
-      leafletMap.addLayer(cluster);
-      if (loadingEl) loadingEl.remove();
-      mapReady = true;
-
-      if (pendingSearch) { doSearch(pendingSearch); pendingSearch = null; }
+      addChunk();
     } catch (err) {
       if (loadingEl) loadingEl.innerHTML = '<span style="color:#64748b">La carte n\'a pas pu se charger.</span>';
       console.error(err);
@@ -575,5 +590,15 @@ const citySlugs: string[] = Object.keys(cityFiles).map(p => p.replace(/^.*\/(.+)
     doSearch(inputEl?.value || '');
   });
 
-  initMap();
+  // La carte est une amélioration progressive, pas le contenu prioritaire de
+  // la page (le spinner + le formulaire de recherche suffisent au premier
+  // rendu). On la charge une fois le thread principal disponible plutôt que
+  // de faire concourir ses requêtes (CSS/JS Leaflet, données stations) avec
+  // le rendu initial : ça évite qu'elle domine le LCP mobile.
+  const win = window as any;
+  if (typeof win.requestIdleCallback === 'function') {
+    win.requestIdleCallback(initMap, { timeout: 2000 });
+  } else {
+    setTimeout(initMap, 200);
+  }
 </script>

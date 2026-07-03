@@ -125,6 +125,11 @@ const webAppSchema = {
   canonical="https://mon-carburant.com/"
   jsonLd={[websiteSchema, organizationSchema, webAppSchema]}
 >
+  <!-- Préconnexion aux tuiles de la carte (chargée en différé, cf. HeroMap) -->
+  <link rel="preconnect" href="https://a.tile.openstreetmap.org" slot="head" />
+  <link rel="preconnect" href="https://b.tile.openstreetmap.org" slot="head" />
+  <link rel="preconnect" href="https://c.tile.openstreetmap.org" slot="head" />
+
   <!-- Hero avec carte interactive -->
   <HeroMap />
 

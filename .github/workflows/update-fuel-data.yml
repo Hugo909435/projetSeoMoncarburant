@@ -2,8 +2,10 @@ name: Mise à jour quotidienne des prix carburant
 
 on:
   schedule:
-    # 6h00 heure de Paris (UTC+1/+2 selon saison) → 5h00 UTC en été / 4h00 UTC en hiver
-    - cron: '0 5 * * *'
+    # Toutes les 3h, en filet de sécurité (le flux gouvernemental /opendata/jour n'est
+    # régénéré qu'une fois par jour ~minuit ; ce cadencement sert surtout à rattraper
+    # un run manqué ou en échec, pas à obtenir une fraîcheur intra-journée).
+    - cron: '0 */3 * * *'
   workflow_dispatch:
     inputs:
       force_rebuild:
@@ -38,8 +40,14 @@ jobs:
       - name: Récupération des données carburant
         id: fetch
         run: |
-          node scripts/fetch-fuel-data.js
-          echo "fetch_done=true" >> $GITHUB_OUTPUT
+          set -o pipefail
+          node scripts/fetch-fuel-data.js 2>&1 | tee fetch-output.log
+          if grep -q '^FETCH_STATUS=failed$' fetch-output.log; then
+            echo "❌ Le téléchargement du flux gouvernemental a échoué (voir logs ci-dessus)."
+            rm -f fetch-output.log
+            exit 1
+          fi
+          rm -f fetch-output.log
 
       - name: Vérification des changements
         id: check-changes
@@ -53,8 +61,8 @@ jobs:
           git config --local user.name "github-actions[bot]"
           git pull origin main
           git add src/data/fuel/ public/data/stations-light.json last-update.txt
-          git commit -m "chore: mise à jour prix carburant $(date +'%Y-%m-%d')" || echo "Aucune donnée à committer (rebuild forcé)"
-          git push || echo "Rien à pousser"
+          git commit -m "chore: mise à jour prix carburant $(date +'%Y-%m-%d %H:%M')"
+          git push
 
       - name: Aucun changement détecté
         if: steps.check-changes.outputs.changed == 'false' && inputs.force_rebuild != 'true'

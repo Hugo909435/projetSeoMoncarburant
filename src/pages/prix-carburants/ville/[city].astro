@@ -9,6 +9,7 @@ import { buildCityIntro } from '../../../utils/city-intro';
 import { buildCityIdentity } from '../../../utils/city-identity';
 import { deptContent } from '../../../data/local-content';
 import LocalIdentity from '../../../components/LocalIdentity.astro';
+import { formatMaj } from '../../../utils/format-maj';
 import { existsSync } from 'node:fs';
 
 export async function getStaticPaths() {
@@ -183,10 +184,11 @@ const jsonLdBreadcrumb = {
                 <th>E10</th>
                 <th>E85</th>
                 <th>GPL</th>
+                <th title="Date de la dernière déclaration de prix par la station">Déclaré</th>
               </tr>
             </thead>
             <tbody>
-              {stations.map((s) => (
+              {stations.map((s: any) => (
                 <tr>
                   <td class="brand-cell">{s.enseigneSlug ? <BrandLogo slug={s.enseigneSlug} name={s.enseigne ?? s.enseigneSlug} /> : <span class="brand-unknown">{s.enseigne ?? '-'}</span>}</td>
                   <td class="station-addr">{s.adresse || '-'}</td>
@@ -196,6 +198,7 @@ const jsonLdBreadcrumb = {
                   <td>{s.prices.E10?.toFixed(3) ?? '-'}</td>
                   <td>{s.prices.E85?.toFixed(3) ?? '-'}</td>
                   <td>{s.prices.GPLc?.toFixed(3) ?? '-'}</td>
+                  <td class="station-maj" title={s.maj ?? ''}>{formatMaj(s.maj)}</td>
                 </tr>
               ))}
             </tbody>
@@ -251,6 +254,7 @@ const jsonLdBreadcrumb = {
   .stations-table td { padding: 0.55rem 0.75rem; border-bottom: 1px solid #f1f5f9; }
   .stations-table tr:hover td { background: #f8fafc; }
   .station-addr { max-width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .station-maj { white-space: nowrap; font-size: 0.75rem; color: #64748b; }
   .brand-cell { white-space: nowrap; padding: 0.4rem 0.75rem; }
   .brand-unknown { font-size: 0.7rem; color: #64748b; background: #f1f5f9; border-radius: 3px; padding: 0.1rem 0.4rem; }
   .nav-links { display: flex; gap: 1rem; flex-wrap: wrap; }

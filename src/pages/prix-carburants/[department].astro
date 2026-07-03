@@ -8,6 +8,7 @@ import LocalIdentity from '../../components/LocalIdentity.astro';
 import { deptContent } from '../../data/local-content';
 import BrandLogo from '../../components/BrandLogo.astro';
 import { resolveBrandLogo } from '../../utils/brand-logo';
+import { formatMaj } from '../../utils/format-maj';
 
 export async function getStaticPaths() {
   const deptFiles = import.meta.glob('../../data/fuel/stations-by-department/*.json', { eager: true });
@@ -236,6 +237,7 @@ const jsonLdBreadcrumb = {
                 <th>E10</th>
                 <th>E85</th>
                 <th>GPL</th>
+                <th title="Date de la dernière déclaration de prix par la station">Déclaré</th>
               </tr>
             </thead>
             <tbody>
@@ -251,6 +253,7 @@ const jsonLdBreadcrumb = {
                   <td>{s.prices.E10?.toFixed(3) ?? '-'}</td>
                   <td>{s.prices.E85?.toFixed(3) ?? '-'}</td>
                   <td>{s.prices.GPLc?.toFixed(3) ?? '-'}</td>
+                  <td class="station-maj" title={s.maj ?? ''}>{formatMaj(s.maj)}</td>
                 </tr>
               ))}
             </tbody>
@@ -259,7 +262,7 @@ const jsonLdBreadcrumb = {
         {count > 30 && (
           <div style="text-align:center; margin-top:1rem">
             <button id="show-more-btn" class="btn-show-more" data-stations={JSON.stringify(stations.slice(30).map((s: any) => ({
-              adresse: s.adresse, ville: s.ville, cp: s.cp, pop: s.pop, prices: s.prices, enseigne: s.enseigne, enseigneSlug: s.enseigneSlug, logo: resolveBrandLogo(s.enseigneSlug)
+              adresse: s.adresse, ville: s.ville, cp: s.cp, pop: s.pop, prices: s.prices, enseigne: s.enseigne, enseigneSlug: s.enseigneSlug, logo: resolveBrandLogo(s.enseigneSlug), maj: s.maj
             })))}>
               Afficher toutes les {count} stations ↓
             </button>
@@ -311,6 +314,8 @@ const jsonLdBreadcrumb = {
 </BaseLayout>
 
 <script>
+  import { formatMaj } from '../../utils/format-maj';
+
   // Afficher plus de stations
   const btn = document.getElementById('show-more-btn');
   if (btn) {
@@ -334,6 +339,7 @@ const jsonLdBreadcrumb = {
           <td>${s.prices?.E10?.toFixed(3) ?? '-'}</td>
           <td>${s.prices?.E85?.toFixed(3) ?? '-'}</td>
           <td>${s.prices?.GPLc?.toFixed(3) ?? '-'}</td>
+          <td class="station-maj" title="${s.maj ?? ''}">${formatMaj(s.maj)}</td>
         `;
         tbody.appendChild(tr);
       });
@@ -373,6 +379,7 @@ const jsonLdBreadcrumb = {
   .stations-table td { padding: 0.55rem 0.75rem; border-bottom: 1px solid #f1f5f9; }
   .stations-table tr:hover td { background: #f8fafc; }
   .station-addr { max-width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .station-maj { white-space: nowrap; font-size: 0.75rem; color: #64748b; }
   .price-highlight { font-weight: 700; color: #16a34a; }
   .pop-badge { font-size: 0.7rem; padding: 0.15rem 0.5rem; border-radius: 999px; font-weight: 600; }
   .pop-auto { background: #fef3c7; color: #92400e; }

@@ -224,6 +224,10 @@ function processStations(rawStations, departments, brandMap) {
     const stationId = String(pdv['@_id']);
     const brand = brandMap[stationId] ?? null;
 
+    // Date de déclaration la plus récente parmi les carburants (issue du flux officiel)
+    const majDates = Object.values(priceUpdates).filter(Boolean);
+    const maj = majDates.length > 0 ? majDates.sort().at(-1) : null;
+
     const station = {
       id: String(pdv['@_id']),
       cp,
@@ -243,6 +247,7 @@ function processStations(rawStations, departments, brandMap) {
       enseigneSlug: brand?.slug ?? null,
       prices,
       priceUpdates,
+      maj,
     };
 
     stations.push(station);
@@ -314,6 +319,7 @@ function stationToLight(s) {
     enseigne: s.enseigne ?? null,
     enseigneSlug: s.enseigneSlug ?? null,
     prices: s.prices,
+    maj: s.maj ?? null,
   };
 }
 
@@ -330,10 +336,11 @@ async function main() {
   } catch (err) {
     console.error('❌ Erreur téléchargement :', err.message);
     // Garder les anciennes données, ne pas écraser
+    console.log('⚠️  Conservation des données existantes.');
+    console.log('FETCH_STATUS=failed');
     if (CHECK_ONLY) {
       process.exit(1);
     } else {
-      console.log('⚠️  Conservation des données existantes.');
       process.exit(0);
     }
   }
@@ -574,6 +581,7 @@ async function main() {
 
   console.log(`\n✅ Terminé ! ${stations.length} stations, ${depCount} depts, ${cityCount} villes`);
   console.log(`📅 Dernière mise à jour : ${new Date().toLocaleString('fr-FR')}\n`);
+  console.log('FETCH_STATUS=ok');
 }
 
 main().catch(err => {
