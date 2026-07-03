@@ -1,0 +1,48 @@
+name: Build et déploiement Hostinger (réutilisable)
+
+on:
+  workflow_call:
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout du dépôt
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Configuration de Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Installation des dépendances
+        run: npm ci
+
+      - name: Build Astro
+        run: npx astro build
+        env:
+          NODE_ENV: production
+
+      - name: Déploiement vers Hostinger
+        timeout-minutes: 15
+        run: |
+          sudo apt-get install -y --no-install-recommends lftp
+          # Transferts SFTP plus robustes : moins de parallélisme (évite les blocages
+          # de connexions simultanées côté Hostinger) + timeouts et reconnexions.
+          lftp -e "set sftp:auto-confirm yes; \
+                   set net:timeout 30; \
+                   set net:max-retries 6; \
+                   set net:reconnect-interval-base 10; \
+                   set net:reconnect-interval-multiplier 1.5; \
+                   set net:persist-retries 5; \
+                   set mirror:parallel-transfer-count 2; \
+                   set mirror:parallel-directories no; \
+                   lcd dist; \
+                   mirror -R --delete --verbose . domains/mon-carburant.com/public_html/; \
+                   quit" \
+            sftp://${{ secrets.FTP_USER }}:${{ secrets.FTP_PASSWORD }}@${{ secrets.FTP_HOST }}:65002

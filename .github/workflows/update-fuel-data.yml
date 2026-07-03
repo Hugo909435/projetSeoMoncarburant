@@ -17,10 +17,19 @@ on:
 permissions:
   contents: write
 
+# Empêche deux déploiements Hostinger simultanés (avec le workflow de
+# déploiement continu déclenché sur push) : les runs se mettent en file
+# plutôt que de se chevaucher sur le même dossier public_html.
+concurrency:
+  group: hostinger-deploy
+  cancel-in-progress: false
+
 jobs:
   fetch-and-update:
     runs-on: ubuntu-latest
     timeout-minutes: 45
+    outputs:
+      changed: ${{ steps.check-changes.outputs.changed }}
 
     steps:
       - name: Checkout du dépôt
@@ -68,28 +77,8 @@ jobs:
         if: steps.check-changes.outputs.changed == 'false' && inputs.force_rebuild != 'true'
         run: echo "✅ Les données n'ont pas changé depuis la dernière mise à jour."
 
-      - name: Build Astro
-        if: steps.check-changes.outputs.changed == 'true' || inputs.force_rebuild == 'true'
-        run: npx astro build
-        env:
-          NODE_ENV: production
-
-      - name: Déploiement vers Hostinger
-        if: steps.check-changes.outputs.changed == 'true' || inputs.force_rebuild == 'true'
-        timeout-minutes: 15
-        run: |
-          sudo apt-get install -y --no-install-recommends lftp
-          # Transferts SFTP plus robustes : moins de parallélisme (évite les blocages
-          # de connexions simultanées côté Hostinger) + timeouts et reconnexions.
-          lftp -e "set sftp:auto-confirm yes; \
-                   set net:timeout 30; \
-                   set net:max-retries 6; \
-                   set net:reconnect-interval-base 10; \
-                   set net:reconnect-interval-multiplier 1.5; \
-                   set net:persist-retries 5; \
-                   set mirror:parallel-transfer-count 2; \
-                   set mirror:parallel-directories no; \
-                   lcd dist; \
-                   mirror -R --delete --verbose . domains/mon-carburant.com/public_html/; \
-                   quit" \
-            sftp://${{ secrets.FTP_USER }}:${{ secrets.FTP_PASSWORD }}@${{ secrets.FTP_HOST }}:65002
+  deploy:
+    needs: fetch-and-update
+    if: needs.fetch-and-update.outputs.changed == 'true' || inputs.force_rebuild == 'true'
+    uses: ./.github/workflows/deploy-hostinger.yml
+    secrets: inherit
