@@ -21,7 +21,7 @@ const BRAND_DIR = resolve(DATA_DIR, 'stations-by-brand');
 const PUBLIC_DATA_DIR = resolve(ROOT, 'public/data');
 const BRAND_MAP_FILE = resolve(ROOT, 'src/data/station-brands.json');
 
-const SOURCE_URL = 'https://donnees.roulez-eco.fr/opendata/jour';
+const SOURCE_URL = 'https://donnees.roulez-eco.fr/opendata/instantane';
 const CHECK_ONLY = process.argv.includes('--check');
 
 const FUELS = ['Gazole', 'SP95', 'SP98', 'E10', 'E85', 'GPLc'];

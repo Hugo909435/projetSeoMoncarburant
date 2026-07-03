@@ -81,6 +81,17 @@ export default defineConfig({
   redirects: {
     '/auteur/thomas-martin/': '/auteur/hugo-beignon/',
     '/piliers/guide-economiser-carburant/': '/piliers/reduire-facture-carburant/',
+    // DOM-TOM sans données (API carburant = métropole uniquement)
+    '/prix-carburants/guadeloupe-971/': '/prix-carburants/',
+    '/prix-carburants/martinique-972/': '/prix-carburants/',
+    '/prix-carburants/guyane-973/': '/prix-carburants/',
+    '/prix-carburants/la-reunion-974/': '/prix-carburants/',
+    '/prix-carburants/mayotte-976/': '/prix-carburants/',
+    // Articles blog inexistants (pattern deviné par Google)
+    '/blog/netto-carburant-prix-2026/': '/blog/',
+    '/blog/avia-carburant-prix-2026/': '/blog/',
+    '/blog/total-carburant-prix-2026/': '/blog/',
+    '/blog/shell-carburant-prix-2026/': '/blog/',
   },
   compressHTML: true,
   prefetch: {
