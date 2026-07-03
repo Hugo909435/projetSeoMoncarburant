@@ -12,6 +12,19 @@ RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
 RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
 RewriteRule ^ https://%1%{REQUEST_URI} [R=301,L]
 
+# Redirections 301 : pages 404 signalées par GSC
+# DOM-TOM (pas de données carburant)
+RewriteRule ^prix-carburants/guadeloupe-971/?$ /prix-carburants/ [R=301,L]
+RewriteRule ^prix-carburants/martinique-972/?$ /prix-carburants/ [R=301,L]
+RewriteRule ^prix-carburants/guyane-973/?$ /prix-carburants/ [R=301,L]
+RewriteRule ^prix-carburants/la-reunion-974/?$ /prix-carburants/ [R=301,L]
+RewriteRule ^prix-carburants/mayotte-976/?$ /prix-carburants/ [R=301,L]
+# Articles blog inexistants
+RewriteRule ^blog/netto-carburant-prix-2026/?$ /blog/ [R=301,L]
+RewriteRule ^blog/avia-carburant-prix-2026/?$ /blog/ [R=301,L]
+RewriteRule ^blog/total-carburant-prix-2026/?$ /blog/ [R=301,L]
+RewriteRule ^blog/shell-carburant-prix-2026/?$ /blog/ [R=301,L]
+
 # Sécurité : En-têtes HTTP
 <IfModule mod_headers.c>
     Header set X-Frame-Options "SAMEORIGIN"
