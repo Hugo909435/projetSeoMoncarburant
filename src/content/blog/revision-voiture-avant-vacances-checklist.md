@@ -44,7 +44,7 @@ draft: false
 
 Chaque été, ce sont les mêmes images sur les aires d'autoroute : une roue de secours qu'on gonfle en urgence, un pare-brise couvert d'insectes qu'on n'arrive plus à essuyer, un moteur qui chauffe sous 35 degrés avec quatre passagers et les valises. La plupart de ces galères se voient venir.
 
-Cet article, rédigé par [Hugo Beignon](/auteur/hugo-beignon/), rassemble une checklist courte à faire avant de partir. L'objectif est double : éviter la panne évitable, et rouler en consommant moins sur un trajet où chaque plein compte davantage qu'au quotidien.
+Cet article rassemble une checklist courte à faire avant de partir. L'objectif est double : éviter la panne évitable, et rouler en consommant moins sur un trajet où chaque plein compte davantage qu'au quotidien.
 
 Pour aller plus loin sur l'entretien qui fait vraiment baisser la consommation toute l'année, notre [guide entretien et consommation](/piliers/entretien-baisser-consommation/) détaille chaque geste dans le détail.
 
