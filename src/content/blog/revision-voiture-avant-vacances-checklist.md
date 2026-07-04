@@ -9,7 +9,7 @@ author: "hugo-beignon"
 category: "entretien"
 tags: ["révision voiture", "vacances", "checklist entretien", "consommation carburant", "entretien voiture"]
 featuredImage: "/images/articles/revision-voiture-avant-vacances.webp"
-imageAlt: "Automobiliste vérifiant les niveaux sous le capot de sa voiture avant un départ en vacances"
+imageAlt: "Voiture garée sur une plage ensoleillée au bord de la mer, prête pour un départ en vacances"
 readingTime: 5
 pillar: "entretien-baisser-consommation"
 relatedArticles: ["controle-technique-preparation", "carburant-vacances-ete-moins-cher", "pression-pneus-consommation"]
