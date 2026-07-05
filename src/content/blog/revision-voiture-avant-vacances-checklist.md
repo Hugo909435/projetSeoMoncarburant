@@ -12,7 +12,7 @@ featuredImage: "/images/articles/revision-voiture-avant-vacances.webp"
 imageAlt: "Voiture garée sur une plage ensoleillée au bord de la mer, prête pour un départ en vacances"
 readingTime: 5
 pillar: "entretien-baisser-consommation"
-relatedArticles: ["controle-technique-preparation", "carburant-vacances-ete-moins-cher", "pression-pneus-consommation"]
+relatedArticles: ["controle-technique-preparation", "plaquettes-frein-quand-changer", "carburant-vacances-ete-moins-cher", "pression-pneus-consommation"]
 ctaTitle: "Comparez le prix du carburant sur votre trajet"
 ctaDescription: "Une fois la voiture révisée, reste à choisir les bonnes stations. Comparez les prix près de chez vous et sur votre itinéraire de vacances."
 faq:
