@@ -315,6 +315,7 @@ const jsonLdBreadcrumb = {
 
 <script>
   import { formatMaj } from '../../utils/format-maj';
+  import { escapeHtml } from '../../utils/escape-html';
 
   // Afficher plus de stations
   const btn = document.getElementById('show-more-btn');
@@ -325,13 +326,14 @@ const jsonLdBreadcrumb = {
       if (!tbody) return;
       extraStations.forEach((s: any) => {
         const tr = document.createElement('tr');
+        const brandLabel = escapeHtml(s.enseigne || s.enseigneSlug);
         const brandHtml = s.enseigneSlug && s.logo
-          ? `<span class="brand-logo-wrap"><img src="${s.logo}" alt="${s.enseigne || s.enseigneSlug}" class="brand-logo-img" loading="lazy" onerror="this.style.display='none';this.nextSibling.style.display='inline-block'"/><span class="brand-logo-text" style="display:none">${s.enseigne || s.enseigneSlug}</span></span>`
-          : `<span class="brand-unknown">${s.enseigne || '-'}</span>`;
+          ? `<span class="brand-logo-wrap"><img src="${escapeHtml(s.logo)}" alt="${brandLabel}" class="brand-logo-img" loading="lazy" onerror="this.style.display='none';this.nextSibling.style.display='inline-block'"/><span class="brand-logo-text" style="display:none">${brandLabel}</span></span>`
+          : `<span class="brand-unknown">${escapeHtml(s.enseigne || '-')}</span>`;
         tr.innerHTML = `
           <td class="brand-cell">${brandHtml}</td>
-          <td class="station-addr">${s.adresse || '-'}</td>
-          <td>${s.ville} (${s.cp})</td>
+          <td class="station-addr">${escapeHtml(s.adresse || '-')}</td>
+          <td>${escapeHtml(s.ville)} (${escapeHtml(s.cp)})</td>
           <td><span class="pop-badge ${s.pop === 'autoroute' ? 'pop-auto' : 'pop-route'}">${s.pop === 'autoroute' ? 'Autoroute' : 'Route'}</span></td>
           <td>${s.prices?.Gazole?.toFixed(3) ?? '-'}</td>
           <td>${s.prices?.SP95?.toFixed(3) ?? '-'}</td>
@@ -339,7 +341,7 @@ const jsonLdBreadcrumb = {
           <td>${s.prices?.E10?.toFixed(3) ?? '-'}</td>
           <td>${s.prices?.E85?.toFixed(3) ?? '-'}</td>
           <td>${s.prices?.GPLc?.toFixed(3) ?? '-'}</td>
-          <td class="station-maj" title="${s.maj ?? ''}">${formatMaj(s.maj)}</td>
+          <td class="station-maj" title="${escapeHtml(s.maj ?? '')}">${formatMaj(s.maj)}</td>
         `;
         tbody.appendChild(tr);
       });

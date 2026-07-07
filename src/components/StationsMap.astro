@@ -107,6 +107,8 @@ const nationalGazole = (statsNational as Record<string, number>)['Gazole'] ?? 0;
 </style>
 
 <script>
+  import { escapeHtml } from '../utils/escape-html';
+
   const mapEl = document.getElementById('stations-map');
 
   function loadCss(href: string) {
@@ -176,8 +178,8 @@ const nationalGazole = (statsNational as Record<string, number>)['Gazole'] ?? 0;
           .map(([k, lbl]) => `<tr><td>${lbl}</td><td>${s.prices[k].toFixed(3)} €/L</td></tr>`)
           .join('');
         const popup =
-          `<div class="fuel-popup"><h4>${s.ville || ''}</h4>` +
-          `<p class="addr">${s.adresse || ''}${s.cp ? ' · ' + s.cp : ''}</p>` +
+          `<div class="fuel-popup"><h4>${escapeHtml(s.ville || '')}</h4>` +
+          `<p class="addr">${escapeHtml(s.adresse || '')}${s.cp ? ' · ' + escapeHtml(s.cp) : ''}</p>` +
           (rows ? `<table>${rows}</table>` : '<em>Prix non communiqués</em>') +
           `</div>`;
         cluster.addLayer(L.marker([s.lat, s.lng], { icon }).bindPopup(popup));

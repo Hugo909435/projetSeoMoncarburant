@@ -54,6 +54,14 @@ const citySlugs: string[] = Object.keys(cityFiles).map(p => p.replace(/^.*\/(.+)
         </button>
       </form>
 
+      <button type="button" id="hm-geo-btn" class="hm-geo-btn" aria-label="Rechercher les stations autour de ma position actuelle">
+        <svg class="hm-geo-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="3"/>
+          <path d="M12 2v3M12 19v3M2 12h3M19 12h3"/>
+        </svg>
+        <span id="hm-geo-btn-label">Autour de moi</span>
+      </button>
+
       <p id="hm-status" class="hm-status" role="status" aria-live="polite" aria-atomic="true"></p>
     </div>
   </div>
@@ -213,6 +221,30 @@ const citySlugs: string[] = Object.keys(cityFiles).map(p => p.replace(/^.*\/(.+)
   .hm-status.is-error { color: #fca5a5; }
   .hm-status.is-ok { color: #86efac; }
 
+  /* ── Bouton géolocalisation ── */
+  .hm-geo-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-top: 0.75rem;
+    padding: 0;
+    background: none;
+    border: none;
+    color: #cbd5e1;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-decoration: underline;
+    text-decoration-color: rgba(203 213 225 / 0.4);
+    text-underline-offset: 3px;
+    cursor: pointer;
+    transition: color 0.15s;
+  }
+  .hm-geo-btn:hover { color: #fff; }
+  .hm-geo-btn:disabled { cursor: wait; opacity: 0.7; }
+
+  .hm-geo-icon { flex-shrink: 0; }
+  .hm-geo-btn.is-loading .hm-geo-icon { animation: hm-spin 0.9s linear infinite; }
+
   /* ── Carte ── */
   .hm-map-wrap {
     background: #fff;
@@ -310,6 +342,16 @@ const citySlugs: string[] = Object.keys(cityFiles).map(p => p.replace(/^.*\/(.+)
   :global(.fuel-pin-exp)   { background: #ea580c; }
   :global(.fuel-pin-na)    { background: #94a3b8; }
 
+  /* ── Pin "vous êtes ici" ── */
+  :global(.hm-user-pin) {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #2563eb;
+    border: 3px solid #fff;
+    box-shadow: 0 0 0 1px rgba(0 0 0 / 0.25), 0 0 0 8px rgba(37 99 235 / 0.25);
+  }
+
   /* ── Popup Leaflet ── */
   :global(.hm-popup .leaflet-popup-content-wrapper) {
     border-radius: 0.75rem;
@@ -373,11 +415,15 @@ const citySlugs: string[] = Object.keys(cityFiles).map(p => p.replace(/^.*\/(.+)
 </style>
 
 <script>
+  import { escapeHtml } from '../utils/escape-html';
+
   const mapEl  = document.getElementById('hm-map') as HTMLElement | null;
   const formEl = document.getElementById('hm-form') as HTMLFormElement | null;
   const inputEl  = document.getElementById('hm-input') as HTMLInputElement | null;
   const statusEl = document.getElementById('hm-status') as HTMLElement | null;
   const loadingEl = document.getElementById('hm-loading') as HTMLElement | null;
+  const geoBtnEl = document.getElementById('hm-geo-btn') as HTMLButtonElement | null;
+  const geoBtnLabelEl = document.getElementById('hm-geo-btn-label') as HTMLElement | null;
 
   if (!mapEl) throw new Error('hm-map introuvable');
 
@@ -447,16 +493,16 @@ const citySlugs: string[] = Object.keys(cityFiles).map(p => p.replace(/^.*\/(.+)
       ? `/prix-carburants/ville/${s.villeSlug}/`
       : dept ? `/prix-carburants/${dept.slug}/` : null;
     const ctaLabel = hasCityPage
-      ? `Voir les stations à ${toDisplay(s.ville || '')} &rarr;`
+      ? `Voir les stations à ${escapeHtml(toDisplay(s.ville || ''))} &rarr;`
       : dept ? `Voir le département ${dept.name} &rarr;` : null;
 
     const noPrice = `<p style="font-size:.78rem;color:#64748b;margin:0 0 .5rem">Prix non communiqués</p>`;
 
     return (
       `<div class="popup-body">` +
-      (s.enseigne ? `<span class="popup-brand">${s.enseigne}</span>` : '') +
-      `<span class="popup-city">${toDisplay(s.ville || '')}</span>` +
-      `<p class="popup-addr">${s.adresse || ''}${s.cp ? ' &middot; ' + s.cp : ''}</p>` +
+      (s.enseigne ? `<span class="popup-brand">${escapeHtml(s.enseigne)}</span>` : '') +
+      `<span class="popup-city">${escapeHtml(toDisplay(s.ville || ''))}</span>` +
+      `<p class="popup-addr">${escapeHtml(s.adresse || '')}${s.cp ? ' &middot; ' + escapeHtml(s.cp) : ''}</p>` +
       (rows ? `<table class="popup-prices">${rows}</table>` : noPrice) +
       `</div>` +
       (ctaUrl && ctaLabel ? `<a href="${ctaUrl}" class="popup-cta">${ctaLabel}</a>` : '')
@@ -467,6 +513,119 @@ const citySlugs: string[] = Object.keys(cityFiles).map(p => p.replace(/^.*\/(.+)
   let leafletMap: any = null;
   let mapReady = false;
   let pendingSearch: string | null = null;
+  let pendingGeo: { lat: number; lng: number } | null = null;
+  let userMarker: any = null;
+
+  function haversineKm(lat1: number, lng1: number, lat2: number, lng2: number): number {
+    const R = 6371;
+    const dLat = (lat2 - lat1) * Math.PI / 180;
+    const dLng = (lng2 - lng1) * Math.PI / 180;
+    const a = Math.sin(dLat / 2) ** 2 +
+      Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * Math.sin(dLng / 2) ** 2;
+    return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  }
+
+  function doGeoSearch(lat: number, lng: number) {
+    if (!mapReady) {
+      pendingGeo = { lat, lng };
+      setStatus('La carte se charge, votre position sera utilisée dans un instant...');
+      return;
+    }
+
+    const L = (window as any).L;
+
+    if (userMarker) leafletMap.removeLayer(userMarker);
+    userMarker = L.marker([lat, lng], {
+      icon: L.divIcon({ className: '', html: '<div class="hm-user-pin"></div>', iconSize: [16, 16] }),
+      zIndexOffset: 1000,
+    }).bindPopup('Vous êtes ici', { className: 'hm-popup' }).addTo(leafletMap);
+
+    setStatus('Recherche des stations autour de vous...');
+
+    const withDist = stations
+      .filter(s => typeof s.lat === 'number' && typeof s.lng === 'number')
+      .map(s => ({ s, d: haversineKm(lat, lng, s.lat, s.lng) }))
+      .sort((a, b) => a.d - b.d);
+
+    let nearby = withDist.filter(x => x.d <= 15);
+    if (nearby.length < 5) nearby = withDist.slice(0, 5);
+
+    if (nearby.length === 0) {
+      leafletMap.flyTo([lat, lng], 12, { animate: true, duration: 1 });
+      setStatus('Aucune station trouvée près de vous.', 'error');
+      return;
+    }
+
+    const lats = [lat, ...nearby.map(x => x.s.lat)];
+    const lngs = [lng, ...nearby.map(x => x.s.lng)];
+    const minLat = Math.min(...lats), maxLat = Math.max(...lats);
+    const minLng = Math.min(...lngs), maxLng = Math.max(...lngs);
+
+    // La carte affiche en permanence toutes les stations (clustering), la
+    // recherche ne fait que déplacer la vue : on annonce donc le nombre de
+    // stations réellement comprises dans le cadre une fois le zoom stabilisé,
+    // plutôt que la liste utilisée pour calculer le cadrage, pour que le
+    // texte corresponde toujours à ce qui est affiché à l'écran.
+    leafletMap.once('moveend', () => {
+      const bounds = leafletMap.getBounds();
+      const inView = stations.filter(s =>
+        typeof s.lat === 'number' && typeof s.lng === 'number' && bounds.contains(L.latLng(s.lat, s.lng))
+      );
+
+      if (inView.length === 0) {
+        setStatus('Aucune station visible près de vous, essayez de dézoomer la carte.', 'error');
+        return;
+      }
+
+      const nearestKm = Math.min(...inView.map(s => haversineKm(lat, lng, s.lat, s.lng)));
+      const n = inView.length;
+      setStatus(
+        `${n.toLocaleString('fr-FR')} station${n > 1 ? 's' : ''} visible${n > 1 ? 's' : ''} près de vous (la plus proche à ${nearestKm.toFixed(1)} km)`,
+        'ok'
+      );
+    });
+
+    if (maxLat - minLat < 0.02 && maxLng - minLng < 0.02) {
+      leafletMap.flyTo([lat, lng], 14, { animate: true, duration: 1 });
+    } else {
+      leafletMap.flyToBounds([[minLat, minLng], [maxLat, maxLng]], {
+        padding: [48, 48], maxZoom: 14, animate: true, duration: 1,
+      });
+    }
+  }
+
+  function locateMe() {
+    if (!navigator.geolocation) {
+      setStatus('La géolocalisation n\'est pas disponible sur votre navigateur.', 'error');
+      return;
+    }
+
+    geoBtnEl?.setAttribute('disabled', 'true');
+    geoBtnEl?.classList.add('is-loading');
+    if (geoBtnLabelEl) geoBtnLabelEl.textContent = 'Localisation en cours...';
+    setStatus('Localisation en cours...');
+
+    navigator.geolocation.getCurrentPosition(
+      pos => {
+        geoBtnEl?.removeAttribute('disabled');
+        geoBtnEl?.classList.remove('is-loading');
+        if (geoBtnLabelEl) geoBtnLabelEl.textContent = 'Autour de moi';
+        doGeoSearch(pos.coords.latitude, pos.coords.longitude);
+      },
+      err => {
+        geoBtnEl?.removeAttribute('disabled');
+        geoBtnEl?.classList.remove('is-loading');
+        if (geoBtnLabelEl) geoBtnLabelEl.textContent = 'Autour de moi';
+        const messages: Record<number, string> = {
+          1: 'Localisation refusée. Autorisez l\'accès à votre position pour utiliser cette fonction.',
+          2: 'Impossible de déterminer votre position actuellement.',
+          3: 'La localisation a pris trop de temps. Réessayez.',
+        };
+        setStatus(messages[err.code] || 'Impossible d\'utiliser votre position.', 'error');
+      },
+      { enableHighAccuracy: true, timeout: 10000, maximumAge: 60000 }
+    );
+  }
 
   function doSearch(raw: string) {
     const q = raw.trim();
@@ -558,7 +717,7 @@ const citySlugs: string[] = Object.keys(cityFiles).map(p => p.replace(/^.*\/(.+)
           const cls = gz == null ? 'fuel-pin-na' : gz <= nat ? 'fuel-pin-cheap' : 'fuel-pin-exp';
           const icon = L.divIcon({
             className: '',
-            html: `<div class="fuel-pin ${cls}" style="width:12px;height:12px" title="${s.ville || ''}"></div>`,
+            html: `<div class="fuel-pin ${cls}" style="width:12px;height:12px" title="${escapeHtml(s.ville || '')}"></div>`,
             iconSize: [12, 12],
           });
           cluster.addLayer(
@@ -577,6 +736,7 @@ const citySlugs: string[] = Object.keys(cityFiles).map(p => p.replace(/^.*\/(.+)
         mapReady = true;
 
         if (pendingSearch) { doSearch(pendingSearch); pendingSearch = null; }
+        if (pendingGeo) { doGeoSearch(pendingGeo.lat, pendingGeo.lng); pendingGeo = null; }
       }
       addChunk();
     } catch (err) {
@@ -589,6 +749,8 @@ const citySlugs: string[] = Object.keys(cityFiles).map(p => p.replace(/^.*\/(.+)
     e.preventDefault();
     doSearch(inputEl?.value || '');
   });
+
+  geoBtnEl?.addEventListener('click', () => locateMe());
 
   // La carte est une amélioration progressive, pas le contenu prioritaire de
   // la page (le spinner + le formulaire de recherche suffisent au premier
