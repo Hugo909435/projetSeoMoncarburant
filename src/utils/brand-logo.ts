@@ -5,6 +5,8 @@ const BRAND_LOGO_EXTS = ['svg', 'png', 'webp'] as const;
 // Enseignes qui partagent le même logo qu'une autre enseigne.
 const BRAND_LOGO_ALIASES: Record<string, string> = {
   'total-access': 'total',
+  'total-excellium': 'total',
+  'totalenergies-access': 'total',
 };
 
 export function resolveBrandLogo(slug: string | null | undefined): string | null {

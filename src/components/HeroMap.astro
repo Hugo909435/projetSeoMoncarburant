@@ -2,6 +2,8 @@
 import statsNational from '../data/fuel/stats-national.json';
 import departmentsData from '../data/departments.json';
 import fuelMeta from '../data/fuel/meta.json';
+import stationBrands from '../data/station-brands.json';
+import { resolveBrandLogo } from '../utils/brand-logo';
 
 const nationalGazole = (statsNational as Record<string, number>)['Gazole'] ?? 0;
 const depts = departmentsData as Record<string, { name: string; slug: string }>;
@@ -13,6 +15,16 @@ for (const [num, d] of Object.entries(depts)) {
 
 const cityFiles = import.meta.glob('../data/fuel/stations-by-city/*.json');
 const citySlugs: string[] = Object.keys(cityFiles).map(p => p.replace(/^.*\/(.+)\.json$/, '$1'));
+
+// Logos de marques disponibles (public/images/brands/), résolus au build pour
+// que le script client n'ait qu'à regarder dans une table plutôt que de
+// deviner l'extension de fichier.
+const brandSlugs = new Set(Object.values(stationBrands as Record<string, { slug: string; name: string }>).map(b => b.slug));
+const brandLogos: Record<string, string> = {};
+for (const slug of brandSlugs) {
+  const logo = resolveBrandLogo(slug);
+  if (logo) brandLogos[slug] = logo;
+}
 ---
 
 <section class="hm-section" aria-labelledby="hm-title">
@@ -54,6 +66,18 @@ const citySlugs: string[] = Object.keys(cityFiles).map(p => p.replace(/^.*\/(.+)
         </button>
       </form>
 
+      <div class="hm-suggestions" id="hm-suggestions" role="group" aria-label="Villes populaires">
+        <span class="hm-suggestions-label">Recherches fréquentes :</span>
+        <button type="button" class="hm-chip" data-city="Paris">Paris</button>
+        <button type="button" class="hm-chip" data-city="Marseille">Marseille</button>
+        <button type="button" class="hm-chip" data-city="Lyon">Lyon</button>
+        <button type="button" class="hm-chip" data-city="Toulouse">Toulouse</button>
+        <button type="button" class="hm-chip" data-city="Nice">Nice</button>
+        <button type="button" class="hm-chip" data-city="Nantes">Nantes</button>
+        <button type="button" class="hm-chip" data-city="Strasbourg">Strasbourg</button>
+        <button type="button" class="hm-chip" data-city="Bordeaux">Bordeaux</button>
+      </div>
+
       <button type="button" id="hm-geo-btn" class="hm-geo-btn" aria-label="Rechercher les stations autour de ma position actuelle">
         <svg class="hm-geo-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <circle cx="12" cy="12" r="3"/>
@@ -66,24 +90,42 @@ const citySlugs: string[] = Object.keys(cityFiles).map(p => p.replace(/^.*\/(.+)
     </div>
   </div>
 
-  <!-- Carte Leaflet -->
+  <!-- Carte Leaflet + liste des stations -->
   <div class="hm-map-wrap">
     <div class="container">
-      <div
-        id="hm-map"
-        class="hm-map"
-        data-nat={nationalGazole}
-        data-depts={JSON.stringify(deptMap)}
-        data-city-slugs={JSON.stringify(citySlugs)}
-        role="application"
-        aria-label="Carte interactive des stations-service en France"
-      >
-        <div class="hm-loading" id="hm-loading">
-          <svg class="hm-spinner" viewBox="0 0 50 50" aria-hidden="true">
-            <circle cx="25" cy="25" r="20" fill="none" stroke-width="5"/>
-          </svg>
-          <span>Chargement des stations...</span>
+      <div class="hm-map-layout">
+        <div
+          id="hm-map"
+          class="hm-map"
+          data-nat={nationalGazole}
+          data-depts={JSON.stringify(deptMap)}
+          data-city-slugs={JSON.stringify(citySlugs)}
+          data-brand-logos={JSON.stringify(brandLogos)}
+          role="application"
+          aria-label="Carte interactive des stations-service en France"
+        >
+          <div class="hm-loading" id="hm-loading">
+            <svg class="hm-spinner" viewBox="0 0 50 50" aria-hidden="true">
+              <circle cx="25" cy="25" r="20" fill="none" stroke-width="5"/>
+            </svg>
+            <span>Chargement des stations...</span>
+          </div>
         </div>
+
+        <aside class="hm-list-panel" aria-label="Liste des stations trouvées">
+          <div class="hm-fuel-filters" id="hm-fuel-filters" role="group" aria-label="Filtrer par type de carburant">
+            <button type="button" class="hm-fuel-btn is-active" data-fuel="Gazole">Gazole</button>
+            <button type="button" class="hm-fuel-btn" data-fuel="SP95">SP95</button>
+            <button type="button" class="hm-fuel-btn" data-fuel="SP98">SP98</button>
+            <button type="button" class="hm-fuel-btn" data-fuel="E10">E10</button>
+            <button type="button" class="hm-fuel-btn" data-fuel="E85">E85</button>
+            <button type="button" class="hm-fuel-btn" data-fuel="GPLc">GPL</button>
+          </div>
+          <p class="hm-list-count" id="hm-list-count"></p>
+          <ul class="hm-list" id="hm-list">
+            <li class="hm-list-empty">Recherchez une ville, un code postal, ou cliquez sur « Autour de moi » pour afficher la liste des stations ici.</li>
+          </ul>
+        </aside>
       </div>
     </div>
   </div>
@@ -211,6 +253,41 @@ const citySlugs: string[] = Object.keys(cityFiles).map(p => p.replace(/^.*\/(.+)
   .hm-btn:hover { background: #c05a17; transform: translateY(-1px); }
   .hm-btn:active { transform: none; }
 
+  /* ── Villes populaires ── */
+  .hm-suggestions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0.875rem;
+    max-width: 700px;
+  }
+
+  .hm-suggestions-label {
+    font-size: 0.8rem;
+    color: #94a3b8;
+    margin-right: 0.125rem;
+  }
+
+  .hm-chip {
+    padding: 0.3rem 0.75rem;
+    border: 1.5px solid rgba(255 255 255 / 0.2);
+    border-radius: 999px;
+    background: rgba(255 255 255 / 0.07);
+    color: #e2e8f0;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s, color 0.15s, transform 0.15s;
+  }
+  .hm-chip:hover {
+    background: rgba(232 119 34 / 0.16);
+    border-color: var(--color-accent);
+    color: #fff;
+    transform: translateY(-1px);
+  }
+  .hm-chip:active { transform: none; }
+
   .hm-status {
     min-height: 1.4rem;
     margin: 0.625rem 0 0;
@@ -251,6 +328,17 @@ const citySlugs: string[] = Object.keys(cityFiles).map(p => p.replace(/^.*\/(.+)
     padding: 2rem 0;
   }
 
+  .hm-map-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 320px;
+    gap: 1.25rem;
+    align-items: start;
+  }
+
+  @media (max-width: 900px) {
+    .hm-map-layout { grid-template-columns: 1fr; }
+  }
+
   .hm-map {
     position: relative;
     width: 100%;
@@ -263,6 +351,221 @@ const citySlugs: string[] = Object.keys(cityFiles).map(p => p.replace(/^.*\/(.+)
   }
 
   @media (max-width: 640px) { .hm-map { height: 400px; border-radius: 0.75rem; } }
+
+  /* ── Panneau liste des stations ── */
+  .hm-list-panel {
+    display: flex;
+    flex-direction: column;
+    height: 520px;
+    background: #f8fafc;
+    border: 1px solid var(--color-border);
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: 0 8px 32px rgba(0 0 0 / 0.1);
+  }
+
+  @media (max-width: 900px) { .hm-list-panel { height: 420px; } }
+  @media (max-width: 640px) { .hm-list-panel { height: 380px; border-radius: 0.75rem; } }
+
+  .hm-fuel-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.375rem;
+    padding: 0.875rem 0.875rem 0.75rem;
+    background: #fff;
+    border-bottom: 1px solid var(--color-border);
+    flex-shrink: 0;
+  }
+
+  .hm-fuel-btn {
+    padding: 0.32rem 0.7rem;
+    border: 1.5px solid var(--color-border);
+    border-radius: 999px;
+    background: #fff;
+    color: #475569;
+    font-size: 0.75rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s, color 0.15s, transform 0.15s;
+  }
+  .hm-fuel-btn:hover { border-color: var(--color-accent); color: var(--color-accent); }
+  .hm-fuel-btn.is-active {
+    background: var(--color-accent);
+    border-color: var(--color-accent);
+    color: #fff;
+    box-shadow: 0 2px 8px rgba(232 119 34 / 0.35);
+  }
+
+  .hm-list-count {
+    margin: 0;
+    padding: 0.5rem 0.875rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #64748b;
+    background: #fff;
+    border-bottom: 1px solid var(--color-border);
+    flex-shrink: 0;
+  }
+  .hm-list-count:empty { display: none; }
+
+  .hm-list {
+    list-style: none;
+    margin: 0;
+    padding: 0.625rem;
+    overflow-y: auto;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    scrollbar-width: thin;
+  }
+  .hm-list::-webkit-scrollbar { width: 7px; }
+  .hm-list::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 999px; }
+  .hm-list::-webkit-scrollbar-track { background: transparent; }
+
+  /* Le contenu ci-dessous est injecté dynamiquement (innerHTML) par le
+     script, donc sans l'attribut de scope Astro : les sélecteurs doivent
+     rester globaux pour s'appliquer. */
+  :global(.hm-list-empty) {
+    padding: 1.5rem 0.75rem;
+    color: #64748b;
+    font-size: 0.85rem;
+    line-height: 1.6;
+    text-align: center;
+  }
+
+  :global(.hm-list-item) {
+    position: relative;
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 0.625rem;
+    width: 100%;
+    text-align: left;
+    background: #fff;
+    border: 1px solid var(--color-border);
+    border-left: 4px solid var(--color-border);
+    border-radius: 0.75rem;
+    padding: 0.6rem 0.75rem;
+    cursor: pointer;
+    box-shadow: 0 1px 2px rgba(15 23 42 / 0.04);
+    transition: border-color 0.15s, box-shadow 0.15s, transform 0.15s;
+  }
+  :global(.hm-list-item:hover), :global(.hm-list-item:focus-visible) {
+    border-color: var(--color-accent);
+    box-shadow: 0 6px 16px rgba(232 119 34 / 0.16);
+    transform: translateY(-1px);
+  }
+  :global(.hm-list-item.is-best) {
+    border-left-color: #16a34a;
+    background: #f4fdf6;
+    margin-top: 0.4rem;
+  }
+
+  :global(.hm-item-best-tag) {
+    position: absolute;
+    top: -0.5rem;
+    left: 0.75rem;
+    background: #16a34a;
+    color: #fff;
+    font-size: 0.6rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    padding: 0.1rem 0.45rem;
+    border-radius: 999px;
+    box-shadow: 0 1px 3px rgba(0 0 0 / 0.2);
+  }
+
+  :global(.hm-item-logo) {
+    width: 36px;
+    height: 36px;
+    border-radius: 0.5rem;
+    flex-shrink: 0;
+    background: #fff;
+    border: 1px solid var(--color-border);
+    object-fit: contain;
+    padding: 3px;
+  }
+  :global(.hm-item-logo-fallback) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    background: var(--color-primary);
+    font-size: 0.9rem;
+    font-weight: 800;
+  }
+
+  :global(.hm-item-main) {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.05rem;
+  }
+
+  :global(.hm-item-brand) {
+    font-size: 0.6875rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-accent);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  :global(.hm-item-city) {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #0f2e44;
+    text-transform: capitalize;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  :global(.hm-item-addr) {
+    font-size: 0.72rem;
+    color: #94a3b8;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  :global(.hm-item-dist) {
+    display: inline-block;
+    margin-top: 0.15rem;
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: #2563eb;
+    background: #eff6ff;
+    border-radius: 999px;
+    padding: 0.05rem 0.45rem;
+    width: fit-content;
+  }
+
+  :global(.hm-item-price-wrap) {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    flex-shrink: 0;
+    line-height: 1.1;
+  }
+
+  :global(.hm-item-price) {
+    font-size: 1.05rem;
+    font-weight: 800;
+    color: #0f2e44;
+    white-space: nowrap;
+  }
+  :global(.hm-list-item.is-best .hm-item-price) { color: #16a34a; }
+
+  :global(.hm-item-unit) {
+    font-size: 0.625rem;
+    font-weight: 600;
+    color: #94a3b8;
+  }
 
   .hm-loading {
     position: absolute;
@@ -424,12 +727,17 @@ const citySlugs: string[] = Object.keys(cityFiles).map(p => p.replace(/^.*\/(.+)
   const loadingEl = document.getElementById('hm-loading') as HTMLElement | null;
   const geoBtnEl = document.getElementById('hm-geo-btn') as HTMLButtonElement | null;
   const geoBtnLabelEl = document.getElementById('hm-geo-btn-label') as HTMLElement | null;
+  const listEl = document.getElementById('hm-list') as HTMLElement | null;
+  const listCountEl = document.getElementById('hm-list-count') as HTMLElement | null;
+  const fuelFiltersEl = document.getElementById('hm-fuel-filters') as HTMLElement | null;
+  const suggestionsEl = document.getElementById('hm-suggestions') as HTMLElement | null;
 
   if (!mapEl) throw new Error('hm-map introuvable');
 
   const nat = parseFloat(mapEl.dataset.nat || '0');
   const deptMap: Record<string, { slug: string; name: string }> = JSON.parse(mapEl.dataset.depts || '{}');
   const citySlugsSet = new Set<string>(JSON.parse(mapEl.dataset.citySlugs || '[]'));
+  const brandLogos: Record<string, string> = JSON.parse(mapEl.dataset.brandLogos || '{}');
 
   function loadCss(href: string): Promise<void> {
     return new Promise(resolve => {
@@ -473,6 +781,7 @@ const citySlugs: string[] = Object.keys(cityFiles).map(p => p.replace(/^.*\/(.+)
     ville: string; villeSlug: string;
     adresse: string; cp: string; dep: string;
     enseigne?: string;
+    enseigneSlug?: string;
     prices?: Record<string, number>;
   };
 
@@ -516,6 +825,88 @@ const citySlugs: string[] = Object.keys(cityFiles).map(p => p.replace(/^.*\/(.+)
   let pendingGeo: { lat: number; lng: number } | null = null;
   let userMarker: any = null;
 
+  const LIST_MAX = 40;
+  let selectedFuel = 'Gazole';
+  let lastResults: { s: Station; dist?: number }[] = [];
+  let popupLayer: any = null;
+
+  function flyToStation(s: Station) {
+    if (!leafletMap) return;
+    const L = (window as any).L;
+    leafletMap.flyTo([s.lat, s.lng], 15, { animate: true, duration: 0.75 });
+    if (popupLayer) leafletMap.closePopup(popupLayer);
+    popupLayer = L.popup({ className: 'hm-popup', maxWidth: 270 })
+      .setLatLng([s.lat, s.lng])
+      .setContent(buildPopup(s))
+      .openOn(leafletMap);
+  }
+
+  function renderList() {
+    if (!listEl) return;
+
+    if (lastResults.length === 0) {
+      listEl.innerHTML = '<li class="hm-list-empty">Recherchez une ville, un code postal, ou cliquez sur « Autour de moi » pour afficher la liste des stations ici.</li>';
+      if (listCountEl) listCountEl.textContent = '';
+      return;
+    }
+
+    const withPrice = lastResults.filter(r => r.s.prices?.[selectedFuel] != null);
+    const sorted = withPrice.slice().sort((a, b) => (a.s.prices![selectedFuel] as number) - (b.s.prices![selectedFuel] as number));
+    const shown = sorted.slice(0, LIST_MAX);
+
+    if (listCountEl) {
+      const label = FUEL_LABELS[selectedFuel] || selectedFuel;
+      listCountEl.textContent = withPrice.length === 0
+        ? `Aucune station avec un prix ${label} communiqué dans cette sélection.`
+        : `${withPrice.length.toLocaleString('fr-FR')} station${withPrice.length > 1 ? 's' : ''} avec prix ${label}` +
+          (withPrice.length > shown.length ? ` (${shown.length} affichées, triées du moins cher au plus cher)` : ' (triées du moins cher au plus cher)');
+    }
+
+    listEl.innerHTML = shown.map(({ s, dist }, i) => {
+      const price = s.prices![selectedFuel] as number;
+      const [intPart, decPart] = price.toFixed(3).replace('.', ',').split(',');
+      const brandName = s.enseigne || 'Station';
+      const logoUrl = s.enseigneSlug ? brandLogos[s.enseigneSlug] : null;
+      const logo = logoUrl
+        ? `<img class="hm-item-logo" src="${logoUrl}" alt="${escapeHtml(brandName)}" loading="lazy" decoding="async" />`
+        : `<span class="hm-item-logo hm-item-logo-fallback">${escapeHtml(brandName.charAt(0).toUpperCase())}</span>`;
+      return `<li>
+        <button type="button" class="hm-list-item${i === 0 ? ' is-best' : ''}" data-lat="${s.lat}" data-lng="${s.lng}">
+          ${i === 0 ? '<span class="hm-item-best-tag">Moins cher</span>' : ''}
+          ${logo}
+          <span class="hm-item-main">
+            <span class="hm-item-brand">${escapeHtml(brandName)}</span>
+            <span class="hm-item-city">${escapeHtml(toDisplay(s.ville || ''))}</span>
+            <span class="hm-item-addr">${escapeHtml(s.adresse || '')}${s.cp ? ' &middot; ' + escapeHtml(s.cp) : ''}</span>
+            ${typeof dist === 'number' ? `<span class="hm-item-dist">${dist.toFixed(1)} km</span>` : ''}
+          </span>
+          <span class="hm-item-price-wrap">
+            <span class="hm-item-price">${intPart},${decPart}</span>
+            <span class="hm-item-unit">€/L</span>
+          </span>
+        </button>
+      </li>`;
+    }).join('');
+  }
+
+  listEl?.addEventListener('click', e => {
+    const btn = (e.target as HTMLElement)?.closest('.hm-list-item') as HTMLElement | null;
+    if (!btn) return;
+    const lat = parseFloat(btn.dataset.lat || '');
+    const lng = parseFloat(btn.dataset.lng || '');
+    const s = lastResults.find(r => r.s.lat === lat && r.s.lng === lng)?.s;
+    if (s) flyToStation(s);
+  });
+
+  fuelFiltersEl?.addEventListener('click', e => {
+    const btn = (e.target as HTMLElement)?.closest('.hm-fuel-btn') as HTMLElement | null;
+    if (!btn) return;
+    selectedFuel = btn.dataset.fuel || 'Gazole';
+    fuelFiltersEl.querySelectorAll('.hm-fuel-btn').forEach(b => b.classList.remove('is-active'));
+    btn.classList.add('is-active');
+    renderList();
+  });
+
   function haversineKm(lat1: number, lng1: number, lat2: number, lng2: number): number {
     const R = 6371;
     const dLat = (lat2 - lat1) * Math.PI / 180;
@@ -553,8 +944,13 @@ const citySlugs: string[] = Object.keys(cityFiles).map(p => p.replace(/^.*\/(.+)
     if (nearby.length === 0) {
       leafletMap.flyTo([lat, lng], 12, { animate: true, duration: 1 });
       setStatus('Aucune station trouvée près de vous.', 'error');
+      lastResults = [];
+      renderList();
       return;
     }
+
+    lastResults = nearby.map(x => ({ s: x.s, dist: x.d }));
+    renderList();
 
     const lats = [lat, ...nearby.map(x => x.s.lat)];
     const lngs = [lng, ...nearby.map(x => x.s.lng)];
@@ -640,25 +1036,47 @@ const citySlugs: string[] = Object.keys(cityFiles).map(p => p.replace(/^.*\/(.+)
     let matched: Station[] = [];
 
     if (/^\d{2,5}$/.test(q)) {
-      const padded = q.padStart(5, '0');
-      const dep = (padded.startsWith('97') || padded.startsWith('98')) ? padded.slice(0, 3) : padded.slice(0, 2);
-      matched = stations.filter(s => s.dep === dep);
-      if (matched.length === 0) matched = stations.filter(s => s.cp?.startsWith(q.slice(0, 2)));
+      if (q.length === 5) {
+        // Code postal complet : on cible d'abord ce code précis (ex : 75013)
+        // avant de retomber sur le département entier.
+        matched = stations.filter(s => s.cp === q);
+      }
+      if (matched.length === 0) {
+        const padded = q.padStart(5, '0');
+        const dep = (padded.startsWith('97') || padded.startsWith('98')) ? padded.slice(0, 3) : padded.slice(0, 2);
+        matched = stations.filter(s => s.dep === dep);
+        if (matched.length === 0) matched = stations.filter(s => s.cp?.startsWith(q.slice(0, 2)));
+      }
     } else {
       const qn = norm(q);
       matched = stations.filter(s => {
         const slug = s.villeSlug || norm(s.ville || '');
-        return slug === qn || slug.startsWith(qn + '-') || slug.startsWith(qn);
+        return slug === qn || slug.startsWith(qn + '-');
       });
       if (matched.length === 0) {
         matched = stations.filter(s => (s.villeSlug || norm(s.ville || '')).includes(qn));
+      }
+
+      // Des communes sans lien (ex : Marseille-en-Beauvaisis, Toulouse-le-Château)
+      // partagent un préfixe avec de grandes villes : on les écarte en ne
+      // gardant que ce qui reste proche de la meilleure correspondance, pour
+      // éviter que la carte ne dézoome sur la moitié de la France.
+      if (matched.length > 1) {
+        const anchor = matched.find(s => (s.villeSlug || norm(s.ville || '')) === qn) || matched[0];
+        const near = matched.filter(s => haversineKm(anchor.lat, anchor.lng, s.lat, s.lng) <= 40);
+        if (near.length > 0) matched = near;
       }
     }
 
     if (matched.length === 0) {
       setStatus('Aucune station trouvée. Vérifiez l\'orthographe ou essayez un code postal.', 'error');
+      lastResults = [];
+      renderList();
       return;
     }
+
+    lastResults = matched.map(s => ({ s }));
+    renderList();
 
     const lats = matched.map(s => s.lat).filter(v => typeof v === 'number');
     const lngs = matched.map(s => s.lng).filter(v => typeof v === 'number');
@@ -751,6 +1169,14 @@ const citySlugs: string[] = Object.keys(cityFiles).map(p => p.replace(/^.*\/(.+)
   });
 
   geoBtnEl?.addEventListener('click', () => locateMe());
+
+  suggestionsEl?.addEventListener('click', e => {
+    const btn = (e.target as HTMLElement)?.closest('.hm-chip') as HTMLElement | null;
+    const city = btn?.dataset.city;
+    if (!city) return;
+    if (inputEl) inputEl.value = city;
+    doSearch(city);
+  });
 
   // La carte est une amélioration progressive, pas le contenu prioritaire de
   // la page (le spinner + le formulaire de recherche suffisent au premier
