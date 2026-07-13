@@ -9,7 +9,7 @@ author: "hugo-beignon"
 category: "carburants"
 tags: ["prix carburant", "stations-service", "marge carburant", "comparateur prix", "économies"]
 featuredImage: "/images/articles/difference-prix-carburant-stations-meme-ville.webp"
-imageAlt: "Deux panneaux de prix de carburant affichant des tarifs différents dans une même ville"
+imageAlt: "Totem de prix affichant les tarifs SP95, SP98, Super et Gazole à l'entrée d'une station-service"
 readingTime: 7
 pillar: "reduire-facture-carburant"
 relatedArticles: ["prix-carburant-2026", "carrefour-carburant-prix-2026", "reduire-facture-carburant"]
@@ -34,6 +34,8 @@ draft: false
 </div>
 
 Vous faites le plein à une station, votre voisin fait le sien deux rues plus loin, et vous découvrez en comparant vos tickets un écart de 15 centimes par litre. Sur un plein de 50 litres, ça représente 7,50 euros jetés par la fenêtre, pour le même produit, dans la même ville, le même jour. La question mérite d'être posée : comment un litre de SP95-E10 peut-il coûter des prix aussi différents à quelques minutes de trajet ?
+
+<p class="text-sm text-slate-500 italic">Photo : Lionel Allorge, <a href="https://creativecommons.org/licenses/by-sa/3.0/deed.fr" target="_blank" rel="noopener">CC BY-SA 3.0</a>, via Wikimedia Commons.</p>
 
 ---
 
