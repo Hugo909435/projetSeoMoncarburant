@@ -32,9 +32,9 @@ jobs:
         timeout-minutes: 15
         run: |
           sudo apt-get install -y --no-install-recommends lftp
-          # Transferts SFTP plus robustes : moins de parallélisme (évite les blocages
+          # Transferts FTP plus robustes : moins de parallélisme (évite les blocages
           # de connexions simultanées côté Hostinger) + timeouts et reconnexions.
-          lftp -e "set sftp:auto-confirm yes; \
+          lftp -e "set ftp:passive-mode true; \
                    set net:timeout 30; \
                    set net:max-retries 6; \
                    set net:reconnect-interval-base 10; \
@@ -45,4 +45,4 @@ jobs:
                    lcd dist; \
                    mirror -R --delete --verbose . domains/mon-carburant.com/public_html/; \
                    quit" \
-            sftp://${{ secrets.FTP_USER }}:${{ secrets.FTP_PASSWORD }}@${{ secrets.FTP_HOST }}:65002
+            ftp://${{ secrets.FTP_USER }}:${{ secrets.FTP_PASSWORD }}@${{ secrets.FTP_HOST }}:21
