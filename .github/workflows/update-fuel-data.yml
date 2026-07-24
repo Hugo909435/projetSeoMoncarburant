@@ -28,6 +28,9 @@ jobs:
   fetch-and-update:
     runs-on: ubuntu-latest
     timeout-minutes: 45
+    concurrency:
+      group: fetch-fuel-data
+      cancel-in-progress: false
     outputs:
       changed: ${{ steps.check-changes.outputs.changed }}
 
@@ -68,10 +71,13 @@ jobs:
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          git pull origin main
           git add src/data/fuel/ public/data/stations-light.json last-update.txt
           git commit -m "chore: mise à jour prix carburant $(date +'%Y-%m-%d %H:%M')"
-          git push
+          for i in 1 2 3 4 5; do
+            git pull --rebase origin main && git push && break
+            echo "Push refusé (tentative $i), nouvelle synchronisation..."
+            sleep $((RANDOM % 10 + 1))
+          done
 
       - name: Aucun changement détecté
         if: steps.check-changes.outputs.changed == 'false' && inputs.force_rebuild != 'true'
