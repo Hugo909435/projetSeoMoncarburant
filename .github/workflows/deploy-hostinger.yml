@@ -39,8 +39,12 @@ jobs:
           # Identifiants passés en variables d'env (pas dans l'URL) : évite
           # qu'un caractère spécial dans le mot de passe (@ : / % # ...) casse
           # le parsing de l'URL ftp://user:pass@host et fausse le login.
-          # Transferts FTP plus robustes : moins de parallélisme (évite les blocages
-          # de connexions simultanées côté Hostinger) + timeouts et reconnexions.
+          # DIAGNOSTIC TEMPORAIRE : le mirror est désactivé le temps de vérifier
+          # dans quel répertoire on atterrit après connexion FTP (le compte FTP
+          # n'a peut-être pas la même racine que l'ancien compte SFTP, ce qui
+          # expliquerait pourquoi les derniers fichiers déployés n'apparaissent
+          # pas sur le site malgré un run vert). À retirer une fois le bon
+          # chemin de destination confirmé.
           lftp -u "$FTP_USER","$FTP_PASSWORD" -p 21 \
                -e "set ftp:ssl-allow no; \
                    set ftp:passive-mode true; \
@@ -51,7 +55,13 @@ jobs:
                    set net:persist-retries 5; \
                    set mirror:parallel-transfer-count 2; \
                    set mirror:parallel-directories no; \
-                   lcd dist; \
-                   mirror -R --delete --verbose . domains/mon-carburant.com/public_html/; \
+                   echo '--- pwd apres login ---'; \
+                   pwd; \
+                   echo '--- contenu du repertoire de connexion ---'; \
+                   ls -la; \
+                   echo '--- tentative de lister domains/ ---'; \
+                   ls -la domains/; \
+                   echo '--- tentative de lister public_html/ ---'; \
+                   ls -la public_html/; \
                    quit" \
             "$FTP_HOST"
