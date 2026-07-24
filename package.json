@@ -15,21 +15,21 @@
     "fetch-brands": "node scripts/fetch-brand-map.js"
   },
   "dependencies": {
-    "@astrojs/mdx": "^4.0.0",
+    "@astrojs/mdx": "^7.0.3",
     "@astrojs/rss": "^4.0.11",
     "@astrojs/sitemap": "^3.3.0",
     "@fontsource-variable/inter": "^5.1.1",
     "@fontsource-variable/manrope": "^5.1.0",
     "@tailwindcss/vite": "^4.1.0",
     "adm-zip": "^0.5.17",
-    "astro": "^5.7.0",
+    "astro": "^7.1.3",
     "astro-seo": "^0.8.4",
     "fast-xml-parser": "^5.7.2",
     "slugify": "^1.6.9",
     "tailwindcss": "^4.1.0"
   },
   "devDependencies": {
-    "sharp": "^0.34.5",
+    "sharp": "^0.35.3",
     "typescript": "^5.7.0"
   }
 }
