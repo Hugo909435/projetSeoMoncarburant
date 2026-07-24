@@ -6,7 +6,7 @@ on:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 35
 
     steps:
       - name: Checkout du dépôt
@@ -28,22 +28,45 @@ jobs:
         env:
           NODE_ENV: production
 
-      - name: Déploiement vers Hostinger
-        timeout-minutes: 15
+      - name: Installation de lftp
+        run: sudo apt-get install -y --no-install-recommends lftp
+
+      - name: Nettoyage du dossier domains/ créé par erreur
+        timeout-minutes: 10
+        continue-on-error: true
         env:
           FTP_USER: ${{ secrets.FTP_USER }}
           FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
           FTP_HOST: ${{ secrets.FTP_HOST }}
         run: |
-          sudo apt-get install -y --no-install-recommends lftp
+          # domains/mon-carburant.com/ contient une copie complète du site,
+          # créée par erreur le temps qu'on identifie le bon chemin de dépôt
+          # (voir historique du fichier). Suppression isolée dans son propre
+          # timeout pour ne pas bouffer le budget du vrai déploiement : une
+          # suppression récursive de ~344 pages en FTP simple est lente.
+          lftp -u "$FTP_USER","$FTP_PASSWORD" -p 21 \
+               -e "set ftp:ssl-allow no; \
+                   set net:timeout 30; \
+                   set net:max-retries 3; \
+                   set net:persist-retries 2; \
+                   rm -r -f domains; \
+                   quit" \
+            "$FTP_HOST"
+
+      - name: Déploiement vers Hostinger
+        timeout-minutes: 20
+        env:
+          FTP_USER: ${{ secrets.FTP_USER }}
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+          FTP_HOST: ${{ secrets.FTP_HOST }}
+        run: |
           # Identifiants passés en variables d'env (pas dans l'URL) : évite
           # qu'un caractère spécial dans le mot de passe (@ : / % # ...) casse
           # le parsing de l'URL ftp://user:pass@host et fausse le login.
           # Ce compte FTP est déjà enraciné dans le document root du site
           # (contrairement à l'ancien compte SFTP) : on mirror directement dans
           # le répertoire courant "." et pas dans domains/mon-carburant.com/public_html/,
-          # qui n'existe pas ici. On supprime aussi le dossier "domains" créé
-          # par erreur lors des runs précédents pendant qu'on cherchait le bon chemin.
+          # qui n'existe pas ici.
           # Transferts FTP plus robustes : moins de parallélisme (évite les blocages
           # de connexions simultanées côté Hostinger) + timeouts et reconnexions.
           lftp -u "$FTP_USER","$FTP_PASSWORD" -p 21 \
@@ -56,7 +79,6 @@ jobs:
                    set net:persist-retries 5; \
                    set mirror:parallel-transfer-count 2; \
                    set mirror:parallel-directories no; \
-                   rm -r -f domains; \
                    lcd dist; \
                    mirror -R --delete --verbose . .; \
                    quit" \
