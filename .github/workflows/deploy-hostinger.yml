@@ -30,11 +30,19 @@ jobs:
 
       - name: Déploiement vers Hostinger
         timeout-minutes: 15
+        env:
+          FTP_USER: ${{ secrets.FTP_USER }}
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+          FTP_HOST: ${{ secrets.FTP_HOST }}
         run: |
           sudo apt-get install -y --no-install-recommends lftp
+          # Identifiants passés en variables d'env (pas dans l'URL) : évite
+          # qu'un caractère spécial dans le mot de passe (@ : / % # ...) casse
+          # le parsing de l'URL ftp://user:pass@host et fausse le login.
           # Transferts FTP plus robustes : moins de parallélisme (évite les blocages
           # de connexions simultanées côté Hostinger) + timeouts et reconnexions.
-          lftp -e "set ftp:passive-mode true; \
+          lftp -u "$FTP_USER","$FTP_PASSWORD" -p 21 \
+               -e "set ftp:passive-mode true; \
                    set net:timeout 30; \
                    set net:max-retries 6; \
                    set net:reconnect-interval-base 10; \
@@ -45,4 +53,4 @@ jobs:
                    lcd dist; \
                    mirror -R --delete --verbose . domains/mon-carburant.com/public_html/; \
                    quit" \
-            ftp://${{ secrets.FTP_USER }}:${{ secrets.FTP_PASSWORD }}@${{ secrets.FTP_HOST }}:21
+            "$FTP_HOST"
