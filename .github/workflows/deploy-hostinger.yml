@@ -42,7 +42,8 @@ jobs:
           # Transferts FTP plus robustes : moins de parallélisme (évite les blocages
           # de connexions simultanées côté Hostinger) + timeouts et reconnexions.
           lftp -u "$FTP_USER","$FTP_PASSWORD" -p 21 \
-               -e "set ftp:passive-mode true; \
+               -e "set ftp:ssl-allow no; \
+                   set ftp:passive-mode true; \
                    set net:timeout 30; \
                    set net:max-retries 6; \
                    set net:reconnect-interval-base 10; \
