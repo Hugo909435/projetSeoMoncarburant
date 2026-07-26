@@ -8,8 +8,8 @@ publishedAt: 2026-07-26
 author: "hugo-beignon"
 category: "carburants"
 tags: ["actualite", "indemnite-carburant", "aide-gouvernementale", "grands-rouleurs", "2026", "juillet-2026"]
-featuredImage: "/images/articles/indemnite-carburant-2026.webp"
-imageAlt: "Simulateur d'indemnité carburant 2026 sur impots.gouv.fr et calendrier montrant une date limite repoussée"
+featuredImage: "/images/articles/indemnite-carburant-delai-rallonge-2026.webp"
+imageAlt: "Main tenant un pistolet de pompe à essence pendant le plein d'un véhicule"
 readingTime: 4
 relatedArticles: ["indemnite-carburant-2026", "totalenergies-plafonne-a-nouveau-carburant-2026", "carburant-prix-remonte-juillet-2026"]
 ctaTitle: "Trouvez la station la moins chère près de chez vous"
