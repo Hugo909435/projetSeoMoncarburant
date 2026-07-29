@@ -102,10 +102,54 @@ const jsonLdBreadcrumb = {
     item: `https://mon-carburant.com${item.url}`,
   })),
 };
+
+// Pilote schema.org GasStation/Offer : limite au departement Mayenne (53) le temps de valider
+// l'impact avant un deploiement plus large. Ne couvre que les stations visibles dans le tableau
+// (30 premieres) pour rester strictement fidele au contenu affiche.
+const FUEL_LABELS: Record<string, string> = {
+  Gazole: 'Gazole', SP95: 'Sans-plomb 95', SP98: 'Sans-plomb 98', E10: 'E10', E85: 'E85', GPLc: 'GPL',
+};
+
+const jsonLdGasStations = dept.num === '53'
+  ? {
+      '@context': 'https://schema.org',
+      '@type': 'ItemList',
+      itemListElement: stations.slice(0, 30).map((s: any, i: number) => ({
+        '@type': 'ListItem',
+        position: i + 1,
+        item: {
+          '@type': 'GasStation',
+          name: s.enseigne ? `${s.enseigne} ${s.ville}` : `Station-service ${s.ville}`,
+          address: {
+            '@type': 'PostalAddress',
+            streetAddress: s.adresse || undefined,
+            addressLocality: s.ville,
+            postalCode: s.cp,
+            addressCountry: 'FR',
+          },
+          geo: (s.lat != null && s.lng != null)
+            ? { '@type': 'GeoCoordinates', latitude: s.lat, longitude: s.lng }
+            : undefined,
+          ...(s.enseigne ? { brand: { '@type': 'Brand', name: s.enseigne } } : {}),
+          makesOffer: FUELS.filter(f => s.prices?.[f] != null).map(f => ({
+            '@type': 'Offer',
+            itemOffered: { '@type': 'Product', name: FUEL_LABELS[f] },
+            price: s.prices[f].toFixed(3),
+            priceCurrency: 'EUR',
+            availability: 'https://schema.org/InStock',
+            ...(s.maj ? { validFrom: s.maj.replace(' ', 'T') } : {}),
+          })),
+        },
+      })),
+    }
+  : null;
 ---
 
 <BaseLayout title={title} description={description} canonical={`/prix-carburants/${dept.slug}/`} noIndex={count < 3}>
   <script type="application/ld+json" set:html={JSON.stringify(jsonLdBreadcrumb)} slot="head" />
+  {jsonLdGasStations && (
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLdGasStations)} slot="head" />
+  )}
 
   <div>
     <!-- Breadcrumb -->
