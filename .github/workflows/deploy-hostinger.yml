@@ -46,15 +46,23 @@ jobs:
           # suppression récursive de ~344 pages en FTP simple est lente.
           lftp -u "$FTP_USER","$FTP_PASSWORD" -p 21 \
                -e "set ftp:ssl-allow no; \
-                   set net:timeout 30; \
-                   set net:max-retries 3; \
-                   set net:persist-retries 2; \
+                   set net:timeout 20; \
+                   set net:max-retries 2; \
+                   set net:persist-retries 1; \
                    rm -r -f domains; \
                    quit" \
             "$FTP_HOST"
 
+      - name: Pause entre les deux connexions FTP
+        # Hostinger applique un throttling/blocage temporaire des connexions FTP
+        # répétées depuis le même compte : sans pause, le déploiement qui suit
+        # immédiatement le nettoyage se voit parfois refuser la connexion dès
+        # le login (aucune ligne "Transferring file" avant l'erreur fatale,
+        # preuve que l'échec a lieu avant même le début du transfert).
+        run: sleep 20
+
       - name: Déploiement vers Hostinger
-        timeout-minutes: 20
+        timeout-minutes: 25
         env:
           FTP_USER: ${{ secrets.FTP_USER }}
           FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
@@ -67,19 +75,41 @@ jobs:
           # (contrairement à l'ancien compte SFTP) : on mirror directement dans
           # le répertoire courant "." et pas dans domains/mon-carburant.com/public_html/,
           # qui n'existe pas ici.
-          # Transferts FTP plus robustes : moins de parallélisme (évite les blocages
-          # de connexions simultanées côté Hostinger) + timeouts et reconnexions.
-          lftp -u "$FTP_USER","$FTP_PASSWORD" -p 21 \
-               -e "set ftp:ssl-allow no; \
-                   set ftp:passive-mode true; \
-                   set net:timeout 30; \
-                   set net:max-retries 6; \
-                   set net:reconnect-interval-base 10; \
-                   set net:reconnect-interval-multiplier 1.5; \
-                   set net:persist-retries 5; \
-                   set mirror:parallel-transfer-count 2; \
-                   set mirror:parallel-directories no; \
-                   lcd dist; \
-                   mirror -R --delete --verbose . .; \
-                   quit" \
-            "$FTP_HOST"
+          # Retry au niveau shell plutôt que de tout miser sur les retries internes
+          # de lftp : Hostinger bloque temporairement les connexions répétées
+          # (cf. l'étape "Pause entre les deux connexions FTP" ci-dessus), donc une
+          # session qui casse en cours de mirror a besoin d'un vrai cooldown avant
+          # de rouvrir une connexion propre, pas juste de reconnexions internes
+          # rapprochées qui retombent dans la même fenêtre de throttling. mirror
+          # étant incrémental (diff avec le distant), relancer une session neuve
+          # reprend là où la précédente s'est arrêtée.
+          for attempt in 1 2 3 4; do
+            echo "::group::Tentative de déploiement $attempt/4"
+            if lftp -u "$FTP_USER","$FTP_PASSWORD" -p 21 \
+                 -e "debug 3; \
+                     set ftp:ssl-allow no; \
+                     set ftp:passive-mode true; \
+                     set net:timeout 30; \
+                     set net:max-retries 3; \
+                     set net:reconnect-interval-base 10; \
+                     set net:reconnect-interval-multiplier 1.5; \
+                     set net:persist-retries 3; \
+                     set mirror:parallel-transfer-count 2; \
+                     set mirror:parallel-directories no; \
+                     lcd dist; \
+                     mirror -R --delete --verbose . .; \
+                     quit" \
+                "$FTP_HOST"; then
+              echo "::endgroup::"
+              echo "Déploiement réussi à la tentative $attempt."
+              exit 0
+            fi
+            echo "::endgroup::"
+            echo "Tentative $attempt échouée."
+            if [ "$attempt" -lt 4 ]; then
+              echo "Pause de 30s avant nouvelle tentative (laisse le throttling Hostinger retomber)..."
+              sleep 30
+            fi
+          done
+          echo "Toutes les tentatives de déploiement ont échoué."
+          exit 1
