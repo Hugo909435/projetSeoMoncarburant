@@ -1,0 +1,164 @@
+---
+// Pagination générique pour listings paginés (articles blog, catégories...)
+interface Props {
+  currentPage: number;
+  lastPage: number;
+  basePath: string; // ex : "/blog"
+}
+
+const { currentPage, lastPage, basePath } = Astro.props;
+
+function pageUrl(n: number): string {
+  return n <= 1 ? `${basePath}/` : `${basePath}/${n}/`;
+}
+
+// Fenêtre de pages autour de la page courante, avec ellipses si besoin
+function getPageNumbers(current: number, last: number): (number | 'ellipsis')[] {
+  const delta = 1;
+  const range: (number | 'ellipsis')[] = [];
+  const start = Math.max(2, current - delta);
+  const end = Math.min(last - 1, current + delta);
+
+  range.push(1);
+  if (start > 2) range.push('ellipsis');
+  for (let i = start; i <= end; i++) range.push(i);
+  if (end < last - 1) range.push('ellipsis');
+  if (last > 1) range.push(last);
+
+  return range;
+}
+
+const pageNumbers = getPageNumbers(currentPage, lastPage);
+---
+
+{lastPage > 1 && (
+  <nav class="pagination" aria-label="Pagination">
+    <a
+      href={currentPage > 1 ? pageUrl(currentPage - 1) : undefined}
+      class="pagination-btn pagination-prev"
+      aria-disabled={currentPage <= 1}
+      aria-label="Page précédente"
+    >
+      &larr; Précédent
+    </a>
+
+    <ul class="pagination-list">
+      {pageNumbers.map((n) => (
+        <li>
+          {n === 'ellipsis' ? (
+            <span class="pagination-ellipsis" aria-hidden="true">&hellip;</span>
+          ) : (
+            <a
+              href={pageUrl(n)}
+              class={`pagination-link ${n === currentPage ? 'active' : ''}`}
+              aria-current={n === currentPage ? 'page' : undefined}
+            >
+              {n}
+            </a>
+          )}
+        </li>
+      ))}
+    </ul>
+
+    <a
+      href={currentPage < lastPage ? pageUrl(currentPage + 1) : undefined}
+      class="pagination-btn pagination-next"
+      aria-disabled={currentPage >= lastPage}
+      aria-label="Page suivante"
+    >
+      Suivant &rarr;
+    </a>
+  </nav>
+)}
+
+<style>
+  .pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 3rem;
+    flex-wrap: wrap;
+  }
+
+  .pagination-list {
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .pagination-btn {
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    border: 1px solid var(--color-border);
+    background: #fff;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--color-text);
+    text-decoration: none;
+    transition: all 0.15s ease;
+    white-space: nowrap;
+  }
+
+  .pagination-btn:hover {
+    background: var(--color-primary);
+    color: #fff;
+    border-color: var(--color-primary);
+  }
+
+  .pagination-btn[aria-disabled='true'] {
+    pointer-events: none;
+    opacity: 0.4;
+  }
+
+  .pagination-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 0.5rem;
+    border: 1px solid var(--color-border);
+    background: #fff;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--color-text);
+    text-decoration: none;
+    transition: all 0.15s ease;
+  }
+
+  .pagination-link:hover {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+  }
+
+  .pagination-link.active {
+    background: var(--color-primary);
+    color: #fff;
+    border-color: var(--color-primary);
+  }
+
+  .pagination-ellipsis {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 2.25rem;
+    height: 2.25rem;
+    color: var(--color-text-secondary);
+    font-size: 0.875rem;
+  }
+
+  @media (max-width: 480px) {
+    .pagination {
+      gap: 0.5rem;
+    }
+
+    .pagination-btn {
+      padding: 0.5rem 0.75rem;
+      font-size: 0.8125rem;
+    }
+  }
+</style>

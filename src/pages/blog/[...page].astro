@@ -1,30 +1,47 @@
 ---
-// Listing blog - tous les articles publiés
+// Listing blog - tous les articles publiés, paginé
+import type { GetStaticPaths } from 'astro';
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ArticleCard from '../../components/ArticleCard.astro';
+import Pagination from '../../components/Pagination.astro';
 
-const allArticles = await getCollection('blog', ({ data }) => !data.draft);
-allArticles.sort((a, b) => b.data.publishedAt.getTime() - a.data.publishedAt.getTime());
+export const getStaticPaths = (async ({ paginate }) => {
+  const allArticles = await getCollection('blog', ({ data }) => !data.draft);
+  allArticles.sort((a, b) => b.data.publishedAt.getTime() - a.data.publishedAt.getTime());
+
+  return paginate(allArticles, { pageSize: 12 });
+}) satisfies GetStaticPaths;
+
+const { page } = Astro.props;
 
 const categoryLabels: Record<string, string> = {
   economies: 'Économies',
   carburants: 'Carburants',
   entretien: 'Entretien',
 };
+
+const isFirstPage = page.currentPage === 1;
+const title = isFirstPage
+  ? 'Blog : tous nos articles sur le carburant'
+  : `Blog : tous nos articles sur le carburant (page ${page.currentPage})`;
+const description = isFirstPage
+  ? "Tous nos articles sur le carburant : éco-conduite, entretien, types de carburants et comparatifs. Conseils pratiques pour les automobilistes français."
+  : `Articles ${page.start + 1} à ${page.end + 1} sur ${page.total} : conseils, comparatifs et guides pratiques sur le carburant.`;
+const canonical = isFirstPage ? '/blog/' : `/blog/${page.currentPage}/`;
 ---
 
 <BaseLayout
-  title="Blog : tous nos articles sur le carburant"
-  description="Tous nos articles sur le carburant : éco-conduite, entretien, types de carburants et comparatifs. Conseils pratiques pour les automobilistes français."
-  canonical="https://mon-carburant.com/blog/"
+  title={title}
+  description={description}
+  canonical={canonical}
 >
   <div class="blog-page">
     <div class="container">
       <header class="blog-header">
         <h1 class="blog-title">Tous nos articles</h1>
         <p class="blog-subtitle">
-          {allArticles.length} article{allArticles.length > 1 ? 's' : ''} : conseils, comparatifs et guides pratiques
+          {page.total} article{page.total > 1 ? 's' : ''} : conseils, comparatifs et guides pratiques
         </p>
 
         <!-- Filtres par catégorie -->
@@ -36,16 +53,19 @@ const categoryLabels: Record<string, string> = {
         </nav>
       </header>
 
-      {allArticles.length === 0 ? (
+      {page.data.length === 0 ? (
         <div class="empty-state">
           <p>Aucun article publié pour le moment. Revenez bientôt !</p>
         </div>
       ) : (
-        <div class="blog-grid">
-          {allArticles.map((article) => (
-            <ArticleCard article={article} />
-          ))}
-        </div>
+        <>
+          <div class="blog-grid">
+            {page.data.map((article) => (
+              <ArticleCard article={article} />
+            ))}
+          </div>
+          <Pagination currentPage={page.currentPage} lastPage={page.lastPage} basePath="/blog" />
+        </>
       )}
     </div>
   </div>
