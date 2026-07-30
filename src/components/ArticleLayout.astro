@@ -108,11 +108,17 @@ const howToSchema = howToSteps && howToSteps.length > 0
 
 const jsonLdSchemas = howToSchema ? [articleSchema, howToSchema] : articleSchema;
 
-const dateFormatted = new Intl.DateTimeFormat('fr-FR', {
+const dateFormatter = new Intl.DateTimeFormat('fr-FR', {
   day: 'numeric',
   month: 'long',
   year: 'numeric',
-}).format(publishedAt);
+});
+
+const dateFormatted = dateFormatter.format(publishedAt);
+const updatedDateFormatted =
+  updatedAt && updatedAt.getTime() !== publishedAt.getTime()
+    ? dateFormatter.format(updatedAt)
+    : null;
 ---
 
 <BaseLayout
@@ -151,7 +157,14 @@ const dateFormatted = new Intl.DateTimeFormat('fr-FR', {
               {author.name}
             </a>
           )}
-          <time datetime={publishedAt.toISOString()} class="meta-date">{dateFormatted}</time>
+          <time datetime={publishedAt.toISOString()} class="meta-date">
+            Publié le {dateFormatted}
+          </time>
+          {updatedDateFormatted && (
+            <time datetime={updatedAt!.toISOString()} class="meta-date meta-date-updated">
+              (mis à jour le {updatedDateFormatted})
+            </time>
+          )}
           <span class="meta-reading">{readingTime} min de lecture</span>
         </div>
 
