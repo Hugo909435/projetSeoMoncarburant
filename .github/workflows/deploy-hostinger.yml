@@ -83,8 +83,18 @@ jobs:
           # rapprochées qui retombent dans la même fenêtre de throttling. mirror
           # étant incrémental (diff avec le distant), relancer une session neuve
           # reprend là où la précédente s'est arrêtée.
-          for attempt in 1 2 3 4; do
-            echo "::group::Tentative de déploiement $attempt/4"
+          #
+          # Backoff exponentiel (30s, 60s, 120s, 240s) plutôt qu'une pause fixe :
+          # un run récent a vu les 4 tentatives échouer d'affilée en timeout de
+          # connexion pur (aucun "Login OK", le port 21 ne répondait tout
+          # simplement pas), ce qui indique un blocage Hostinger qui dure parfois
+          # plus longtemps qu'une pause fixe de 30s entre essais. Avec 5
+          # tentatives et un cooldown qui s'allonge, le dernier essai n'arrive
+          # qu'après 7 minutes de pause cumulée, ce qui laisse largement plus de
+          # marge au blocage pour retomber.
+          max_attempts=5
+          for attempt in $(seq 1 "$max_attempts"); do
+            echo "::group::Tentative de déploiement $attempt/$max_attempts"
             if lftp -u "$FTP_USER","$FTP_PASSWORD" -p 21 \
                  -e "debug 3; \
                      set ftp:ssl-allow no; \
@@ -106,9 +116,13 @@ jobs:
             fi
             echo "::endgroup::"
             echo "Tentative $attempt échouée."
-            if [ "$attempt" -lt 4 ]; then
-              echo "Pause de 30s avant nouvelle tentative (laisse le throttling Hostinger retomber)..."
-              sleep 30
+            if [ "$attempt" -lt "$max_attempts" ]; then
+              backoff=$((30 * (2 ** (attempt - 1))))
+              if [ "$backoff" -gt 240 ]; then
+                backoff=240
+              fi
+              echo "Pause de ${backoff}s avant nouvelle tentative (laisse le throttling Hostinger retomber)..."
+              sleep "$backoff"
             fi
           done
           echo "Toutes les tentatives de déploiement ont échoué."
