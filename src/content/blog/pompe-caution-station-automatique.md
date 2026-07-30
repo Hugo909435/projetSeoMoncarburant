@@ -9,8 +9,8 @@ author: "hugo-beignon"
 category: "carburants"
 tags: ["caution carburant", "pompe automatique", "pré-autorisation bancaire", "station-service", "paiement carburant"]
 relatedArticles: ["pompe-essence-fonctionnement", "panne-essence-autoroute", "erreur-carburant-mauvais-plein"]
-featuredImage: "/images/articles/pompe-essence-fonctionnement.webp"
-imageAlt: "Terminal de paiement par carte bancaire sur une pompe à essence en station automatique"
+featuredImage: "/images/articles/pompe-caution-station-automatique.jpg"
+imageAlt: "Station-service Shell éclairée la nuit, voiture garée devant les pompes automatiques"
 readingTime: 5
 ctaTitle: "Trouvez une station avec un vrai vendeur avant de partir"
 ctaDescription: "Notre comparateur affiche aussi le type de station : automatique ou avec personnel. De quoi choisir en connaissance de cause avant de tendre votre carte."
