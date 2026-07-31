@@ -13,7 +13,7 @@ tags: ["prix coûtant", "leclerc", "intermarché", "carrefour", "système u", "b
 featuredImage: "/images/articles/prix-coutant-carburant-calendrier-leclerc-intermarche-carrefour.webp"
 imageAlt: "Panneau de prix carburant affichant une opération prix coûtant en grande surface"
 readingTime: 4
-relatedArticles: ["leclerc-carburant-prix-coutant-juillet-2026", "intermarche-carburant-prix-coutant-2026", "carrefour-carburant-prix-2026", "prix-coutant-carburant-carrefour-auchan-casino-cora", "reduire-facture-carburant"]
+relatedArticles: ["leclerc-carburant-prix-coutant-juillet-2026", "intermarche-carburant-prix-coutant-2026", "carrefour-carburant-prix-2026", "prix-coutant-carburant-systeme-u-auchan-casino-cora", "reduire-facture-carburant"]
 ctaTitle: "Trouvez la station la moins chère près de chez vous"
 ctaDescription: "Notre comparateur référence les prix de plus de 11 000 stations-service en France, mis à jour quotidiennement via les données officielles."
 faq:
