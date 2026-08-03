@@ -10,7 +10,7 @@ category: "economies"
 pillar: "reduire-facture-carburant"
 tags: ["prix coûtant", "leclerc", "intermarché", "carrefour", "économies", "bon plan", "carburant"]
 featuredImage: "/images/articles/prix-coutant-carburant-vaut-il-le-coup.webp"
-imageAlt: "Automobiliste consultant le prix affiché à une pompe à carburant en grande surface"
+imageAlt: "Station-service de grande surface avec pompes en libre-service et voitures en train de faire le plein"
 readingTime: 6
 relatedArticles: ["prix-coutant-carburant-calendrier-leclerc-intermarche-carrefour", "carburant-moins-cher-leclerc-intermarche-carrefour-2026", "prix-coutant-carburant-systeme-u-auchan-casino-cora", "reduire-facture-carburant"]
 ctaTitle: "Trouvez la station la moins chère sans attendre une opération"
@@ -30,6 +30,8 @@ faq:
     answer: "Le plus simple est de comparer le prix affiché en opération avec le prix d'une station grande surface proche de votre trajet habituel, plutôt que de raisonner uniquement sur le pourcentage de remise annoncé. Notre comparateur affiche les prix réels constatés à la pompe, station par station, ce qui permet ce calcul en quelques secondes."
 draft: false
 ---
+
+<!-- Crédit image : "Station-service E.Leclerc Bellerive-sur-Allier (1) 2022-05-01.JPG" par Tabl-trai, Wikimedia Commons, licence CC BY-SA 4.0 (https://commons.wikimedia.org/wiki/File:Station-service_E.Leclerc_Bellerive-sur-Allier_(1)_2022-05-01.JPG), recadrée. -->
 
 Une opération prix coûtant est annoncée près de chez vous, et la question se pose : ça vaut le coup de s'y organiser, ou pas vraiment ? La communication met en avant des économies spectaculaires, mais elle mélange en général deux choses très différentes : le fait d'être dans une station de supermarché (déjà moins chère toute l'année) et la remise propre à l'opération. Voici ce que ça donne une fois les deux séparés, et un vrai coût en face : le détour et l'attente.
 
