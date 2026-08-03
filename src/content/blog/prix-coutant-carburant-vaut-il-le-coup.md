@@ -23,7 +23,7 @@ faq:
   - question: "Vaut-il le coup de faire un détour pour profiter d'une opération prix coûtant ?"
     answer: "Rarement, si le détour est dédié. Dix kilomètres aller-retour représentent environ 0,6 litre de carburant consommé, et une file d'attente de 15 à 20 minutes a un coût en temps réel même s'il ne figure pas sur le ticket. Ces deux éléments cumulés peuvent effacer la totalité de la remise. L'opération vaut le coup quand elle tombe sur un trajet ou des courses déjà prévus, beaucoup moins quand elle nécessite un aller-retour spécifique."
   - question: "Est-il plus rentable de choisir une station grande surface toute l'année plutôt que d'attendre une opération prix coûtant ?"
-    answer: "Oui, largement. L'écart entre une station Leclerc, Intermarché ou Carrefour et une station de réseau traditionnel comme Total, Esso, BP ou Shell atteint 15 à 28 centimes par litre au quotidien, disponible 365 jours par an. C'est plusieurs fois la remise ponctuelle d'une opération prix coûtant, sans file d'attente ni date à surveiller."
+    answer: "Ça dépend du réseau traditionnel auquel on compare. Début août 2026, l'écart entre Leclerc et TotalEnergies n'est plus que de 2 à 3 centimes par litre, quasiment négligeable. Face à Esso ou BP, l'écart reste net (5 à 7 centimes). Face à Shell, il grimpe à près de 28 centimes, largement plus que la remise d'une opération prix coûtant ponctuelle, disponible 365 jours par an."
   - question: "Pourquoi les stations sont-elles souvent prises d'assaut pendant ces opérations ?"
     answer: "Parce que la communication (SMS, application, affichage) touche tous les clients de l'enseigne en même temps, sur une fenêtre de 24 à 48 heures seulement. L'affluence est particulièrement forte en fin de journée et en début de week-end. Le matin ou en début d'après-midi restent les créneaux les plus calmes."
   - question: "Comment savoir si le détour vaut vraiment le coup avant de partir ?"
@@ -47,12 +47,12 @@ C'est ce deuxième chiffre, 5 à 10 centimes, qui correspond réellement à l'op
 
 ## Le calcul isolé : ce que rapporte l'opération elle-même
 
-Prenons un plein de 55 litres de Gazole chez Leclerc, qui affiche en moyenne 2,066 €/L en temps normal début août 2026.
+Prenons un plein de 55 litres de Gazole chez Leclerc, qui affiche en moyenne 2,207 €/L début août 2026 (données officielles du 3 août 2026, prix relevés en hausse depuis la flambée de mi-juillet).
 
 | Situation | Prix au litre | Coût du plein (55 L) |
 |---|---|---|
-| Leclerc, jour normal | 2,066 €/L | 113,63 € |
-| Leclerc, opération prix coûtant (remise moyenne 7,5 c/L) | 1,991 €/L | 109,51 € |
+| Leclerc, jour normal | 2,207 €/L | 121,39 € |
+| Leclerc, opération prix coûtant (remise moyenne 7,5 c/L) | 2,132 €/L | 117,26 € |
 | **Gain dû à l'opération, isolé** | | **environ 4,10 €** |
 
 Quatre euros sur un plein, ce n'est pas rien, mais ce n'est pas non plus la promesse d'une pompe "à prix cassé". C'est l'ordre de grandeur réel de ce que rapporte l'opération en tant que telle, une fois qu'on la compare au bon prix de référence : celui de la même enseigne le reste du temps, pas celui d'une station qui coûte déjà plus cher au quotidien.
@@ -73,17 +73,18 @@ Additionnés, un détour de 10 km et une attente de 15 minutes suffisent à effa
 
 ## Le vrai réflexe : la station, pas la date
 
-Il existe une économie bien plus grosse que celle d'une opération de 48 heures, et elle est disponible tous les jours de l'année : le choix de l'enseigne. Les stations Leclerc, Intermarché, Carrefour ou Système U affichent en moyenne **15 à 28 centimes de moins par litre** que les réseaux traditionnels comme TotalEnergies, Esso, BP ou Shell. Sur un plein de 55 litres, cet écart représente à lui seul 8 à 15 euros, sans aucune date à surveiller ni file d'attente à subir.
+Il existe une autre économie, disponible tous les jours de l'année : le choix de l'enseigne. Mais elle n'est plus aussi uniforme qu'on le dit souvent. D'après les prix relevés le 3 août 2026, l'écart entre Leclerc (le moins cher des grandes surfaces sur le Gazole, 2,207 €/L) et les réseaux traditionnels dépend beaucoup de la marque : quasi nul face à TotalEnergies, très net face à Shell.
 
-| Type de station | Écart type vs grande surface (Gazole) |
-|---|---|
-| Grande surface (Leclerc, Intermarché, Carrefour, Système U) | Référence |
-| TotalEnergies | + 5 à 6 c/L |
-| Esso | + 7 c/L |
-| BP | + 13 c/L |
-| Shell | + 28 c/L |
+| Enseigne | Gazole moyen | Écart vs Leclerc |
+|---|---|---|
+| E.Leclerc | 2,207 €/L | Référence |
+| Total Access | 2,222 €/L | + 1,5 c/L |
+| TotalEnergies | 2,233 €/L | + 2,6 c/L |
+| Esso | 2,257 €/L | + 5 c/L |
+| BP | 2,275 €/L | + 6,8 c/L |
+| Shell | 2,486 €/L | + 27,9 c/L |
 
-Concrètement : rouler toute l'année en grande surface rapporte plus qu'une opération prix coûtant ponctuelle. L'opération devient un vrai bonus quand elle tombe un jour où vous faites vos courses de toute façon, elle perd tout son intérêt si elle vous fait sortir de votre route.
+Sur un plein de 55 litres, l'écart avec TotalEnergies ne représente donc plus qu'1,50 €, à peine plus que la marge d'erreur d'une station à l'autre. Face à Shell, en revanche, l'écart grimpe à plus de 15 €, largement au-dessus de ce qu'apporte une opération prix coûtant. Le réflexe "grande surface plutôt que réseau traditionnel" reste donc pertinent, mais il vaut surtout la peine face à Shell, BP ou Esso : face à Total, la différence s'est nettement resserrée ces dernières semaines.
 
 ---
 
@@ -103,8 +104,8 @@ Concrètement : rouler toute l'année en grande surface rapporte plus qu'une op�
 
 ## Ce qu'il faut retenir
 
-L'opération prix coûtant est un vrai avantage, mais un avantage modeste, de l'ordre de 3 à 5 euros par plein une fois isolé de l'effet "je suis déjà en grande surface". Le détour et l'attente qu'elle génère parfois peuvent facilement dépasser ce gain. La vraie source d'économie, plus discrète mais bien plus importante sur l'année, reste le choix systématique d'une station grande surface plutôt qu'un réseau traditionnel, disponible 365 jours par an sans SMS ni calendrier à suivre.
+L'opération prix coûtant est un vrai avantage, mais un avantage modeste, de l'ordre de 3 à 5 euros par plein une fois isolé de l'effet "je suis déjà en grande surface". Le détour et l'attente qu'elle génère parfois peuvent facilement dépasser ce gain. Une source d'économie plus discrète, disponible toute l'année sans SMS ni calendrier à suivre, reste le choix de l'enseigne, mais elle ne vaut plus grand-chose face à TotalEnergies aujourd'hui : elle reste en revanche déterminante face à Esso, BP et surtout Shell.
 
 Pour repérer la station la moins chère près de chez vous, opération en cours ou non, direction notre [comparateur de prix](/prix-carburants/). Et pour connaître les prochaines fenêtres prix coûtant chez Leclerc, Intermarché, Carrefour et Système U, notre [calendrier détaillé](/blog/prix-coutant-carburant-calendrier-leclerc-intermarche-carrefour/) reste à jour.
 
-*Article publié le 3 août 2026. Les prix cités sont ceux constatés fin juillet et début août 2026 et peuvent évoluer.*
+*Article publié le 3 août 2026. Prix Gazole d'après les données officielles du 3 août 2026 (donnees.roulez-eco.fr). Ces prix évoluent quotidiennement, consultez notre comparateur pour les tarifs du jour.*
