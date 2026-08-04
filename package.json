@@ -15,6 +15,8 @@
     "fetch-brands": "node scripts/fetch-brand-map.js",
     "waves": "node scripts/build-station-waves.js",
     "waves:plan": "node scripts/build-station-waves.js --dry-run",
+    "waves:replan": "node scripts/build-station-waves.js --replan",
+    "waves:replan:plan": "node scripts/build-station-waves.js --replan --dry-run",
     "preview:stations": "STATIONS_ROLLOUT_ALL=1 astro build"
   },
   "dependencies": {

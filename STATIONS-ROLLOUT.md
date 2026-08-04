@@ -4,23 +4,27 @@ Note de référence pour la mise en ligne progressive des fiches station-service
 de mon-carburant.com.
 
 Dernière mise à jour du document : 4 août 2026.
+Cadence en vigueur : montée en charge 100 puis 250, 500 et 800 (24 vagues).
 
 ---
 
 ## 1. En une minute
 
-Le site connaît 9 804 stations-service. Chacune a désormais sa page détaillée
+Le site connaît 9 803 stations-service. Chacune a désormais sa page détaillée
 (prix des six carburants, comparaison avec la commune, le département et la
 France, carte, horaires, services, texte de 250 à 350 mots, FAQ, données
 structurées).
 
-Ces pages ne sont **pas** publiées d'un coup. Elles sortent par **vagues de 100,
-toutes les deux semaines**, à partir du **lundi 10 août 2026**.
+Ces pages ne sont **pas** publiées d'un coup. Elles sortent par vagues, une
+**toutes les deux semaines**, à partir du **lundi 10 août 2026**. La taille des
+vagues monte progressivement : **100 pages** pendant les trois premiers mois,
+puis 250, 500 et 800 une fois l'indexation vérifiée. **24 vagues au total, la
+dernière le 28 juin 2027.**
 
 Le mécanisme est automatique. Le site est déjà reconstruit tous les jours pour
 rafraîchir les prix : le jour où une vague arrive à échéance, ce rebuild
-quotidien génère les 100 nouvelles pages et les déploie. **Il n'y a rien à faire
-à chaque vague.**
+quotidien génère les nouvelles pages et les déploie. **Il n'y a rien à faire à
+chaque vague.**
 
 ---
 
@@ -41,63 +45,68 @@ dévaluation de la part de Google. Trois raisons concrètes :
    gabarit se propage à 9 800 pages avant d'être détecté. Par vagues, un
    problème repéré sur la vague 3 se corrige avant que la vague 4 ne sorte.
 
-Le rythme choisi est volontairement prudent. Il permet de mesurer le taux
-d'indexation réel de chaque lot dans la Search Console avant d'envoyer le
-suivant.
+D'où la montée en charge par paliers plutôt qu'un rythme constant : on commence
+assez lentement pour pouvoir corriger, et on accélère une fois que les chiffres
+d'indexation montrent que le gabarit passe.
 
 ---
 
 ## 3. Le calendrier
 
-Une vague tous les 14 jours, 100 pages par vague, départ le 10 août 2026.
+Une vague tous les 14 jours, départ le 10 août 2026. Les colonnes « Dépts » et
+« Communes » montrent l'étalement géographique réel de chaque lot.
 
-| Trimestre | Vagues | Période | Pages du trimestre | Cumul | Couverture |
-|---|---|---|---|---|---|
-| 3e trim. 2026 | 1 à 4 | 10/08 au 21/09/2026 | 400 | 400 | 4 % |
-| 4e trim. 2026 | 5 à 11 | 05/10 au 28/12/2026 | 700 | 1 100 | 11 % |
-| 1er trim. 2027 | 12 à 17 | 11/01 au 22/03/2027 | 600 | 1 700 | 17 % |
-| 2e trim. 2027 | 18 à 24 | 05/04 au 28/06/2027 | 700 | 2 400 | 24 % |
-| 3e trim. 2027 | 25 à 30 | 12/07 au 20/09/2027 | 600 | 3 000 | 31 % |
-| 4e trim. 2027 | 31 à 37 | 04/10 au 27/12/2027 | 700 | 3 700 | 38 % |
-| 1er trim. 2028 | 38 à 43 | 10/01 au 20/03/2028 | 600 | 4 300 | 44 % |
-| 2e trim. 2028 | 44 à 50 | 03/04 au 26/06/2028 | 700 | 5 000 | 51 % |
-| 3e trim. 2028 | 51 à 56 | 10/07 au 18/09/2028 | 600 | 5 600 | 57 % |
-| 4e trim. 2028 | 57 à 63 | 02/10 au 25/12/2028 | 700 | 6 300 | 64 % |
-| 1er trim. 2029 | 64 à 69 | 08/01 au 19/03/2029 | 600 | 6 900 | 70 % |
-| 2e trim. 2029 | 70 à 76 | 02/04 au 25/06/2029 | 700 | 7 600 | 78 % |
-| 3e trim. 2029 | 77 à 82 | 09/07 au 17/09/2029 | 600 | 8 200 | 84 % |
-| 4e trim. 2029 | 83 à 89 | 01/10 au 24/12/2029 | 700 | 8 900 | 91 % |
-| 1er trim. 2030 | 90 à 95 | 07/01 au 18/03/2030 | 600 | 9 500 | 97 % |
-| 2e trim. 2030 | 96 à 99 | 01/04 au 13/05/2030 | 304 | 9 804 | 100 % |
+| Vague | Date | Pages | Dépts | Communes | Cumul | Couverture |
+|---|---|---|---|---|---|---|
+| 1 | 10/08/2026 | 100 | 25 | 28 | 100 | 1 % |
+| 2 | 24/08/2026 | 100 | 31 | 33 | 200 | 2 % |
+| 3 | 07/09/2026 | 100 | 33 | 42 | 300 | 3 % |
+| 4 | 21/09/2026 | 100 | 46 | 52 | 400 | 4 % |
+| 5 | 05/10/2026 | 100 | 41 | 59 | 500 | 5 % |
+| 6 | 19/10/2026 | 100 | 47 | 61 | 600 | 6 % |
+| 7 | 02/11/2026 | 250 | 63 | 115 | 850 | 9 % |
+| 8 | 16/11/2026 | 250 | 64 | 118 | 1 100 | 11 % |
+| 9 | 30/11/2026 | 250 | 75 | 184 | 1 350 | 14 % |
+| 10 | 14/12/2026 | 250 | 79 | 232 | 1 600 | 16 % |
+| 11 | 28/12/2026 | 250 | 79 | 225 | 1 850 | 19 % |
+| 12 | 11/01/2027 | 250 | 77 | 241 | 2 100 | 21 % |
+| 13 | 25/01/2027 | 500 | 88 | 464 | 2 600 | 27 % |
+| 14 | 08/02/2027 | 500 | 90 | 474 | 3 100 | 32 % |
+| 15 | 22/02/2027 | 500 | 91 | 471 | 3 600 | 37 % |
+| 16 | 08/03/2027 | 500 | 93 | 475 | 4 100 | 42 % |
+| 17 | 22/03/2027 | 500 | 91 | 486 | 4 600 | 47 % |
+| 18 | 05/04/2027 | 500 | 91 | 483 | 5 100 | 52 % |
+| 19 | 19/04/2027 | 800 | 94 | 746 | 5 900 | 60 % |
+| 20 | 03/05/2027 | 800 | 95 | 774 | 6 700 | 68 % |
+| 21 | 17/05/2027 | 800 | 94 | 769 | 7 500 | 77 % |
+| 22 | 31/05/2027 | 800 | 92 | 777 | 8 300 | 85 % |
+| 23 | 14/06/2027 | 800 | 95 | 773 | 9 100 | 93 % |
+| 24 | 28/06/2027 | 703 | 95 | 692 | 9 803 | 100 % |
 
-**Fin du déploiement : 13 mai 2030, soit 3 ans et 9 mois.**
+**Fin du déploiement : 28 juin 2027, soit 10 mois et demi.**
 
-Le calendrier exact, vague par vague, est dans
-`src/data/fuel/station-waves.json` (champ `waves`). Pour l'afficher :
+Les six premières vagues restent volontairement à 100 pages. C'est la phase où
+l'on ne sait pas encore comment Google accueille le gabarit, et où une erreur se
+paie cher. À partir de la vague 7 (2 novembre 2026), la cadence monte.
+
+Pour réafficher ce calendrier à tout moment :
 
 ```bash
-node -e "const w=require('./src/data/fuel/station-waves.json'); \
-  w.waves.forEach(v=>console.log('Vague '+String(v.n).padStart(2)+' | '+v.publishAt+' | '+v.count+' pages'+(v.published?' | publiée':'')))"
+npm run waves:plan
 ```
 
-### Attention sur la durée
+### Le point de décision du 21 septembre 2026
 
-**3 ans et 9 mois, ce n'est pas « plusieurs mois ».** C'est la conséquence
-arithmétique directe de 100 pages toutes les deux semaines sur un parc de
-9 804 stations : 99 vagues, 26 vagues par an.
+L'accélération est **inscrite dans le plan**, elle se déclenchera donc toute
+seule. La vérification après la vague 4 n'est plus un feu vert à donner mais un
+frein à actionner si besoin :
 
-Ce rythme est le bon **pour commencer**, parce qu'il n'engage à rien et
-qu'il permet de vérifier que Google indexe correctement le gabarit. Il n'a
-aucune raison d'être maintenu pendant quatre ans. Une fois les trois ou
-quatre premières vagues indexées à un taux satisfaisant, la cadence peut
-être multipliée sans risque : à ce stade Google a déjà validé le modèle de
-page, ce qui reste à prouver est seulement la capacité du site à absorber
-du volume.
-
-Le palier d'accélération recommandé est décrit au point 6. Il ramène la
-couverture complète à **fin juin 2027, soit un peu moins d'un an**.
-
----
+- **Vague 4 le 21 septembre 2026**, 400 pages en ligne.
+- **Premier lot à 250 le 2 novembre 2026.** Six semaines de marge pour regarder
+  les chiffres et réagir.
+- Si moins de 70 % des 400 pages sont indexées à cette date, ou si une alerte
+  qualité remonte, **freiner** : voir le point 6 pour repousser les paliers, ou
+  le point 9 pour geler complètement.
 
 ## 4. Ce qui se passe automatiquement
 
@@ -158,6 +167,11 @@ apparaissent dans l'open data après coup vont dans la première vague à venir 
 a de la place. Une station qui disparaît du flux garde son affectation et son
 URL, sa page cesse simplement d'être générée.
 
+La conséquence de la garantie n°1 mérite d'être explicite : **une fois le plan
+écrit, modifier `WAVE_PLAN` ne change rien**, puisque toutes les stations sont
+déjà affectées. Changer de cadence passe obligatoirement par `--replan`, décrit
+au point 6.
+
 ### Ordre de publication
 
 Les stations sont classées par potentiel décroissant. Le score combine :
@@ -169,11 +183,15 @@ Les stations sont classées par potentiel décroissant. Le score combine :
 - un bonus pour les stations d'autoroute, qui captent des requêtes propres ;
 - un bonus de fraîcheur pour les stations qui déclarent régulièrement leurs prix.
 
-Deux plafonds de diversité s'appliquent **par vague** : 6 stations maximum par
-commune, 12 par département. Sans eux, la vague 1 serait presque entièrement
-parisienne et lyonnaise, les 100 pages se cannibaliseraient entre elles et
-concurrenceraient la page ville existante. Avec, la vague 1 couvre 24
-départements et 44 communes.
+Deux plafonds de diversité s'appliquent **par vague**, exprimés en part du lot :
+6 % maximum pour une même commune, 12 % pour un même département. Sur une vague
+de 100, cela fait 6 et 12 ; sur une vague de 800, 48 et 96. Sans eux, la vague 1
+serait presque entièrement parisienne et lyonnaise, les pages se
+cannibaliseraient entre elles et concurrenceraient la page ville existante.
+
+Le résultat figure dans les colonnes « Dépts » et « Communes » du calendrier :
+25 départements dès la vague 1, et plus de 90 départements pour 700 à 780
+communes sur les grosses vagues.
 
 ---
 
@@ -185,46 +203,67 @@ Tout se règle dans `scripts/build-station-waves.js`, en haut du fichier.
 const INTERVAL_DAYS = 14;
 
 const WAVE_PLAN = [
-  { fromWave: 1, size: 100 },
+  { fromWave: 1, size: 100 },  // vagues 1 à 6, prudence initiale
+  { fromWave: 7, size: 250 },  // vagues 7 à 12
+  { fromWave: 13, size: 500 }, // vagues 13 à 18
+  { fromWave: 19, size: 800 }, // vagues 19 et suivantes
 ];
 ```
 
 `WAVE_PLAN` fonctionne par paliers : chaque entrée s'applique à partir de la
 vague indiquée, jusqu'au palier suivant.
 
-### Palier d'accélération recommandé
+### Le piège à connaître
 
-À appliquer une fois les vagues 1 à 4 indexées correctement (voir point 7) :
+Modifier `WAVE_PLAN` puis relancer `npm run waves` **ne fait rien**. Le script
+est idempotent par construction : il n'affecte que les stations qui n'ont pas
+encore de vague, et à ce stade elles en ont toutes une. C'est précisément ce qui
+protège les pages en ligne, mais cela veut dire qu'un changement de cadence
+demande une commande différente.
+
+### Appliquer un nouveau plan
+
+```bash
+npm run waves:replan:plan   # simulation, n'écrit rien
+npm run waves:replan        # applique
+```
+
+`--replan` gèle les stations des vagues **déjà publiées** (vague et URL
+inchangées) et redistribue toutes les autres selon le nouveau plan. C'est
+l'unique manière de changer de cadence en cours de route sans toucher à ce qui
+est en ligne.
+
+Le script affiche ce qu'il fait avant d'écrire :
+
+```
+♻️  Replanification : 600 station(s) figée(s) (vagues 1 à 6, déjà publiées), 9203 redistribuée(s).
+```
+
+Vérifier ce nombre de stations figées : il doit correspondre au cumul des vagues
+déjà sorties. S'il vaut 0 alors que des pages sont en ligne, ne pas écrire.
+
+### Freiner
+
+Repousser les paliers suffit, par exemple pour rester à 100 pendant six mois de
+plus :
 
 ```js
 const WAVE_PLAN = [
-  { fromWave: 1, size: 100 },   // vagues 1 à 6, prudence initiale
-  { fromWave: 7, size: 250 },   // vagues 7 à 12
-  { fromWave: 13, size: 500 },  // vagues 13 à 18
-  { fromWave: 19, size: 800 },  // vagues 19 et suivantes
+  { fromWave: 1, size: 100 },
+  { fromWave: 19, size: 250 },
+  { fromWave: 25, size: 500 },
+  { fromWave: 31, size: 800 },
 ];
 ```
 
-Résultat : 24 vagues au lieu de 99, couverture complète **fin juin 2027**.
+Puis `npm run waves:replan`. Les vagues déjà sorties ne bougent pas.
 
-### Après modification
+### Ce à quoi ne pas toucher
 
-```bash
-npm run waves:plan   # simulation, n'écrit rien
-npm run waves        # applique
-```
-
-**Modifier `WAVE_PLAN` ne dépublie jamais rien.** Les stations déjà affectées
-gardent leur vague ; seules les stations non encore affectées et les vagues
-futures sont recalculées. Réduire une taille de vague ne retire donc pas de
-pages déjà en ligne.
-
-En revanche, `INTERVAL_DAYS` et `startDate` décalent **toutes** les dates,
-y compris celles de vagues déjà publiées. Ne les changer qu'en connaissance de
-cause : allonger l'intervalle après coup peut faire repasser une vague publiée à
-l'état non publié et retirer ses pages du site.
-
----
+`INTERVAL_DAYS` et `startDate` décalent **toutes** les dates, y compris celles
+de vagues déjà publiées. Allonger l'intervalle après coup peut faire repasser
+une vague publiée à l'état non publié et retirer ses pages du site. Pour
+suspendre, utiliser `FREEZE_AT_WAVE` (point 9), pas l'intervalle.
 
 ## 7. Points de contrôle
 
@@ -255,11 +294,18 @@ puis une fois par mois en régime de croisière.
 - Le bon indicateur au début n'est pas le trafic mais le **nombre d'URL qui
   génèrent au moins une impression**. Il doit croître avec les vagues.
 
-**Décision d'accélération**
+**Rythme des vérifications**
 
-Après la vague 4 (21 septembre 2026), soit 400 pages en ligne : si plus de 70 %
-sont indexées et qu'aucune alerte qualité n'est remontée, appliquer le palier
-d'accélération du point 6.
+L'accélération étant automatique, la surveillance compte plus que dans un plan à
+cadence constante. Trois rendez-vous à ne pas manquer :
+
+| Date | Vagues sorties | Pages | À vérifier |
+|---|---|---|---|
+| 21/09/2026 | 1 à 4 | 400 | Taux d'indexation. En dessous de 70 %, freiner avant le 2 novembre. |
+| 30/11/2026 | 1 à 9 | 1 350 | Le passage à 250 a-t-il tenu ? Freiner avant le 25 janvier si non. |
+| 05/04/2027 | 1 à 18 | 5 100 | Dernier point avant les vagues à 800. |
+
+Entre ces rendez-vous, un coup d'œil mensuel à la courbe d'indexation suffit.
 
 ---
 

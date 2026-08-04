@@ -26,6 +26,7 @@
  * Usage :
  *   node scripts/build-station-waves.js
  *   node scripts/build-station-waves.js --dry-run    (n'écrit rien, affiche le plan)
+ *   node scripts/build-station-waves.js --replan     (applique un nouveau WAVE_PLAN)
  *   STATIONS_WAVE_START=2026-09-01 node scripts/build-station-waves.js
  */
 
@@ -43,6 +44,22 @@ const WAVES_FILE = resolve(DATA_DIR, 'station-waves.json');
 
 const DRY_RUN = process.argv.includes('--dry-run');
 
+/**
+ * Replanification.
+ *
+ * L'idempotence du script est une garantie : une station affectée n'est jamais
+ * redistribuée. C'est ce qui protège les pages en ligne, mais cela veut aussi
+ * dire que modifier WAVE_PLAN n'a aucun effet sur les stations déjà planifiées,
+ * donc sur rien du tout une fois le premier plan écrit.
+ *
+ * --replan lève cette garantie pour les seules vagues à venir : les stations
+ * des vagues déjà publiées gardent leur vague ET leur URL, toutes les autres
+ * sont remises dans le sac et redistribuées selon le nouveau plan. C'est
+ * l'unique manière de changer de cadence en cours de route sans toucher à ce
+ * qui est en ligne.
+ */
+const REPLAN = process.argv.includes('--replan');
+
 // ─────────────────────────────────────────────────────────────────────────────
 // Cadence de publication
 // ─────────────────────────────────────────────────────────────────────────────
@@ -54,29 +71,42 @@ const INTERVAL_DAYS = 14;
  * Taille des vagues, par paliers. Chaque entrée s'applique à partir de la vague
  * indiquée et jusqu'au palier suivant.
  *
- * Réglage actuel : 100 pages toutes les deux semaines, du début à la fin.
- * À ce rythme, les ~9 800 stations demandent 98 vagues, soit près de quatre ans.
- * Voir STATIONS-ROLLOUT.md pour le palier d'accélération prêt à l'emploi, à
- * appliquer une fois l'indexation des premières vagues validée.
+ * Montée en charge progressive. Les six premières vagues restent à 100 pages,
+ * le temps de vérifier en Search Console que Google indexe correctement le
+ * gabarit. Une fois cette preuve faite, il n'y a plus de raison de rester à ce
+ * rythme : ce qui reste à démontrer n'est plus la qualité du modèle de page
+ * mais la capacité du site à absorber du volume, et cela se teste en montant.
  *
- * Modifier ce tableau ne réaffecte JAMAIS une station déjà publiée : seules les
- * stations pas encore affectées et les vagues futures sont impactées.
+ * À 100 pages du début à la fin, le parc complet demanderait 99 vagues, soit
+ * près de quatre ans. Avec ces paliers, 24 vagues suffisent.
+ *
+ * IMPORTANT : modifier ce tableau n'a aucun effet sur les stations déjà
+ * planifiées, l'affectation étant idempotente par construction. Pour appliquer
+ * un changement de cadence, lancer `npm run waves:replan`, qui gèle les vagues
+ * publiées et redistribue uniquement les suivantes.
  */
 const WAVE_PLAN = [
-  { fromWave: 1, size: 100 },
+  { fromWave: 1, size: 100 },  // vagues 1 à 6, prudence initiale
+  { fromWave: 7, size: 250 },  // vagues 7 à 12
+  { fromWave: 13, size: 500 }, // vagues 13 à 18
+  { fromWave: 19, size: 800 }, // vagues 19 et suivantes
 ];
 
 /**
- * Plafonds de diversité géographique, par vague.
+ * Plafonds de diversité géographique, exprimés en part d'une vague.
  *
  * Sans eux, la première vague serait à peu près intégralement parisienne et
  * lyonnaise : les 100 pages se cannibaliseraient entre elles et concurrenceraient
  * la page ville existante. En bornant, chaque vague couvre au minimum une
  * dizaine de départements, ce qui multiplie les requêtes visées et donne à
  * Google un signal de couverture nationale plutôt que d'empilement local.
+ *
+ * Des parts plutôt que des nombres fixes : les vagues passant de 100 à 800
+ * pages, un plafond fixe à 12 stations par département finirait par forcer une
+ * dispersion absurde sur 67 départements pour remplir une seule vague.
  */
-const MAX_PER_CITY_PER_WAVE = 6;
-const MAX_PER_DEPT_PER_WAVE = 12;
+const MAX_CITY_SHARE = 0.06; // 6 stations pour une vague de 100
+const MAX_DEPT_SHARE = 0.12; // 12 stations pour une vague de 100
 
 /** Taille de la vague n (1-indexé). */
 function waveSize(n) {
@@ -85,6 +115,16 @@ function waveSize(n) {
     if (n >= step.fromWave) size = step.size;
   }
   return size;
+}
+
+/** Plafonds absolus applicables à la vague n. */
+function waveCaps(n) {
+  const size = waveSize(n);
+  return {
+    size,
+    city: Math.max(1, Math.round(size * MAX_CITY_SHARE)),
+    dept: Math.max(1, Math.round(size * MAX_DEPT_SHARE)),
+  };
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -266,10 +306,31 @@ function main() {
     );
   }
 
+  // Dernière vague dont la date est atteinte : la frontière entre ce qui est
+  // figé et ce qui peut encore être redistribué.
+  const lastPublishedWave = (previous?.waves ?? []).reduce(
+    (last, w) => (w.publishAt <= today ? w.n : last),
+    0,
+  );
+
   /** id -> { wave, path } */
   const assignment = new Map();
+  let released = 0;
   for (const [id, entry] of Object.entries(previous?.stations ?? {})) {
+    if (REPLAN && entry.wave > lastPublishedWave) {
+      // Vague pas encore sortie : on libère l'affectation, le nouveau plan
+      // décidera. L'URL sera recalculée à l'identique à partir des mêmes
+      // données, seul le numéro de vague peut changer.
+      released++;
+      continue;
+    }
     assignment.set(id, { wave: entry.wave, path: entry.path });
+  }
+
+  if (REPLAN) {
+    console.log(
+      `♻️  Replanification : ${assignment.size} station(s) figée(s) (vagues 1 à ${lastPublishedWave}, déjà publiées), ${released} redistribuée(s).`,
+    );
   }
 
   // Occupation courante des vagues, et compteurs de diversité.
@@ -322,13 +383,13 @@ function main() {
     // plafonds de diversité. Au-delà de la dernière vague existante, on en crée
     // une nouvelle, donc la boucle termine toujours.
     for (;;) {
-      const size = waveSize(wave);
+      const caps = waveCaps(wave);
       const ck = `${wave}|${s.villeSlug}`;
       const dk = `${wave}|${s.dep}`;
       const fits =
-        (occupancy.get(wave) ?? 0) < size &&
-        (cityCount.get(ck) ?? 0) < MAX_PER_CITY_PER_WAVE &&
-        (deptCount.get(dk) ?? 0) < MAX_PER_DEPT_PER_WAVE;
+        (occupancy.get(wave) ?? 0) < caps.size &&
+        (cityCount.get(ck) ?? 0) < caps.city &&
+        (deptCount.get(dk) ?? 0) < caps.dept;
       if (fits) break;
       wave++;
     }
@@ -383,8 +444,8 @@ function main() {
     intervalDays: INTERVAL_DAYS,
     wavePlan: WAVE_PLAN,
     diversity: {
-      maxPerCityPerWave: MAX_PER_CITY_PER_WAVE,
-      maxPerDeptPerWave: MAX_PER_DEPT_PER_WAVE,
+      maxCityShare: MAX_CITY_SHARE,
+      maxDeptShare: MAX_DEPT_SHARE,
     },
     totalStations: assignment.size,
     totalWaves,
