@@ -61,6 +61,13 @@ jobs:
           fi
           rm -f fetch-output.log
 
+      - name: Planification des vagues de pages station
+        # Affecte les stations nouvellement apparues dans l'open data à une
+        # vague future, et bascule à l'état publié les vagues dont la date est
+        # atteinte. Le fichier n'est réécrit que si le plan change réellement,
+        # pour ne pas déclencher un déploiement quotidien sans raison.
+        run: node scripts/build-station-waves.js
+
       - name: Vérification des changements
         id: check-changes
         run: |

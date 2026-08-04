@@ -48,6 +48,26 @@ try {
   // données absentes : sitemap complet par défaut.
 }
 
+// Avant la première vague de pages station, l'annuaire n'a rien à lister. Il est
+// déjà rendu en noindex côté page ; le laisser dans le sitemap enverrait deux
+// signaux contradictoires, on l'en retire tant qu'il est vide.
+try {
+  const waves = JSON.parse(
+    readFileSync(new URL('./src/data/fuel/station-waves.json', import.meta.url), 'utf-8'),
+  );
+  // Mêmes échappatoires que src/utils/station-waves.ts, sinon une simulation de
+  // date produirait des pages station absentes du sitemap.
+  const today = process.env.STATIONS_ROLLOUT_DATE ?? new Date().toISOString().slice(0, 10);
+  const anyPublished =
+    process.env.STATIONS_ROLLOUT_ALL === '1' ||
+    (waves.waves ?? []).some((w) => w.publishAt <= today);
+  if (!anyPublished) {
+    weakUrls.add(`${SITE}/prix-carburants/stations/`);
+  }
+} catch {
+  // plan absent : rien à exclure.
+}
+
 // Dates réelles des articles (blog + piliers) : le sitemap doit refléter la
 // date de publication/mise à jour propre à chaque article plutôt que la date
 // de build du site. Un <lastmod> identique sur toutes les URLs à chaque build

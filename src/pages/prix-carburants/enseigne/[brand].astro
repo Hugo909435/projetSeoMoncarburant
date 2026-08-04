@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import BrandLogo from '../../../components/BrandLogo.astro';
+import StationLink from '../../../components/StationLink.astro';
 import statsNational from '../../../data/fuel/stats-national.json';
 import brandsIndex from '../../../data/fuel/brands.json';
 import departmentsData from '../../../data/departments.json';
@@ -171,7 +172,7 @@ const jsonLdBreadcrumb = {
                   <tbody>
                     {top10.Gazole.map((s: any) => (
                       <tr>
-                        <td class="station-addr">{s.adresse || '-'}</td>
+                        <td class="station-addr"><StationLink id={s.id} adresse={s.adresse} ville={s.ville} /></td>
                         <td><a href={`/prix-carburants/${deps[s.dep]?.slug ?? s.dep}/`} class="dept-link">{s.ville}</a></td>
                         <td class="price-highlight">{s.prices.Gazole?.toFixed(3) ?? '-'} €/L</td>
                       </tr>
@@ -190,7 +191,7 @@ const jsonLdBreadcrumb = {
                   <tbody>
                     {top10.SP95.map((s: any) => (
                       <tr>
-                        <td class="station-addr">{s.adresse || '-'}</td>
+                        <td class="station-addr"><StationLink id={s.id} adresse={s.adresse} ville={s.ville} /></td>
                         <td><a href={`/prix-carburants/${deps[s.dep]?.slug ?? s.dep}/`} class="dept-link">{s.ville}</a></td>
                         <td class="price-highlight">{s.prices.SP95?.toFixed(3) ?? '-'} €/L</td>
                       </tr>
@@ -224,7 +225,7 @@ const jsonLdBreadcrumb = {
             <tbody>
               {brandData.stations.slice(0, 30).map((s: any) => (
                 <tr>
-                  <td class="station-addr">{s.adresse || '-'}</td>
+                  <td class="station-addr"><StationLink id={s.id} adresse={s.adresse} ville={s.ville} /></td>
                   <td>{s.ville}</td>
                   <td>
                     <a href={`/prix-carburants/${deps[s.dep]?.slug ?? s.dep}/`} class="dept-pill-link">

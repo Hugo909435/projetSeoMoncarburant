@@ -16,6 +16,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, '..');
 const DATA_DIR = resolve(ROOT, 'src/data/fuel');
 const DEPT_DIR = resolve(DATA_DIR, 'stations-by-department');
+const DETAIL_DIR = resolve(DATA_DIR, 'stations-detail');
 const CITY_DIR = resolve(DATA_DIR, 'stations-by-city');
 const BRAND_DIR = resolve(DATA_DIR, 'stations-by-brand');
 const PUBLIC_DATA_DIR = resolve(ROOT, 'public/data');
@@ -31,6 +32,121 @@ const FUEL_ID_MAP = { '1': 'Gazole', '2': 'SP95', '6': 'SP98', '5': 'E10', '3': 
 
 function slugifyCity(name) {
   return slugify(name, { lower: true, strict: true, locale: 'fr' });
+}
+
+const NAMED_ENTITIES = {
+  amp: '&', quot: '"', apos: "'", lt: '<', gt: '>', nbsp: ' ',
+  eacute: 'é', egrave: 'è', agrave: 'à', ccedil: 'ç', ocirc: 'ô',
+  rsquo: '’', ndash: '–', mdash: '—', oelig: 'œ',
+};
+
+/**
+ * Nettoie une chaîne de texte issue du flux gouvernemental.
+ *
+ * Une quinzaine d'enregistrements contiennent des entités HTML sous forme
+ * littérale ("Salleb&#339;uf" pour Sallebœuf, "route d&#8217;aigre"). Laissées
+ * telles quelles, elles ressortent doublement échappées dans le HTML, faussent
+ * la longueur des balises meta et polluent les URLs générées.
+ *
+ * On en profite pour ramener la typographie aux caractères simples : apostrophe
+ * droite, et trait d'union à la place des tirets cadratin et demi-cadratin, que
+ * la charte rédactionnelle du site proscrit.
+ */
+function cleanText(raw) {
+  if (raw == null) return '';
+  let out = String(raw);
+
+  // Deux passes : certaines chaînes sont échappées deux fois ("&amp;#8217;").
+  for (let i = 0; i < 2; i++) {
+    out = out
+      .replace(/&#x([0-9a-f]+);/gi, (_, hex) => String.fromCodePoint(parseInt(hex, 16)))
+      .replace(/&#(\d+);/g, (_, dec) => String.fromCodePoint(Number(dec)))
+      .replace(/&([a-z]+);/gi, (m, name) => NAMED_ENTITIES[name.toLowerCase()] ?? m);
+  }
+
+  return out
+    .replace(/[‘’‛]/g, "'")
+    .replace(/[“”]/g, '"')
+    .replace(/[–—]/g, '-')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+// Mots qui restent en minuscule dans un nom de commune, sauf en première position.
+const PARTICULES = new Set([
+  'de', 'du', 'des', 'd', 'la', 'le', 'les', 'l', 'sur', 'sous', 'en', 'et',
+  'au', 'aux', 'lès', 'les', 'lez', 'sainte-', 'a', 'à', 'devant', 'dessus',
+  'dessous', 'près', 'sans', 'sur-', 'the',
+]);
+
+/**
+ * Remet un nom de commune dans une casse présentable.
+ *
+ * Le flux gouvernemental est très inégal sur ce point : un tiers des communes
+ * arrive tout en majuscules ("BOURG-EN-BRESSE"), le reste dans des formes
+ * mélangées ("MONTREAL du GERS"). Afficher ces chaînes telles quelles dans un
+ * titre de page ou un H1 donne un rendu criard et un signal de contenu généré.
+ */
+function titleCaseCity(raw) {
+  const lower = String(raw).toLowerCase();
+  // On découpe en gardant les séparateurs, pour capitaliser après un tiret ou
+  // une apostrophe comme en début de mot.
+  const parts = lower.split(/([\s\-'’])/);
+
+  let wordIndex = 0;
+  return parts
+    .map((part) => {
+      if (/^[\s\-'’]$/.test(part) || part === '') return part;
+      const isFirst = wordIndex === 0;
+      wordIndex++;
+      if (!isFirst && PARTICULES.has(part)) return part;
+      return part.charAt(0).toUpperCase() + part.slice(1);
+    })
+    .join('');
+}
+
+/**
+ * Choisit, pour chaque commune, la meilleure graphie disponible.
+ *
+ * Une même commune apparaît souvent sous plusieurs formes selon les stations
+ * ("BOURG-EN-BRESSE", "Bourg en Bresse", "NÎMES", "NIMES"). La casse n'entre pas
+ * dans le choix, puisqu'elle est refaite ensuite : ce qui compte est l'information
+ * que la variante conserve et que les autres ont perdue, à savoir les accents et
+ * les traits d'union. À égalité, la graphie la plus fréquente l'emporte.
+ * Les 168 villes de top-cities.json font autorité sur tout le reste.
+ */
+function buildCityNames(stations, topCities) {
+  const variantsBySlug = new Map();
+  for (const s of stations) {
+    const counts = variantsBySlug.get(s.villeSlug);
+    if (counts) counts.set(s.ville, (counts.get(s.ville) ?? 0) + 1);
+    else variantsBySlug.set(s.villeSlug, new Map([[s.ville, 1]]));
+  }
+
+  const scoreVariant = (v) => {
+    const accents = (v.match(/[À-ÖØ-öø-ÿ]/g) ?? []).length * 10;
+    const hyphens = (v.match(/-/g) ?? []).length * 5;
+    const apostrophes = (v.match(/['’]/g) ?? []).length * 5;
+    return accents + hyphens + apostrophes;
+  };
+
+  const names = {};
+  for (const [slug, counts] of variantsBySlug) {
+    const best = [...counts.entries()].sort(
+      (a, b) =>
+        scoreVariant(b[0]) - scoreVariant(a[0]) ||
+        b[1] - a[1] ||
+        a[0].localeCompare(b[0]),
+    )[0][0];
+    names[slug] = titleCaseCity(best);
+  }
+
+  // Les noms de référence l'emportent sur la reconstruction automatique.
+  for (const city of topCities) {
+    if (names[city.slug]) names[city.slug] = city.name;
+  }
+
+  return names;
 }
 
 // Normalisation des noms d'enseigne issus du XML gouvernemental
@@ -88,7 +204,7 @@ function normalizeEnseigne(raw) {
 }
 
 function ensureDirs() {
-  for (const dir of [DATA_DIR, DEPT_DIR, CITY_DIR, BRAND_DIR, PUBLIC_DATA_DIR]) {
+  for (const dir of [DATA_DIR, DEPT_DIR, DETAIL_DIR, CITY_DIR, BRAND_DIR, PUBLIC_DATA_DIR]) {
     if (!existsSync(dir)) mkdirSync(dir, { recursive: true });
   }
 }
@@ -150,6 +266,67 @@ function getDepNum(cp) {
   return str.substring(0, 2);
 }
 
+// Le flux note les heures au format "07.00" ou "7:00" selon les stations.
+function normalizeHeure(raw) {
+  if (raw == null || raw === '') return null;
+  const str = String(raw).trim().replace(',', '.');
+  const m = str.match(/^(\d{1,2})[.:h]?(\d{2})?$/);
+  if (!m) return null;
+  const h = Number(m[1]);
+  const min = m[2] ? Number(m[2]) : 0;
+  if (!Number.isInteger(h) || h < 0 || h > 24) return null;
+  if (!Number.isInteger(min) || min < 0 || min > 59) return null;
+  return `${String(h).padStart(2, '0')}:${String(min).padStart(2, '0')}`;
+}
+
+/**
+ * Extrait les horaires d'ouverture déclarés par la station, sous forme compacte.
+ *
+ * Retourne un tableau de 7 entrées (index 0 = lundi ... 6 = dimanche) :
+ *   - "07:00-20:00" ou "07:00-12:00,14:00-19:00" : créneaux d'ouverture
+ *   - "F"  : la station se déclare explicitement fermée ce jour-là
+ *   - null : jour non renseigné par la station
+ * ou null si la station ne déclare rien d'exploitable (cas fréquent : près de
+ * la moitié du parc laisse le bloc horaires vide).
+ *
+ * Le format compact est délibéré : ce fichier est régénéré et commité chaque
+ * jour, une représentation en objets par jour pèse 10 fois plus lourd pour la
+ * même information.
+ */
+function parseHoraires(horaires) {
+  if (!horaires?.jour) return null;
+  const jours = Array.isArray(horaires.jour) ? horaires.jour : [horaires.jour];
+
+  const out = [null, null, null, null, null, null, null];
+  let hasContent = false;
+
+  for (const j of jours) {
+    const id = Number(j['@_id']);
+    if (!Number.isInteger(id) || id < 1 || id > 7) continue;
+
+    if (j['@_ferme'] === 1 || j['@_ferme'] === '1') {
+      out[id - 1] = 'F';
+      hasContent = true;
+      continue;
+    }
+
+    if (!j.horaire) continue;
+    const creneaux = Array.isArray(j.horaire) ? j.horaire : [j.horaire];
+    const slots = [];
+    for (const c of creneaux) {
+      const open = normalizeHeure(c['@_ouverture']);
+      const close = normalizeHeure(c['@_fermeture']);
+      if (open && close) slots.push(`${open}-${close}`);
+    }
+    if (slots.length > 0) {
+      out[id - 1] = slots.join(',');
+      hasContent = true;
+    }
+  }
+
+  return hasContent ? out : null;
+}
+
 function normalizePrice(valeur) {
   if (valeur == null || valeur === '' || valeur === 0) return null;
   const v = Number(valeur);
@@ -177,7 +354,7 @@ function processStations(rawStations, departments, brandMap) {
 
     if (!lat || !lng) continue;
 
-    const ville = String(pdv.ville ?? '').trim();
+    const ville = cleanText(pdv.ville);
     if (!ville) continue;
 
     // Prix par carburant
@@ -220,6 +397,9 @@ function processStations(rawStations, departments, brandMap) {
     // Horaires automate 24/24
     const automate = pdv.horaires?.['@_automate-24-24'] === 1 || pdv.horaires?.['@_automate-24-24'] === '1';
 
+    // Horaires d'ouverture détaillés (utilisés par les pages station)
+    const horaires = parseHoraires(pdv.horaires);
+
     // Enseigne — source : station-brands.json (généré par fetch-brand-map.js)
     const stationId = String(pdv['@_id']);
     const brand = brandMap[stationId] ?? null;
@@ -233,7 +413,7 @@ function processStations(rawStations, departments, brandMap) {
       cp,
       ville,
       villeSlug: slugifyCity(ville),
-      adresse: String(pdv.adresse ?? '').trim(),
+      adresse: cleanText(pdv.adresse),
       lat,
       lng,
       dep: depNum,
@@ -243,6 +423,7 @@ function processStations(rawStations, departments, brandMap) {
       pop: pdv['@_pop'] === 'A' ? 'autoroute' : 'route',
       automate,
       services,
+      horaires,
       enseigne: brand?.name ?? null,
       enseigneSlug: brand?.slug ?? null,
       prices,
@@ -388,6 +569,11 @@ async function main() {
     byCity[s.villeSlug].push(s);
   }
 
+  // Référentiel de noms de communes présentables (voir buildCityNames)
+  const cityNames = buildCityNames(stations, topCities);
+  writeFileSync(resolve(DATA_DIR, 'city-names.json'), JSON.stringify(cityNames, null, 0));
+  console.log(`🔤 ${Object.keys(cityNames).length} noms de communes normalisés`);
+
   // Stats nationales
   const statsNational = buildNationalStats(stations);
   writeFileSync(resolve(DATA_DIR, 'stats-national.json'), JSON.stringify(statsNational, null, 2));
@@ -460,6 +646,25 @@ async function main() {
     depCount++;
   }
   console.log(`📁 ${depCount} fichiers département générés`);
+
+  // Fichiers de détail par département : champs lourds (services, horaires)
+  // dont les pages station ont besoin au build, mais qui n'ont rien à faire
+  // dans stations-light.json (servi tel quel au navigateur) ni dans les
+  // fichiers département (chargés en entier par les pages département).
+  let detailCount = 0;
+  for (const [dep, sts] of Object.entries(byDep)) {
+    const detail = {};
+    for (const s of sts) {
+      const entry = {};
+      if (s.services.length > 0) entry.services = s.services;
+      if (s.automate) entry.automate = true;
+      if (s.horaires) entry.horaires = s.horaires;
+      if (Object.keys(entry).length > 0) detail[s.id] = entry;
+    }
+    writeFileSync(resolve(DETAIL_DIR, `${dep}.json`), JSON.stringify(detail));
+    detailCount++;
+  }
+  console.log(`🕒 ${detailCount} fichiers détail (services + horaires) générés`);
 
   // Fichiers par ville (top cities uniquement)
   let cityCount = 0;

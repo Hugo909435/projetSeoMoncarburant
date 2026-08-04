@@ -1,0 +1,222 @@
+---
+/**
+ * Annuaire des pages station publiées.
+ *
+ * Sert deux choses : donner à Google un point d'entrée unique vers les pages
+ * station en cours de déploiement (le sitemap seul ne remplace pas un lien),
+ * et rendre le rythme du déploiement lisible pour un visiteur.
+ *
+ * L'annuaire ne liste que les stations dont la vague est échue : il grossit au
+ * même rythme que les vagues.
+ */
+import type { GetStaticPaths } from 'astro';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Pagination from '../../../components/Pagination.astro';
+import departments from '../../../data/departments.json';
+import cityNames from '../../../data/fuel/city-names.json';
+import { publishedStations, rolloutMeta } from '../../../utils/station-waves';
+import { FUEL_KEYS } from '../../../data/fuel/config';
+
+type Dept = { num: string; name: string; slug: string };
+
+export const getStaticPaths = (async ({ paginate }) => {
+  const deptFiles = import.meta.glob('../../../data/fuel/stations-by-department/*.json', { eager: true });
+  const deps = departments as Record<string, Dept>;
+  const names = cityNames as Record<string, string>;
+
+  const rows: any[] = [];
+  for (const [path, mod] of Object.entries(deptFiles) as [string, any][]) {
+    const depNum = path.match(/\/([^/]+)\.json$/)?.[1];
+    const data = mod.default ?? mod;
+    if (!depNum || !data?.stations) continue;
+    const dept = deps[depNum];
+    if (!dept) continue;
+
+    for (const s of data.stations) {
+      const entry = publishedStations.get(String(s.id));
+      if (!entry) continue;
+      rows.push({
+        id: s.id,
+        wave: entry.wave,
+        url: `/prix-carburants/station/${entry.path}/`,
+        enseigne: s.enseigne ?? null,
+        adresse: s.adresse,
+        ville: names[s.villeSlug] ?? s.ville,
+        cp: s.cp,
+        deptName: dept.name,
+        deptSlug: dept.slug,
+        deptNum: dept.num,
+        gazole: s.prices?.Gazole ?? null,
+        fuels: FUEL_KEYS.filter((f) => s.prices?.[f] != null).length,
+      });
+    }
+  }
+
+  // Ordre stable : département, puis commune, puis adresse. Une station ne
+  // change donc pas de page d'annuaire d'un build à l'autre, sauf arrivée
+  // d'une nouvelle vague.
+  rows.sort(
+    (a, b) =>
+      a.deptNum.localeCompare(b.deptNum) ||
+      a.ville.localeCompare(b.ville, 'fr') ||
+      String(a.adresse).localeCompare(String(b.adresse), 'fr'),
+  );
+
+  return paginate(rows, { pageSize: 60 });
+}) satisfies GetStaticPaths;
+
+const { page } = Astro.props;
+
+const isFirstPage = page.currentPage === 1;
+const title = isFirstPage
+  ? 'Annuaire des stations-service en France'
+  : `Annuaire des stations-service (page ${page.currentPage})`;
+const description = isFirstPage
+  ? `Retrouvez le détail des stations-service référencées : prix des carburants, horaires, services et itinéraire, station par station.`
+  : `Stations-service référencées, page ${page.currentPage} : prix des carburants, horaires et services station par station.`;
+const canonical = isFirstPage ? '/prix-carburants/stations/' : `/prix-carburants/stations/${page.currentPage}/`;
+
+const breadcrumb = [
+  { name: 'Accueil', url: '/' },
+  { name: 'Prix carburants', url: '/prix-carburants/' },
+  { name: 'Annuaire des stations', url: '/prix-carburants/stations/' },
+];
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: breadcrumb.map((item, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    name: item.name,
+    item: `https://mon-carburant.com${item.url}`,
+  })),
+};
+
+const coveragePct = rolloutMeta.totalStations
+  ? (rolloutMeta.publishedCount / rolloutMeta.totalStations) * 100
+  : 0;
+---
+
+{/* Avant la première vague, l'annuaire n'a rien à lister : autant ne pas
+    l'offrir à l'indexation plutôt que d'exposer une page vide. */}
+<BaseLayout
+  title={title}
+  description={description}
+  canonical={canonical}
+  jsonLd={jsonLd}
+  noIndex={rolloutMeta.publishedCount === 0}
+>
+  <div>
+    <div class="container" style="padding-top:1rem">
+      <nav aria-label="Fil d'ariane" class="breadcrumb-nav">
+        {breadcrumb.map((item, i) => (
+          <>
+            {i > 0 && <span aria-hidden="true"> › </span>}
+            {i < breadcrumb.length - 1
+              ? <a href={item.url}>{item.name}</a>
+              : <span aria-current="page">{item.name}</span>
+            }
+          </>
+        ))}
+      </nav>
+    </div>
+
+    <section class="dir-hero">
+      <div class="container">
+        <h1>Annuaire des stations-service</h1>
+        <p class="dir-sub">
+          {rolloutMeta.publishedCount.toLocaleString('fr-FR')} station{rolloutMeta.publishedCount > 1 ? 's' : ''} détaillée{rolloutMeta.publishedCount > 1 ? 's' : ''} sur {rolloutMeta.totalStations.toLocaleString('fr-FR')} référencées en France
+        </p>
+      </div>
+    </section>
+
+    <div class="container page-body">
+      {isFirstPage && (
+        <section class="section-block">
+          <div class="progress-box">
+            <div class="progress-bar"><span style={`width:${Math.max(coveragePct, 0.6).toFixed(2)}%`}></span></div>
+            <p>
+              Nous publions progressivement la fiche détaillée de chaque station-service française.
+              À ce jour, {rolloutMeta.publishedCount.toLocaleString('fr-FR')} fiches sont en ligne, soit {coveragePct.toFixed(1)}% du parc.
+              {rolloutMeta.nextWave && ` Prochain lot le ${new Date(rolloutMeta.nextWave.publishAt).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })}.`}
+            </p>
+          </div>
+        </section>
+      )}
+
+      <section class="section-block">
+        <div class="table-wrapper">
+          <table class="stations-table">
+            <thead>
+              <tr>
+                <th>Station</th>
+                <th>Commune</th>
+                <th>Département</th>
+                <th>Gazole</th>
+              </tr>
+            </thead>
+            <tbody>
+              {page.data.map((row: any) => (
+                <tr>
+                  <td><a href={row.url}>{row.enseigne ?? 'Station-service'}{row.adresse ? `, ${row.adresse}` : ''}</a></td>
+                  <td>{row.ville} ({row.cp})</td>
+                  <td><a class="dept-link" href={`/prix-carburants/${row.deptSlug}/`}>{row.deptName}</a></td>
+                  <td>{row.gazole != null ? `${row.gazole.toFixed(3)} €` : '-'}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <Pagination
+        currentPage={page.currentPage}
+        lastPage={page.lastPage}
+        basePath="/prix-carburants/stations"
+      />
+
+      <section class="section-block">
+        <div class="nav-links">
+          <a href="/prix-carburants/" class="nav-link">Comparateur national</a>
+          <a href="/prix-carburants/methodologie/" class="nav-link">Notre méthodologie</a>
+        </div>
+      </section>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .breadcrumb-nav { font-size: 0.875rem; color: var(--color-text-muted); }
+  .breadcrumb-nav a { color: var(--color-primary); text-decoration: none; }
+  .breadcrumb-nav a:hover { text-decoration: underline; }
+
+  .dir-hero { background: var(--color-primary); color: #fff; padding: 2.5rem 0 2rem; }
+  .dir-hero h1 { font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 800; color: #fff; margin: 0 0 0.5rem; }
+  .dir-sub { color: #cbd5e1; margin: 0; }
+
+  .page-body { padding-top: 2rem; padding-bottom: 3rem; }
+  .section-block { margin-bottom: 2.5rem; }
+
+  .progress-box { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 0.6rem; padding: 1.1rem 1.25rem; }
+  .progress-box p { margin: 0.75rem 0 0; color: #374151; font-size: 0.9rem; line-height: 1.65; }
+  .progress-bar { height: 8px; background: #e2e8f0; border-radius: 999px; overflow: hidden; }
+  .progress-bar span { display: block; height: 100%; background: var(--color-accent, #16a34a); border-radius: 999px; }
+
+  .table-wrapper { overflow-x: auto; }
+  .stations-table { width: 100%; border-collapse: collapse; font-size: 0.875rem; }
+  .stations-table th { background: #f1f5f9; color: var(--color-primary); padding: 0.6rem 0.75rem; text-align: left; font-size: 0.8rem; }
+  .stations-table td { padding: 0.55rem 0.75rem; border-bottom: 1px solid #f1f5f9; }
+  .stations-table tr:hover td { background: #f8fafc; }
+  .stations-table a { color: var(--color-primary); font-weight: 600; text-decoration: none; }
+  .stations-table a:hover { text-decoration: underline; }
+  .dept-link { font-weight: 500 !important; }
+
+  .nav-links { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .nav-link {
+    background: #f1f5f9; border: 1px solid #e2e8f0; border-radius: 0.5rem;
+    padding: 0.5rem 1rem; text-decoration: none; color: var(--color-primary); font-size: 0.875rem; font-weight: 600;
+    transition: all 0.15s;
+  }
+  .nav-link:hover { background: var(--color-primary); color: #fff; }
+</style>

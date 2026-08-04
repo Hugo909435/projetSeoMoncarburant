@@ -6,6 +6,7 @@ import statsByRegion from '../../data/fuel/stats-by-region.json';
 import statsByDepartment from '../../data/fuel/stats-by-department.json';
 import departmentsData from '../../data/departments.json';
 import meta from '../../data/fuel/meta.json';
+import { rolloutMeta } from '../../utils/station-waves';
 
 const FUEL_CONFIG = [
   { key: 'Gazole',  label: 'Gazole',          color: '#374151' },
@@ -162,6 +163,9 @@ const description = `Comparez les prix du carburant dans toute la France. ${meta
         </p>
         <div class="explainer-links">
           <a href="/prix-carburants/methodologie/">En savoir plus sur notre méthodologie</a>
+          {rolloutMeta.publishedCount > 0 && (
+            <a href="/prix-carburants/stations/">Annuaire des stations-service</a>
+          )}
           <a href="/blog/astuces-economiser-carburant/">10 astuces pour économiser du carburant</a>
         </div>
       </div>

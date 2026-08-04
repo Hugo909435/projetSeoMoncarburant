@@ -1,0 +1,30 @@
+---
+/**
+ * Cellule « adresse » d'un tableau de stations.
+ *
+ * Rend un lien vers la fiche station si sa vague de publication est échue, et
+ * du texte simple sinon. Les tableaux existants (ville, département, enseigne)
+ * listent tout le parc alors que les fiches sortent par lots : sans ce garde-fou
+ * ils pointeraient vers des pages qui n'existent pas encore.
+ */
+import { stationUrl } from '../utils/station-waves';
+
+interface Props {
+  id: string;
+  adresse?: string | null;
+  /** Complète l'intitulé du lien quand l'adresse seule est trop vague. */
+  ville?: string | null;
+}
+
+const { id, adresse, ville } = Astro.props;
+const url = stationUrl(id);
+const label = adresse || (ville ? `Station à ${ville}` : 'Station-service');
+const title = ville && adresse ? `${adresse}, ${ville}` : label;
+---
+
+{url ? <a href={url} title={title}>{label}</a> : <span>{adresse || '-'}</span>}
+
+<style>
+  a { color: var(--color-primary); text-decoration: none; font-weight: 600; }
+  a:hover { text-decoration: underline; }
+</style>

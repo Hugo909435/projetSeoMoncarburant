@@ -1,0 +1,628 @@
+---
+/**
+ * Page de détail d'une station-service.
+ *
+ * Ces pages sont publiées par vagues (voir STATIONS-ROLLOUT.md). getStaticPaths
+ * ne génère que les stations dont la vague est échue à la date du build : le
+ * reste du parc existe dans les données mais n'est pas rendu, donc pas exposé
+ * au sitemap ni au crawl.
+ */
+import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import BrandLogo from '../../../../components/BrandLogo.astro';
+import departments from '../../../../data/departments.json';
+import statsNational from '../../../../data/fuel/stats-national.json';
+import statsByDept from '../../../../data/fuel/stats-by-department.json';
+import brandsIndex from '../../../../data/fuel/brands.json';
+import cityNames from '../../../../data/fuel/city-names.json';
+import meta from '../../../../data/fuel/meta.json';
+import { FUEL_COLORS, FUEL_KEYS } from '../../../../data/fuel/config';
+import { publishedStations, stationUrl } from '../../../../utils/station-waves';
+import {
+  buildStationIntro,
+  buildStationFaq,
+  stationHeading,
+  stationDisplayName,
+  type StationLike,
+} from '../../../../utils/station-intro';
+import { decodeHoraires, horairesToSchema, isAlwaysOpen } from '../../../../utils/station-hours';
+import { formatMaj } from '../../../../utils/format-maj';
+
+type Dept = { num: string; name: string; slug: string; region: string; regionSlug: string };
+
+export async function getStaticPaths() {
+  // Astro isole getStaticPaths du reste du frontmatter : les helpers dont il a
+  // besoin doivent être déclarés à l'intérieur.
+
+  /** Distance à vol d'oiseau en kilomètres. */
+  const haversine = (aLat: number, aLng: number, bLat: number, bLng: number): number => {
+    const R = 6371;
+    const toRad = (d: number) => (d * Math.PI) / 180;
+    const dLat = toRad(bLat - aLat);
+    const dLng = toRad(bLng - aLng);
+    const h =
+      Math.sin(dLat / 2) ** 2 +
+      Math.cos(toRad(aLat)) * Math.cos(toRad(bLat)) * Math.sin(dLng / 2) ** 2;
+    return 2 * R * Math.asin(Math.sqrt(h));
+  };
+
+  const deptFiles = import.meta.glob('../../../../data/fuel/stations-by-department/*.json', { eager: true });
+  const detailFiles = import.meta.glob('../../../../data/fuel/stations-detail/*.json', { eager: true });
+  const cityFiles = import.meta.glob('../../../../data/fuel/stations-by-city/*.json', { eager: true });
+
+  const deps = departments as Record<string, Dept>;
+
+  // Le flux gouvernemental écrit un tiers des communes en majuscules et le
+  // reste dans des casses mélangées. On affiche partout la graphie normalisée
+  // (voir buildCityNames dans scripts/fetch-fuel-data.js).
+  const names = cityNames as Record<string, string>;
+  const displayCity = (s: any) => names[s.villeSlug] ?? s.ville;
+
+  // Villes et enseignes qui disposent déjà d'une page : on ne crée pas de lien
+  // interne vers une URL qui n'existe pas.
+  const citySlugsWithPage = new Set(
+    Object.keys(cityFiles).map((p) => p.match(/\/([^/]+)\.json$/)?.[1] ?? ''),
+  );
+  const brandSlugsWithPage = new Set((brandsIndex as { slug: string }[]).map((b) => b.slug));
+
+  // Détail (services, horaires) indexé par identifiant de station.
+  const detailById: Record<string, any> = {};
+  for (const mod of Object.values(detailFiles) as any[]) {
+    Object.assign(detailById, mod.default ?? mod);
+  }
+
+  const paths: any[] = [];
+
+  for (const [path, mod] of Object.entries(deptFiles) as [string, any][]) {
+    const depNum = path.match(/\/([^/]+)\.json$/)?.[1];
+    const data = mod.default ?? mod;
+    if (!depNum || !data?.stations?.length) continue;
+
+    const dept = deps[depNum];
+    if (!dept) continue;
+
+    const all = data.stations as any[];
+
+    // Agrégats par commune, calculés une fois par département. Ils couvrent
+    // toutes les communes, y compris celles qui n'ont pas de page ville.
+    const byCity = new Map<string, any[]>();
+    for (const s of all) {
+      const list = byCity.get(s.villeSlug);
+      if (list) list.push(s);
+      else byCity.set(s.villeSlug, [s]);
+    }
+
+    const cityAggregates = new Map<string, { stats: Record<string, number>; count: number; gazoleOrder: string[] }>();
+    for (const [slug, list] of byCity) {
+      const stats: Record<string, number> = {};
+      for (const fuel of FUEL_KEYS) {
+        const values = list.map((s) => s.prices?.[fuel]).filter((v: any) => v != null);
+        if (values.length > 0) {
+          stats[fuel] = values.reduce((a: number, b: number) => a + b, 0) / values.length;
+        }
+      }
+      const gazoleOrder = list
+        .filter((s) => s.prices?.Gazole != null)
+        .sort((a, b) => a.prices.Gazole - b.prices.Gazole || a.id.localeCompare(b.id))
+        .map((s) => s.id);
+      cityAggregates.set(slug, { stats, count: list.length, gazoleOrder });
+    }
+
+    for (const station of all) {
+      const entry = publishedStations.get(String(station.id));
+      if (!entry) continue; // vague pas encore échue
+
+      const slashIndex = entry.path.indexOf('/');
+      const citySegment = entry.path.slice(0, slashIndex);
+      const stationSegment = entry.path.slice(slashIndex + 1);
+      if (!citySegment || !stationSegment) continue;
+
+      const aggregate = cityAggregates.get(station.villeSlug);
+      const gazoleOrder = aggregate?.gazoleOrder ?? [];
+      const rankIndex = gazoleOrder.indexOf(String(station.id));
+
+      // Cinq stations les plus proches du même département. Le maillage se
+      // densifie à mesure que les vagues sortent : une voisine non encore
+      // publiée est affichée sans lien.
+      const nearby = all
+        .filter((s) => s.id !== station.id && s.lat && s.lng)
+        .map((s) => ({ station: s, distance: haversine(station.lat, station.lng, s.lat, s.lng) }))
+        .sort((a, b) => a.distance - b.distance)
+        .slice(0, 5)
+        .map(({ station: s, distance }) => ({
+          id: s.id,
+          nom: s.enseigne ?? null,
+          enseigneSlug: s.enseigneSlug ?? null,
+          adresse: s.adresse,
+          ville: displayCity(s),
+          gazole: s.prices?.Gazole ?? null,
+          distance,
+          url: stationUrl(s.id),
+        }));
+
+      paths.push({
+        params: { city: citySegment, station: stationSegment },
+        props: {
+          station: { ...station, ville: displayCity(station) },
+          detail: detailById[String(station.id)] ?? {},
+          dept,
+          cityStats: aggregate?.stats ?? {},
+          cityStationCount: aggregate?.count ?? 1,
+          cityRankGazole: rankIndex >= 0 ? rankIndex + 1 : null,
+          cityRankTotal: gazoleOrder.length > 0 ? gazoleOrder.length : null,
+          deptStationCount: all.length,
+          cityHasPage: citySlugsWithPage.has(station.villeSlug),
+          brandHasPage: !!station.enseigneSlug && brandSlugsWithPage.has(station.enseigneSlug),
+          nearby,
+          canonicalPath: `/prix-carburants/station/${entry.path}/`,
+        },
+      });
+    }
+  }
+
+  return paths;
+}
+
+const {
+  station,
+  detail,
+  dept,
+  deptStationCount,
+  cityStats,
+  cityStationCount,
+  cityRankGazole,
+  cityRankTotal,
+  cityHasPage,
+  brandHasPage,
+  nearby,
+  canonicalPath,
+} = Astro.props;
+
+const s = station as StationLike & { lat: number; lng: number; villeSlug: string };
+const services: string[] = detail.services ?? [];
+const horaires: (string | null)[] | null = detail.horaires ?? null;
+const automate: boolean = !!detail.automate;
+
+const national = statsNational as Record<string, number>;
+const deptStats = ((statsByDept as Record<string, Record<string, number>>)[dept.num] ?? {}) as Record<string, number>;
+
+const introParams = {
+  station: s,
+  services,
+  horaires,
+  automate,
+  cityStats,
+  cityStationCount,
+  cityRankGazole,
+  cityRankTotal,
+  deptStats,
+  deptName: dept.name,
+  deptNum: dept.num,
+  deptStationCount,
+  nationalStats: national,
+};
+
+const paragraphs = buildStationIntro(introParams);
+const faq = buildStationFaq(introParams);
+const weekHours = decodeHoraires(horaires);
+const alwaysOpen = isAlwaysOpen(horaires);
+
+const heading = stationHeading(s);
+const brandName = s.enseigne && s.enseigne !== 'independent' ? s.enseigne : null;
+
+const lastUpdate = meta.lastUpdate
+  ? new Date(meta.lastUpdate).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })
+  : null;
+
+// ── Métadonnées ───────────────────────────────────────────────────────────────
+// metaTitle est plafonné à 60 caractères sur le reste du site. Ici le titre est
+// construit, pas rédigé : on dégrade proprement plutôt que de tronquer au milieu
+// d'un mot sur les adresses longues.
+const gazole = s.prices['Gazole'] ?? null;
+const cheapestLabel = cityRankGazole === 1 ? ' - la moins chère' : '';
+
+// Trois formulations par ordre de préférence, de la plus riche à la plus
+// courte. On retient la première qui tient dans la limite, et on tronque en
+// dernier recours pour les communes à nom très long
+// ("Bretteville-l'Orgueilleuse Thue et Mue").
+const titleCandidates = [
+  `Prix carburant station ${brandName ?? ''} ${s.ville}${cheapestLabel}`,
+  `Prix carburant station ${brandName ?? ''} ${s.ville}`,
+  `Prix carburant station ${s.ville}`,
+  `Carburant ${s.ville}`,
+].map((t) => t.replace(/\s+/g, ' ').trim());
+
+const title =
+  titleCandidates.find((t) => t.length <= 60) ?? titleCandidates.at(-1)!.slice(0, 60).trimEnd();
+
+// La description est assemblée puis tronquée sur une frontière de phrase :
+// une adresse longue ne doit pas produire une coupe au milieu d'un mot.
+const descLead = `${stationDisplayName(s)}${s.adresse ? `, ${s.adresse}` : ''} à ${s.ville}`;
+const descPrice =
+  gazole != null
+    ? `Gazole à ${gazole.toFixed(3)} €/L, prix mis à jour chaque jour.`
+    : `prix des carburants, horaires et services, mis à jour chaque jour.`;
+
+let description = `${descLead} : ${descPrice}`;
+if (description.length > 160) {
+  description = `${descLead.slice(0, 160 - descPrice.length - 3).trimEnd()} : ${descPrice}`;
+}
+if (description.length > 160) {
+  description = description.slice(0, 157).trimEnd() + '...';
+}
+
+const breadcrumb = [
+  { name: 'Accueil', url: '/' },
+  { name: 'Prix carburants', url: '/prix-carburants/' },
+  { name: dept.name, url: `/prix-carburants/${dept.slug}/` },
+  ...(cityHasPage ? [{ name: s.ville, url: `/prix-carburants/ville/${s.villeSlug}/` }] : []),
+  { name: brandName ?? 'Station', url: canonicalPath },
+];
+
+const openingHours = horairesToSchema(horaires);
+
+const jsonLd: Record<string, unknown>[] = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'GasStation',
+    '@id': `https://mon-carburant.com${canonicalPath}`,
+    name: brandName ? `${brandName} ${s.ville}` : `Station-service ${s.ville}`,
+    url: `https://mon-carburant.com${canonicalPath}`,
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: s.adresse || undefined,
+      postalCode: s.cp,
+      addressLocality: s.ville,
+      addressRegion: dept.region,
+      addressCountry: 'FR',
+    },
+    geo: { '@type': 'GeoCoordinates', latitude: s.lat, longitude: s.lng },
+    ...(brandName ? { brand: { '@type': 'Brand', name: brandName } } : {}),
+    ...(openingHours.length > 0 ? { openingHoursSpecification: openingHours } : {}),
+    ...(FUEL_KEYS.some((f) => s.prices[f] != null)
+      ? {
+          makesOffer: FUEL_KEYS.filter((f) => s.prices[f] != null).map((f) => ({
+            '@type': 'Offer',
+            itemOffered: { '@type': 'Product', name: f === 'GPLc' ? 'GPL' : f },
+            price: s.prices[f],
+            priceCurrency: 'EUR',
+            eligibleQuantity: { '@type': 'QuantitativeValue', unitCode: 'LTR', value: 1 },
+          })),
+        }
+      : {}),
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: breadcrumb.map((item, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: item.name,
+      item: `https://mon-carburant.com${item.url}`,
+    })),
+  },
+];
+
+if (faq.length > 0) {
+  jsonLd.push({
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faq.map((f) => ({
+      '@type': 'Question',
+      name: f.question,
+      acceptedAnswer: { '@type': 'Answer', text: f.answer },
+    })),
+  });
+}
+
+const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${s.lat},${s.lng}`;
+const osmEmbed = `https://www.openstreetmap.org/export/embed.html?bbox=${s.lng - 0.008},${s.lat - 0.004},${s.lng + 0.008},${s.lat + 0.004}&layer=mapnik&marker=${s.lat},${s.lng}`;
+
+function priceDiff(price: number | null | undefined, fuelKey: string) {
+  const nat = national[fuelKey];
+  if (price == null || nat == null) return null;
+  return ((price - nat) / nat) * 100;
+}
+---
+
+<BaseLayout title={title} description={description} canonical={canonicalPath} jsonLd={jsonLd}>
+  <div>
+    <div class="container" style="padding-top:1rem">
+      <nav aria-label="Fil d'ariane" class="breadcrumb-nav">
+        {breadcrumb.map((item, i) => (
+          <>
+            {i > 0 && <span aria-hidden="true"> › </span>}
+            {i < breadcrumb.length - 1
+              ? <a href={item.url}>{item.name}</a>
+              : <span aria-current="page">{item.name}</span>
+            }
+          </>
+        ))}
+      </nav>
+    </div>
+
+    <section class="station-hero">
+      <div class="container">
+        <div class="hero-head">
+          {s.enseigneSlug && <BrandLogo slug={s.enseigneSlug} name={brandName ?? s.enseigneSlug} />}
+          <h1>{heading}</h1>
+        </div>
+        <p class="station-sub">
+          {s.cp} {s.ville}
+          {s.pop === 'autoroute' && <span class="tag tag-motorway">Autoroute</span>}
+          {automate && <span class="tag tag-auto">Automate 24/24</span>}
+          {alwaysOpen && <span class="tag tag-open">Ouvert 24h/24</span>}
+          {cityRankGazole === 1 && <span class="tag tag-best">Moins chère de {s.ville}</span>}
+        </p>
+        {lastUpdate && <p class="update-info">Données du {lastUpdate}</p>}
+      </div>
+    </section>
+
+    <div class="container page-body">
+      <!-- Prix du jour -->
+      <section class="section-block">
+        <h2>Prix des carburants à la pompe</h2>
+        <div class="fuel-stats-grid">
+          {FUEL_KEYS.map((fuel) => {
+            const price = s.prices[fuel] ?? null;
+            const diff = priceDiff(price, fuel);
+            return (
+              <div class={`fuel-stat-card${price == null ? ' is-empty' : ''}`} style={`--fuel-color: ${FUEL_COLORS[fuel]}`}>
+                <div class="fsc-label">{fuel === 'GPLc' ? 'GPL' : fuel}</div>
+                <div class="fsc-price">
+                  {price != null ? price.toFixed(3) : 'n.c.'}
+                  {price != null && <span class="fsc-unit">€/L</span>}
+                </div>
+                {diff != null && (
+                  <div class={`fsc-diff ${diff < -2 ? 'badge-green' : diff > 2 ? 'badge-orange' : 'badge-neutral'}`}>
+                    {diff > 0 ? '+' : ''}{diff.toFixed(1)}% France
+                  </div>
+                )}
+              </div>
+            );
+          })}
+        </div>
+        <p class="price-note">
+          Dernière déclaration de la station : <strong>{formatMaj(s.maj)}</strong>.
+          Les carburants notés « n.c. » ne sont pas distribués ici ou sont en rupture.
+        </p>
+      </section>
+
+      <!-- Comparaison -->
+      {gazole != null && (
+        <section class="section-block">
+          <h2>Ce prix est-il intéressant ?</h2>
+          <div class="compare-grid">
+            <div class="compare-card">
+              <div class="cc-label">Cette station</div>
+              <div class="cc-value cc-strong">{gazole.toFixed(3)} €/L</div>
+            </div>
+            {cityStats['Gazole'] != null && (
+              <div class="compare-card">
+                <div class="cc-label">Moyenne à {s.ville}</div>
+                <div class="cc-value">{cityStats['Gazole'].toFixed(3)} €/L</div>
+                <div class="cc-delta">{gazole <= cityStats['Gazole'] ? '−' : '+'}{Math.round(Math.abs(gazole - cityStats['Gazole']) * 100)} c/L</div>
+              </div>
+            )}
+            {deptStats['Gazole'] != null && (
+              <div class="compare-card">
+                <div class="cc-label">Moyenne {dept.name}</div>
+                <div class="cc-value">{deptStats['Gazole'].toFixed(3)} €/L</div>
+                <div class="cc-delta">{gazole <= deptStats['Gazole'] ? '−' : '+'}{Math.round(Math.abs(gazole - deptStats['Gazole']) * 100)} c/L</div>
+              </div>
+            )}
+            {national['Gazole'] != null && (
+              <div class="compare-card">
+                <div class="cc-label">Moyenne France</div>
+                <div class="cc-value">{national['Gazole'].toFixed(3)} €/L</div>
+                <div class="cc-delta">{gazole <= national['Gazole'] ? '−' : '+'}{Math.round(Math.abs(gazole - national['Gazole']) * 100)} c/L</div>
+              </div>
+            )}
+          </div>
+          {cityRankGazole != null && cityRankTotal != null && cityRankTotal >= 3 && (
+            <p class="rank-note">
+              Classement Gazole à {s.ville} : <strong>{cityRankGazole}<sup>e</sup> sur {cityRankTotal}</strong> stations comparées.
+            </p>
+          )}
+        </section>
+      )}
+
+      <!-- Localisation -->
+      <section class="section-block">
+        <h2>Où se trouve cette station ?</h2>
+        <div class="map-wrap">
+          <iframe
+            src={osmEmbed}
+            title={`Carte de la station ${brandName ?? ''} à ${s.ville}`}
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+          ></iframe>
+        </div>
+        <p class="addr-line">
+          <strong>{s.adresse || 'Adresse non communiquée'}</strong>, {s.cp} {s.ville}
+        </p>
+        <a class="cta-directions" href={mapsUrl} target="_blank" rel="noopener nofollow">
+          Ouvrir l'itinéraire
+        </a>
+      </section>
+
+      <!-- Horaires -->
+      {weekHours && (
+        <section class="section-block">
+          <h2>Horaires d'ouverture</h2>
+          <table class="hours-table">
+            <tbody>
+              {weekHours.map((d) => (
+                <tr>
+                  <th scope="row">{d.day}</th>
+                  <td>
+                    {d.unknown ? <span class="muted">Non communiqué</span>
+                      : d.closed ? <span class="muted">Fermé</span>
+                      : d.slots.join(' et ')}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          {automate && <p class="hours-note">Un automate carte bancaire reste accessible en dehors de ces horaires.</p>}
+        </section>
+      )}
+
+      <!-- Services -->
+      {services.length > 0 && (
+        <section class="section-block">
+          <h2>Services proposés</h2>
+          <ul class="services-list">
+            {services.map((svc) => <li>{svc}</li>)}
+          </ul>
+        </section>
+      )}
+
+      <!-- Texte -->
+      <section class="section-block seo-text">
+        <h2>{stationDisplayName(s)} à {s.ville} : le détail</h2>
+        {paragraphs.map((para) => <p>{para}</p>)}
+      </section>
+
+      <!-- Stations proches -->
+      {nearby.length > 0 && (
+        <section class="section-block">
+          <h2>Stations les plus proches</h2>
+          <div class="table-wrapper">
+            <table class="stations-table">
+              <thead>
+                <tr>
+                  <th>Station</th>
+                  <th>Commune</th>
+                  <th>Distance</th>
+                  <th>Gazole</th>
+                </tr>
+              </thead>
+              <tbody>
+                {nearby.map((n: any) => (
+                  <tr>
+                    <td>
+                      {n.url
+                        ? <a href={n.url}>{n.nom ?? 'Station-service'}{n.adresse ? `, ${n.adresse}` : ''}</a>
+                        : <span>{n.nom ?? 'Station-service'}{n.adresse ? `, ${n.adresse}` : ''}</span>}
+                    </td>
+                    <td>{n.ville}</td>
+                    <td>{n.distance < 1 ? `${Math.round(n.distance * 1000)} m` : `${n.distance.toFixed(1)} km`}</td>
+                    <td>{n.gazole != null ? `${n.gazole.toFixed(3)} €` : '-'}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+      )}
+
+      <!-- FAQ -->
+      {faq.length > 0 && (
+        <section class="section-block">
+          <h2>Questions fréquentes</h2>
+          <div class="faq-list">
+            {faq.map((f) => (
+              <details class="faq-item">
+                <summary>{f.question}</summary>
+                <p>{f.answer}</p>
+              </details>
+            ))}
+          </div>
+        </section>
+      )}
+
+      <!-- Navigation -->
+      <section class="section-block">
+        <div class="nav-links">
+          {cityHasPage && <a href={`/prix-carburants/ville/${s.villeSlug}/`} class="nav-link">Toutes les stations de {s.ville}</a>}
+          <a href={`/prix-carburants/${dept.slug}/`} class="nav-link">{dept.name} ({dept.num})</a>
+          {brandHasPage && s.enseigneSlug && <a href={`/prix-carburants/enseigne/${s.enseigneSlug}/`} class="nav-link">Prix {brandName}</a>}
+          <a href="/prix-carburants/stations/" class="nav-link">Annuaire des stations</a>
+        </div>
+      </section>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .breadcrumb-nav { font-size: 0.875rem; color: var(--color-text-muted); }
+  .breadcrumb-nav a { color: var(--color-primary); text-decoration: none; }
+  .breadcrumb-nav a:hover { text-decoration: underline; }
+
+  .station-hero { background: var(--color-primary); color: #fff; padding: 2.5rem 0 2rem; }
+  .hero-head { display: flex; align-items: center; gap: 0.85rem; flex-wrap: wrap; }
+  .station-hero h1 { font-size: clamp(1.35rem, 2.6vw, 1.9rem); font-weight: 800; color: #fff; margin: 0 0 0.5rem; }
+  .station-sub { color: #cbd5e1; margin: 0 0 0.5rem; display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
+  .tag { font-size: 0.7rem; font-weight: 700; padding: 0.15rem 0.5rem; border-radius: 999px; }
+  .tag-motorway { background: #1e40af; color: #dbeafe; }
+  .tag-auto { background: #334155; color: #e2e8f0; }
+  .tag-open { background: #065f46; color: #d1fae5; }
+  .tag-best { background: #facc15; color: #422006; }
+  .update-info { font-size: 0.8125rem; color: #94a3b8; margin: 0; }
+
+  .page-body { padding-top: 2rem; padding-bottom: 3rem; }
+  .section-block { margin-bottom: 3rem; }
+  .section-block h2 { font-size: 1.2rem; font-weight: 700; color: var(--color-primary); margin: 0 0 1.25rem; border-bottom: 2px solid #e5e7eb; padding-bottom: 0.5rem; }
+
+  .fuel-stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem; }
+  @media (min-width: 768px) { .fuel-stats-grid { grid-template-columns: repeat(6, 1fr); } }
+  .fuel-stat-card { background: #fff; border: 2px solid #e5e7eb; border-top: 3px solid var(--fuel-color); border-radius: 0.5rem; padding: 1rem; }
+  .fuel-stat-card.is-empty { opacity: 0.5; }
+  .fsc-label { font-size: 0.75rem; color: var(--color-text-muted); font-weight: 700; margin-bottom: 0.25rem; }
+  .fsc-price { font-size: 1.25rem; font-weight: 800; color: var(--fuel-color); display: flex; align-items: baseline; gap: 0.2rem; }
+  .fsc-unit { font-size: 0.7rem; font-weight: 500; color: var(--color-text-muted); }
+  .fsc-diff { font-size: 0.7rem; padding: 0.15rem 0.4rem; border-radius: 999px; margin-top: 0.25rem; display: inline-block; font-weight: 600; }
+  .badge-green { background: #dcfce7; color: #166534; }
+  .badge-orange { background: #fff7ed; color: #c2410c; }
+  .badge-neutral { background: #f1f5f9; color: #64748b; }
+  .price-note { font-size: 0.8125rem; color: var(--color-text-muted); margin-top: 0.9rem; }
+
+  .compare-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
+  @media (min-width: 768px) { .compare-grid { grid-template-columns: repeat(4, 1fr); } }
+  .compare-card { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 0.5rem; padding: 0.9rem; }
+  .cc-label { font-size: 0.75rem; color: var(--color-text-muted); font-weight: 600; }
+  .cc-value { font-size: 1.1rem; font-weight: 700; color: var(--color-primary); margin-top: 0.2rem; }
+  .cc-strong { color: #16a34a; }
+  .cc-delta { font-size: 0.75rem; color: #64748b; margin-top: 0.15rem; }
+  .rank-note { font-size: 0.9rem; color: #374151; margin-top: 1rem; }
+
+  .map-wrap { border-radius: 0.6rem; overflow: hidden; border: 1px solid var(--color-border); }
+  .map-wrap iframe { width: 100%; height: 320px; border: 0; display: block; }
+  .addr-line { margin: 0.9rem 0 0.75rem; color: #374151; }
+  .cta-directions {
+    display: inline-block; background: var(--color-primary); color: #fff; text-decoration: none;
+    padding: 0.55rem 1.1rem; border-radius: 0.5rem; font-weight: 600; font-size: 0.875rem;
+  }
+  .cta-directions:hover { opacity: 0.9; }
+
+  .hours-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; max-width: 26rem; }
+  .hours-table th { text-align: left; font-weight: 600; color: var(--color-primary); padding: 0.45rem 0.75rem 0.45rem 0; border-bottom: 1px solid #f1f5f9; }
+  .hours-table td { padding: 0.45rem 0; border-bottom: 1px solid #f1f5f9; }
+  .hours-table .muted { color: #94a3b8; }
+  .hours-note { font-size: 0.8125rem; color: var(--color-text-muted); margin-top: 0.75rem; }
+
+  .services-list { display: flex; flex-wrap: wrap; gap: 0.5rem; list-style: none; padding: 0; margin: 0; }
+  .services-list li { background: #f1f5f9; border: 1px solid #e2e8f0; border-radius: 999px; padding: 0.3rem 0.75rem; font-size: 0.8125rem; color: #334155; }
+
+  .table-wrapper { overflow-x: auto; }
+  .stations-table { width: 100%; border-collapse: collapse; font-size: 0.875rem; }
+  .stations-table th { background: #f1f5f9; color: var(--color-primary); padding: 0.6rem 0.75rem; text-align: left; font-size: 0.8rem; }
+  .stations-table td { padding: 0.55rem 0.75rem; border-bottom: 1px solid #f1f5f9; }
+  .stations-table a { color: var(--color-primary); font-weight: 600; text-decoration: none; }
+  .stations-table a:hover { text-decoration: underline; }
+
+  .faq-list { display: flex; flex-direction: column; gap: 0.5rem; }
+  .faq-item { border: 1px solid #e2e8f0; border-radius: 0.5rem; padding: 0.75rem 1rem; background: #fff; }
+  .faq-item summary { font-weight: 600; color: var(--color-primary); cursor: pointer; }
+  .faq-item p { margin: 0.6rem 0 0; color: #374151; line-height: 1.65; font-size: 0.9rem; }
+
+  .nav-links { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .nav-link {
+    background: #f1f5f9; border: 1px solid #e2e8f0; border-radius: 0.5rem;
+    padding: 0.5rem 1rem; text-decoration: none; color: var(--color-primary); font-size: 0.875rem; font-weight: 600;
+    transition: all 0.15s;
+  }
+  .nav-link:hover { background: var(--color-primary); color: #fff; }
+
+  .seo-text p { color: #374151; line-height: 1.7; margin-bottom: 0.75rem; }
+</style>

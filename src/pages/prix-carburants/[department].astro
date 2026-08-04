@@ -8,6 +8,8 @@ import LocalIdentity from '../../components/LocalIdentity.astro';
 import { deptContent } from '../../data/local-content';
 import BrandLogo from '../../components/BrandLogo.astro';
 import { resolveBrandLogo } from '../../utils/brand-logo';
+import StationLink from '../../components/StationLink.astro';
+import { stationUrl } from '../../utils/station-waves';
 import { formatMaj } from '../../utils/format-maj';
 
 export async function getStaticPaths() {
@@ -231,7 +233,7 @@ const jsonLdGasStations = dept.num === '53'
                     {top10.Gazole.map((s: any) => (
                       <tr>
                         <td class="brand-cell">{s.enseigneSlug ? <BrandLogo slug={s.enseigneSlug} name={s.enseigne ?? s.enseigneSlug} /> : <span class="brand-unknown">{s.enseigne ?? '-'}</span>}</td>
-                        <td class="station-addr">{s.adresse || '-'}</td>
+                        <td class="station-addr"><StationLink id={s.id} adresse={s.adresse} ville={s.ville} /></td>
                         <td>{s.ville} ({s.cp})</td>
                         <td class="price-highlight">{s.prices.Gazole?.toFixed(3) ?? '-'} €/L</td>
                       </tr>
@@ -251,7 +253,7 @@ const jsonLdGasStations = dept.num === '53'
                     {top10.SP95.map((s: any) => (
                       <tr>
                         <td class="brand-cell">{s.enseigneSlug ? <BrandLogo slug={s.enseigneSlug} name={s.enseigne ?? s.enseigneSlug} /> : <span class="brand-unknown">{s.enseigne ?? '-'}</span>}</td>
-                        <td class="station-addr">{s.adresse || '-'}</td>
+                        <td class="station-addr"><StationLink id={s.id} adresse={s.adresse} ville={s.ville} /></td>
                         <td>{s.ville} ({s.cp})</td>
                         <td class="price-highlight">{s.prices.SP95?.toFixed(3) ?? '-'} €/L</td>
                       </tr>
@@ -288,7 +290,7 @@ const jsonLdGasStations = dept.num === '53'
               {stations.slice(0, 30).map((s: any) => (
                 <tr>
                   <td class="brand-cell">{s.enseigneSlug ? <BrandLogo slug={s.enseigneSlug} name={s.enseigne ?? s.enseigneSlug} /> : <span class="brand-unknown">{s.enseigne ?? '-'}</span>}</td>
-                  <td class="station-addr">{s.adresse || '-'}</td>
+                  <td class="station-addr"><StationLink id={s.id} adresse={s.adresse} ville={s.ville} /></td>
                   <td>{s.ville} ({s.cp})</td>
                   <td><span class={`pop-badge ${s.pop === 'autoroute' ? 'pop-auto' : 'pop-route'}`}>{s.pop === 'autoroute' ? 'Autoroute' : 'Route'}</span></td>
                   <td>{s.prices.Gazole?.toFixed(3) ?? '-'}</td>
@@ -306,7 +308,7 @@ const jsonLdGasStations = dept.num === '53'
         {count > 30 && (
           <div style="text-align:center; margin-top:1rem">
             <button id="show-more-btn" class="btn-show-more" data-stations={JSON.stringify(stations.slice(30).map((s: any) => ({
-              adresse: s.adresse, ville: s.ville, cp: s.cp, pop: s.pop, prices: s.prices, enseigne: s.enseigne, enseigneSlug: s.enseigneSlug, logo: resolveBrandLogo(s.enseigneSlug), maj: s.maj
+              adresse: s.adresse, ville: s.ville, cp: s.cp, pop: s.pop, prices: s.prices, enseigne: s.enseigne, enseigneSlug: s.enseigneSlug, logo: resolveBrandLogo(s.enseigneSlug), maj: s.maj, url: stationUrl(s.id)
             })))}>
               Afficher toutes les {count} stations ↓
             </button>
@@ -376,7 +378,7 @@ const jsonLdGasStations = dept.num === '53'
           : `<span class="brand-unknown">${escapeHtml(s.enseigne || '-')}</span>`;
         tr.innerHTML = `
           <td class="brand-cell">${brandHtml}</td>
-          <td class="station-addr">${escapeHtml(s.adresse || '-')}</td>
+          <td class="station-addr">${s.url ? `<a href="${escapeHtml(s.url)}">${escapeHtml(s.adresse || 'Station-service')}</a>` : escapeHtml(s.adresse || '-')}</td>
           <td>${escapeHtml(s.ville)} (${escapeHtml(s.cp)})</td>
           <td><span class="pop-badge ${s.pop === 'autoroute' ? 'pop-auto' : 'pop-route'}">${s.pop === 'autoroute' ? 'Autoroute' : 'Route'}</span></td>
           <td>${s.prices?.Gazole?.toFixed(3) ?? '-'}</td>
