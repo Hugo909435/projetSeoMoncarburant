@@ -1,0 +1,39 @@
+---
+/**
+ * Cellule « enseigne » du tableau de répartition d'une fiche station.
+ *
+ * Logo si l'enseigne est identifiée, lien vers la page enseigne si elle
+ * existe, et repère visuel sur la ligne correspondant à la station consultée.
+ */
+import BrandLogo from './BrandLogo.astro';
+
+interface Props {
+  slug?: string | null;
+  name: string;
+  /** URL de la page enseigne, ou null si elle n'existe pas. */
+  url?: string | null;
+  /** Vrai pour l'enseigne de la station affichée. */
+  current?: boolean;
+}
+
+const { slug, name, url, current } = Astro.props;
+---
+
+<span class="brand-name-cell">
+  {slug && <BrandLogo slug={slug} name={name} />}
+  {url && <a href={url}>{name}</a>}
+  {!url && <span class={slug ? 'brand-plain' : 'brand-unknown'}>{name}</span>}
+  {current && <span class="tag-here">dont celle-ci</span>}
+</span>
+
+<style>
+  .brand-name-cell { display: inline-flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
+  .brand-name-cell a { color: var(--color-primary); font-weight: 600; text-decoration: none; }
+  .brand-name-cell a:hover { text-decoration: underline; }
+  .brand-plain { font-weight: 600; color: var(--color-primary); }
+  .brand-unknown { font-size: 0.8rem; color: #64748b; }
+  .tag-here {
+    font-size: 0.7rem; font-weight: 700; background: #facc15; color: #422006;
+    padding: 0.1rem 0.4rem; border-radius: 999px; white-space: nowrap;
+  }
+</style>

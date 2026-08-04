@@ -9,6 +9,7 @@
  */
 import BaseLayout from '../../../../layouts/BaseLayout.astro';
 import BrandLogo from '../../../../components/BrandLogo.astro';
+import BrandCell from '../../../../components/BrandCell.astro';
 import departments from '../../../../data/departments.json';
 import statsNational from '../../../../data/fuel/stats-national.json';
 import statsByDept from '../../../../data/fuel/stats-by-department.json';
@@ -70,6 +71,57 @@ export async function getStaticPaths() {
     Object.assign(detailById, mod.default ?? mod);
   }
 
+  /**
+   * Répartition des stations par enseigne sur un périmètre donné.
+   *
+   * Les stations sans enseigne identifiée (28 % du parc) sont regroupées sur
+   * une ligne plutôt qu'ignorées : les passer sous silence donnerait un total
+   * qui ne correspond pas au nombre de stations annoncé ailleurs sur la page.
+   */
+  const buildBrandTable = (list: any[]) => {
+    const map = new Map<string, any>();
+    for (const s of list) {
+      const known = s.enseigneSlug && s.enseigneSlug !== 'independent';
+      const key = known ? s.enseigneSlug : '__none__';
+      let entry = map.get(key);
+      if (!entry) {
+        entry = {
+          slug: known ? s.enseigneSlug : null,
+          name: known ? (s.enseigne ?? s.enseigneSlug) : 'Indépendantes ou non renseignées',
+          count: 0,
+          prices: [] as number[],
+        };
+        map.set(key, entry);
+      }
+      entry.count++;
+      if (s.prices?.Gazole != null) entry.prices.push(s.prices.Gazole);
+    }
+
+    const rows = [...map.values()]
+      .map((e) => ({
+        slug: e.slug,
+        name: e.name,
+        count: e.count,
+        avg: e.prices.length > 0 ? e.prices.reduce((a: number, b: number) => a + b, 0) / e.prices.length : null,
+        min: e.prices.length > 0 ? Math.min(...e.prices) : null,
+      }))
+      .sort((a, b) => b.count - a.count || a.name.localeCompare(b.name, 'fr'));
+
+    // Au-delà de dix lignes le tableau cesse d'être « pratique ». Le reste est
+    // agrégé pour que la somme reste juste.
+    if (rows.length <= 10) return rows;
+    const head = rows.slice(0, 9);
+    const tail = rows.slice(9);
+    head.push({
+      slug: null,
+      name: `${tail.length} autres enseignes`,
+      count: tail.reduce((n, r) => n + r.count, 0),
+      avg: null,
+      min: null,
+    });
+    return head;
+  };
+
   const paths: any[] = [];
 
   for (const [path, mod] of Object.entries(deptFiles) as [string, any][]) {
@@ -91,7 +143,10 @@ export async function getStaticPaths() {
       else byCity.set(s.villeSlug, [s]);
     }
 
-    const cityAggregates = new Map<string, { stats: Record<string, number>; count: number; gazoleOrder: string[] }>();
+    const cityAggregates = new Map<
+      string,
+      { stats: Record<string, number>; count: number; gazoleOrder: string[]; brands: any[] }
+    >();
     for (const [slug, list] of byCity) {
       const stats: Record<string, number> = {};
       for (const fuel of FUEL_KEYS) {
@@ -104,8 +159,10 @@ export async function getStaticPaths() {
         .filter((s) => s.prices?.Gazole != null)
         .sort((a, b) => a.prices.Gazole - b.prices.Gazole || a.id.localeCompare(b.id))
         .map((s) => s.id);
-      cityAggregates.set(slug, { stats, count: list.length, gazoleOrder });
+      cityAggregates.set(slug, { stats, count: list.length, gazoleOrder, brands: buildBrandTable(list) });
     }
+
+    const deptBrands = buildBrandTable(all);
 
     for (const station of all) {
       const entry = publishedStations.get(String(station.id));
@@ -150,6 +207,10 @@ export async function getStaticPaths() {
           cityRankGazole: rankIndex >= 0 ? rankIndex + 1 : null,
           cityRankTotal: gazoleOrder.length > 0 ? gazoleOrder.length : null,
           deptStationCount: all.length,
+          // Sur une commune à une ou deux stations, la répartition par enseigne
+          // n'apprend rien : on élargit alors au département.
+          brandTable: (aggregate?.count ?? 1) >= 3 ? (aggregate?.brands ?? []) : deptBrands,
+          brandTableScope: (aggregate?.count ?? 1) >= 3 ? 'commune' : 'departement',
           cityHasPage: citySlugsWithPage.has(station.villeSlug),
           brandHasPage: !!station.enseigneSlug && brandSlugsWithPage.has(station.enseigneSlug),
           nearby,
@@ -167,6 +228,8 @@ const {
   detail,
   dept,
   deptStationCount,
+  brandTable,
+  brandTableScope,
   cityStats,
   cityStationCount,
   cityRankGazole,
@@ -313,6 +376,37 @@ if (faq.length > 0) {
     })),
   });
 }
+
+// Tableau de répartition par enseigne : on garde la trace de l'enseigne de la
+// station courante pour la signaler dans le tableau.
+// Enseignes disposant d'une page dédiée. Recalculé ici : le Set construit dans
+// getStaticPaths n'est pas visible depuis le rendu.
+const brandPageSlugs = new Set((brandsIndex as { slug: string }[]).map((b) => b.slug));
+
+// Lignes du tableau de répartition, entièrement préparées ici : le gabarit se
+// contente ensuite d'afficher, sans logique imbriquée.
+const brandRows = (brandTable as any[]).map((row: any) => ({
+  ...row,
+  url: row.slug && brandPageSlugs.has(row.slug) ? `/prix-carburants/enseigne/${row.slug}/` : null,
+  isCurrent: !!row.slug && row.slug === s.enseigneSlug,
+  avgLabel: row.avg != null ? `${row.avg.toFixed(3)} €` : '-',
+  minLabel: row.min != null ? `${row.min.toFixed(3)} €` : '-',
+  rowClass: row.slug && row.slug === s.enseigneSlug ? 'is-current' : undefined,
+}));
+const brandTotal = brandRows.reduce((n: number, r: any) => n + r.count, 0);
+const brandNote =
+  brandTableScope === 'commune'
+    ? `Répartition des ${brandTotal} stations de ${s.ville}. Les prix moyens ne portent que sur les stations qui communiquent un tarif Gazole.`
+    : `${s.ville} comptant trop peu de stations pour une répartition utile, ce tableau porte sur l'ensemble du département (${dept.name}, ${brandTotal} stations). Les prix moyens ne portent que sur les stations qui communiquent un tarif Gazole.`;
+
+// « du département Yvelines » est fautif, et le bon article change d'un
+// département à l'autre (le Gard, la Gironde, les Yvelines, l'Ain). On
+// contourne en repartant de la commune, ce qui parle davantage au visiteur ;
+// le périmètre exact est précisé sous le tableau.
+const brandHeading =
+  brandTableScope === 'commune'
+    ? `Les enseignes à ${s.ville}`
+    : `Les enseignes autour de ${s.ville}`;
 
 const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${s.lat},${s.lng}`;
 const osmEmbed = `https://www.openstreetmap.org/export/embed.html?bbox=${s.lng - 0.008},${s.lat - 0.004},${s.lng + 0.008},${s.lat + 0.004}&layer=mapnik&marker=${s.lat},${s.lng}`;
@@ -477,6 +571,44 @@ function priceDiff(price: number | null | undefined, fuelKey: string) {
         </section>
       )}
 
+      <!-- Répartition par enseigne -->
+      {brandRows.length > 1 && (
+        <section class="section-block">
+          <h2>{brandHeading}</h2>
+          <div class="table-wrapper">
+            <table class="stations-table brand-table">
+              <thead>
+                <tr>
+                  <th>Enseigne</th>
+                  <th>Stations</th>
+                  <th>Gazole moyen</th>
+                  <th>Le moins cher</th>
+                </tr>
+              </thead>
+              <tbody>
+                {brandRows.map((row: any) => (
+                  <tr class={row.rowClass}>
+                    <td class="brand-cell">
+                      <BrandCell slug={row.slug} name={row.name} url={row.url} current={row.isCurrent} />
+                    </td>
+                    <td><strong>{row.count}</strong></td>
+                    <td>{row.avgLabel}</td>
+                    <td>{row.minLabel}</td>
+                  </tr>
+                ))}
+                <tr class="total-row">
+                  <td>Total</td>
+                  <td><strong>{brandTotal}</strong></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="brand-note">{brandNote}</p>
+        </section>
+      )}
+
       <!-- Texte -->
       <section class="section-block seo-text">
         <h2>{stationDisplayName(s)} à {s.ville} : le détail</h2>
@@ -610,6 +742,10 @@ function priceDiff(price: number | null | undefined, fuelKey: string) {
   .stations-table td { padding: 0.55rem 0.75rem; border-bottom: 1px solid #f1f5f9; }
   .stations-table a { color: var(--color-primary); font-weight: 600; text-decoration: none; }
   .stations-table a:hover { text-decoration: underline; }
+
+  .brand-table tr.total-row td { border-top: 2px solid #e2e8f0; border-bottom: none; font-weight: 700; color: var(--color-primary); }
+  .brand-table tr.is-current td { background: #fffbeb; }
+  .brand-note { font-size: 0.8125rem; color: var(--color-text-muted); margin-top: 0.75rem; }
 
   .faq-list { display: flex; flex-direction: column; gap: 0.5rem; }
   .faq-item { border: 1px solid #e2e8f0; border-radius: 0.5rem; padding: 0.75rem 1rem; background: #fff; }
