@@ -1,15 +1,22 @@
 /**
  * Texte descriptif d'une page station.
  *
- * Même principe que city-intro.ts : aucune génération aléatoire, tout est
- * déterministe. Le contenu est piloté par les données réelles de la station
- * (écart de prix, rang dans la commune, services, horaires) et l'ordre des
- * paragraphes varie selon un indice tiré de l'identifiant. Deux stations aux
- * données proches ne produisent donc pas le même texte, et une même station
- * produit toujours le même texte d'un build à l'autre.
+ * Deux principes.
  *
- * Cible : 250 à 350 mots, assez pour que la page tienne debout seule sans
- * remplissage artificiel.
+ * 1. NE PAS REDIRE LES TABLEAUX. La page affiche déjà une grille de prix, un
+ *    comparatif commune/département/national, un classement, une liste de
+ *    services, des horaires et un tableau d'enseignes. Paraphraser ces blocs en
+ *    prose gonfle le compteur de mots sans rien apprendre, et c'est exactement
+ *    ce qui donne à une page l'allure du contenu produit en série. Le texte sert
+ *    donc à interpréter, pas à répéter : ce que l'écart de prix représente sur
+ *    un plein, ce que le type d'enseigne implique, ce qu'il faut vérifier.
+ *
+ * 2. DÉTERMINISME. Aucun aléatoire. Le contenu est piloté par les données
+ *    réelles et l'ordre par un indice tiré de l'identifiant. Une même station
+ *    produit toujours le même texte d'un build à l'autre.
+ *
+ * Cible : 110 à 140 mots. Volontairement court. Sur ce type de page, la valeur
+ * est dans la donnée fraîche, pas dans le volume de prose autour.
  */
 
 export interface StationLike {
@@ -39,14 +46,41 @@ export interface StationIntroParams {
   deptStats: Partial<Record<string, number>>;
   deptName?: string;
   deptNum?: string;
-  /** Nombre de stations du département, pour le paragraphe de repli. */
   deptStationCount?: number;
   nationalStats: Record<string, number>;
 }
 
 const fmt = (n: number) => n.toFixed(3);
-const sign = (n: number) => (n > 0 ? '+' : '');
 const cents = (n: number) => Math.round(Math.abs(n) * 100);
+
+/** Volume retenu pour traduire un écart au litre en euros parlants. */
+const PLEIN_LITRES = 50;
+const surLePlein = (gapPerLitre: number) => (Math.abs(gapPerLitre) * PLEIN_LITRES).toFixed(2);
+
+/**
+ * « de » suivi d'un nom de commune, avec l'élision et la contraction correctes.
+ *
+ * « la moyenne de Abbeville » et « les stations de Le Mans » sont fautifs, et
+ * l'erreur se voit d'autant plus qu'elle se répète sur des milliers de pages.
+ *
+ * L'élision devant h n'est volontairement pas faite : elle dépend du caractère
+ * aspiré ou muet du h, qui ne se devine pas sans dictionnaire. « de Honfleur »
+ * est correct, « de Hénin-Beaumont » légèrement gauche mais pas fautif, alors
+ * qu'une élision systématique produirait « d'Honfleur », qui l'est.
+ */
+export function deVille(name: string): string {
+  if (/^Les\s/i.test(name)) return `des ${name.slice(4)}`;
+  if (/^Le\s/i.test(name)) return `du ${name.slice(3)}`;
+  if (/^[aeiouyàâäéèêëïîôöûü]/i.test(name)) return `d'${name}`;
+  return `de ${name}`;
+}
+
+/** « à » suivi d'un nom de commune, avec la contraction correcte. */
+export function aVille(name: string): string {
+  if (/^Les\s/i.test(name)) return `aux ${name.slice(4)}`;
+  if (/^Le\s/i.test(name)) return `au ${name.slice(3)}`;
+  return `à ${name}`;
+}
 
 function diffPct(local: number, ref: number) {
   return ((local - ref) / ref) * 100;
@@ -66,28 +100,12 @@ const FUEL_LABEL: Record<string, string> = {
   GPLc: 'GPL',
 };
 
-/** Libellé précédé de son article, pour les énumérations en toutes lettres. */
-const FUEL_WITH_ARTICLE: Record<string, string> = {
-  Gazole: 'le Gazole',
-  SP95: 'le SP95',
-  SP98: 'le SP98',
-  E10: "l'E10",
-  E85: 'le superéthanol E85',
-  GPLc: 'le GPL',
-};
-
 /**
  * Met une étiquette de service en bas de casse sans écraser ses sigles.
  * « Automate CB 24/24 » doit donner « automate CB 24/24 », pas « automate cb 24/24 ».
  */
 function decapitalize(label: string): string {
   return label.charAt(0).toLowerCase() + label.slice(1);
-}
-
-/** Libellé lisible de la station, sans le mot « station » en tête. */
-export function stationLabel(s: StationLike): string {
-  const brand = s.enseigne && s.enseigne !== 'independent' ? s.enseigne : 'Station-service';
-  return s.adresse ? `${brand}, ${s.adresse}` : brand;
 }
 
 /**
@@ -141,12 +159,15 @@ export function summarizeHoraires(horaires: (string | null)[] | null): string | 
   return `Les horaires varient selon les jours, le détail jour par jour est indiqué plus bas.`;
 }
 
+/** Enseignes de grande distribution : modèle tarifaire et contraintes propres. */
+const GMS = new Set([
+  'leclerc', 'intermarche', 'carrefour', 'super-u', 'auchan', 'casino',
+  'netto', 'lidl', 'match', 'spar', 'bi1', 'monoprix', 'cora',
+]);
+
 export function buildStationIntro(p: StationIntroParams): string[] {
   const {
     station: s,
-    services,
-    horaires,
-    automate,
     cityStats,
     cityStationCount,
     cityRankGazole,
@@ -163,14 +184,11 @@ export function buildStationIntro(p: StationIntroParams): string[] {
   const deptLabel = deptName && deptNum ? `${deptName} (${deptNum})` : (deptName ?? null);
   const isAutoroute = s.pop === 'autoroute';
 
-  const fuelsAvailable = Object.keys(s.prices).filter((f) => s.prices[f] != null);
   const gazole = s.prices['Gazole'] ?? null;
-  const sp95 = s.prices['SP95'] ?? null;
-  const e10 = s.prices['E10'] ?? null;
-  const e85 = s.prices['E85'] ?? null;
-  const gpl = s.prices['GPLc'] ?? null;
+  const cityGazole = cityStats['Gazole'] ?? null;
+  const natGazole = nationalStats['Gazole'] ?? null;
 
-  // ── Paragraphe 1 : identification ──────────────────────────────────────────
+  // ── 1. Où l'on est ─────────────────────────────────────────────────────────
 
   function pIdentity(): string {
     // « au 12 rue des Lilas » se dit, « au Route de Beaucaire » non : l'article
@@ -180,283 +198,170 @@ export function buildStationIntro(p: StationIntroParams): string[] {
       ? startsWithNumber
         ? `au ${s.adresse}`
         : s.adresse
-      : `à ${s.ville}`;
+      : aVille(s.ville);
 
     const cityStr = s.cp ? `${s.ville} (${s.cp})` : s.ville;
-    // Formulation en apposition : « dans le département Gard » est fautif et
-    // le bon article varie d'un département à l'autre (le Gard, la Gironde,
-    // les Landes, l'Ain). L'apposition évite d'avoir à le deviner.
+    const cityDe = s.cp ? `${deVille(s.ville)} (${s.cp})` : deVille(s.ville);
+    const cityA = s.cp ? `${aVille(s.ville)} (${s.cp})` : aVille(s.ville);
+    // Apposition : « dans le département Gard » est fautif et le bon article
+    // change d'un département à l'autre (le Gard, la Gironde, les Landes, l'Ain).
     const deptStr = deptLabel ? `, département ${deptLabel}` : '';
-    const roadStr = isAutoroute
-      ? " Implantée sur le réseau autoroutier, elle s'adresse d'abord aux conducteurs en transit."
+    const label = brand ? `cette station ${brand}` : 'cette station-service';
+
+    const road = isAutoroute
+      ? " Implantée sur le réseau autoroutier, elle s'adresse surtout aux conducteurs en transit."
       : '';
-    const neighbourStr =
-      cityStationCount > 1
-        ? ` La commune compte ${cityStationCount} stations-service au total.`
-        : ` C'est la seule station-service recensée sur la commune.`;
 
     const forms = [
-      `${brand ? `Cette station ${brand}` : 'Cette station-service'} est située ${where}, à ${cityStr}${deptStr}.${roadStr}${neighbourStr}`,
-      `Vous trouverez ${brand ? `cette station ${brand}` : 'cette station-service'} ${where}, sur la commune de ${cityStr}${deptStr}.${roadStr}${neighbourStr}`,
-      `${brand ? `La station ${brand}` : 'La station-service'} ${where} fait partie des points de vente de carburant recensés à ${cityStr}${deptStr}.${roadStr}${neighbourStr}`,
-      `Installée ${where} à ${cityStr}${deptStr}, ${brand ? `cette station ${brand}` : 'cette station-service'} déclare ses prix au fichier officiel des carburants.${roadStr}${neighbourStr}`,
+      `${label.charAt(0).toUpperCase() + label.slice(1)} est située ${where}, ${cityA}${deptStr}.${road}`,
+      `Vous trouverez ${label} ${where}, sur la commune ${cityDe}${deptStr}.${road}`,
+      cityStationCount > 1
+        ? `Installée ${where} ${cityA}${deptStr}, elle est l'une des ${cityStationCount} stations-service de la commune.${road}`
+        : `Installée ${where} ${cityA}${deptStr}, elle est la seule station-service de la commune.${road}`,
+      `${brand ?? 'Cette station-service'} ${where} dessert la commune ${cityDe}${deptStr}.${road}`,
     ];
     return forms[v];
   }
 
-  // ── Paragraphe 2 : le prix, et son écart aux moyennes ──────────────────────
+  // ── 2. Ce que le prix veut dire ────────────────────────────────────────────
 
-  function pPrice(): string | null {
-    if (fuelsAvailable.length === 0) {
-      return `Cette station n'a pas communiqué de prix récemment. Les tarifs affichés sur cette page reprennent la dernière déclaration transmise au fichier officiel, ils peuvent donc avoir évolué depuis votre dernier passage.`;
-    }
-
-    // On raisonne sur le carburant le plus structurant disponible.
-    const ref: [string, number] | null = gazole
-      ? ['Gazole', gazole]
-      : sp95
-        ? ['SP95', sp95]
-        : e10
-          ? ['E10', e10]
-          : null;
-
-    if (!ref) {
-      const list = fuelsAvailable.map((f) => `${FUEL_LABEL[f] ?? f} à ${fmt(s.prices[f]!)} €/L`).join(', ');
-      return `Les carburants disponibles ici sont proposés aux tarifs suivants : ${list}.`;
-    }
-
-    const [fuel, price] = ref;
-    const label = FUEL_LABEL[fuel] ?? fuel;
-    const cityAvg = cityStats[fuel] ?? null;
-    const natAvg = nationalStats[fuel] ?? null;
-
-    const parts: string[] = [];
-
-    if (cityAvg != null && cityStationCount > 1) {
-      const d = diffPct(price, cityAvg);
-      if (d < -1.5) {
-        parts.push(
-          `Le ${label} y est affiché à ${fmt(price)} €/L, soit ${cents(price - cityAvg)} centimes de moins que la moyenne constatée à ${s.ville} (${fmt(cityAvg)} €/L).`,
-        );
-      } else if (d > 1.5) {
-        parts.push(
-          `Le ${label} y est affiché à ${fmt(price)} €/L, soit ${cents(price - cityAvg)} centimes au-dessus de la moyenne de ${s.ville} (${fmt(cityAvg)} €/L).`,
-        );
-      } else {
-        parts.push(
-          `Le ${label} y est affiché à ${fmt(price)} €/L, au niveau de la moyenne de ${s.ville} (${fmt(cityAvg)} €/L).`,
-        );
+  function pPriceReading(): string | null {
+    if (gazole == null) {
+      const other = Object.keys(s.prices).find((f) => s.prices[f] != null);
+      if (!other) {
+        return `Cette station n'a pas transmis de tarif lors du dernier relevé officiel. Les stations proches listées plus bas permettent de comparer les prix du secteur.`;
       }
-    } else {
-      parts.push(`Le ${label} y est affiché à ${fmt(price)} €/L.`);
+      return `Cette station ne cote pas le Gazole. Le ${FUEL_LABEL[other] ?? other} y est relevé à ${fmt(s.prices[other]!)} €/L, à comparer avec les stations voisines listées plus bas.`;
     }
 
-    if (natAvg != null) {
-      const dn = diffPct(price, natAvg);
-      parts.push(
-        `Rapporté à la moyenne nationale de ${fmt(natAvg)} €/L, l'écart est de ${sign(dn)}${dn.toFixed(1)}%.`,
-      );
+    const gapCity = cityGazole != null ? gazole - cityGazole : null;
+    const rankStr =
+      cityRankGazole != null && cityRankTotal != null && cityRankTotal >= 3
+        ? `${cityRankGazole}e sur ${cityRankTotal} stations comparées`
+        : null;
+
+    // Le seul chiffre qui n'est nulle part ailleurs sur la page : ce que l'écart
+    // représente réellement au moment de payer.
+    if (gapCity != null && Math.abs(gapCity) >= 0.01) {
+      const euros = surLePlein(gapCity);
+      if (gapCity < 0) {
+        const lead =
+          cityRankGazole === 1
+            ? `Sur le Gazole, c'est aujourd'hui le tarif le plus bas ${deVille(s.ville)}`
+            : `Sur le Gazole, elle se situe sous la moyenne ${deVille(s.ville)}${rankStr ? ` (${rankStr})` : ''}`;
+        return `${lead} : ${cents(gapCity)} centimes de moins que la moyenne communale, soit environ ${euros} € d'économie sur un plein de ${PLEIN_LITRES} litres.`;
+      }
+      return `Le Gazole y est facturé ${cents(gapCity)} centimes au-dessus de la moyenne ${deVille(s.ville)}${rankStr ? `, ce qui la place ${rankStr}` : ''}. Sur un plein de ${PLEIN_LITRES} litres, l'écart représente environ ${euros} € de plus que dans une station moyenne de la commune.`;
     }
 
-    const deptAvg = deptStats[fuel] ?? null;
-    if (deptAvg != null && deptName) {
-      parts.push(`La moyenne départementale (${deptName}) s'établit de son côté à ${fmt(deptAvg)} €/L.`);
-    }
-
-    // Récapitulatif de la gamme distribuée, hors carburant déjà commenté.
-    const others = fuelsAvailable.filter((f) => f !== fuel);
-    if (others.length > 0) {
-      const list = others.map((f) => `${FUEL_WITH_ARTICLE[f] ?? f} à ${fmt(s.prices[f]!)} €/L`);
-      const last = list.pop();
-      parts.push(
-        `La station distribue également ${list.length > 0 ? `${list.join(', ')} et ${last}` : last}.`,
-      );
-    }
-
-    return parts.join(' ');
+    // Le prix aligné sur la moyenne communale est le cas le plus courant : sans
+    // variantes, une seule et même phrase couvrirait la moitié du parc.
+    const natDiff = natGazole != null ? diffPct(gazole, natGazole) : null;
+    const natStr =
+      natDiff != null
+        ? ` L'écart avec la moyenne nationale est de ${natDiff > 0 ? '+' : ''}${natDiff.toFixed(1)} %.`
+        : '';
+    const aligned = [
+      `Le Gazole y est affiché à ${fmt(gazole)} €/L, au niveau de la moyenne constatée ${aVille(s.ville)}.${natStr}`,
+      `À ${fmt(gazole)} €/L, le Gazole s'aligne ici sur la moyenne communale : aucune bonne ni mauvaise surprise à attendre à la pompe.${natStr}`,
+      `Le Gazole se négocie ${fmt(gazole)} €/L, un tarif dans la moyenne ${deVille(s.ville)}.${natStr}`,
+      `Rien ne distingue vraiment cette station sur le Gazole, affiché à ${fmt(gazole)} €/L comme dans la plupart des stations de la commune.${natStr}`,
+    ];
+    return aligned[v];
   }
 
-  // ── Paragraphe 3 : positionnement dans la commune ──────────────────────────
-
-  function pRank(): string | null {
-    if (cityRankGazole == null || cityRankTotal == null || cityRankTotal < 3) return null;
-
-    const share = cityRankGazole / cityRankTotal;
-
-    if (cityRankGazole === 1) {
-      const forms = [
-        `Sur le Gazole, c'est actuellement la station la moins chère de ${s.ville} parmi les ${cityRankTotal} qui communiquent un tarif.`,
-        `Elle occupe la première place du classement Gazole à ${s.ville}, devant ${cityRankTotal - 1} autres stations.`,
-        `Aucune station de ${s.ville} n'affiche un Gazole moins cher aujourd'hui.`,
-        `C'est le tarif Gazole le plus bas relevé à ${s.ville} sur les ${cityRankTotal} stations comparées.`,
-      ];
-      return forms[v];
-    }
-
-    if (share <= 0.34) {
-      return `Elle se classe ${cityRankGazole}e sur ${cityRankTotal} pour le Gazole à ${s.ville}, ce qui la place dans le tiers le plus avantageux de la commune.`;
-    }
-
-    if (share >= 0.75) {
-      return `Elle se classe ${cityRankGazole}e sur ${cityRankTotal} pour le Gazole à ${s.ville} : d'autres stations de la commune affichent un tarif nettement plus bas, le comparatif ville détaille les écarts.`;
-    }
-
-    return `Elle se situe en milieu de classement pour le Gazole à ${s.ville}, en ${cityRankGazole}e position sur ${cityRankTotal} stations comparées.`;
-  }
-
-  // ── Paragraphe 4 : carburants alternatifs et équipements ───────────────────
-
-  function pOffer(): string | null {
-    const parts: string[] = [];
-
-    // Les prix sont déjà donnés dans le paragraphe tarifaire : on commente ici
-    // ce que cette disponibilité change concrètement pour l'automobiliste.
-    if (e85 != null && gpl != null) {
-      parts.push(
-        `Proposer à la fois le superéthanol E85 et le GPL reste rare : moins d'une station française sur dix distribue l'un ou l'autre, ce qui fait de cette adresse un point de ravitaillement utile pour les véhicules FlexFuel comme pour les véhicules convertis au GPL.`,
-      );
-    } else if (e85 != null) {
-      parts.push(
-        `La présence du superéthanol E85 mérite d'être signalée : c'est le carburant le moins cher du marché, accessible aux véhicules FlexFuel et à ceux équipés d'un boîtier de conversion homologué.`,
-      );
-    } else if (gpl != null) {
-      parts.push(
-        `La station distribue le GPL, une motorisation encore peu servie sur le territoire, ce qui limite le nombre de points de ravitaillement possibles pour les véhicules concernés.`,
-      );
-    } else if (fuelsAvailable.length >= 4) {
-      parts.push(
-        `Avec ${fuelsAvailable.length} carburants à la pompe, elle couvre l'essentiel des motorisations essence et diesel du parc français.`,
-      );
-    }
-
-    if (automate) {
-      parts.push(
-        `Un automate accepte la carte bancaire en dehors des heures d'ouverture de la boutique, ce qui permet de faire le plein la nuit.`,
-      );
-    }
-
-    if (services.length > 0) {
-      // La liste complète figure dans son propre bloc plus bas : ici on cite
-      // les premiers services sans chercher à tout répéter.
-      const shown = services.slice(0, 5).map(decapitalize);
-      const suffix = services.length > shown.length ? ', entre autres' : '';
-      parts.push(`Côté équipements, la station déclare ${shown.join(', ')}${suffix}.`);
-    }
-
-    const hourStr = summarizeHoraires(horaires);
-    if (hourStr) parts.push(hourStr);
-
-    return parts.length > 0 ? parts.join(' ') : null;
-  }
-
-  // ── Paragraphe 5 : conseil pratique, calibré sur le type de station ────────
-
-  /** Enseignes de grande distribution : modèle tarifaire et contraintes propres. */
-  const GMS = new Set([
-    'leclerc', 'intermarche', 'carrefour', 'super-u', 'auchan', 'casino',
-    'netto', 'lidl', 'match', 'spar', 'bi1', 'monoprix', 'cora',
-  ]);
+  // ── 3. Ce qu'il faut en faire ──────────────────────────────────────────────
 
   function pContext(): string {
+    const method = [
+      `Prix issus du fichier public des carburants, actualisés chaque jour : seul l'affichage en station fait foi.`,
+      `Données officielles réactualisées quotidiennement, à vérifier à la pompe avant de faire le plein.`,
+      `Tarifs déclarés par la station au dispositif public de transparence, mis à jour chaque jour sur cette page.`,
+      `Relevé quotidien issu des données ouvertes du ministère de l'Économie, donné à titre indicatif.`,
+    ][v];
+
+    // Deux formulations par cas de figure. Le type d'enseigne détermine le fond
+    // du paragraphe, et la grande distribution représente à elle seule près de
+    // 40 % du parc : sans alternance, ce texte deviendrait la phrase la plus
+    // répétée du site.
+    const alt = v % 2;
+
     if (isAutoroute) {
-      return `Les stations d'autoroute pratiquent structurellement des tarifs plus élevés que le réseau ordinaire, l'écart atteignant couramment 15 à 25 centimes par litre. Si votre autonomie le permet, une sortie vers une commune voisine reste presque toujours plus économique. Le tableau des stations proches, plus bas, indique les distances et les prix relevés autour de ce point de vente.`;
+      return [
+        `Les stations d'autoroute pratiquent des tarifs supérieurs de 15 à 25 centimes au réseau ordinaire. Si l'autonomie le permet, une sortie vers une commune voisine reste presque toujours plus économique. ${method}`,
+        `Faire le plein sur autoroute se paie : l'écart avec une station de bord de route atteint couramment 15 à 25 centimes par litre, soit près de 10 € sur un plein. Le détour par la sortie la plus proche est vite rentabilisé. ${method}`,
+      ][alt];
     }
 
     if (s.enseigneSlug && GMS.has(s.enseigneSlug)) {
-      return `Les stations de grande distribution comme celle-ci appliquent des marges volontairement faibles sur le carburant, qu'elles utilisent comme produit d'appel pour attirer en magasin. C'est ce qui explique qu'elles figurent le plus souvent en tête des classements de prix. En contrepartie, leurs horaires suivent généralement ceux du magasin, hors accès automate, et l'affluence peut être forte aux heures de sortie de bureau.`;
+      return [
+        `Les enseignes de grande distribution vendent le carburant à faible marge, comme produit d'appel, ce qui les place souvent en tête des classements de prix. En contrepartie, leurs horaires suivent ceux du magasin en dehors de l'automate. ${method}`,
+        `Le carburant sert ici de produit d'appel vers le magasin, un modèle qui tire les prix vers le bas mais impose ses contraintes : affluence aux heures de sortie de bureau, et accès calé sur les horaires du centre commercial hors automate. ${method}`,
+      ][alt];
     }
 
     if (!brand) {
-      return `Cette station n'est rattachée à aucun réseau national identifié dans les données publiques. Les stations indépendantes affichent des tarifs très variables d'un point de vente à l'autre : certaines comptent parmi les moins chères de leur secteur, d'autres se situent nettement au-dessus. Comparer avec les stations voisines avant de faire le plein reste le réflexe le plus rentable.`;
+      return [
+        `Aucun réseau national n'est identifié pour cette station dans les données publiques. Les indépendantes affichent des tarifs très variables d'un point de vente à l'autre : comparer avec les voisines reste le réflexe le plus rentable. ${method}`,
+        `Cette station n'est rattachée à aucune enseigne nationale identifiée. Chez les indépendantes, le prix dépend surtout de la concurrence locale : certaines sont les moins chères de leur secteur, d'autres nettement au-dessus. ${method}`,
+      ][alt];
     }
 
-    return `Les réseaux traditionnels comme ${brand} misent moins sur le prix que sur la disponibilité : amplitude horaire large, présence sur les axes, et services annexes plus fournis que dans la grande distribution. Sur un plein de 50 litres, quelques centimes d'écart au litre représentent tout de même plusieurs euros, d'où l'intérêt de comparer avec les stations proches listées plus bas.`;
+    return [
+      `Les réseaux comme ${brand} misent moins sur le prix que sur la disponibilité : amplitude horaire large, présence sur les axes, services annexes plus fournis que dans la grande distribution. ${method}`,
+      `${brand} appartient aux réseaux traditionnels, dont l'argument n'est pas le tarif mais l'accessibilité : implantation sur les axes, ouverture étendue et services plus complets. Quelques centimes d'écart au litre pèsent tout de même plusieurs euros sur un plein. ${method}`,
+    ][alt];
   }
-
-  // ── Paragraphe 6 : cadre méthodologique ────────────────────────────────────
-
-  function pMethod(): string {
-    const forms = [
-      `Les prix de cette page proviennent du fichier officiel des prix des carburants, alimenté par les stations elles-mêmes et republié chaque jour par l'État. Un tarif peut donc avoir changé entre la dernière déclaration du gérant et votre passage à la pompe.`,
-      `Ces tarifs sont issus des déclarations transmises par la station au dispositif public de transparence des prix, que nous récupérons quotidiennement. Vérifiez toujours l'affichage en entrée de station avant de faire le plein.`,
-      `Le relevé s'appuie sur les données ouvertes du ministère de l'Économie, mises à jour chaque jour. La déclaration étant à la main du gérant, un décalage de quelques heures avec le prix réel reste possible.`,
-      `Ces informations proviennent du fichier public des prix des carburants, actualisé quotidiennement sur notre site. Elles sont données à titre indicatif : seul l'affichage en station fait foi.`,
-    ];
-    return forms[v];
-  }
-
-  // ── Assemblage ─────────────────────────────────────────────────────────────
-  // L'ordre dépend de l'angle le plus fort : une station très bon marché
-  // ouvre sur le prix, une station bien équipée ouvre sur son offre.
-
-  const gazoleCityDiff =
-    gazole != null && cityStats['Gazole'] != null ? diffPct(gazole, cityStats['Gazole']!) : null;
-  const isCheap = cityRankGazole === 1 || (gazoleCityDiff != null && gazoleCityDiff < -2);
-  const isWellEquipped = services.length >= 5 && (e85 != null || gpl != null);
-
-  let ordered: (string | null)[];
-
-  if (isCheap) {
-    ordered = [pPrice(), pRank(), pIdentity(), pOffer(), pContext(), pMethod()];
-  } else if (isWellEquipped && v >= 2) {
-    ordered = [pIdentity(), pOffer(), pPrice(), pRank(), pContext(), pMethod()];
-  } else {
-    ordered = [pIdentity(), pPrice(), pRank(), pOffer(), pContext(), pMethod()];
-  }
-
-  const paragraphs = ordered.filter((x): x is string => x != null && x.trim() !== '');
 
   /**
-   * Repli pour les fiches maigres.
+   * Ce qui distingue vraiment cette station, quand il y a quelque chose.
    *
-   * Une station rurale isolée, sans services déclarés, sans horaires et avec
-   * deux carburants cotés, ne mobilise qu'une partie des paragraphes ci-dessus
-   * et tombe autour de 150 mots. On complète alors avec le cadrage
-   * départemental, qui reste de la donnée réelle et propre à la page, plutôt
-   * que de laisser une page trop courte pour tenir seule.
+   * On ne redit pas la grille de prix ni la liste des services : on explique ce
+   * que leur présence change. Retourne null quand la station n'a rien de
+   * particulier, plutôt que de meubler.
    */
+  function pPracticality(): string | null {
+    const e85 = s.prices['E85'] ?? null;
+    const gpl = s.prices['GPLc'] ?? null;
+
+    if (e85 != null && gpl != null) {
+      return `Distribuer à la fois le superéthanol E85 et le GPL reste rare, moins d'une station française sur dix propose l'un ou l'autre : l'adresse est utile à connaître pour ces motorisations.`;
+    }
+    if (e85 != null) {
+      return `La présence du superéthanol E85 vaut le détour pour un véhicule FlexFuel ou équipé d'un boîtier homologué : c'est le carburant le moins cher du marché français.`;
+    }
+    if (gpl != null) {
+      return `Le GPL est encore peu distribué en France, ce qui limite fortement les points de ravitaillement possibles : celui-ci en fait partie.`;
+    }
+    if (p.horaires && p.horaires.every((h) => h === '00:00-23:59')) {
+      return `La station reste accessible à toute heure, ce qui en fait un point de repli commode pour les trajets de nuit ou les départs matinaux.`;
+    }
+    if (p.automate) {
+      return `Un automate carte bancaire prend le relais en dehors des heures d'ouverture de la boutique, le plein reste donc possible la nuit.`;
+    }
+    return null;
+  }
+
+  const paragraphs = [pIdentity(), pPriceReading(), pPracticality(), pContext()].filter(
+    (x): x is string => x != null && x.trim() !== '',
+  );
+
+  // Repli pour les fiches les plus dépouillées : une station rurale isolée sans
+  // Gazole coté descend sous les 100 mots. On ajoute alors le seul cadrage qui
+  // ne figure nulle part ailleurs sur la page, l'échelle départementale.
   const wordCount = paragraphs.join(' ').split(/\s+/).length;
-  if (wordCount < 220) {
-    const extra = pDeptFallback();
-    if (extra) paragraphs.splice(paragraphs.length - 1, 0, extra);
+  if (wordCount < 85 && deptName) {
+    const deptGazole = deptStats['Gazole'] ?? null;
+    if (deptGazole != null && deptStationCount) {
+      paragraphs.splice(
+        paragraphs.length - 1,
+        0,
+        `À l'échelle du département (${deptName}), le Gazole s'échange en moyenne à ${fmt(deptGazole)} €/L sur les ${deptStationCount} stations que nous suivons. La page départementale permet de les trier par prix.`,
+      );
+    }
   }
 
   return paragraphs;
-
-  function pDeptFallback(): string | null {
-    if (!deptName) return null;
-
-    const bits: string[] = [];
-    const deptGazole = deptStats['Gazole'] ?? null;
-    const natGazole = nationalStats['Gazole'] ?? null;
-
-    if (deptGazole != null && natGazole != null) {
-      const d = diffPct(deptGazole, natGazole);
-      const qualifier =
-        d < -1.5
-          ? 'un département plutôt bon marché pour faire le plein'
-          : d > 1.5
-            ? 'un département où le plein revient plus cher que la moyenne'
-            : 'un département aligné sur la moyenne nationale';
-      bits.push(
-        `À l'échelle du département (${deptName}), le Gazole s'échange en moyenne à ${fmt(deptGazole)} €/L contre ${fmt(natGazole)} €/L sur l'ensemble du pays, ce qui en fait ${qualifier}.`,
-      );
-    }
-
-    if (deptStationCount && deptStationCount > 1) {
-      bits.push(
-        `Notre comparateur y suit ${deptStationCount} stations-service au total : la page départementale permet de les trier par prix et de repérer les moins chères du secteur avant de prendre la route.`,
-      );
-    }
-
-    if (cityStationCount === 1) {
-      bits.push(
-        `Cette commune ne comptant qu'une seule station, comparer suppose d'élargir aux communes voisines : le tableau des stations proches, plus haut, donne les distances et les tarifs relevés alentour.`,
-      );
-    }
-
-    return bits.length > 0 ? bits.join(' ') : null;
-  }
 }
 
 /** Trois questions fréquentes, alimentées par les données réelles de la station. */
@@ -467,7 +372,6 @@ export function buildStationFaq(p: StationIntroParams): { question: string; answ
   const brandLabel = s.enseigne && s.enseigne !== 'independent' ? `${s.enseigne} ` : '';
   const where = s.adresse ? `${s.adresse}, ${s.ville}` : s.ville;
 
-  // 1. Le prix, la question qui amène la visite.
   const gazole = s.prices['Gazole'] ?? null;
   const sp95 = s.prices['SP95'] ?? null;
   const e10 = s.prices['E10'] ?? null;
@@ -482,23 +386,21 @@ export function buildStationFaq(p: StationIntroParams): { question: string; answ
     answer:
       priceBits.length > 0
         ? `Lors du dernier relevé, la station affichait ${priceBits.join(', ')}. Ces tarifs proviennent du fichier officiel des prix des carburants et sont actualisés chaque jour sur cette page.`
-        : `Cette station n'a pas transmis de tarif lors du dernier relevé officiel. Consultez la page de la commune pour voir les stations de ${s.ville} qui communiquent leurs prix.`,
+        : `Cette station n'a pas transmis de tarif lors du dernier relevé officiel. Consultez la page de la commune pour voir les stations ${deVille(s.ville)} qui communiquent leurs prix.`,
   });
 
-  // 2. Est-ce que ça vaut le détour ?
   if (cityRankGazole != null && cityRankTotal != null && cityRankTotal >= 3) {
     faq.push({
-      question: `Cette station est-elle moins chère que les autres à ${s.ville} ?`,
+      question: `Cette station est-elle moins chère que les autres ${aVille(s.ville)} ?`,
       answer:
         cityRankGazole === 1
-          ? `Oui. Sur le Gazole, elle affiche le tarif le plus bas des ${cityRankTotal} stations de ${s.ville} qui communiquent un prix.`
-          : `Elle se classe ${cityRankGazole}e sur ${cityRankTotal} stations à ${s.ville} pour le Gazole${
+          ? `Oui. Sur le Gazole, elle affiche le tarif le plus bas des ${cityRankTotal} stations ${deVille(s.ville)} qui communiquent un prix.`
+          : `Elle se classe ${cityRankGazole}e sur ${cityRankTotal} stations ${aVille(s.ville)} pour le Gazole${
               cityStats['Gazole'] != null ? `, où la moyenne s'établit à ${fmt(cityStats['Gazole']!)} €/L` : ''
             }. Le comparatif complet de la commune permet de voir les écarts station par station.`,
     });
   }
 
-  // 3. Accès et horaires, la question pratique.
   const hourStr = summarizeHoraires(horaires);
   if (hourStr || automate) {
     faq.push({

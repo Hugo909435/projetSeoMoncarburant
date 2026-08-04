@@ -3,6 +3,7 @@ import { defineConfig } from 'astro/config';
 import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
+import { isWeakStation } from './src/utils/station-quality.mjs';
 
 // Date de dernière mise à jour du site (rebuild quotidien des prix carburant).
 // Sert de signal de fraîcheur <lastmod> dans le sitemap.
@@ -63,6 +64,35 @@ try {
     (waves.waves ?? []).some((w) => w.publishAt <= today);
   if (!anyPublished) {
     weakUrls.add(`${SITE}/prix-carburants/stations/`);
+  }
+
+  // Fiches station trop pauvres pour être indexées. La page les rend déjà en
+  // noindex : les laisser au sitemap enverrait le signal inverse. La règle vient
+  // du même module que celui utilisé par la page, elle ne peut donc pas diverger.
+  const currentWave = (waves.waves ?? []).reduce(
+    (last, w) => (w.publishAt <= today ? w.n : last),
+    0,
+  );
+  const maxWave = process.env.STATIONS_ROLLOUT_ALL === '1' ? (waves.totalWaves ?? 0) : currentWave;
+
+  if (maxWave > 0) {
+    const stationDir = new URL('./src/data/fuel/stations-by-department/', import.meta.url);
+    let excluded = 0;
+    for (const f of readdirSync(stationDir)) {
+      if (!f.endsWith('.json')) continue;
+      const payload = JSON.parse(readFileSync(new URL(f, stationDir), 'utf-8'));
+      for (const station of payload.stations ?? []) {
+        const entry = waves.stations?.[String(station.id)];
+        if (!entry || entry.wave > maxWave) continue;
+        if (isWeakStation(station)) {
+          weakUrls.add(`${SITE}/prix-carburants/station/${entry.path}/`);
+          excluded++;
+        }
+      }
+    }
+    if (excluded > 0) {
+      console.log(`[sitemap] ${excluded} fiche(s) station exclue(s) : données insuffisantes.`);
+    }
   }
 } catch {
   // plan absent : rien à exclure.

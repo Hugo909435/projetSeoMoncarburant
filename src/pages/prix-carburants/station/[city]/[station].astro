@@ -27,6 +27,7 @@ import {
 } from '../../../../utils/station-intro';
 import { decodeHoraires, horairesToSchema, isAlwaysOpen } from '../../../../utils/station-hours';
 import { formatMaj } from '../../../../utils/format-maj';
+import { isWeakStation, weaknessReason } from '../../../../utils/station-quality.mjs';
 
 type Dept = { num: string; name: string; slug: string; region: string; regionSlug: string };
 
@@ -269,6 +270,12 @@ const faq = buildStationFaq(introParams);
 const weekHours = decodeHoraires(horaires);
 const alwaysOpen = isAlwaysOpen(horaires);
 
+// Fiche trop pauvre pour être proposée à l'indexation : pas de prix à comparer,
+// adresse inexploitable, ou déclaration trop ancienne. La page reste accessible
+// et reliée au site, elle n'est simplement pas offerte au référencement.
+const isWeak = isWeakStation(s);
+const weakReason = isWeak ? weaknessReason(s) : null;
+
 const heading = stationHeading(s);
 const brandName = s.enseigne && s.enseigne !== 'independent' ? s.enseigne : null;
 
@@ -418,7 +425,7 @@ function priceDiff(price: number | null | undefined, fuelKey: string) {
 }
 ---
 
-<BaseLayout title={title} description={description} canonical={canonicalPath} jsonLd={jsonLd}>
+<BaseLayout title={title} description={description} canonical={canonicalPath} jsonLd={jsonLd} noIndex={isWeak}>
   <div>
     <div class="container" style="padding-top:1rem">
       <nav aria-label="Fil d'ariane" class="breadcrumb-nav">
@@ -479,6 +486,12 @@ function priceDiff(price: number | null | undefined, fuelKey: string) {
           Dernière déclaration de la station : <strong>{formatMaj(s.maj)}</strong>.
           Les carburants notés « n.c. » ne sont pas distribués ici ou sont en rupture.
         </p>
+        {isWeak && (
+          <p class="stale-warning">
+            Les informations de prix de cette station sont incomplètes ou anciennes
+            ({weakReason}). Vérifiez sur place, ou consultez les stations proches listées plus bas.
+          </p>
+        )}
       </section>
 
       <!-- Comparaison -->
@@ -708,6 +721,10 @@ function priceDiff(price: number | null | undefined, fuelKey: string) {
   .badge-orange { background: #fff7ed; color: #c2410c; }
   .badge-neutral { background: #f1f5f9; color: #64748b; }
   .price-note { font-size: 0.8125rem; color: var(--color-text-muted); margin-top: 0.9rem; }
+  .stale-warning {
+    font-size: 0.85rem; color: #92400e; background: #fffbeb;
+    border: 1px solid #fde68a; border-radius: 0.5rem; padding: 0.7rem 0.9rem; margin-top: 0.75rem;
+  }
 
   .compare-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
   @media (min-width: 768px) { .compare-grid { grid-template-columns: repeat(4, 1fr); } }

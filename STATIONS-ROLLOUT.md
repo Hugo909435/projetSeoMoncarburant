@@ -12,8 +12,8 @@ Cadence en vigueur : montée en charge 100 puis 250, 500 et 800 (24 vagues).
 
 Le site connaît 9 803 stations-service. Chacune a désormais sa page détaillée
 (prix des six carburants, comparaison avec la commune, le département et la
-France, carte, horaires, services, texte de 250 à 350 mots, FAQ, données
-structurées).
+France, répartition par enseigne, carte, horaires, services, stations proches,
+texte court, FAQ, données structurées).
 
 Ces pages ne sont **pas** publiées d'un coup. Elles sortent par vagues, une
 **toutes les deux semaines**, à partir du **lundi 10 août 2026**. La taille des
@@ -141,6 +141,8 @@ les prix n'ont pas bougé.
 | `src/pages/prix-carburants/station/[city]/[station].astro` | La page. |
 | `src/pages/prix-carburants/stations/[...page].astro` | L'annuaire paginé des fiches publiées. |
 | `src/components/StationLink.astro` | Lien vers une fiche, inactif si la vague n'est pas sortie. |
+| `src/components/BrandCell.astro` | Cellule enseigne du tableau de répartition. |
+| `src/utils/station-quality.mjs` | Règle de noindex des fiches trop pauvres (point 6 bis). |
 
 ### Structure des URL
 
@@ -265,6 +267,61 @@ de vagues déjà publiées. Allonger l'intervalle après coup peut faire repasse
 une vague publiée à l'état non publié et retirer ses pages du site. Pour
 suspendre, utiliser `FREEZE_AT_WAVE` (point 9), pas l'intervalle.
 
+## 6 bis. Garde-fous qualité
+
+Deux réglages limitent le risque que ces pages soient perçues comme du contenu
+produit en série. Ils comptent davantage que la cadence.
+
+### Les fiches trop pauvres ne sont pas indexées
+
+Toutes les stations ont une page, elle reste utile à qui cherche cette adresse.
+Mais **563 fiches (5,7 % du parc) sont rendues en `noindex` et exclues du
+sitemap**, parce qu'elles n'ont pas de quoi tenir debout :
+
+| Critère | Effet |
+|---|---|
+| Moins de 2 carburants cotés | noindex |
+| Adresse inexploitable (moins de 5 caractères) | noindex |
+| Dernière déclaration de prix vieille de plus de 90 jours | noindex |
+
+La règle vit dans `src/utils/station-quality.mjs`, importée à la fois par la
+page et par `astro.config.mjs`. Une seule définition, donc pas de risque qu'une
+page soit `noindex` tout en restant au sitemap. Le build affiche le compte :
+
+```
+[sitemap] 563 fiche(s) station exclue(s) : données insuffisantes.
+```
+
+Ces fiches affichent en outre un encart avertissant le visiteur que la donnée
+est incomplète ou ancienne, avec le motif exact.
+
+Pour durcir ou assouplir, modifier `MIN_FUELS` et `STALE_DAYS` dans ce fichier.
+
+### Le texte est volontairement court
+
+Environ **120 mots** par fiche, pas 300. La page porte déjà une grille de prix,
+un comparatif, un classement, un tableau d'enseignes, des horaires, une liste de
+services et les stations proches. Paraphraser ces blocs en prose gonflerait le
+compteur de mots sans rien apprendre à personne, et c'est précisément ce qui
+donne à une page l'allure du contenu généré en série.
+
+Le texte sert donc à interpréter, pas à répéter : ce que l'écart de prix
+représente sur un plein de 50 litres, ce que le type d'enseigne implique, ce
+qu'il faut vérifier sur place.
+
+Mesure de la répétition sur les 9 803 fiches générées, avant et après ce
+resserrage :
+
+| | Avant | Après |
+|---|---|---|
+| Mots par fiche (moyenne) | 262 | 119 |
+| Tournure la plus répandue | 98 % des fiches | 33 % |
+
+Les 33 % restants correspondent à une clause factuelle courte (« l'écart avec la
+moyenne nationale est de X % »), difficilement reformulable et sans enjeu.
+
+---
+
 ## 7. Points de contrôle
 
 À faire dans la Search Console, deux ou trois jours après chaque vague au début,
@@ -361,9 +418,9 @@ signal négatif.
 ## 10. Limites connues
 
 - **Fiabilité des prix.** Les tarifs viennent des déclarations des gérants. Un
-  décalage de quelques heures avec le prix réel est possible, et une station qui
-  ne déclare plus affiche des données figées. La date de dernière déclaration
-  est affichée sur chaque fiche.
+  décalage de quelques heures avec le prix réel est possible. La date de
+  dernière déclaration est affichée sur chaque fiche, et une station qui ne
+  déclare plus depuis 90 jours passe automatiquement en noindex (point 6 bis).
 - **Noms de communes.** Un tiers du parc arrive en majuscules dans l'open data,
   parfois sans accents. `city-names.json` reconstitue la meilleure graphie
   disponible en croisant les variantes, mais une commune dont aucune station
