@@ -11,7 +11,7 @@ pillar: "reduire-facture-carburant"
 tags: ["prix coûtant", "leclerc", "intermarché", "carrefour", "économies", "bon plan", "carburant"]
 featuredImage: "/images/articles/prix-coutant-carburant-vaut-il-le-coup.webp"
 imageAlt: "Station-service de grande surface avec pompes en libre-service et voitures en train de faire le plein"
-readingTime: 6
+readingTime: 7
 relatedArticles: ["prix-coutant-carburant-calendrier-leclerc-intermarche-carrefour", "carburant-moins-cher-leclerc-intermarche-carrefour-2026", "prix-coutant-carburant-systeme-u-auchan-casino-cora", "reduire-facture-carburant"]
 ctaTitle: "Trouvez la station la moins chère sans attendre une opération"
 ctaDescription: "Notre comparateur référence les prix de plus de 11 000 stations-service en France, mis à jour quotidiennement via les données officielles."
@@ -34,6 +34,21 @@ draft: false
 <!-- Crédit image : "Station-service E.Leclerc Bellerive-sur-Allier (1) 2022-05-01.JPG" par Tabl-trai, Wikimedia Commons, licence CC BY-SA 4.0 (https://commons.wikimedia.org/wiki/File:Station-service_E.Leclerc_Bellerive-sur-Allier_(1)_2022-05-01.JPG), recadrée. -->
 
 Une opération prix coûtant est annoncée près de chez vous, et la question se pose : ça vaut le coup de s'y organiser, ou pas vraiment ? La communication met en avant des économies spectaculaires, mais elle mélange en général deux choses très différentes : le fait d'être dans une station de supermarché (déjà moins chère toute l'année) et la remise propre à l'opération. Voici ce que ça donne une fois les deux séparés, et un vrai coût en face : le détour et l'attente.
+
+---
+
+## Pourquoi ça semble si peu cher : deux comparaisons, deux résultats
+
+Si le prix coûtant a la réputation d'être imbattable, ce n'est pas un hasard : tout dépend du prix auquel on le compare.
+
+| Comparaison | Écart | Sur un plein de 55 L |
+|---|---|---|
+| Prix coûtant Leclerc (2,132 €/L) vs Shell (2,486 €/L) | - 35,4 c/L | **- 19,50 €** |
+| Prix coûtant Leclerc (2,132 €/L) vs Leclerc un jour normal (2,207 €/L) | - 7,5 c/L | **- 4,10 €** |
+
+La première ligne, c'est ce qui reste en tête : une opération qui donne l'impression d'un carburant "à prix cassé", parce qu'elle est comparée, dans la communication comme dans les esprits, à une station chère ou au prix qu'on avait en tête avant la hausse de mi-juillet. C'est un écart réel, et il justifie amplement l'attention que ces opérations reçoivent.
+
+La seconde ligne, c'est ce que l'opération change réellement, une fois qu'on la compare à ce que la même enseigne facture la veille et le lendemain. Les deux chiffres sont vrais en même temps : le prix coûtant est spectaculairement moins cher qu'une station Shell ou qu'un plein d'il y a quelques semaines, et seulement modestement moins cher que ce que Leclerc facture déjà le reste du temps. La suite de cet article se concentre sur ce second chiffre, celui qui détermine si un détour dédié vaut vraiment le coup.
 
 ---
 
