@@ -3,8 +3,9 @@
 Note de référence pour la mise en ligne progressive des fiches station-service
 de mon-carburant.com.
 
-Dernière mise à jour du document : 4 août 2026.
+Dernière mise à jour du document : 5 août 2026.
 Cadence en vigueur : montée en charge 100 puis 250, 500 et 800 (24 vagues).
+État : vague 1 en ligne depuis le 4 août 2026.
 
 ---
 
@@ -16,10 +17,12 @@ France, répartition par enseigne, carte, horaires, services, stations proches,
 texte court, FAQ, données structurées).
 
 Ces pages ne sont **pas** publiées d'un coup. Elles sortent par vagues, une
-**toutes les deux semaines**, à partir du **lundi 10 août 2026**. La taille des
-vagues monte progressivement : **100 pages** pendant les trois premiers mois,
-puis 250, 500 et 800 une fois l'indexation vérifiée. **24 vagues au total, la
-dernière le 28 juin 2027.**
+**toutes les deux semaines**. La taille des vagues monte progressivement :
+**100 pages** pendant les trois premiers mois, puis 250, 500 et 800 une fois
+l'indexation vérifiée. **24 vagues au total.**
+
+La vague 1 est en ligne depuis le **4 août 2026**, la vague 2 sort le
+**18 août 2026**, et la dernière le **22 juin 2027**.
 
 Le mécanisme est automatique. Le site est déjà reconstruit tous les jours pour
 rafraîchir les prix : le jour où une vague arrive à échéance, ce rebuild
@@ -53,41 +56,41 @@ d'indexation montrent que le gabarit passe.
 
 ## 3. Le calendrier
 
-Une vague tous les 14 jours, départ le 10 août 2026. Les colonnes « Dépts » et
-« Communes » montrent l'étalement géographique réel de chaque lot.
+Une vague tous les 14 jours, départ le 4 août 2026. **La vague 1 est en ligne
+depuis le 4 août 2026.**
 
-| Vague | Date | Pages | Dépts | Communes | Cumul | Couverture |
-|---|---|---|---|---|---|---|
-| 1 | 10/08/2026 | 100 | 25 | 28 | 100 | 1 % |
-| 2 | 24/08/2026 | 100 | 31 | 33 | 200 | 2 % |
-| 3 | 07/09/2026 | 100 | 33 | 42 | 300 | 3 % |
-| 4 | 21/09/2026 | 100 | 46 | 52 | 400 | 4 % |
-| 5 | 05/10/2026 | 100 | 41 | 59 | 500 | 5 % |
-| 6 | 19/10/2026 | 100 | 47 | 61 | 600 | 6 % |
-| 7 | 02/11/2026 | 250 | 63 | 115 | 850 | 9 % |
-| 8 | 16/11/2026 | 250 | 64 | 118 | 1 100 | 11 % |
-| 9 | 30/11/2026 | 250 | 75 | 184 | 1 350 | 14 % |
-| 10 | 14/12/2026 | 250 | 79 | 232 | 1 600 | 16 % |
-| 11 | 28/12/2026 | 250 | 79 | 225 | 1 850 | 19 % |
-| 12 | 11/01/2027 | 250 | 77 | 241 | 2 100 | 21 % |
-| 13 | 25/01/2027 | 500 | 88 | 464 | 2 600 | 27 % |
-| 14 | 08/02/2027 | 500 | 90 | 474 | 3 100 | 32 % |
-| 15 | 22/02/2027 | 500 | 91 | 471 | 3 600 | 37 % |
-| 16 | 08/03/2027 | 500 | 93 | 475 | 4 100 | 42 % |
-| 17 | 22/03/2027 | 500 | 91 | 486 | 4 600 | 47 % |
-| 18 | 05/04/2027 | 500 | 91 | 483 | 5 100 | 52 % |
-| 19 | 19/04/2027 | 800 | 94 | 746 | 5 900 | 60 % |
-| 20 | 03/05/2027 | 800 | 95 | 774 | 6 700 | 68 % |
-| 21 | 17/05/2027 | 800 | 94 | 769 | 7 500 | 77 % |
-| 22 | 31/05/2027 | 800 | 92 | 777 | 8 300 | 85 % |
-| 23 | 14/06/2027 | 800 | 95 | 773 | 9 100 | 93 % |
-| 24 | 28/06/2027 | 703 | 95 | 692 | 9 803 | 100 % |
+| Vague | Date | Pages | Cumul | Couverture |
+|---|---|---|---|---|
+| 1 | 04/08/2026 | 100 | 100 | 1 % |
+| 2 | 18/08/2026 | 100 | 200 | 2 % |
+| 3 | 01/09/2026 | 100 | 300 | 3 % |
+| 4 | 15/09/2026 | 100 | 400 | 4 % |
+| 5 | 29/09/2026 | 100 | 500 | 5 % |
+| 6 | 13/10/2026 | 100 | 600 | 6 % |
+| 7 | 27/10/2026 | 250 | 850 | 9 % |
+| 8 | 10/11/2026 | 250 | 1 100 | 11 % |
+| 9 | 24/11/2026 | 250 | 1 350 | 14 % |
+| 10 | 08/12/2026 | 250 | 1 600 | 16 % |
+| 11 | 22/12/2026 | 250 | 1 850 | 19 % |
+| 12 | 05/01/2027 | 250 | 2 100 | 21 % |
+| 13 | 19/01/2027 | 500 | 2 600 | 27 % |
+| 14 | 02/02/2027 | 500 | 3 100 | 32 % |
+| 15 | 16/02/2027 | 500 | 3 600 | 37 % |
+| 16 | 02/03/2027 | 500 | 4 100 | 42 % |
+| 17 | 16/03/2027 | 500 | 4 600 | 47 % |
+| 18 | 30/03/2027 | 500 | 5 100 | 52 % |
+| 19 | 13/04/2027 | 800 | 5 900 | 60 % |
+| 20 | 27/04/2027 | 800 | 6 700 | 68 % |
+| 21 | 11/05/2027 | 800 | 7 500 | 77 % |
+| 22 | 25/05/2027 | 800 | 8 300 | 85 % |
+| 23 | 08/06/2027 | 800 | 9 100 | 93 % |
+| 24 | 22/06/2027 | 703 | 9 803 | 100 % |
 
-**Fin du déploiement : 28 juin 2027, soit 10 mois et demi.**
+**Fin du déploiement : 22/06/2027, soit 10 mois et demi.**
 
 Les six premières vagues restent volontairement à 100 pages. C'est la phase où
 l'on ne sait pas encore comment Google accueille le gabarit, et où une erreur se
-paie cher. À partir de la vague 7 (2 novembre 2026), la cadence monte.
+paie cher. À partir de la vague 7 (27/10/2026), la cadence monte.
 
 Pour réafficher ce calendrier à tout moment :
 
@@ -95,15 +98,15 @@ Pour réafficher ce calendrier à tout moment :
 npm run waves:plan
 ```
 
-### Le point de décision du 21 septembre 2026
+### Le point de décision du 15/09/2026
 
 L'accélération est **inscrite dans le plan**, elle se déclenchera donc toute
 seule. La vérification après la vague 4 n'est plus un feu vert à donner mais un
 frein à actionner si besoin :
 
-- **Vague 4 le 21 septembre 2026**, 400 pages en ligne.
-- **Premier lot à 250 le 2 novembre 2026.** Six semaines de marge pour regarder
-  les chiffres et réagir.
+- **Vague 4 le 15/09/2026**, 400 pages en ligne.
+- **Premier lot à 250 le 27/10/2026.** Six semaines de marge pour regarder les
+  chiffres et réagir.
 - Si moins de 70 % des 400 pages sont indexées à cette date, ou si une alerte
   qualité remonte, **freiner** : voir le point 6 pour repousser les paliers, ou
   le point 9 pour geler complètement.
@@ -358,9 +361,9 @@ cadence constante. Trois rendez-vous à ne pas manquer :
 
 | Date | Vagues sorties | Pages | À vérifier |
 |---|---|---|---|
-| 21/09/2026 | 1 à 4 | 400 | Taux d'indexation. En dessous de 70 %, freiner avant le 2 novembre. |
-| 30/11/2026 | 1 à 9 | 1 350 | Le passage à 250 a-t-il tenu ? Freiner avant le 25 janvier si non. |
-| 05/04/2027 | 1 à 18 | 5 100 | Dernier point avant les vagues à 800. |
+| 15/09/2026 | 1 à 4 | 400 | Taux d'indexation. En dessous de 70 %, freiner avant le 27/10/2026. |
+| 24/11/2026 | 1 à 9 | 1 350 | Le passage à 250 a-t-il tenu ? Freiner avant le 19/01/2027 si non. |
+| 30/03/2027 | 1 à 18 | 5 100 | Dernier point avant les vagues à 800. |
 
 Entre ces rendez-vous, un coup d'œil mensuel à la courbe d'indexation suffit.
 
