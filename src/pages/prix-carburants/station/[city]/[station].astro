@@ -10,6 +10,7 @@
 import BaseLayout from '../../../../layouts/BaseLayout.astro';
 import BrandLogo from '../../../../components/BrandLogo.astro';
 import BrandCell from '../../../../components/BrandCell.astro';
+import StationMiniMap from '../../../../components/StationMiniMap.astro';
 import departments from '../../../../data/departments.json';
 import statsNational from '../../../../data/fuel/stats-national.json';
 import statsByDept from '../../../../data/fuel/stats-by-department.json';
@@ -416,7 +417,6 @@ const brandHeading =
     : `Les enseignes autour de ${s.ville}`;
 
 const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${s.lat},${s.lng}`;
-const osmEmbed = `https://www.openstreetmap.org/export/embed.html?bbox=${s.lng - 0.008},${s.lat - 0.004},${s.lng + 0.008},${s.lat + 0.004}&layer=mapnik&marker=${s.lat},${s.lng}`;
 
 function priceDiff(price: number | null | undefined, fuelKey: string) {
   const nat = national[fuelKey];
@@ -536,14 +536,12 @@ function priceDiff(price: number | null | undefined, fuelKey: string) {
       <!-- Localisation -->
       <section class="section-block">
         <h2>Où se trouve cette station ?</h2>
-        <div class="map-wrap">
-          <iframe
-            src={osmEmbed}
-            title={`Carte de la station ${brandName ?? ''} à ${s.ville}`}
-            loading="lazy"
-            referrerpolicy="no-referrer-when-downgrade"
-          ></iframe>
-        </div>
+        <StationMiniMap
+          lat={s.lat}
+          lng={s.lng}
+          label={`${stationDisplayName(s)}${s.adresse ? `, ${s.adresse}` : ''}`}
+          gazole={gazole}
+        />
         <p class="addr-line">
           <strong>{s.adresse || 'Adresse non communiquée'}</strong>, {s.cp} {s.ville}
         </p>
@@ -735,8 +733,6 @@ function priceDiff(price: number | null | undefined, fuelKey: string) {
   .cc-delta { font-size: 0.75rem; color: #64748b; margin-top: 0.15rem; }
   .rank-note { font-size: 0.9rem; color: #374151; margin-top: 1rem; }
 
-  .map-wrap { border-radius: 0.6rem; overflow: hidden; border: 1px solid var(--color-border); }
-  .map-wrap iframe { width: 100%; height: 320px; border: 0; display: block; }
   .addr-line { margin: 0.9rem 0 0.75rem; color: #374151; }
   .cta-directions {
     display: inline-block; background: var(--color-primary); color: #fff; text-decoration: none;

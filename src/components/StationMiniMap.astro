@@ -1,0 +1,167 @@
+---
+/**
+ * Carte d'une station unique, sur sa fiche.
+ *
+ * Volontairement PAS un iframe. La politique de sécurité du site
+ * (public/.htaccess) pose `default-src 'self'` sans directive `frame-src` :
+ * tout cadre tiers, y compris l'embed OpenStreetMap, est donc bloqué par le
+ * navigateur et la carte reste blanche.
+ *
+ * On reprend le montage déjà utilisé par StationsMap.astro sur l'accueil :
+ * Leaflet servi depuis /vendor/ (autorisé par `script-src 'self'`) et tuiles
+ * OSM chargées en images (autorisées par `img-src https://*.tile.openstreetmap.org`).
+ * Aucune modification de la CSP n'est nécessaire.
+ *
+ * Chargement différé à l'entrée dans le viewport, pour ne pas peser sur le LCP
+ * d'une page dont l'essentiel est au-dessus de la carte.
+ */
+interface Props {
+  lat: number;
+  lng: number;
+  /** Libellé affiché dans l'infobulle du marqueur. */
+  label: string;
+  /** Prix du Gazole, affiché sur le marqueur quand il est connu. */
+  gazole?: number | null;
+  zoom?: number;
+}
+
+const { lat, lng, label, gazole = null, zoom = 15 } = Astro.props;
+---
+
+<div
+  class="station-map"
+  data-lat={lat}
+  data-lng={lng}
+  data-zoom={zoom}
+  data-label={label}
+  data-gazole={gazole ?? ''}
+  role="application"
+  aria-label={`Carte de la station ${label}`}
+>
+  <div class="map-placeholder">Chargement de la carte…</div>
+</div>
+
+<style>
+  .station-map {
+    position: relative;
+    height: 320px;
+    width: 100%;
+    border-radius: 0.6rem;
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+    background: #eef2f5;
+    z-index: 0;
+  }
+  .map-placeholder {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #64748b;
+    font-size: 0.875rem;
+  }
+  .station-map :global(.station-pin) {
+    background: #16a34a;
+    color: #fff;
+    font-weight: 700;
+    font-size: 0.72rem;
+    border: 2px solid #fff;
+    border-radius: 999px;
+    padding: 0.2rem 0.45rem;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.35);
+    white-space: nowrap;
+    text-align: center;
+  }
+</style>
+
+<script>
+  const el = document.querySelector<HTMLElement>('.station-map');
+
+  function loadCss(href: string) {
+    return new Promise<void>((resolve) => {
+      const l = document.createElement('link');
+      l.rel = 'stylesheet';
+      l.href = href;
+      l.onload = () => resolve();
+      l.onerror = () => resolve();
+      document.head.appendChild(l);
+    });
+  }
+
+  function loadScript(src: string) {
+    return new Promise<void>((resolve, reject) => {
+      if (document.querySelector(`script[src="${src}"]`)) return resolve();
+      const s = document.createElement('script');
+      s.src = src;
+      s.async = true;
+      s.onload = () => resolve();
+      s.onerror = () => reject(new Error('load ' + src));
+      document.head.appendChild(s);
+    });
+  }
+
+  let started = false;
+  async function initMap() {
+    if (started || !el) return;
+    started = true;
+
+    const lat = parseFloat(el.dataset.lat || '0');
+    const lng = parseFloat(el.dataset.lng || '0');
+    const zoom = parseInt(el.dataset.zoom || '15', 10);
+    const label = el.dataset.label || 'Station-service';
+    const gazole = el.dataset.gazole ? parseFloat(el.dataset.gazole) : null;
+
+    try {
+      await loadCss('/vendor/leaflet/leaflet.css');
+      await loadScript('/vendor/leaflet/leaflet.js');
+
+      const L = (window as any).L;
+      if (!L) throw new Error('leaflet');
+
+      el.querySelector('.map-placeholder')?.remove();
+
+      const map = L.map(el, {
+        scrollWheelZoom: false,
+        zoomControl: true,
+        attributionControl: true,
+      }).setView([lat, lng], zoom);
+
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+      }).addTo(map);
+
+      const text = gazole != null && !Number.isNaN(gazole) ? gazole.toFixed(3) + ' €' : '⛽';
+      const icon = L.divIcon({
+        className: '',
+        html: `<div class="station-pin">${text}</div>`,
+        iconSize: [58, 24],
+        iconAnchor: [29, 24],
+      });
+
+      L.marker([lat, lng], { icon, title: label }).addTo(map).bindPopup(label);
+    } catch {
+      // Leaflet indisponible : on laisse un repli lisible plutôt qu'un cadre vide.
+      el.innerHTML =
+        '<div class="map-placeholder">Carte momentanément indisponible. L\'adresse et l\'itinéraire restent accessibles ci-dessous.</div>';
+    }
+  }
+
+  if (el) {
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver(
+        (entries) => {
+          if (entries.some((e) => e.isIntersecting)) {
+            io.disconnect();
+            initMap();
+          }
+        },
+        { rootMargin: '200px' },
+      );
+      io.observe(el);
+    } else {
+      initMap();
+    }
+  }
+</script>
