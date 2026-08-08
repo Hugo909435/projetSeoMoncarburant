@@ -23,7 +23,7 @@ faq:
   - question: "Combien de litres de carburant peut-on ramener en jerrican ?"
     answer: "Depuis un pays de l'Union européenne (Belgique, Luxembourg, Allemagne, Espagne, Italie), la règle est claire : le carburant contenu dans le réservoir normal du véhicule est exonéré d'accise, plus 10 litres maximum dans un réservoir portatif. Au-delà, la taxe française est théoriquement due. Pour la Suisse, la franchise douanière est plus généreuse : 25 litres en jerrican, puis 0,80 franc de droits par litre supplémentaire et 8,1 % de TVA. L'Andorre étant hors Union européenne, la règle des 10 litres ne s'y applique pas et aucune franchise carburant spécifique n'est publiée par la douane française."
   - question: "Combien de kilomètres de détour vaut-il la peine de faire ?"
-    answer: "Cela dépend entièrement de la frontière. Pour un plein de 50 litres de gazole, le gain absorbe jusqu'à 200 km aller-retour vers l'Andorre, 155 km vers le Luxembourg et 128 km vers l'Espagne. Vers l'Italie le seuil tombe à 53 km, vers l'Allemagne à 18 km, et vers la Belgique ou la Suisse le détour n'est jamais rentable puisqu'il n'y a aucun gain à aller chercher. Ces seuils ne comptent que le carburant consommé par le détour, pas le temps passé ni l'usure du véhicule."
+    answer: "Cela dépend entièrement de la frontière. Pour un plein de 50 litres de gazole, le gain absorbe jusqu'à 200 km aller-retour vers l'Andorre, 152 km vers le Luxembourg et 130 km vers l'Espagne. Vers l'Italie le seuil tombe à 52 km, vers l'Allemagne à 17 km, et vers la Belgique ou la Suisse le détour n'est jamais rentable puisqu'il n'y a aucun gain à aller chercher. Ces seuils ne comptent que le carburant consommé par le détour, pas le temps passé ni l'usure du véhicule."
   - question: "Le calcul change-t-il si je roule au E85 ?"
     answer: "Oui, et radicalement. Le superéthanol E85 se vend 0,829 €/L en médiane en France, et il n'existe quasiment nulle part ailleurs en Europe de l'Ouest. Même en tenant compte de la surconsommation d'environ 25 %, le E85 revient à environ 1,04 €/L équivalent, soit 50 centimes de moins que le carburant le moins cher d'Andorre. Si votre véhicule est converti au E85, aucune frontière n'est rentable : votre meilleure station est française."
   - question: "Faut-il déclarer le carburant à la douane en rentrant en France ?"
@@ -87,15 +87,15 @@ Base de calcul : un véhicule à 6,5 L/100 km, soit environ 0,14 € de carburan
 
 | Frontière | Détour max rentable (gazole, plein de 50 L) | Détour max rentable (essence) |
 |---|---|---|
-| **Andorre** | 200 km aller-retour | 178 km aller-retour |
-| **Luxembourg** | 155 km aller-retour | 143 km aller-retour |
-| **Espagne** | 128 km aller-retour | 108 km aller-retour |
-| **Italie** | 53 km aller-retour | nul |
-| **Belgique** | nul | 36 km aller-retour |
-| **Allemagne** | 18 km aller-retour | nul |
+| **Andorre** | 200 km aller-retour | 179 km aller-retour |
+| **Luxembourg** | 152 km aller-retour | 143 km aller-retour |
+| **Espagne** | 130 km aller-retour | 110 km aller-retour |
+| **Italie** | 52 km aller-retour | nul |
+| **Belgique** | nul | 37 km aller-retour |
+| **Allemagne** | 17 km aller-retour | nul |
 | **Suisse** | nul | nul |
 
-Ces seuils sont **volontairement optimistes** : ils ne comptent que le carburant. Ils ignorent l'usure, les péages éventuels et surtout votre temps. Si vous voulez un seuil réaliste, divisez-les par deux. Un aller-retour de 155 km au Luxembourg pour gagner 22 € revient à se payer environ 9 € de l'heure une fois le trajet décompté : ça n'a de sens que si vous y allez de toute façon.
+Ces seuils sont **volontairement optimistes** : ils ne comptent que le carburant. Ils ignorent l'usure, les péages éventuels et surtout votre temps. Si vous voulez un seuil réaliste, divisez-les par deux. Un aller-retour de 152 km au Luxembourg pour gagner 22 € revient à se payer environ 9 € de l'heure une fois le trajet décompté : ça n'a de sens que si vous y allez de toute façon.
 
 D'où la vraie ligne de partage, qui n'est pas géographique mais comportementale.
 

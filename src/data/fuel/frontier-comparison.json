@@ -1,0 +1,273 @@
+{
+  "generatedAt": "2026-08-08T12:10:40.918Z",
+  "radiusKm": 30,
+  "tankLitres": 50,
+  "consumptionPer100km": 6.5,
+  "kmPerYear": 13000,
+  "eurPerChf": 1.08,
+  "foreignPricesUpdatedAt": "2026-08-08",
+  "nationalMedian": {
+    "Gazole": 2.189,
+    "E10": 1.983,
+    "SP95": 2.029,
+    "SP98": 2.076
+  },
+  "borders": [
+    {
+      "country": "Andorre",
+      "stationsUsed": 18,
+      "sampleSizes": {
+        "Gazole": 18,
+        "E10": 16,
+        "SP95": 5,
+        "SP98": 14
+      },
+      "date": "2026-08-08",
+      "source": "Prix affichés au Pas de la Case",
+      "sourceUrl": "https://www.pas-de-la-case.fr/carburants-pas-de-la-case-prix-temps-reel.html",
+      "note": "Hors Union européenne. Accès par route de montagne, la surconsommation du col réduit le détour réellement rentable.",
+      "fuels": {
+        "Gazole": {
+          "france": 2.199,
+          "abroad": 1.626,
+          "perLitre": 0.573,
+          "perTank": 28.65,
+          "detourKm": 200,
+          "perYear": 484
+        },
+        "E10": {
+          "france": 1.999,
+          "abroad": 1.535,
+          "perLitre": 0.464,
+          "perTank": 23.2,
+          "detourKm": 179,
+          "perYear": 392
+        },
+        "SP98": {
+          "france": 2.148,
+          "abroad": 1.595,
+          "perLitre": 0.553,
+          "perTank": 27.65,
+          "detourKm": 198,
+          "perYear": 467
+        }
+      }
+    },
+    {
+      "country": "Luxembourg",
+      "stationsUsed": 76,
+      "sampleSizes": {
+        "Gazole": 75,
+        "E10": 55,
+        "SP95": 19,
+        "SP98": 49
+      },
+      "date": "2026-08-08",
+      "source": "Prix de vente maximums fixés par l'État luxembourgeois",
+      "sourceUrl": "https://carbu.com/luxembourg/index.php/prixmaximum",
+      "note": "Prix administré : toutes les stations vendent au plafond ou juste en dessous, comparer est inutile.",
+      "fuels": {
+        "Gazole": {
+          "france": 2.24,
+          "abroad": 1.798,
+          "perLitre": 0.442,
+          "perTank": 22.1,
+          "detourKm": 152,
+          "perYear": 373
+        },
+        "E10": {
+          "france": 1.99,
+          "abroad": 1.619,
+          "perLitre": 0.371,
+          "perTank": 18.55,
+          "detourKm": 143,
+          "perYear": 313
+        },
+        "SP98": {
+          "france": 2.129,
+          "abroad": 1.774,
+          "perLitre": 0.355,
+          "perTank": 17.75,
+          "detourKm": 128,
+          "perYear": 300
+        }
+      }
+    },
+    {
+      "country": "Espagne",
+      "stationsUsed": 96,
+      "sampleSizes": {
+        "Gazole": 95,
+        "E10": 82,
+        "SP95": 34,
+        "SP98": 69
+      },
+      "date": "2026-08-03",
+      "source": "Bulletin pétrolier hebdomadaire de la Commission européenne",
+      "sourceUrl": "https://prix-carburant.eu/prix-carburant-europe.php",
+      "note": "Le gasóleo B, teinté rouge et moins cher, est un carburant agricole interdit sur route.",
+      "fuels": {
+        "Gazole": {
+          "france": 2.159,
+          "abroad": 1.794,
+          "perLitre": 0.365,
+          "perTank": 18.25,
+          "detourKm": 130,
+          "perYear": 308
+        },
+        "E10": {
+          "france": 1.969,
+          "abroad": 1.687,
+          "perLitre": 0.282,
+          "perTank": 14.1,
+          "detourKm": 110,
+          "perYear": 238
+        }
+      }
+    },
+    {
+      "country": "Italie",
+      "stationsUsed": 95,
+      "sampleSizes": {
+        "Gazole": 95,
+        "E10": 76,
+        "SP95": 30,
+        "SP98": 81
+      },
+      "date": "2026-08-03",
+      "source": "Bulletin pétrolier hebdomadaire de la Commission européenne",
+      "sourceUrl": "https://prix-carburant.eu/prix-carburant-europe.php",
+      "note": "Écart servito / fai da te de 15 à 20 c/L. Le prix du totem est souvent celui du servito.",
+      "fuels": {
+        "Gazole": {
+          "france": 2.241,
+          "abroad": 2.09,
+          "perLitre": 0.151,
+          "perTank": 7.55,
+          "detourKm": 52,
+          "perYear": 128
+        },
+        "E10": {
+          "france": 1.99,
+          "abroad": 1.992,
+          "perLitre": -0.002,
+          "perTank": -0.1,
+          "detourKm": 0,
+          "perYear": -2
+        }
+      }
+    },
+    {
+      "country": "Allemagne",
+      "stationsUsed": 209,
+      "sampleSizes": {
+        "Gazole": 195,
+        "E10": 145,
+        "SP95": 35,
+        "SP98": 135
+      },
+      "date": "2026-08-03",
+      "source": "Bulletin pétrolier hebdomadaire de la Commission européenne",
+      "sourceUrl": "https://prix-carburant.eu/prix-carburant-europe.php",
+      "note": "Depuis avril 2026 les stations ne peuvent augmenter leurs prix qu'une fois par jour, à 12 h. Avant midi le gazole est environ 4,3 c/L sous la moyenne du jour, après midi il bondit de 18,4 c/L (source ADAC).",
+      "fuels": {
+        "Gazole": {
+          "france": 2.259,
+          "abroad": 2.208,
+          "perLitre": 0.051,
+          "perTank": 2.55,
+          "detourKm": 17,
+          "perYear": 43
+        },
+        "E10": {
+          "france": 2.064,
+          "abroad": 2.184,
+          "perLitre": -0.12,
+          "perTank": -6,
+          "detourKm": 0,
+          "perYear": -101
+        }
+      }
+    },
+    {
+      "country": "Belgique",
+      "stationsUsed": 349,
+      "sampleSizes": {
+        "Gazole": 344,
+        "E10": 289,
+        "SP95": 71,
+        "SP98": 299
+      },
+      "date": "2026-08-08",
+      "source": "Prix de vente maximums officiels",
+      "sourceUrl": "https://carbu.com/belgique/prixmaximum",
+      "note": "Ce sont des plafonds : beaucoup de stations vendent en dessous, l'estimation du gain est donc prudente.",
+      "fuels": {
+        "Gazole": {
+          "france": 2.159,
+          "abroad": 2.211,
+          "perLitre": -0.052,
+          "perTank": -2.6,
+          "detourKm": 0,
+          "perYear": -44
+        },
+        "E10": {
+          "france": 1.959,
+          "abroad": 1.866,
+          "perLitre": 0.093,
+          "perTank": 4.65,
+          "detourKm": 37,
+          "perYear": 79
+        },
+        "SP98": {
+          "france": 2.033,
+          "abroad": 1.988,
+          "perLitre": 0.045,
+          "perTank": 2.25,
+          "detourKm": 17,
+          "perYear": 38
+        }
+      }
+    },
+    {
+      "country": "Suisse",
+      "stationsUsed": 243,
+      "sampleSizes": {
+        "Gazole": 225,
+        "E10": 160,
+        "SP95": 88,
+        "SP98": 171
+      },
+      "date": "2026-08-08",
+      "source": "Touring Club Suisse",
+      "sourceUrl": "https://www.tcs.ch/fr/camping-voyages/informations-touristiques/bon-a-savoir/peages-frais/prix-essence-europe.php",
+      "note": "Prix en francs, convertis via _eurPerChf. S'ajoutent la marge de conversion de la carte (3 à 5 %) et la vignette autoroutière à 40 CHF.",
+      "fuels": {
+        "Gazole": {
+          "france": 2.25,
+          "abroad": 2.3112,
+          "perLitre": -0.0612,
+          "perTank": -3.06,
+          "detourKm": 0,
+          "perYear": -52
+        },
+        "E10": {
+          "france": 1.999,
+          "abroad": 2.0952,
+          "perLitre": -0.0962,
+          "perTank": -4.81,
+          "detourKm": 0,
+          "perYear": -81
+        },
+        "SP98": {
+          "france": 2.119,
+          "abroad": 2.214,
+          "perLitre": -0.095,
+          "perTank": -4.75,
+          "detourKm": 0,
+          "perYear": -80
+        }
+      }
+    }
+  ]
+}

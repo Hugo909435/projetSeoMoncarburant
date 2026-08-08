@@ -17,7 +17,9 @@
     "waves:plan": "node scripts/build-station-waves.js --dry-run",
     "waves:replan": "node scripts/build-station-waves.js --replan",
     "waves:replan:plan": "node scripts/build-station-waves.js --replan --dry-run",
-    "preview:stations": "STATIONS_ROLLOUT_ALL=1 astro build"
+    "preview:stations": "STATIONS_ROLLOUT_ALL=1 astro build",
+    "frontier": "node scripts/frontier-prices.js",
+    "frontier:chart": "node scripts/build-frontier-chart.js"
   },
   "dependencies": {
     "@astrojs/mdx": "^4.0.0",
