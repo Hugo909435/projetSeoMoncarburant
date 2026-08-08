@@ -9,7 +9,7 @@ author: "hugo-beignon"
 category: "economies"
 tags: ["frontaliers", "prix carburant", "Luxembourg", "Andorre", "Suisse", "Espagne", "douane", "économies"]
 featuredImage: "/images/articles/faire-le-plein-a-l-etranger-frontaliers.webp"
-imageAlt: "Panneau de frontière européenne devant une station-service, avec des voitures faisant le plein"
+imageAlt: "Graphique du gain ou du surcoût sur un plein de 50 L de gazole dans les sept pays voisins de la France : Andorre 28,65 € gagnés, Luxembourg 22,10 €, Espagne 18,25 €, Italie 7,55 €, Allemagne 2,55 €, Belgique 2,60 € perdus, Suisse 3,06 € perdus"
 readingTime: 12
 pillar: "reduire-facture-carburant"
 relatedArticles: ["autoroute-ou-nationale-carburant-plus-cher", "difference-prix-carburant-stations-meme-ville", "e85-superethanol-vaut-il-le-coup"]
