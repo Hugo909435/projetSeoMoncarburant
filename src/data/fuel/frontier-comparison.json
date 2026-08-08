@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-08T12:10:40.918Z",
+  "generatedAt": "2026-08-08T12:12:08.659Z",
   "radiusKm": 30,
   "tankLitres": 50,
   "consumptionPer100km": 6.5,
@@ -7,10 +7,10 @@
   "eurPerChf": 1.08,
   "foreignPricesUpdatedAt": "2026-08-08",
   "nationalMedian": {
-    "Gazole": 2.189,
-    "E10": 1.983,
+    "Gazole": 2.185,
+    "E10": 1.979,
     "SP95": 2.029,
-    "SP98": 2.076
+    "SP98": 2.07
   },
   "borders": [
     {
@@ -98,7 +98,7 @@
       "stationsUsed": 96,
       "sampleSizes": {
         "Gazole": 95,
-        "E10": 82,
+        "E10": 81,
         "SP95": 34,
         "SP98": 69
       },
@@ -140,12 +140,12 @@
       "note": "Écart servito / fai da te de 15 à 20 c/L. Le prix du totem est souvent celui du servito.",
       "fuels": {
         "Gazole": {
-          "france": 2.241,
+          "france": 2.24,
           "abroad": 2.09,
-          "perLitre": 0.151,
-          "perTank": 7.55,
+          "perLitre": 0.15,
+          "perTank": 7.5,
           "detourKm": 52,
-          "perYear": 128
+          "perYear": 127
         },
         "E10": {
           "france": 1.99,
@@ -172,20 +172,20 @@
       "note": "Depuis avril 2026 les stations ne peuvent augmenter leurs prix qu'une fois par jour, à 12 h. Avant midi le gazole est environ 4,3 c/L sous la moyenne du jour, après midi il bondit de 18,4 c/L (source ADAC).",
       "fuels": {
         "Gazole": {
-          "france": 2.259,
+          "france": 2.25,
           "abroad": 2.208,
-          "perLitre": 0.051,
-          "perTank": 2.55,
-          "detourKm": 17,
-          "perYear": 43
+          "perLitre": 0.042,
+          "perTank": 2.1,
+          "detourKm": 14,
+          "perYear": 35
         },
         "E10": {
-          "france": 2.064,
+          "france": 2.049,
           "abroad": 2.184,
-          "perLitre": -0.12,
-          "perTank": -6,
+          "perLitre": -0.135,
+          "perTank": -6.75,
           "detourKm": 0,
-          "perYear": -101
+          "perYear": -114
         }
       }
     },
@@ -193,10 +193,10 @@
       "country": "Belgique",
       "stationsUsed": 349,
       "sampleSizes": {
-        "Gazole": 344,
-        "E10": 289,
+        "Gazole": 345,
+        "E10": 290,
         "SP95": 71,
-        "SP98": 299
+        "SP98": 300
       },
       "date": "2026-08-08",
       "source": "Prix de vente maximums officiels",
@@ -204,12 +204,12 @@
       "note": "Ce sont des plafonds : beaucoup de stations vendent en dessous, l'estimation du gain est donc prudente.",
       "fuels": {
         "Gazole": {
-          "france": 2.159,
+          "france": 2.151,
           "abroad": 2.211,
-          "perLitre": -0.052,
-          "perTank": -2.6,
+          "perLitre": -0.06,
+          "perTank": -3,
           "detourKm": 0,
-          "perYear": -44
+          "perYear": -51
         },
         "E10": {
           "france": 1.959,
@@ -220,12 +220,12 @@
           "perYear": 79
         },
         "SP98": {
-          "france": 2.033,
+          "france": 2.03,
           "abroad": 1.988,
-          "perLitre": 0.045,
-          "perTank": 2.25,
-          "detourKm": 17,
-          "perYear": 38
+          "perLitre": 0.042,
+          "perTank": 2.1,
+          "detourKm": 16,
+          "perYear": 35
         }
       }
     },
@@ -234,9 +234,9 @@
       "stationsUsed": 243,
       "sampleSizes": {
         "Gazole": 225,
-        "E10": 160,
+        "E10": 162,
         "SP95": 88,
-        "SP98": 171
+        "SP98": 172
       },
       "date": "2026-08-08",
       "source": "Touring Club Suisse",

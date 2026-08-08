@@ -9,7 +9,7 @@ author: "hugo-beignon"
 category: "economies"
 tags: ["frontaliers", "prix carburant", "Luxembourg", "Andorre", "Suisse", "Espagne", "douane", "économies"]
 featuredImage: "/images/articles/faire-le-plein-a-l-etranger-frontaliers.webp"
-imageAlt: "Graphique du gain ou du surcoût sur un plein de 50 L de gazole dans les sept pays voisins de la France : Andorre 28,65 € gagnés, Luxembourg 22,10 €, Espagne 18,25 €, Italie 7,55 €, Allemagne 2,55 €, Belgique 2,60 € perdus, Suisse 3,06 € perdus"
+imageAlt: "Graphique du gain ou du surcoût sur un plein de 50 L de gazole dans les sept pays voisins de la France : Andorre 28,65 € gagnés, Luxembourg 22,10 €, Espagne 18,25 €, Italie 7,50 €, Allemagne 2,10 €, Belgique 3,00 € perdus, Suisse 3,06 € perdus"
 readingTime: 12
 pillar: "reduire-facture-carburant"
 relatedArticles: ["autoroute-ou-nationale-carburant-plus-cher", "difference-prix-carburant-stations-meme-ville", "e85-superethanol-vaut-il-le-coup"]
@@ -23,7 +23,7 @@ faq:
   - question: "Combien de litres de carburant peut-on ramener en jerrican ?"
     answer: "Depuis un pays de l'Union européenne (Belgique, Luxembourg, Allemagne, Espagne, Italie), la règle est claire : le carburant contenu dans le réservoir normal du véhicule est exonéré d'accise, plus 10 litres maximum dans un réservoir portatif. Au-delà, la taxe française est théoriquement due. Pour la Suisse, la franchise douanière est plus généreuse : 25 litres en jerrican, puis 0,80 franc de droits par litre supplémentaire et 8,1 % de TVA. L'Andorre étant hors Union européenne, la règle des 10 litres ne s'y applique pas et aucune franchise carburant spécifique n'est publiée par la douane française."
   - question: "Combien de kilomètres de détour vaut-il la peine de faire ?"
-    answer: "Cela dépend entièrement de la frontière. Pour un plein de 50 litres de gazole, le gain absorbe jusqu'à 200 km aller-retour vers l'Andorre, 152 km vers le Luxembourg et 130 km vers l'Espagne. Vers l'Italie le seuil tombe à 52 km, vers l'Allemagne à 17 km, et vers la Belgique ou la Suisse le détour n'est jamais rentable puisqu'il n'y a aucun gain à aller chercher. Ces seuils ne comptent que le carburant consommé par le détour, pas le temps passé ni l'usure du véhicule."
+    answer: "Cela dépend entièrement de la frontière. Pour un plein de 50 litres de gazole, le gain absorbe jusqu'à 200 km aller-retour vers l'Andorre, 152 km vers le Luxembourg et 130 km vers l'Espagne. Vers l'Italie le seuil tombe à 52 km, vers l'Allemagne à 14 km, et vers la Belgique ou la Suisse le détour n'est jamais rentable puisqu'il n'y a aucun gain à aller chercher. Ces seuils ne comptent que le carburant consommé par le détour, pas le temps passé ni l'usure du véhicule."
   - question: "Le calcul change-t-il si je roule au E85 ?"
     answer: "Oui, et radicalement. Le superéthanol E85 se vend 0,829 €/L en médiane en France, et il n'existe quasiment nulle part ailleurs en Europe de l'Ouest. Même en tenant compte de la surconsommation d'environ 25 %, le E85 revient à environ 1,04 €/L équivalent, soit 50 centimes de moins que le carburant le moins cher d'Andorre. Si votre véhicule est converti au E85, aucune frontière n'est rentable : votre meilleure station est française."
   - question: "Faut-il déclarer le carburant à la douane en rentrant en France ?"
@@ -52,9 +52,9 @@ Le point de comparaison n'est pas le prix moyen français, il est le prix que vo
 | **Andorre** | 2,199 €/L | 1,626 €/L | -0,573 | **28,65 € gagnés** |
 | **Luxembourg** | 2,240 €/L | 1,798 €/L | -0,442 | **22,10 € gagnés** |
 | **Espagne** | 2,159 €/L | 1,794 €/L | -0,365 | **18,25 € gagnés** |
-| **Italie** | 2,241 €/L | 2,090 €/L | -0,151 | 7,55 € gagnés |
-| **Allemagne** | 2,259 €/L | 2,208 €/L | -0,051 | 2,55 € gagnés |
-| **Belgique** | 2,159 €/L | 2,211 €/L | +0,052 | **2,60 € perdus** |
+| **Italie** | 2,240 €/L | 2,090 €/L | -0,150 | 7,50 € gagnés |
+| **Allemagne** | 2,250 €/L | 2,208 €/L | -0,042 | 2,10 € gagnés |
+| **Belgique** | 2,151 €/L | 2,211 €/L | +0,060 | **3,00 € perdus** |
 | **Suisse** | 2,250 €/L | 2,311 €/L | +0,061 | **3,06 € perdus** |
 
 ### Essence (E10 côté français, Super 95 côté étranger)
@@ -67,13 +67,13 @@ Le point de comparaison n'est pas le prix moyen français, il est le prix que vo
 | **Belgique** | 1,959 €/L | 1,866 €/L | -0,093 | 4,65 € gagnés |
 | **Italie** | 1,990 €/L | 1,992 €/L | +0,002 | nul |
 | **Suisse** | 1,999 €/L | 2,095 €/L | +0,096 | **4,81 € perdus** |
-| **Allemagne** | 2,064 €/L | 2,184 €/L | +0,120 | **6,00 € perdus** |
+| **Allemagne** | 2,049 €/L | 2,184 €/L | +0,135 | **6,75 € perdus** |
 
 Trois enseignements immédiats.
 
 **La Suisse a basculé.** Au taux d'août 2026, environ 1,08 € pour un franc, le carburant suisse est plus cher que le français dans les deux catégories. Le TCS, l'automobile club suisse, le dit lui-même : la Suisse est au-dessus de la quasi-totalité de ses voisins. Le plein à Genève ou à Bâle n'est plus une bonne affaire, c'est une perte sèche d'environ 3 à 5 € par plein.
 
-**La Belgique et l'Allemagne s'inversent selon le carburant.** En Belgique, l'essence reste légèrement intéressante (4,65 € par plein) mais le gazole ne l'est plus. En Allemagne, c'est l'inverse et de façon plus marquée : le gazole rapporte quelques euros, l'essence en fait perdre six.
+**La Belgique et l'Allemagne s'inversent selon le carburant.** En Belgique, l'essence reste légèrement intéressante (4,65 € par plein) mais le gazole ne l'est plus. En Allemagne, c'est l'inverse et de façon plus marquée : le gazole rapporte deux euros, l'essence en fait perdre près de sept.
 
 **L'Andorre reste la championne**, avec un écart supérieur à 55 centimes par litre sur le gazole. Encore faut-il pouvoir y monter, nous y revenons plus bas.
 
@@ -92,7 +92,7 @@ Base de calcul : un véhicule à 6,5 L/100 km, soit environ 0,14 € de carburan
 | **Espagne** | 130 km aller-retour | 110 km aller-retour |
 | **Italie** | 52 km aller-retour | nul |
 | **Belgique** | nul | 37 km aller-retour |
-| **Allemagne** | 17 km aller-retour | nul |
+| **Allemagne** | 14 km aller-retour | nul |
 | **Suisse** | nul | nul |
 
 Ces seuils sont **volontairement optimistes** : ils ne comptent que le carburant. Ils ignorent l'usure, les péages éventuels et surtout votre temps. Si vous voulez un seuil réaliste, divisez-les par deux. Un aller-retour de 152 km au Luxembourg pour gagner 22 € revient à se payer environ 9 € de l'heure une fois le trajet décompté : ça n'a de sens que si vous y allez de toute façon.
@@ -108,9 +108,9 @@ Vous traversez déjà la frontière pour travailler. Votre détour est nul, le g
 | **Andorre** | 484 € | 392 € |
 | **Luxembourg** | 373 € | 313 € |
 | **Espagne** | 308 € | 238 € |
-| **Italie** | 128 € | 0 € |
-| **Allemagne** | 43 € | -101 € |
-| **Belgique** | -44 € | 79 € |
+| **Italie** | 127 € | 0 € |
+| **Allemagne** | 35 € | -114 € |
+| **Belgique** | -51 € | 79 € |
 | **Suisse** | -52 € | -81 € |
 
 Pour les 120 000 frontaliers français du Luxembourg, faire systématiquement le plein côté luxembourgeois représente environ **373 € par an** sur un véhicule diesel. C'est le seul cas où l'effort est nul et le gain massif.
@@ -153,25 +153,25 @@ Bon à savoir : le gazole se dit *gasóleo A*. Le *gasóleo B*, teinté en rouge
 
 ### Italie : intéressant sur le gazole uniquement
 
-**Verdict : oui pour le diesel, inutile pour l'essence.** 7,55 € par plein de gazole, gain nul en essence.
+**Verdict : oui pour le diesel, inutile pour l'essence.** 7,50 € par plein de gazole, gain nul en essence.
 
-Attention à la structure du marché italien : la différence entre le *servito* (service à la pompe) et le *fai da te* (self-service) atteint couramment 15 à 20 centimes par litre. Le prix affiché en grand sur le totem est souvent celui du *servito*. Prenez systématiquement la file *fai da te*, sans quoi votre gain de 7,55 € disparaît entièrement.
+Attention à la structure du marché italien : la différence entre le *servito* (service à la pompe) et le *fai da te* (self-service) atteint couramment 15 à 20 centimes par litre. Le prix affiché en grand sur le totem est souvent celui du *servito*. Prenez systématiquement la file *fai da te*, sans quoi votre gain de 7,50 € disparaît entièrement.
 
 ### Allemagne : uniquement le gazole, et uniquement avant midi
 
-**Verdict : marginal, et conditionné à l'heure.** 2,55 € par plein de gazole en moyenne, 6 € perdus en essence.
+**Verdict : marginal, et conditionné à l'heure.** 2,10 € par plein de gazole en moyenne, 6,75 € perdus en essence.
 
 C'est la frontière où le détail compte le plus, à cause d'une réglementation entrée en vigueur en **avril 2026** : les stations allemandes ne peuvent désormais augmenter leurs prix **qu'une seule fois par jour, à 12 heures**. Le résultat, mesuré par l'ADAC, est spectaculaire : juste avant midi, les prix sont environ 4,3 centimes sous la moyenne du jour pour le gazole et 3,7 centimes pour le Super E10, puis ils bondissent en moyenne de 18,4 centimes (gazole) et 14,6 centimes (E10) après 12 heures.
 
-Traduction concrète pour un frontalier alsacien ou mosellan : un plein de gazole fait **entre 11 h et 12 h** rapporte environ 4,70 €, le même plein fait à 14 h vous fait perdre de l'argent. Sur l'essence, même à l'heure optimale, l'Allemagne reste plus chère que le côté français.
+Traduction concrète pour un frontalier alsacien ou mosellan : un plein de gazole fait **entre 11 h et 12 h** rapporte environ 4,25 €, le même plein fait à 14 h vous fait perdre de l'argent. Sur l'essence, même à l'heure optimale, l'Allemagne reste plus chère que le côté français.
 
 ### Belgique : l'essence oui, le gazole non
 
-**Verdict : marginal.** 4,65 € par plein d'essence, 2,60 € perdus sur le gazole.
+**Verdict : marginal.** 4,65 € par plein d'essence, 3,00 € perdus sur le gazole.
 
 La Belgique applique elle aussi un système de **prix maximums officiels** : 2,211 €/L pour le diesel B7 et 1,866 €/L pour le Super 95 E10 au 8 août 2026. Nuance importante et à votre avantage : contrairement au Luxembourg, beaucoup de stations belges vendent nettement en dessous du plafond, en particulier les stations automatiques sans personnel. Le gain réel sur l'essence peut donc dépasser les 4,65 € calculés ici, qui reposent sur le prix plafond.
 
-Sur le gazole en revanche, l'écart joue contre vous, et les stations du Nord et de l'Aisne comptent déjà parmi les moins chères de France (2,159 €/L de médiane sur la bande frontalière, contre 2,189 €/L en médiane nationale). Vous êtes bien servi de ce côté-ci.
+Sur le gazole en revanche, l'écart joue contre vous, et les stations du Nord et de l'Aisne comptent déjà parmi les moins chères de France (2,151 €/L de médiane sur la bande frontalière, contre 2,185 €/L en médiane nationale). Vous êtes bien servi de ce côté-ci.
 
 ### Suisse : la frontière qu'il faut arrêter de traverser
 
