@@ -13,7 +13,7 @@ tags: ["prix coûtant", "leclerc", "intermarché", "carrefour", "système u", "b
 featuredImage: "/images/articles/prix-coutant-carburant-calendrier-leclerc-intermarche-carrefour.webp"
 imageAlt: "Panneau de prix carburant affichant une opération prix coûtant en grande surface"
 readingTime: 4
-relatedArticles: ["leclerc-carburant-prix-coutant-juillet-2026", "intermarche-carburant-prix-coutant-2026", "carrefour-carburant-prix-2026", "prix-coutant-carburant-systeme-u-auchan-casino-cora", "reduire-facture-carburant"]
+relatedArticles: ["carburant-prix-coutant-aout-2026", "leclerc-carburant-prix-coutant-juillet-2026", "intermarche-carburant-prix-coutant-2026", "carrefour-carburant-prix-2026", "prix-coutant-carburant-systeme-u-auchan-casino-cora"]
 ctaTitle: "Trouvez la station la moins chère près de chez vous"
 ctaDescription: "Notre comparateur référence les prix de plus de 11 000 stations-service en France, mis à jour quotidiennement via les données officielles."
 faq:
@@ -84,5 +84,7 @@ La vague de l'été 2026 a déjà démarré côté Leclerc et Intermarché, et S
 ---
 
 Pour aller plus loin, chaque enseigne a ses propres subtilités : consultez nos guides détaillés sur le [prix coûtant chez Leclerc](/blog/leclerc-carburant-prix-coutant-juillet-2026/), les [avantages carburant Intermarché](/blog/intermarche-carburant-prix-coutant-2026/) et la [carte Pass Carrefour](/blog/carrefour-carburant-prix-2026/).
+
+Nous publions par ailleurs un point mensuel sur les opérations en cours : retrouvez le [récapitulatif d'août 2026](/blog/carburant-prix-coutant-aout-2026/) pour l'état des lieux le plus récent.
 
 *Article publié le 22 juillet 2026, mis à jour le 30 juillet 2026 avec les dates constatées de l'opération Leclerc et Intermarché et l'annonce de Système U. Les périodes et conditions décrites sont celles habituellement constatées et peuvent varier d'une année et d'un magasin à l'autre.*
