@@ -10,7 +10,7 @@ category: "economies"
 pillar: "reduire-facture-carburant"
 tags: ["prix coûtant", "août 2026", "système u", "totalenergies", "leclerc", "intermarché", "carburant", "économies"]
 featuredImage: "/images/articles/carburant-prix-coutant-aout-2026.webp"
-imageAlt: "Station-service U de supermarché, un automobiliste fait le plein sous l'auvent"
+imageAlt: "Station-service Super U avec son totem de prix et un camion-citerne en cours de livraison"
 readingTime: 5
 relatedArticles: ["prix-coutant-carburant-calendrier-leclerc-intermarche-carrefour", "leclerc-carburant-prix-coutant-juillet-2026", "totalenergies-plafonne-a-nouveau-carburant-2026", "prix-coutant-carburant-systeme-u-auchan-casino-cora", "reduire-facture-carburant"]
 ctaTitle: "Trouvez la station la moins chère près de chez vous"
@@ -31,7 +31,7 @@ draft: false
 
 Août est traditionnellement un mois creux pour les opérations carburant à prix coûtant : les enseignes ont déjà tiré leurs cartouches fin juin et début juillet, avant les grands départs, et gardent la suivante pour la rentrée. L'été 2026 ne fait pas exception, à une nuance près : avec un gazole qui a franchi les 2,17 €/L, la moindre remise compte plus que d'habitude. Voici le point à mi-parcours du mois, opération par opération.
 
-<p class="text-sm text-slate-500 italic">Photo d'illustration : Didivo67, <a href="https://creativecommons.org/publicdomain/zero/1.0/deed.fr" target="_blank" rel="noopener">CC0</a>, via Wikimedia Commons.</p>
+<p class="text-sm text-slate-500 italic">Photo : Didivo67, <a href="https://creativecommons.org/publicdomain/zero/1.0/deed.fr" target="_blank" rel="noopener">CC0</a>, via Wikimedia Commons. Photo d'illustration, les prix affichés sur le totem ne sont pas ceux d'août 2026.</p>
 
 ---
 
