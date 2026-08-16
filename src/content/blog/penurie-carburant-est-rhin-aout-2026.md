@@ -10,7 +10,7 @@ author: "hugo-beignon"
 category: "carburants"
 tags: ["pénurie carburant", "Grand Est", "Alsace", "Rhin", "sécheresse", "août 2026", "approvisionnement"]
 featuredImage: "/images/articles/penurie-carburant-est-rhin-aout-2026.webp"
-imageAlt: "Barge fluviale chargée d'hydrocarbures naviguant sur un Rhin au niveau très bas, berges largement découvertes"
+imageAlt: "Cargo fluvial naviguant sur le Rhin en août 2026 devant Kaub, coque haute sur l'eau et larges bancs de graviers découverts sur la rive"
 readingTime: 5
 relatedArticles: ["pourquoi-prix-carburant-eleves-juin-2026", "compatibilite-sp95-e10", "voyant-reserve-combien-de-km"]
 ctaTitle: "Vérifiez quelles stations sont approvisionnées près de chez vous"
@@ -107,3 +107,5 @@ Pour comprendre ce qui fait bouger les prix sur le fond, taxes comprises, notre 
 ---
 
 *Article publié le 16 août 2026. Chiffres issus des relevés préfectoraux et des données de [prix-carburants.gouv.fr](https://www.prix-carburants.gouv.fr/) ; niveaux du Rhin relevés à la station de Kaub. La situation évolue au rythme des précipitations.*
+
+*Photo d'illustration : le cargo fluvial Danimex 2 passant devant Kaub le 8 août 2026, alors que la cote officielle n'était que de 26 cm. Cliché de Rolf Kranz, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Niedrigwasser_Mittelrhein_2026_-_GMS_Danimex_2_vor_Kaub.jpg), licence [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/deed.fr), image recadrée et redimensionnée.*
