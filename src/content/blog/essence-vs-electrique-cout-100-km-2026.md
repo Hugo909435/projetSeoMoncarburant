@@ -19,7 +19,7 @@ faq:
   - question: "Combien coûtent 100 km en voiture électrique en 2026 ?"
     answer: "Entre 2,97 € et 15,94 € selon l'endroit où vous rechargez. À domicile en heures creuses (0,1589 €/kWh au tarif réglementé d'août 2026), 100 km reviennent à 2,97 €. Sur une borne rapide d'autoroute facturée 0,69 €/kWh, les mêmes 100 km coûtent 15,94 €, soit plus qu'un plein d'essence. C'est le lieu de recharge, pas la voiture, qui détermine la facture."
   - question: "Combien coûtent 100 km en essence ou en diesel en août 2026 ?"
-    answer: "Sur une compacte consommant 6,5 L/100 km en essence, 100 km coûtent 13,10 € au prix moyen du SP95-E10 relevé le 18 août 2026 (2,016 €/L). En diesel, sur une consommation de 5,4 L/100 km et un gazole à 2,222 €/L, la note est de 12,00 €. Sur autoroute à 130 km/h, comptez respectivement 15,12 € et 14,00 €."
+    answer: "Sur une compacte consommant 6,5 L/100 km en essence, 100 km coûtent 13,10 € au prix moyen du SP95-E10 relevé le 18 août 2026 (2,016 €/L). En diesel, sur une consommation de 5,4 L/100 km et un gazole à 2,223 €/L, la note est de 12,00 €. Sur autoroute à 130 km/h, comptez respectivement 15,12 € et 14,00 €."
   - question: "À partir de quel prix du kWh la voiture électrique coûte-t-elle plus cher que le thermique ?"
     answer: "Au-delà de 0,67 €/kWh en usage mixte, 100 km en électrique coûtent plus cher qu'en diesel. Sur autoroute, le seuil tombe à 0,61 €/kWh, parce que la consommation électrique grimpe plus vite que celle d'un moteur thermique à vitesse stabilisée. Plusieurs réseaux de charge rapide facturent aujourd'hui entre 0,54 et 0,69 €/kWh sans abonnement, donc au-dessus ou juste sous ce seuil."
   - question: "Le Superéthanol E85 est-il moins cher que la recharge électrique ?"
@@ -51,11 +51,11 @@ Côté carburants, voici les moyennes nationales du jour.
 
 | Carburant | Prix moyen national (18 août 2026) |
 |-----------|-----------------------------------|
-| Gazole B7 | 2,222 €/L |
+| Gazole B7 | 2,223 €/L |
 | SP95-E10 | 2,016 €/L |
-| SP95-E5 | 2,056 €/L |
-| SP98 | 2,099 €/L |
-| GPL-c | 1,051 €/L |
+| SP95-E5 | 2,057 €/L |
+| SP98 | 2,100 €/L |
+| GPL-c | 1,052 €/L |
 | Superéthanol E85 | 0,865 €/L |
 
 *Moyennes calculées sur 9 797 stations-service relevées le 18 août 2026. Source : [prix-carburants.gouv.fr](https://www.prix-carburants.gouv.fr/), données ouvertes.*
@@ -86,7 +86,7 @@ Voici le coût de 100 km en usage mixte, toutes énergies confondues, aux prix c
 | Électrique, borne supermarché à 0,25 €/kWh | 4,47 € |
 | Électrique, borne rapide à 0,39 €/kWh | 6,96 € |
 | Superéthanol E85 | 7,03 € |
-| GPL | 8,20 € |
+| GPL | 8,21 € |
 | Électrique, borne rapide à 0,55 €/kWh | 9,82 € |
 | Gazole | 12,00 € |
 | Électrique, borne rapide à 0,69 €/kWh | 12,32 € |
@@ -124,7 +124,7 @@ C'est le point le plus mal traité dans les comparatifs, parce qu'il oblige à f
 |------------------------|----------------|
 | Superéthanol E85 | **8,11 €** |
 | Électrique, borne rapide à 0,39 €/kWh | 9,01 € |
-| GPL | 9,46 € |
+| GPL | 9,47 € |
 | Électrique, borne rapide à 0,55 €/kWh | 12,71 € |
 | Gazole | 14,00 € |
 | Essence SP95-E10 | 15,12 € |
