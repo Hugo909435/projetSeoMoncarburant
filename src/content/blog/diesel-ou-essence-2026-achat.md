@@ -13,7 +13,7 @@ featuredImage: "/images/articles/diesel-ou-essence-2026-achat.webp"
 imageAlt: "Deux pistolets de pompe à essence et diesel côte à côte en station-service"
 readingTime: 4
 pillar: "sp95-vs-sp98"
-relatedArticles: ["e85-superethanol-vaut-il-le-coup", "compatibilite-sp95-e10"]
+relatedArticles: ["e85-superethanol-vaut-il-le-coup", "compatibilite-sp95-e10", "essence-vs-electrique-cout-100-km-2026"]
 ctaTitle: "Comparez les prix diesel et essence près de chez vous"
 ctaDescription: "Notre comparateur référence les prix de plus de 11 000 stations-service en France, mis à jour quotidiennement via les données officielles."
 faq:
@@ -54,7 +54,7 @@ Revendre un diesel en 2026 est plus compliqué qu'il y a dix ans. Le marché de 
 
 ## Et si la vraie réponse était ailleurs ?
 
-Avant de trancher entre diesel et essence, il vaut la peine de regarder l'hybride, qui a fait d'énormes progrès depuis 2023. Sur un usage mixte, ville et route, il consomme presque comme un diesel sans les contraintes du gazole. Ce n'est pas la solution universelle, mais elle mérite un essai avant de fermer la porte.
+Avant de trancher entre diesel et essence, il vaut la peine de regarder l'hybride, qui a fait d'énormes progrès depuis 2023. Sur un usage mixte, ville et route, il consomme presque comme un diesel sans les contraintes du gazole. Ce n'est pas la solution universelle, mais elle mérite un essai avant de fermer la porte. L'électrique aussi, à condition de faire le calcul honnêtement : nous avons chiffré [ce que coûtent vraiment 100 km en essence et en électrique](/blog/essence-vs-electrique-cout-100-km-2026/), et la réponse dépend surtout de l'endroit où vous rechargez.
 
 ## Ce qu'il faut retenir avant de signer
 

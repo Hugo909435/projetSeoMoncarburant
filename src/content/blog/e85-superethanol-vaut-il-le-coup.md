@@ -12,7 +12,7 @@ featuredImage: "/images/articles/e85-superethanol-vaut-il-le-coup.webp"
 imageAlt: "Pompe E85 superéthanol en station-service française avec affichage du prix au litre"
 readingTime: 8
 pillar: "sp95-vs-sp98"
-relatedArticles: ["compatibilite-sp95-e10", "prix-carburant-2026", "melanger-sp95-sp98"]
+relatedArticles: ["compatibilite-sp95-e10", "prix-carburant-2026", "melanger-sp95-sp98", "essence-vs-electrique-cout-100-km-2026"]
 ctaTitle: "Trouvez une station E85 au meilleur prix"
 ctaDescription: "Notre comparateur référence les prix de plus de 11 000 stations-service en France, mis à jour quotidiennement via les données officielles."
 faq:
@@ -216,4 +216,4 @@ Le passage à l'E85 est un investissement : entre 700 et 1 600 € pour un boît
 
 Les limites existent : disponibilité en station encore incomplète, démarrage à froid perfectible en hiver, bilan environnemental nuancé. Mais pour les conducteurs essence qui roulent régulièrement, la réponse est claire : oui, l'E85 vaut le coup en 2026.
 
-Pour comparer les prix en temps réel et trouver la station E85 la plus proche, utilisez notre [comparateur de prix carburant](/prix-carburants/). Et pour comprendre les différences entre les essences classiques, consultez notre guide [SP95 vs SP98](/piliers/sp95-vs-sp98/).
+Pour comparer les prix en temps réel et trouver la station E85 la plus proche, utilisez notre [comparateur de prix carburant](/prix-carburants/). Et pour comprendre les différences entre les essences classiques, consultez notre guide [SP95 vs SP98](/piliers/sp95-vs-sp98/). Enfin, si vous hésitez plutôt entre thermique et électrique, notre calcul du [coût réel de 100 km](/blog/essence-vs-electrique-cout-100-km-2026/) place l'E85 devant toutes les bornes de recharge publiques.
