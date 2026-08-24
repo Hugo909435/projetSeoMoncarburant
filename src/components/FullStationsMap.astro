@@ -9,6 +9,7 @@ import departmentsData from '../data/departments.json';
 import fuelMeta from '../data/fuel/meta.json';
 import stationBrands from '../data/station-brands.json';
 import { resolveBrandLogo } from '../utils/brand-logo';
+import { publishedStations } from '../utils/station-waves';
 
 const nationalGazole = (statsNational as Record<string, number>)['Gazole'] ?? 0;
 const depts = departmentsData as Record<string, { name: string; slug: string }>;
@@ -20,6 +21,14 @@ for (const [num, d] of Object.entries(depts)) {
 
 const cityFiles = import.meta.glob('../data/fuel/stations-by-city/*.json');
 const citySlugs: string[] = Object.keys(cityFiles).map(p => p.replace(/^.*\/(.+)\.json$/, '$1'));
+
+// Stations dont la fiche dédiée est déjà publiée (voir STATIONS-ROLLOUT.md) :
+// id -> chemin, pour prioriser ce lien sur celui de la ville/du département
+// dans les popups de la carte.
+const stationPages: Record<string, string> = {};
+for (const [id, entry] of publishedStations) {
+  stationPages[id] = entry.path;
+}
 
 const brandSlugs = new Set(Object.values(stationBrands as Record<string, { slug: string; name: string }>).map(b => b.slug));
 const brandLogos: Record<string, string> = {};
@@ -78,6 +87,7 @@ for (const slug of brandSlugs) {
     data-depts={JSON.stringify(deptMap)}
     data-city-slugs={JSON.stringify(citySlugs)}
     data-brand-logos={JSON.stringify(brandLogos)}
+    data-station-pages={JSON.stringify(stationPages)}
     role="application"
     aria-label="Carte interactive des stations-service en France"
   >
@@ -551,6 +561,7 @@ for (const slug of brandSlugs) {
   const deptMap: Record<string, { slug: string; name: string }> = JSON.parse(mapEl.dataset.depts || '{}');
   const citySlugsSet = new Set<string>(JSON.parse(mapEl.dataset.citySlugs || '[]'));
   const brandLogos: Record<string, string> = JSON.parse(mapEl.dataset.brandLogos || '{}');
+  const stationPages: Record<string, string> = JSON.parse(mapEl.dataset.stationPages || '{}');
 
   function loadCss(href: string): Promise<void> {
     return new Promise(resolve => {
@@ -604,6 +615,7 @@ for (const slug of brandSlugs) {
   listCloseEl?.addEventListener('click', closeListPanel);
 
   type Station = {
+    id?: string;
     lat: number; lng: number;
     ville: string; villeSlug: string;
     adresse: string; cp: string; dep: string;
@@ -623,14 +635,19 @@ for (const slug of brandSlugs) {
       .map(([k, lbl]) => `<tr><td>${lbl}</td><td>${(s.prices![k] as number).toFixed(3)} €/L</td></tr>`)
       .join('');
 
+    const stationPath = s.id ? stationPages[s.id] : null;
     const dept = deptMap[s.dep];
     const hasCityPage = s.villeSlug && citySlugsSet.has(s.villeSlug);
-    const ctaUrl = hasCityPage
-      ? `/prix-carburants/ville/${s.villeSlug}/`
-      : dept ? `/prix-carburants/${dept.slug}/` : null;
-    const ctaLabel = hasCityPage
-      ? `Voir les stations à ${escapeHtml(toDisplay(s.ville || ''))} &rarr;`
-      : dept ? `Voir le département ${dept.name} &rarr;` : null;
+    const ctaUrl = stationPath
+      ? `/prix-carburants/station/${stationPath}/`
+      : hasCityPage
+        ? `/prix-carburants/ville/${s.villeSlug}/`
+        : dept ? `/prix-carburants/${dept.slug}/` : null;
+    const ctaLabel = stationPath
+      ? 'Voir la fiche de la station &rarr;'
+      : hasCityPage
+        ? `Voir les stations à ${escapeHtml(toDisplay(s.ville || ''))} &rarr;`
+        : dept ? `Voir le département ${dept.name} &rarr;` : null;
 
     const noPrice = `<p style="font-size:.78rem;color:#64748b;margin:0 0 .5rem">Prix non communiqués</p>`;
 
