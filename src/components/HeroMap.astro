@@ -8,6 +8,11 @@ import { resolveBrandLogo } from '../utils/brand-logo';
 const nationalGazole = (statsNational as Record<string, number>)['Gazole'] ?? 0;
 const depts = departmentsData as Record<string, { name: string; slug: string }>;
 
+const lastUpdateDate = fuelMeta.lastUpdate ? new Date(fuelMeta.lastUpdate) : null;
+const lastUpdateLabel = lastUpdateDate
+  ? `${new Intl.DateTimeFormat('fr-FR', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'Europe/Paris' }).format(lastUpdateDate)} à ${new Intl.DateTimeFormat('fr-FR', { hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Paris' }).format(lastUpdateDate)}`
+  : null;
+
 const deptMap: Record<string, { slug: string; name: string }> = {};
 for (const [num, d] of Object.entries(depts)) {
   deptMap[num] = { slug: d.slug, name: d.name };
@@ -37,8 +42,18 @@ for (const slug of brandSlugs) {
         Trouvez la station la moins chère<br />
         <span class="hm-accent">près de chez vous</span>
       </h1>
+
+      {lastUpdateLabel && (
+        <p class="hm-freshness">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+          </svg>
+          Prix actualisés chaque jour &middot; Dernière mise à jour : <time datetime={fuelMeta.lastUpdate}>{lastUpdateLabel}</time>
+        </p>
+      )}
+
       <p class="hm-subtitle">
-        {fuelMeta.totalStations.toLocaleString('fr-FR')} stations référencées &middot; Données officielles &middot; Mise à jour quotidienne
+        {fuelMeta.totalStations.toLocaleString('fr-FR')} stations référencées &middot; Données officielles du gouvernement
       </p>
 
       <form id="hm-form" class="hm-form" role="search" aria-label="Recherche par ville ou code postal" novalidate>
@@ -66,6 +81,14 @@ for (const slug of brandSlugs) {
         </button>
       </form>
 
+      <button type="button" id="hm-geo-btn" class="hm-geo-btn" aria-label="Rechercher les stations autour de ma position actuelle">
+        <svg class="hm-geo-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="3"/>
+          <path d="M12 2v3M12 19v3M2 12h3M19 12h3"/>
+        </svg>
+        <span id="hm-geo-btn-label">Trouver une station autour de moi</span>
+      </button>
+
       <div class="hm-suggestions" id="hm-suggestions" role="group" aria-label="Villes populaires">
         <span class="hm-suggestions-label">Recherches fréquentes :</span>
         <button type="button" class="hm-chip" data-city="Paris">Paris</button>
@@ -77,14 +100,6 @@ for (const slug of brandSlugs) {
         <button type="button" class="hm-chip" data-city="Strasbourg">Strasbourg</button>
         <button type="button" class="hm-chip" data-city="Bordeaux">Bordeaux</button>
       </div>
-
-      <button type="button" id="hm-geo-btn" class="hm-geo-btn" aria-label="Rechercher les stations autour de ma position actuelle">
-        <svg class="hm-geo-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <circle cx="12" cy="12" r="3"/>
-          <path d="M12 2v3M12 19v3M2 12h3M19 12h3"/>
-        </svg>
-        <span id="hm-geo-btn-label">Autour de moi</span>
-      </button>
 
       <p id="hm-status" class="hm-status" role="status" aria-live="polite" aria-atomic="true"></p>
     </div>
@@ -123,7 +138,7 @@ for (const slug of brandSlugs) {
           </div>
           <p class="hm-list-count" id="hm-list-count"></p>
           <ul class="hm-list" id="hm-list">
-            <li class="hm-list-empty">Recherchez une ville, un code postal, ou cliquez sur « Autour de moi » pour afficher la liste des stations ici.</li>
+            <li class="hm-list-empty">Recherchez une ville, un code postal, ou cliquez sur « Trouver une station autour de moi » pour afficher la liste des stations ici.</li>
           </ul>
         </aside>
       </div>
@@ -298,25 +313,40 @@ for (const slug of brandSlugs) {
   .hm-status.is-error { color: #fca5a5; }
   .hm-status.is-ok { color: #86efac; }
 
+  /* ── Fraîcheur des prix ── */
+  .hm-freshness {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin: 0 0 0.875rem;
+    padding: 0.3rem 0.75rem;
+    background: rgba(34 197 94 / 0.15);
+    border: 1px solid rgba(74 222 128 / 0.35);
+    border-radius: 999px;
+    color: #86efac;
+    font-size: 0.8125rem;
+    font-weight: 600;
+  }
+  .hm-freshness time { color: #fff; font-weight: 700; }
+
   /* ── Bouton géolocalisation ── */
   .hm-geo-btn {
     display: inline-flex;
     align-items: center;
-    gap: 0.4rem;
-    margin-top: 0.75rem;
-    padding: 0;
-    background: none;
-    border: none;
-    color: #cbd5e1;
-    font-size: 0.85rem;
-    font-weight: 600;
-    text-decoration: underline;
-    text-decoration-color: rgba(203 213 225 / 0.4);
-    text-underline-offset: 3px;
+    gap: 0.5rem;
+    margin-top: 0.875rem;
+    padding: 0.65rem 1.25rem;
+    background: rgba(255 255 255 / 0.1);
+    border: 2px solid var(--color-accent);
+    border-radius: 999px;
+    color: #fff;
+    font-size: 0.9rem;
+    font-weight: 700;
     cursor: pointer;
-    transition: color 0.15s;
+    transition: background 0.15s, transform 0.15s;
   }
-  .hm-geo-btn:hover { color: #fff; }
+  .hm-geo-btn:hover { background: var(--color-accent); transform: translateY(-1px); }
+  .hm-geo-btn:active { transform: none; }
   .hm-geo-btn:disabled { cursor: wait; opacity: 0.7; }
 
   .hm-geo-icon { flex-shrink: 0; }
@@ -845,7 +875,7 @@ for (const slug of brandSlugs) {
     if (!listEl) return;
 
     if (lastResults.length === 0) {
-      listEl.innerHTML = '<li class="hm-list-empty">Recherchez une ville, un code postal, ou cliquez sur « Autour de moi » pour afficher la liste des stations ici.</li>';
+      listEl.innerHTML = '<li class="hm-list-empty">Recherchez une ville, un code postal, ou cliquez sur « Trouver une station autour de moi » pour afficher la liste des stations ici.</li>';
       if (listCountEl) listCountEl.textContent = '';
       return;
     }
@@ -1005,13 +1035,13 @@ for (const slug of brandSlugs) {
       pos => {
         geoBtnEl?.removeAttribute('disabled');
         geoBtnEl?.classList.remove('is-loading');
-        if (geoBtnLabelEl) geoBtnLabelEl.textContent = 'Autour de moi';
+        if (geoBtnLabelEl) geoBtnLabelEl.textContent = 'Trouver une station autour de moi';
         doGeoSearch(pos.coords.latitude, pos.coords.longitude);
       },
       err => {
         geoBtnEl?.removeAttribute('disabled');
         geoBtnEl?.classList.remove('is-loading');
-        if (geoBtnLabelEl) geoBtnLabelEl.textContent = 'Autour de moi';
+        if (geoBtnLabelEl) geoBtnLabelEl.textContent = 'Trouver une station autour de moi';
         const messages: Record<number, string> = {
           1: 'Localisation refusée. Autorisez l\'accès à votre position pour utiliser cette fonction.',
           2: 'Impossible de déterminer votre position actuellement.',

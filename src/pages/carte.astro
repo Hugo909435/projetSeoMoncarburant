@@ -1,0 +1,63 @@
+---
+// Carte plein écran des stations-service, dédiée (façon chargemap.com/map).
+// Contrairement à HeroMap (section de l'accueil), cette page EST la carte :
+// elle occupe tout l'espace sous l'en-tête du site, sans pied de page.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import FullStationsMap from '../components/FullStationsMap.astro';
+import fuelMeta from '../data/fuel/meta.json';
+
+const webAppSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebApplication',
+  name: 'Carte des stations-service Mon Carburant',
+  url: 'https://mon-carburant.com/carte/',
+  applicationCategory: 'UtilitiesApplication',
+  operatingSystem: 'Web',
+  inLanguage: 'fr-FR',
+  description: `Carte interactive des ${fuelMeta.totalStations.toLocaleString('fr-FR')} stations-service de France avec prix du carburant en temps réel.`,
+  offers: { '@type': 'Offer', price: '0', priceCurrency: 'EUR' },
+  provider: { '@type': 'Organization', name: 'Mon Carburant', url: 'https://mon-carburant.com' },
+};
+---
+
+<BaseLayout
+  title="Carte des stations-service en France"
+  description={`Carte interactive de ${fuelMeta.totalStations.toLocaleString('fr-FR')} stations-service en France. Trouvez la station la moins chère près de chez vous, filtrez par carburant, géolocalisez-vous.`}
+  canonical="https://mon-carburant.com/carte/"
+  jsonLd={webAppSchema}
+  bodyClass="map-page"
+>
+  <link rel="preconnect" href="https://a.tile.openstreetmap.org" slot="head" />
+  <link rel="preconnect" href="https://b.tile.openstreetmap.org" slot="head" />
+  <link rel="preconnect" href="https://c.tile.openstreetmap.org" slot="head" />
+
+  <h1 class="visually-hidden">Carte des stations-service en France</h1>
+  <FullStationsMap />
+</BaseLayout>
+
+<style is:global>
+  /* Page carte plein écran : pas de pied de page, la carte occupe tout
+     l'espace restant sous l'en-tête (sticky, 4rem de haut). */
+  body.map-page {
+    overflow: hidden;
+    height: 100vh;
+  }
+  body.map-page #main-content {
+    height: calc(100vh - 4rem);
+    overflow: hidden;
+  }
+  body.map-page .site-footer {
+    display: none;
+  }
+  body.map-page .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+</style>
