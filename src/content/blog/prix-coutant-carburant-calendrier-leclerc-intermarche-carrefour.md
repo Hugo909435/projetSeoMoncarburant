@@ -5,7 +5,7 @@ metaDescription: "Quand auront lieu les prochaines opérations carburant à prix
 slug: "prix-coutant-carburant-calendrier-leclerc-intermarche-carrefour"
 excerpt: "Leclerc, Intermarché et Carrefour organisent plusieurs opérations carburant à prix coûtant par an. Voici les périodes habituelles, les conditions par enseigne et comment ne pas les rater."
 publishedAt: 2026-07-22
-updatedAt: 2026-07-30
+updatedAt: 2026-08-24
 author: "hugo-beignon"
 category: "economies"
 pillar: "reduire-facture-carburant"
@@ -13,7 +13,7 @@ tags: ["prix coûtant", "leclerc", "intermarché", "carrefour", "système u", "b
 featuredImage: "/images/articles/prix-coutant-carburant-calendrier-leclerc-intermarche-carrefour.webp"
 imageAlt: "Panneau de prix carburant affichant une opération prix coûtant en grande surface"
 readingTime: 4
-relatedArticles: ["carburant-prix-coutant-aout-2026", "leclerc-carburant-prix-coutant-juillet-2026", "intermarche-carburant-prix-coutant-2026", "carrefour-carburant-prix-2026", "prix-coutant-carburant-systeme-u-auchan-casino-cora"]
+relatedArticles: ["carburant-prix-coutant-septembre-2026", "leclerc-carburant-prix-coutant-juillet-2026", "intermarche-carburant-prix-coutant-2026", "carrefour-carburant-prix-2026", "prix-coutant-carburant-systeme-u-auchan-casino-cora"]
 ctaTitle: "Trouvez la station la moins chère près de chez vous"
 ctaDescription: "Notre comparateur référence les prix de plus de 11 000 stations-service en France, mis à jour quotidiennement via les données officielles."
 faq:
@@ -34,13 +34,15 @@ Leclerc, Intermarché et Carrefour organisent chacun, plusieurs fois par an, des
 
 ---
 
-## Le point à fin juillet 2026 : ce qui s'est déjà passé cet été
+## Le point au 24 août 2026 : ce qui s'est déjà passé cet été
 
 La vague estivale a démarré tôt. **E.Leclerc** a ouvert le bal les vendredi 3 et samedi 4 juillet, dans 711 stations du réseau, juste avant le premier grand week-end de départs en vacances. **Intermarché**, via sa filiale Netto, a suivi dès le lendemain avec une opération les samedi 4 et dimanche 5 juillet, limitée au sans-plomb et au gazole.
 
-**Système U**, qui ne fait pas partie du trio suivi dans cet article mais reste un acteur comparable, a choisi le chassé-croisé du mois d'août : son opération est annoncée les **dimanche 2 et lundi 3 août 2026**, dans près de 700 stations. Si vous lisez ces lignes fin juillet, c'est la prochaine fenêtre à surveiller de près, elle arrive dans quelques jours seulement.
+**Système U**, qui ne fait pas partie du trio suivi dans cet article mais reste un acteur comparable, a choisi le chassé-croisé du mois d'août : son opération s'est tenue les **dimanche 2 et lundi 3 août 2026**, dans près de 700 stations, pour accompagner les retours de vacances.
 
-**Carrefour**, de son côté, n'avait pas encore communiqué de date précise au moment de la mise à jour de cet article : l'enseigne annonce généralement ses opérations carburant plus tard dans la saison, souvent via SMS aux porteurs de la carte Pass.
+**Carrefour**, de son côté, n'avait toujours pas communiqué de date au 24 août : l'enseigne annonce généralement ses opérations carburant plus tard dans la saison, souvent via SMS aux porteurs de la carte Pass.
+
+Reste la rentrée. Aucune des quatre enseignes n'avait annoncé de date à la date de mise à jour de cet article, alors que c'est habituellement l'une des fenêtres les plus actives de l'année. Nous suivons ce point de près dans notre [récapitulatif mensuel](/blog/carburant-prix-coutant-septembre-2026/), mis à jour dès qu'une opération est annoncée.
 
 ---
 
@@ -85,6 +87,6 @@ La vague de l'été 2026 a déjà démarré côté Leclerc et Intermarché, et S
 
 Pour aller plus loin, chaque enseigne a ses propres subtilités : consultez nos guides détaillés sur le [prix coûtant chez Leclerc](/blog/leclerc-carburant-prix-coutant-juillet-2026/), les [avantages carburant Intermarché](/blog/intermarche-carburant-prix-coutant-2026/) et la [carte Pass Carrefour](/blog/carrefour-carburant-prix-2026/).
 
-Nous publions par ailleurs un point mensuel sur les opérations en cours : retrouvez le [récapitulatif d'août 2026](/blog/carburant-prix-coutant-aout-2026/) pour l'état des lieux le plus récent.
+Nous publions par ailleurs un point mensuel sur les opérations en cours : retrouvez le [récapitulatif avant la rentrée de septembre 2026](/blog/carburant-prix-coutant-septembre-2026/) pour l'état des lieux le plus récent.
 
-*Article publié le 22 juillet 2026, mis à jour le 30 juillet 2026 avec les dates constatées de l'opération Leclerc et Intermarché et l'annonce de Système U. Les périodes et conditions décrites sont celles habituellement constatées et peuvent varier d'une année et d'un magasin à l'autre.*
+*Article publié le 22 juillet 2026, mis à jour le 24 août 2026 avec la confirmation de l'opération Système U début août et le point sur la rentrée, toujours sans date annoncée à cette date. Les périodes et conditions décrites sont celles habituellement constatées et peuvent varier d'une année et d'un magasin à l'autre.*
