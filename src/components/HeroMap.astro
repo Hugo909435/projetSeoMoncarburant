@@ -743,6 +743,9 @@ for (const slug of brandSlugs) {
   :global(.popup-prices td) { padding: 0.1rem 0.4rem 0.1rem 0; color: #374151; }
   :global(.popup-prices td:last-child) { font-weight: 700; text-align: right; color: #0f2e44; }
 
+  :global(.popup-footer) { display: flex; }
+  :global(.popup-footer > a) { flex: 1; }
+
   :global(.popup-cta) {
     display: block;
     background: var(--color-accent);
@@ -755,6 +758,19 @@ for (const slug of brandSlugs) {
     transition: background 0.15s;
   }
   :global(.popup-cta:hover) { background: #c05a17; color: #fff !important; }
+
+  :global(.popup-route) {
+    display: block;
+    background: #eef2f7;
+    color: #0f2e44 !important;
+    text-decoration: none !important;
+    text-align: center;
+    font-size: 0.8125rem;
+    font-weight: 700;
+    padding: 0.55rem 1rem;
+    transition: background 0.15s;
+  }
+  :global(.popup-route:hover) { background: #e2e8f0; }
 </style>
 
 <script>
@@ -853,6 +869,7 @@ for (const slug of brandSlugs) {
         : dept ? `Voir le département ${dept.name} &rarr;` : null;
 
     const noPrice = `<p style="font-size:.78rem;color:#64748b;margin:0 0 .5rem">Prix non communiqués</p>`;
+    const routeUrl = `https://www.google.com/maps/dir/?api=1&destination=${s.lat},${s.lng}`;
 
     return (
       `<div class="popup-body">` +
@@ -861,7 +878,10 @@ for (const slug of brandSlugs) {
       `<p class="popup-addr">${escapeHtml(s.adresse || '')}${s.cp ? ' &middot; ' + escapeHtml(s.cp) : ''}</p>` +
       (rows ? `<table class="popup-prices">${rows}</table>` : noPrice) +
       `</div>` +
-      (ctaUrl && ctaLabel ? `<a href="${ctaUrl}" class="popup-cta">${ctaLabel}</a>` : '')
+      `<div class="popup-footer">` +
+      `<a href="${routeUrl}" class="popup-route" target="_blank" rel="noopener noreferrer">Itinéraire</a>` +
+      (ctaUrl && ctaLabel ? `<a href="${ctaUrl}" class="popup-cta">${ctaLabel}</a>` : '') +
+      `</div>`
     );
   }
 
