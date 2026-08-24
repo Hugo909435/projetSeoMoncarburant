@@ -526,18 +526,20 @@ for (const slug of brandSlugs) {
   :global(.popup-prices) { border-collapse: collapse; font-size: 0.8rem; width: 100%; margin-bottom: 0; }
   :global(.popup-prices td) { padding: 0.1rem 0.4rem 0.1rem 0; color: #374151; }
   :global(.popup-prices td:last-child) { font-weight: 700; text-align: right; color: #0f2e44; }
-  :global(.popup-footer) { display: flex; }
+  :global(.popup-footer) { display: flex; gap: 0.5rem; padding: 0.7rem 0.85rem 0.85rem; background: #f8fafc; border-top: 1px solid #eef1f5; }
   :global(.popup-footer > a) { flex: 1; }
   :global(.popup-cta) {
-    display: block; background: var(--color-accent); color: #fff !important; text-decoration: none !important;
-    text-align: center; font-size: 0.8125rem; font-weight: 700; padding: 0.55rem 1rem; transition: background 0.15s;
+    display: flex; align-items: center; justify-content: center; background: var(--color-accent); color: #fff !important; text-decoration: none !important;
+    text-align: center; font-size: 0.8125rem; font-weight: 700; padding: 0.6rem 0.75rem; border-radius: 0.5rem; transition: background 0.15s, transform 0.1s;
   }
   :global(.popup-cta:hover) { background: #c05a17; color: #fff !important; }
+  :global(.popup-cta:active) { transform: scale(0.96); }
   :global(.popup-route) {
-    display: block; background: #eef2f7; color: #0f2e44 !important; text-decoration: none !important;
-    text-align: center; font-size: 0.8125rem; font-weight: 700; padding: 0.55rem 1rem; transition: background 0.15s;
+    display: flex; align-items: center; justify-content: center; gap: 0.35rem; background: #2563eb; color: #fff !important; text-decoration: none !important;
+    text-align: center; font-size: 0.8125rem; font-weight: 700; padding: 0.6rem 0.75rem; border-radius: 0.5rem; transition: background 0.15s, transform 0.1s;
   }
-  :global(.popup-route:hover) { background: #e2e8f0; }
+  :global(.popup-route:hover) { background: #1d4ed8; color: #fff !important; }
+  :global(.popup-route:active) { transform: scale(0.96); }
 
   /* Repositionne les contrôles de zoom Leaflet pour ne pas chevaucher la barre d'outils */
   :global(.fm-map .leaflet-top.leaflet-left) { top: 4.75rem; }
@@ -667,7 +669,7 @@ for (const slug of brandSlugs) {
       (rows ? `<table class="popup-prices">${rows}</table>` : noPrice) +
       `</div>` +
       `<div class="popup-footer">` +
-      `<a href="${routeUrl}" class="popup-route" target="_blank" rel="noopener noreferrer">Itinéraire</a>` +
+      `<a href="${routeUrl}" class="popup-route" target="_blank" rel="noopener noreferrer"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 11 22 2 13 21 11 13 3 11"></polygon></svg>Ouvrir l'itinéraire</a>` +
       (ctaUrl && ctaLabel ? `<a href="${ctaUrl}" class="popup-cta">${ctaLabel}</a>` : '') +
       `</div>`
     );
