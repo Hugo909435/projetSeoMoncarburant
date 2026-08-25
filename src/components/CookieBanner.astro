@@ -8,8 +8,8 @@
     <div class="cb-content">
       <strong id="cb-title" class="cb-heading">🍪 Gestion des cookies</strong>
       <p class="cb-text">
-        Nous utilisons Google Analytics pour mesurer l'audience de nos pages et améliorer votre expérience.
-        Aucun cookie ne sera déposé sans votre accord préalable.
+        Nous utilisons Google Analytics pour mesurer l'audience de nos pages et Google AdSense pour
+        afficher des publicités et financer le site. Aucun cookie ne sera déposé sans votre accord préalable.
         <a href="/politique-confidentialite/" class="cb-link">En savoir plus</a>
       </p>
     </div>
@@ -45,6 +45,19 @@
         </div>
         <label class="tgl" for="tgl-analytics" aria-label="Activer les cookies d'analyse">
           <input type="checkbox" id="tgl-analytics" role="switch" class="tgl-input">
+          <span class="tgl-track"><span class="tgl-thumb"></span></span>
+        </label>
+      </div>
+    </div>
+
+    <div class="cm-section">
+      <div class="cm-row">
+        <div class="cm-info">
+          <h3 class="cm-cat">Cookies publicitaires</h3>
+          <p>Google AdSense affiche des publicités qui financent le site. Sans votre accord, aucune annonce ni cookie publicitaire n'est chargé.</p>
+        </div>
+        <label class="tgl" for="tgl-ads" aria-label="Activer les cookies publicitaires">
+          <input type="checkbox" id="tgl-ads" role="switch" class="tgl-input">
           <span class="tgl-track"><span class="tgl-thumb"></span></span>
         </label>
       </div>
@@ -306,20 +319,22 @@
 
 <script is:inline>
 (function () {
-  var KEY = 'cookie-consent-mc';
-  var GA  = 'G-34QJT89RZV';
+  var KEY  = 'cookie-consent-mc';
+  var GA   = 'G-34QJT89RZV';
+  var ADS  = 'ca-pub-3886240842343078';
 
-  var $b  = document.getElementById('cookie-banner');
-  var $m  = document.getElementById('cookie-modal');
-  var $r  = document.getElementById('cookie-reopen');
-  var $tg = document.getElementById('tgl-analytics');
+  var $b    = document.getElementById('cookie-banner');
+  var $m    = document.getElementById('cookie-modal');
+  var $r    = document.getElementById('cookie-reopen');
+  var $tg   = document.getElementById('tgl-analytics');
+  var $tgAd = document.getElementById('tgl-ads');
 
   /* ── Persistance ─────────────────────────────────────────────── */
   function load() {
     try { return JSON.parse(localStorage.getItem(KEY)); } catch (e) { return null; }
   }
-  function store(analytics) {
-    var c = { analytics: !!analytics, timestamp: new Date().toISOString(), version: 1 };
+  function store(analytics, ads) {
+    var c = { analytics: !!analytics, ads: !!ads, timestamp: new Date().toISOString(), version: 2 };
     try { localStorage.setItem(KEY, JSON.stringify(c)); } catch (e) {}
     return c;
   }
@@ -339,6 +354,23 @@
     document.head.appendChild(s);
   }
 
+  /* ── Google AdSense (chargement conditionnel) ────────────────── */
+  function loadAds() {
+    if (document.getElementById('_adsbygoogle')) return;
+    var s = document.createElement('script');
+    s.id          = '_adsbygoogle';
+    s.async       = true;
+    s.crossOrigin = 'anonymous';
+    s.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=' + ADS;
+    s.onload = function () {
+      var slots = document.querySelectorAll('ins.adsbygoogle');
+      for (var i = 0; i < slots.length; i++) {
+        try { (window.adsbygoogle = window.adsbygoogle || []).push({}); } catch (e) {}
+      }
+    };
+    document.head.appendChild(s);
+  }
+
   /* ── Animations bandeau ──────────────────────────────────────── */
   function showBanner() {
     $b.classList.add('is-open');
@@ -353,7 +385,9 @@
 
   /* ── Animations modale ───────────────────────────────────────── */
   function showModal() {
-    if ($tg) $tg.checked = !!(load() || {}).analytics;
+    var existing = load() || {};
+    if ($tg) $tg.checked = !!existing.analytics;
+    if ($tgAd) $tgAd.checked = !!existing.ads;
     $m.classList.add('is-open');
     requestAnimationFrame(function () {
       requestAnimationFrame(function () {
@@ -374,6 +408,7 @@
     hideModal();
     $r.classList.add('is-open');
     if (c.analytics) loadGA4();
+    if (c.ads) loadAds();
   }
 
   /* ── Initialisation ──────────────────────────────────────────── */
@@ -384,23 +419,26 @@
       // Retarder le chargement de GA4 pour ne pas pénaliser le LCP/FCP
       setTimeout(loadGA4, 2000);
     }
+    if (existing.ads) {
+      setTimeout(loadAds, 2000);
+    }
   } else {
     showBanner();
   }
 
   /* ── Gestionnaires d'événements ──────────────────────────────── */
   document.getElementById('cb-accept').addEventListener('click', function () {
-    apply(store(true));
+    apply(store(true, true));
   });
   document.getElementById('cb-refuse').addEventListener('click', function () {
-    apply(store(false));
+    apply(store(false, false));
   });
   document.getElementById('cb-customize').addEventListener('click', function () {
     hideBanner();
     setTimeout(showModal, 50);
   });
   document.getElementById('cm-save').addEventListener('click', function () {
-    apply(store($tg ? $tg.checked : false));
+    apply(store($tg ? $tg.checked : false, $tgAd ? $tgAd.checked : false));
   });
   document.getElementById('cm-close').addEventListener('click', function () {
     hideModal();
