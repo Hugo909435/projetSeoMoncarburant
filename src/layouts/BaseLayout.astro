@@ -20,6 +20,7 @@ interface Props {
   noIndex?: boolean;
   jsonLd?: Record<string, unknown> | Record<string, unknown>[];
   bodyClass?: string;
+  hideAds?: boolean;
 }
 
 const {
@@ -35,6 +36,7 @@ const {
   noIndex,
   jsonLd,
   bodyClass,
+  hideAds,
 } = Astro.props;
 ---
 
@@ -76,7 +78,7 @@ const {
     <main id="main-content">
       <slot />
     </main>
-    <AdUnit />
+    {!hideAds && <AdUnit />}
     <Footer />
     <CookieBanner />
   </body>

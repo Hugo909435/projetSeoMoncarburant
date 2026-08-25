@@ -9,6 +9,7 @@ import RelatedArticles from './RelatedArticles.astro';
 import FAQ from './FAQ.astro';
 import PriceHistoryChart from './PriceHistoryChart.astro';
 import ShareButtons from './ShareButtons.astro';
+import AdUnit from './AdUnit.astro';
 
 interface Heading {
   depth: number;
@@ -192,6 +193,7 @@ const updatedDateFormatted =
 
         <div class="article-content prose">
           <slot />
+          <AdUnit />
           {(category === 'carburants' || category === 'economies') && <PriceHistoryChart />}
           {faq && faq.length > 0 && <FAQ items={faq} />}
           <ShareButtons url={pageUrl} title={title} />

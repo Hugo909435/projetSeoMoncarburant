@@ -2,17 +2,15 @@
 // Bloc pub Google AdSense, respectueux du consentement RGPD (voir CookieBanner.astro).
 // Rien ne se charge tant que l'utilisateur n'a pas accepté la catégorie "Publicité" :
 // le <ins> reste vide et inerte jusqu'à ce que le script adsbygoogle soit injecté.
-//
-// TODO avant mise en prod : remplace ADS_SLOT par le data-ad-slot de ton unité
-// "Display responsive" créée dans le tableau de bord AdSense (Annonces > Par bloc).
 const ADS_CLIENT = 'ca-pub-3886240842343078';
-const ADS_SLOT = 'XXXXXXXXXX';
+const DEFAULT_SLOT = '9482478582';
 
 interface Props {
+  slot?: string;
   class?: string;
 }
 
-const { class: className } = Astro.props;
+const { slot = DEFAULT_SLOT, class: className } = Astro.props;
 ---
 
 <div class:list={['ad-slot', className]} data-ads-consent-slot>
@@ -21,7 +19,7 @@ const { class: className } = Astro.props;
     class="adsbygoogle"
     style="display:block"
     data-ad-client={ADS_CLIENT}
-    data-ad-slot={ADS_SLOT}
+    data-ad-slot={slot}
     data-ad-format="auto"
     data-full-width-responsive="true"></ins>
 </div>
