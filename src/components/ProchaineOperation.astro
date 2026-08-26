@@ -1,0 +1,325 @@
+---
+/**
+ * Répond à la question « y a-t-il une opération prix coûtant ce week-end ? ».
+ *
+ * Le calcul est fait au build. Le site étant rebuildé toutes les 3h par le
+ * workflow de mise à jour des prix, la réponse suit le calendrier sans
+ * intervention : le vendredi matin, le bloc bascule tout seul sur le week-end
+ * qui commence.
+ *
+ * L'état affiché vient de src/utils/prix-coutant.ts, partagé avec le bandeau
+ * d'accueil. Une opération n'est présentée comme telle que si l'enseigne l'a
+ * annoncée ; les décrochages seulement mesurés dans l'open data sont rendus
+ * plus bas, dans un bloc distinct qui ne les présente pas comme confirmés.
+ */
+import { etatPrixCoutant, toDate, PARIS_TZ, type Operation } from '../utils/prix-coutant';
+import BrandLogo from './BrandLogo.astro';
+
+const {
+  weekendStart,
+  weekendEnd,
+  prixCoutant,
+  plafonnements,
+  prochaineFenetre,
+  signaux,
+  signalDate,
+  verifieLe: verifieLeIso,
+} = etatPrixCoutant();
+
+const fmtJour = new Intl.DateTimeFormat('fr-FR', {
+  timeZone: 'UTC',
+  weekday: 'long',
+  day: 'numeric',
+  month: 'long',
+});
+const fmtJourAnnee = new Intl.DateTimeFormat('fr-FR', {
+  timeZone: 'UTC',
+  weekday: 'long',
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric',
+});
+const fmtCourt = new Intl.DateTimeFormat('fr-FR', {
+  timeZone: 'UTC',
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric',
+});
+// Pour la borne de gauche d'une plage : l'année n'est portée que par la borne
+// de droite, sinon elle apparaît deux fois dans la même phrase.
+const fmtCourtSansAnnee = new Intl.DateTimeFormat('fr-FR', {
+  timeZone: 'UTC',
+  day: 'numeric',
+  month: 'long',
+});
+
+// Quand les deux bornes tombent dans le même mois, seule celle de droite le
+// porte : « les vendredi 28 et samedi 29 août 2026 », pas « 28 août et 29 août ».
+const fmtJourSansMois = new Intl.DateTimeFormat('fr-FR', {
+  timeZone: 'UTC',
+  weekday: 'long',
+  day: 'numeric',
+});
+
+function periode(op: Operation): string {
+  const debut = toDate(op.start);
+  const fin = toDate(op.end);
+  if (op.start === op.end) return `le ${fmtJourAnnee.format(debut)}`;
+
+  const memeMois = op.start.slice(0, 7) === op.end.slice(0, 7);
+  const gauche = memeMois ? fmtJourSansMois.format(debut) : fmtJour.format(debut);
+  const jours = Math.round((fin.getTime() - debut.getTime()) / 86400000);
+
+  return jours === 1
+    ? `les ${gauche} et ${fmtJourAnnee.format(fin)}`
+    : `du ${gauche} au ${fmtJourAnnee.format(fin)}`;
+}
+
+const libelleWeekend = `${fmtJour.format(toDate(weekendStart))} au ${fmtJourAnnee.format(toDate(weekendEnd))}`;
+const verifieLe = fmtCourt.format(toDate(verifieLeIso));
+
+const fmtHeure = new Intl.DateTimeFormat('fr-FR', {
+  timeZone: PARIS_TZ,
+  day: 'numeric',
+  month: 'long',
+  hour: '2-digit',
+  minute: '2-digit',
+});
+---
+
+<aside
+  class="pco"
+  data-reponse={prixCoutant.length > 0 ? 'oui' : 'non'}
+  aria-label="Opérations carburant à prix coûtant ce week-end"
+>
+  <div class="pco-head">
+    <span class="pco-badge">{prixCoutant.length > 0 ? 'Oui' : 'Aucune annoncée'}</span>
+    <p class="pco-weekend">Week-end du {libelleWeekend}</p>
+  </div>
+
+  {prixCoutant.length > 0 ? (
+    <ul class="pco-list">
+      {prixCoutant.map((op) => (
+        <li class="pco-item">
+          <span class="pco-logo"><BrandLogo slug={op.brand} name={op.brandName} /></span>
+          <div class="pco-item-body">
+            <p class="pco-item-title">
+              <strong>{op.brandName}</strong> vend à prix coûtant {periode(op)}
+              {op.stations ? <span class="pco-stations"> dans {op.stations} stations</span> : null}
+            </p>
+            <p class="pco-item-meta">{op.fuels}. {op.note}</p>
+          </div>
+        </li>
+      ))}
+    </ul>
+  ) : (
+    <div class="pco-empty">
+      <p><strong>Aucune opération à prix coûtant n'est annoncée pour ce week-end.</strong></p>
+      <p>
+        Les enseignes ne communiquent leurs dates que 2 à 3 jours à l'avance, par SMS,
+        via leur application ou par affichage en magasin. Cette page est mise à jour
+        plusieurs fois par jour : si une annonce tombe d'ici vendredi, elle apparaîtra ici.
+      </p>
+      {prochaineFenetre && (
+        <p class="pco-fenetre">
+          <span class="pco-fenetre-label">Prochaine fenêtre probable</span>
+          <span>
+            {prochaineFenetre.label}, du {fmtCourtSansAnnee.format(toDate(prochaineFenetre.from))}
+            au {fmtCourt.format(toDate(prochaineFenetre.to))}. {prochaineFenetre.note}
+          </span>
+        </p>
+      )}
+    </div>
+  )}
+
+  {plafonnements.length > 0 && (
+    <div class="pco-plafond">
+      {plafonnements.map((op) => (
+        <p>
+          <span class="pco-logo pco-logo-inline"><BrandLogo slug={op.brand} name={op.brandName} /></span>
+          <span>
+            <strong>{op.brandName}</strong> applique un plafonnement {periode(op)} : {op.fuels}.
+            {' '}{op.note}
+          </span>
+        </p>
+      ))}
+    </div>
+  )}
+
+  {signaux.length > 0 && (
+    <div class="pco-releve">
+      <p class="pco-releve-label">Relevé automatique des prix</p>
+      <ul class="pco-releve-list">
+        {signaux.map((s) => (
+          <li>
+            <strong>{s.brandName}</strong> : {s.stationsDropping} stations affichent des prix{' '}
+            {(s.medianDrop * 100).toFixed(0)} centimes en dessous du marché, soit{' '}
+            {Math.round(s.share * 100)} % du réseau.
+          </li>
+        ))}
+      </ul>
+      <p class="pco-releve-note">
+        Mesuré sur les prix officiels des stations, sans annonce de l'enseigne. Un décrochage
+        de cette ampleur correspond en général à une opération en cours, mais il n'en constitue
+        pas la confirmation.
+        {signalDate ? ` Dernier relevé le ${fmtHeure.format(signalDate)}.` : ''}
+      </p>
+    </div>
+  )}
+
+  <div class="pco-foot">
+    <a href="/prix-carburants/" class="pco-cta">Comparer les stations autour de vous →</a>
+    <p class="pco-verif">Dates vérifiées le {verifieLe}</p>
+  </div>
+</aside>
+
+<style>
+  .pco {
+    border: 2px solid #cbd5e1;
+    border-left-width: 5px;
+    border-radius: 0.75rem;
+    background: linear-gradient(135deg, #f8fafc, #fff);
+    padding: 1.25rem 1.5rem;
+    margin: 2rem 0;
+  }
+  .pco[data-reponse='oui'] {
+    border-color: #16a34a;
+    background: linear-gradient(135deg, #f0fdf4, #fff);
+  }
+
+  .pco-head {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+  }
+  .pco-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.25rem 0.7rem;
+    border-radius: 999px;
+    background: #475569;
+    color: #fff;
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+  }
+  .pco[data-reponse='oui'] .pco-badge { background: #16a34a; }
+  .pco-weekend {
+    margin: 0;
+    font-size: 0.9375rem;
+    font-weight: 700;
+    color: var(--color-text-muted);
+  }
+
+  .pco-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.875rem; }
+  .pco-item { display: flex; gap: 0.875rem; align-items: flex-start; }
+  .pco-logo {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+  .pco-logo :global(img) { max-width: 100%; height: auto; }
+  .pco-item-body { min-width: 0; }
+  .pco-item-title { margin: 0 0 0.2rem; font-size: 1rem; line-height: 1.45; }
+  .pco-stations { white-space: nowrap; }
+  .pco-item-meta { margin: 0; font-size: 0.875rem; color: var(--color-text-muted); }
+
+  .pco-empty p { margin: 0 0 0.75rem; font-size: 0.9375rem; line-height: 1.6; }
+  .pco-empty p:last-child { margin-bottom: 0; }
+  .pco-fenetre {
+    display: grid;
+    gap: 0.2rem;
+    padding: 0.75rem 0.9rem;
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+  }
+  .pco-fenetre-label {
+    font-size: 0.6875rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--color-text-muted);
+  }
+
+  .pco-plafond {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px dashed #cbd5e1;
+  }
+  .pco-plafond p {
+    display: flex;
+    gap: 0.75rem;
+    align-items: flex-start;
+    margin: 0;
+    font-size: 0.875rem;
+    line-height: 1.6;
+  }
+  .pco-logo-inline { width: 2rem; height: 2rem; }
+
+  .pco-releve {
+    margin-top: 1rem;
+    padding: 0.9rem 1rem;
+    background: #fffbeb;
+    border: 1px solid #fcd34d;
+    border-radius: 0.5rem;
+  }
+  .pco-releve-label {
+    margin: 0 0 0.5rem;
+    font-size: 0.6875rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: #92400e;
+  }
+  .pco-releve-list {
+    margin: 0 0 0.6rem;
+    padding-left: 1.1rem;
+    font-size: 0.9375rem;
+    line-height: 1.55;
+  }
+  .pco-releve-list li + li { margin-top: 0.3rem; }
+  .pco-releve-note {
+    margin: 0;
+    font-size: 0.8125rem;
+    line-height: 1.5;
+    color: var(--color-text-muted);
+  }
+
+  .pco-foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    margin-top: 1.25rem;
+    padding-top: 1rem;
+    border-top: 1px solid #e2e8f0;
+  }
+  .pco-cta {
+    display: inline-flex;
+    padding: 0.55rem 1.1rem;
+    background: #0369a1;
+    color: #fff;
+    border-radius: 0.5rem;
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 700;
+    transition: opacity 0.2s;
+  }
+  .pco-cta:hover { opacity: 0.85; }
+  .pco-verif { margin: 0; font-size: 0.75rem; color: var(--color-text-muted); }
+
+  @media (max-width: 480px) {
+    .pco { padding: 1rem 1.1rem; }
+    .pco-foot { flex-direction: column; align-items: stretch; }
+    .pco-cta { justify-content: center; }
+  }
+</style>

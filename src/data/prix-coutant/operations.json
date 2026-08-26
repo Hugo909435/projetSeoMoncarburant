@@ -1,0 +1,86 @@
+{
+  "_comment": "Source unique des opérations carburant à prix coûtant. Ce fichier alimente le composant ProchaineOperation.astro et, à terme, les articles mensuels. Ne jamais recopier une date à la main dans un article : l'ajouter ici. Les enseignes annoncent leurs opérations 2 à 3 jours à l'avance seulement, ce fichier est donc à mettre à jour en début de semaine. Champs : start/end au format AAAA-MM-JJ (dates incluses), type 'prix-coutant' ou 'plafonnement', status 'confirmee' (annoncée officiellement par l'enseigne) ou 'terminee'. Ne jamais saisir une opération non annoncée : les fenêtres seulement probables vont dans fenetresProbables.",
+  "_updatedAt": "2026-08-26",
+  "operations": [
+    {
+      "id": "leclerc-2026-07-03",
+      "brand": "leclerc",
+      "brandName": "E.Leclerc",
+      "type": "prix-coutant",
+      "status": "confirmee",
+      "start": "2026-07-03",
+      "end": "2026-07-04",
+      "stations": 711,
+      "fuels": "Tous carburants",
+      "note": "Ouverte à tous, sans carte de fidélité ni montant d'achat minimum.",
+      "source": "Annonce E.Leclerc",
+      "sourceUrl": "",
+      "sourceArticle": "leclerc-carburant-prix-coutant-juillet-2026"
+    },
+    {
+      "id": "intermarche-2026-07-04",
+      "brand": "intermarche",
+      "brandName": "Intermarché",
+      "type": "prix-coutant",
+      "status": "confirmee",
+      "start": "2026-07-04",
+      "end": "2026-07-05",
+      "stations": null,
+      "fuels": "Sans-plomb et gazole uniquement",
+      "note": "Opération menée avec sa filiale Netto.",
+      "source": "Annonce Intermarché",
+      "sourceUrl": "",
+      "sourceArticle": "intermarche-carburant-prix-coutant-2026"
+    },
+    {
+      "id": "systeme-u-2026-08-02",
+      "brand": "super-u",
+      "brandName": "Système U",
+      "type": "prix-coutant",
+      "status": "confirmee",
+      "start": "2026-08-02",
+      "end": "2026-08-03",
+      "stations": 700,
+      "fuels": "Tous carburants",
+      "note": "Opération calée sur le chassé-croisé estival.",
+      "source": "Annonce Système U",
+      "sourceUrl": "",
+      "sourceArticle": "carburant-prix-coutant-aout-2026"
+    },
+    {
+      "id": "totalenergies-plafonnement-2026",
+      "brand": "total",
+      "brandName": "TotalEnergies",
+      "type": "plafonnement",
+      "status": "confirmee",
+      "start": "2026-07-22",
+      "end": "2026-08-30",
+      "stations": null,
+      "fuels": "Essence plafonnée à 1,99 €/L, gazole à 2,25 €/L",
+      "note": "Ce n'est pas du prix coûtant mais un plafond permanent sur la période, valable dans toutes les stations de France métropolitaine, autoroutes comprises.",
+      "source": "Annonce TotalEnergies",
+      "sourceUrl": "",
+      "sourceArticle": "totalenergies-plafonne-a-nouveau-carburant-2026"
+    }
+  ],
+  "fenetresProbables": [
+    {
+      "label": "Rentrée scolaire",
+      "from": "2026-08-28",
+      "to": "2026-09-06",
+      "note": "Historiquement l'une des périodes les plus actives de l'année, juste après la vague estivale."
+    },
+    {
+      "label": "Vacances de la Toussaint",
+      "from": "2026-10-16",
+      "to": "2026-10-25",
+      "note": "Fenêtre habituelle avant les départs d'automne."
+    },
+    {
+      "label": "Fêtes de fin d'année",
+      "from": "2026-12-18",
+      "to": "2026-12-24",
+      "note": "Dernière vague de l'année, souvent annoncée très tard."
+    }
+  ]
+}

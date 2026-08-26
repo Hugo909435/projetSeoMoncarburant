@@ -5,6 +5,7 @@ import ArticleCard from '../components/ArticleCard.astro';
 import Newsletter from '../components/Newsletter.astro';
 import FuelSearch from '../components/FuelSearch.astro';
 import HeroMap from '../components/HeroMap.astro';
+import AlertePrixCoutant from '../components/AlertePrixCoutant.astro';
 import statsNational from '../data/fuel/stats-national.json';
 import statsByDepartment from '../data/fuel/stats-by-department.json';
 import fuelMeta from '../data/fuel/meta.json';
@@ -135,6 +136,8 @@ const webAppSchema = {
   <link rel="preconnect" href="https://c.tile.openstreetmap.org" slot="head" />
 
   <!-- Hero avec carte interactive -->
+  <AlertePrixCoutant />
+
   <HeroMap />
 
   <!-- Widgets carburant -->

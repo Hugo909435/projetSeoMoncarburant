@@ -38,7 +38,12 @@ jobs:
       - name: Checkout du dépôt
         uses: actions/checkout@v4
         with:
-          fetch-depth: 1
+          # Le détecteur de prix coûtant compare les prix du jour à ceux d'il y
+          # a 20h, en lisant l'état précédent directement dans l'historique des
+          # commits de données. Un checkout superficiel le priverait de sa
+          # référence. 60 commits couvrent largement la fenêtre, le workflow
+          # tournant au plus 8 fois par jour.
+          fetch-depth: 60
 
       - name: Configuration de Node.js
         uses: actions/setup-node@v4
@@ -60,6 +65,12 @@ jobs:
             exit 1
           fi
           rm -f fetch-output.log
+
+      - name: Détection des opérations à prix coûtant
+        # Repère les réseaux dont les stations décrochent massivement du marché,
+        # signature d'une opération à prix coûtant. Non bloquant : une absence
+        # d'historique ou un flux incomplet ne doit pas faire échouer le build.
+        run: node scripts/detect-prix-coutant.js || echo "Détection ignorée."
 
       - name: Planification des vagues de pages station
         # Affecte les stations nouvellement apparues dans l'open data à une

@@ -1,0 +1,105 @@
+---
+/**
+ * Rappel affiché en haut de page quand une opération à prix coûtant se joue
+ * le jour même.
+ *
+ * Le reste du temps, ce composant ne rend rien du tout. C'est le point
+ * important : un bandeau permanent qui dirait « aucune opération en cours »
+ * serait ignoré au bout d'une semaine, et n'aurait plus aucun effet le jour
+ * où il compte vraiment.
+ *
+ * Deux déclencheurs, volontairement distincts dans leur formulation :
+ *  - une opération annoncée par l'enseigne, qui couvre la date du jour ;
+ *  - un décrochage mesuré dans l'open data par le détecteur, présenté comme
+ *    un relevé de prix et jamais comme une opération confirmée.
+ */
+import { etatPrixCoutant, PAGE_PRIX_COUTANT } from '../utils/prix-coutant';
+
+const { aujourdhui: operations, signaux } = etatPrixCoutant();
+
+const enseignesAnnoncees = operations.map((op) => op.brandName);
+
+// Le signal le plus large : c'est celui qui a le plus de chances de concerner
+// la station du lecteur, et un bandeau n'a la place que pour un seul chiffre.
+const signalPrincipal = signaux.length > 0
+  ? signaux.reduce((a, b) => (b.stationsDropping > a.stationsDropping ? b : a))
+  : null;
+
+const visible = enseignesAnnoncees.length > 0 || signalPrincipal !== null;
+
+function listeFr(noms: string[]): string {
+  if (noms.length === 1) return noms[0];
+  return `${noms.slice(0, -1).join(', ')} et ${noms[noms.length - 1]}`;
+}
+---
+
+{visible && (
+  <aside class="apc" aria-label="Opération carburant à prix coûtant en cours">
+    <a href={PAGE_PRIX_COUTANT} class="apc-link">
+      <span class="apc-badge">En ce moment</span>
+      <span class="apc-text">
+        {enseignesAnnoncees.length > 0 ? (
+          <>
+            <strong>{listeFr(enseignesAnnoncees)}</strong> vend le carburant à prix coûtant
+            aujourd'hui.
+          </>
+        ) : (
+          <>
+            <strong>{signalPrincipal!.stationsDropping} stations {signalPrincipal!.brandName}</strong>
+            {' '}affichent des prix {(signalPrincipal!.medianDrop * 100).toFixed(0)} centimes
+            sous le marché.
+          </>
+        )}
+      </span>
+      <span class="apc-cta">Voir le détail →</span>
+    </a>
+  </aside>
+)}
+
+<style>
+  .apc {
+    background: #052e16;
+    color: #fff;
+  }
+  .apc-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    max-width: 72rem;
+    margin: 0 auto;
+    padding: 0.7rem 1.25rem;
+    color: inherit;
+    text-decoration: none;
+    font-size: 0.9375rem;
+    line-height: 1.4;
+  }
+  .apc-link:hover .apc-cta { text-decoration: underline; }
+
+  .apc-badge {
+    flex-shrink: 0;
+    padding: 0.15rem 0.6rem;
+    border-radius: 999px;
+    background: #22c55e;
+    color: #052e16;
+    font-size: 0.6875rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .apc-text strong { font-weight: 700; }
+  .apc-cta {
+    flex-shrink: 0;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+
+  @media (max-width: 640px) {
+    .apc-link {
+      justify-content: flex-start;
+      padding: 0.65rem 1rem;
+      font-size: 0.875rem;
+    }
+  }
+</style>
