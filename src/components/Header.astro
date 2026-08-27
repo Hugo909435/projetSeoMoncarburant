@@ -291,10 +291,24 @@ const isPrixActive = pathname.startsWith('/prix-carburants/') || pathname.starts
     z-index: 200;
   }
 
-  /* Bascule à droite du bouton via JS si le panneau déborderait de l'écran */
+  /* Sur desktop, le panneau est centré sous le bouton déclencheur */
+  @media (min-width: 1024px) {
+    .dropdown-panel {
+      left: 50%;
+      transform: translateX(-50%);
+    }
+  }
+
+  /* Bascule via JS si le panneau centré déborderait de l'écran */
   .dropdown-panel.align-right {
     left: auto;
     right: 0;
+    transform: none;
+  }
+
+  .dropdown-panel.align-left {
+    left: 0;
+    transform: none;
   }
 
   .has-dropdown.open .dropdown-panel {
@@ -359,12 +373,21 @@ const isPrixActive = pathname.startsWith('/prix-carburants/') || pathname.starts
   }
 
   .dropdown-heading {
-    font-size: 0.75rem;
-    font-weight: 700;
+    font-size: 1rem;
+    font-weight: 800;
     text-transform: uppercase;
-    letter-spacing: 0.04em;
-    color: #6b7280;
-    margin: 0 0 0.625rem;
+    letter-spacing: 0.02em;
+    margin: 0 0 0.75rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid currentColor;
+  }
+
+  .dropdown-col-dept .dropdown-heading {
+    color: var(--color-primary);
+  }
+
+  .dropdown-col-brand .dropdown-heading {
+    color: var(--color-accent);
   }
 
   .dropdown-dept-grid {
@@ -627,10 +650,12 @@ const isPrixActive = pathname.startsWith('/prix-carburants/') || pathname.starts
   if (dropdownItem && dropdownCaret && dropdownPanel) {
     // Repositionne le panneau à droite du bouton (desktop) s'il déborderait de l'écran
     const repositionDropdown = () => {
-      dropdownPanel.classList.remove('align-right');
+      dropdownPanel.classList.remove('align-right', 'align-left');
       const rect = dropdownPanel.getBoundingClientRect();
       if (rect.right > window.innerWidth - 8) {
         dropdownPanel.classList.add('align-right');
+      } else if (rect.left < 8) {
+        dropdownPanel.classList.add('align-left');
       }
     };
 
