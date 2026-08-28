@@ -1,0 +1,213 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import autoroutesIndex from '../../../data/fuel/autoroutes.json';
+import statsAutoroute from '../../../data/fuel/stats-autoroute.json';
+import statsNational from '../../../data/fuel/stats-national.json';
+import meta from '../../../data/fuel/meta.json';
+
+const FUELS = ['Gazole', 'SP95', 'SP98', 'E10', 'E85', 'GPLc'] as const;
+const FUEL_LABELS: Record<string, string> = {
+  Gazole: 'Gazole', SP95: 'SP95', SP98: 'SP98', E10: 'E10', E85: 'E85', GPLc: 'GPL',
+};
+
+const highways = (autoroutesIndex as { slug: string; code: string; count: number; gazoleAvg: number | null }[])
+  .slice()
+  .sort((a, b) => a.count === b.count ? 0 : b.count - a.count);
+
+const totalAutorouteStations = statsAutoroute.autorouteCount ?? highways.reduce((sum, h) => sum + h.count, 0);
+
+const gazoleAutoroute = statsAutoroute.autoroute?.Gazole;
+const gazoleRoute = statsAutoroute.route?.Gazole;
+const gazoleDiff = gazoleAutoroute && gazoleRoute ? ((gazoleAutoroute - gazoleRoute) / gazoleRoute) * 100 : null;
+
+const lastUpdate = meta.lastUpdate
+  ? new Date(meta.lastUpdate).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })
+  : null;
+
+const title = 'Prix carburant sur autoroute : toutes les autoroutes';
+const description = `Comparez les prix du carburant sur ${highways.length} autoroutes françaises. ${totalAutorouteStations} stations-service référencées, prix mis à jour quotidiennement.`;
+
+const breadcrumb = [
+  { name: 'Accueil', url: '/' },
+  { name: 'Prix carburants', url: '/prix-carburants/' },
+  { name: 'Autoroutes', url: '/prix-carburants/autoroute/' },
+];
+
+const jsonLdBreadcrumb = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: breadcrumb.map((item, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    name: item.name,
+    item: `https://mon-carburant.com${item.url}`,
+  })),
+};
+---
+
+<BaseLayout title={title} description={description} canonical="/prix-carburants/autoroute/">
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLdBreadcrumb)} slot="head" />
+
+  <div>
+    <!-- Breadcrumb -->
+    <div class="container" style="padding-top:1rem">
+      <nav aria-label="Fil d'ariane" class="breadcrumb-nav">
+        {breadcrumb.map((item, i) => (
+          <>
+            {i > 0 && <span aria-hidden="true"> › </span>}
+            {i < breadcrumb.length - 1
+              ? <a href={item.url}>{item.name}</a>
+              : <span aria-current="page">{item.name}</span>
+            }
+          </>
+        ))}
+      </nav>
+    </div>
+
+    <!-- Hero -->
+    <section class="hw-hero">
+      <div class="container">
+        <h1>Prix des carburants sur autoroute</h1>
+        <p class="hw-subtitle">{highways.length} autoroutes référencées · {totalAutorouteStations} stations-service</p>
+        {lastUpdate && <p class="update-info">Données du {lastUpdate}</p>}
+      </div>
+    </section>
+
+    <div class="container page-body">
+
+      <!-- Comparatif autoroute vs route -->
+      <section class="section-block">
+        <h2>Autoroute vs route : l'écart de prix</h2>
+        <div class="compare-grid">
+          <div class="compare-card compare-route">
+            <div class="compare-label">Stations hors autoroute</div>
+            <div class="compare-price">{gazoleRoute != null ? gazoleRoute.toFixed(3) : '-'} <span>€/L Gazole</span></div>
+          </div>
+          <div class="compare-vs" aria-hidden="true">vs</div>
+          <div class="compare-card compare-auto">
+            <div class="compare-label">Stations d'autoroute</div>
+            <div class="compare-price">{gazoleAutoroute != null ? gazoleAutoroute.toFixed(3) : '-'} <span>€/L Gazole</span></div>
+          </div>
+        </div>
+        {gazoleDiff != null && (
+          <p class="hw-insight">
+            En moyenne, le Gazole coûte <strong>{Math.abs(gazoleDiff).toFixed(1)}% {gazoleDiff > 0 ? 'plus cher' : 'moins cher'}</strong> sur autoroute
+            que dans le reste du réseau. Sur un plein de 50 litres, l'écart représente environ{' '}
+            <strong>{gazoleRoute != null ? Math.abs((gazoleAutoroute! - gazoleRoute) * 50).toFixed(2) : '-'} €</strong>.
+          </p>
+        )}
+      </section>
+
+      <!-- Liste des autoroutes -->
+      <section class="section-block">
+        <h2>Toutes les autoroutes</h2>
+        <p class="dept-intro">Cliquez sur une autoroute pour voir le détail des stations et de leurs prix.</p>
+        <div class="table-wrapper">
+          <table class="fuel-table">
+            <thead>
+              <tr>
+                <th scope="col">Autoroute</th>
+                <th scope="col">Stations</th>
+                <th scope="col">Gazole moyen</th>
+              </tr>
+            </thead>
+            <tbody>
+              {highways.map(h => {
+                const nat = statsNational['Gazole'];
+                const diff = h.gazoleAvg != null && nat != null ? ((h.gazoleAvg - nat) / nat) * 100 : null;
+                return (
+                  <tr>
+                    <td>
+                      <a href={`/prix-carburants/autoroute/${h.slug}/`} class="hw-link">
+                        Autoroute {h.code}
+                      </a>
+                    </td>
+                    <td class="price-cell">{h.count}</td>
+                    <td class="price-cell">
+                      {h.gazoleAvg != null ? (
+                        <span>
+                          {h.gazoleAvg.toFixed(3)} €/L
+                          {diff != null && (
+                            <span class={`price-badge ${diff < -2 ? 'badge-green' : diff > 2 ? 'badge-orange' : 'badge-neutral'}`}>
+                              {diff > 0 ? '+' : ''}{diff.toFixed(1)}%
+                            </span>
+                          )}
+                        </span>
+                      ) : '-'}
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Texte SEO -->
+      <section class="section-block seo-text">
+        <h2>Trouver la station la moins chère sur autoroute</h2>
+        <p>
+          Mon Carburant identifie automatiquement les stations-service situées sur le réseau autoroutier français
+          à partir du flux officiel du ministère de l'Économie, et les regroupe par numéro d'autoroute (A1, A6, A7...)
+          d'après l'adresse déclarée par chaque station. Certaines aires ne mentionnant pas de numéro d'autoroute
+          dans leur adresse ne peuvent pas être classées individuellement : elles restent comptabilisées dans les
+          statistiques nationales mais n'apparaissent pas sur une page autoroute dédiée.
+        </p>
+        <p>
+          Les prix sur autoroute sont structurellement plus élevés qu'ailleurs : redevance de concession, coûts
+          d'exploitation et absence de concurrence directe expliquent l'écart. Retrouvez nos conseils dans{' '}
+          <a href="/blog/autoroute-ou-nationale-carburant-plus-cher/">notre article sur le sujet</a>.
+        </p>
+        <p>
+          <a href="/prix-carburants/methodologie/">En savoir plus sur notre méthodologie</a> ·
+          <a href="/prix-carburants/">Comparateur national</a>
+        </p>
+      </section>
+
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .breadcrumb-nav { font-size:0.875rem; color:var(--color-text-muted); margin-bottom:0.5rem; }
+  .breadcrumb-nav a { color:var(--color-primary); text-decoration:none; }
+  .breadcrumb-nav a:hover { text-decoration:underline; }
+
+  .hw-hero { background:linear-gradient(135deg, var(--color-primary) 0%, #1a4a66 100%); color:#fff; padding:2.5rem 0 2rem; }
+  .hw-hero h1 { font-size:clamp(1.5rem,3.5vw,2.25rem); font-weight:800; color:#fff; margin:0 0 0.5rem; }
+  .hw-subtitle { color:#94a3b8; margin:0 0 0.5rem; }
+  .update-info { font-size:0.8125rem; color:#64748b; margin:0; }
+
+  .page-body { padding-top:2rem; padding-bottom:3rem; }
+  .section-block { margin-bottom:3rem; }
+  .section-block h2 { font-size:1.25rem; font-weight:700; color:var(--color-primary); margin:0 0 1.25rem; border-bottom:2px solid #e5e7eb; padding-bottom:0.5rem; }
+
+  .compare-grid { display:grid; grid-template-columns:1fr auto 1fr; align-items:center; gap:1rem; max-width:36rem; }
+  .compare-card { background:#fff; border:2px solid #e5e7eb; border-radius:0.75rem; padding:1.25rem; text-align:center; }
+  .compare-auto { border-top:4px solid var(--color-accent); }
+  .compare-route { border-top:4px solid #16a34a; }
+  .compare-label { font-size:0.8125rem; color:var(--color-text-muted); font-weight:600; margin-bottom:0.5rem; }
+  .compare-price { font-size:1.5rem; font-weight:800; color:var(--color-primary); }
+  .compare-price span { font-size:0.8125rem; font-weight:500; color:var(--color-text-muted); }
+  .compare-vs { font-weight:800; color:#9ca3af; font-size:0.875rem; }
+
+  .hw-insight { background:#fff7ed; border:1px solid #fed7aa; border-left:4px solid var(--color-accent); border-radius:0.5rem; padding:1rem 1.25rem; margin-top:1.25rem; color:#9a3412; font-size:0.9375rem; max-width:44rem; }
+
+  .dept-intro { color:var(--color-text-muted); font-size:0.875rem; margin:-0.5rem 0 1rem; }
+
+  .table-wrapper { overflow-x:auto; }
+  .fuel-table { width:100%; border-collapse:collapse; font-size:0.9rem; max-width:36rem; }
+  .fuel-table th { background:var(--color-primary); color:#fff; padding:0.75rem 1rem; text-align:left; font-size:0.8125rem; font-weight:600; }
+  .fuel-table td { padding:0.7rem 1rem; border-bottom:1px solid #f1f5f9; }
+  .fuel-table tr:hover td { background:#f8fafc; }
+  .hw-link { color:var(--color-primary); text-decoration:none; font-weight:700; }
+  .hw-link:hover { text-decoration:underline; }
+  .price-cell { font-variant-numeric:tabular-nums; }
+  .price-badge { display:inline-block; font-size:0.7rem; padding:0.1rem 0.35rem; border-radius:999px; margin-left:0.35rem; font-weight:600; }
+  .badge-green { background:#dcfce7; color:#166534; }
+  .badge-orange { background:#fff7ed; color:#c2410c; }
+  .badge-neutral { background:#f1f5f9; color:#64748b; }
+
+  .seo-text p { color:#374151; line-height:1.7; margin-bottom:0.75rem; }
+  .seo-text a { color:var(--color-accent); }
+</style>

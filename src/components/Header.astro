@@ -2,6 +2,7 @@
 // Header principal - logo + navigation
 import departmentsData from '../data/departments.json';
 import brandsData from '../data/fuel/brands.json';
+import autoroutesData from '../data/fuel/autoroutes.json';
 
 const navLinks = [
   { href: '/', label: 'Accueil' },
@@ -18,6 +19,10 @@ const allDepts = Object.values(deps).sort((a, b) => a.num.localeCompare(b.num, '
 const brands = (brandsData as { slug: string; name: string; count: number }[])
   .slice()
   .sort((a, b) => a.name.localeCompare(b.name, 'fr'));
+
+const highways = (autoroutesData as { slug: string; code: string; count: number }[])
+  .slice()
+  .sort((a, b) => parseInt(a.code.slice(1), 10) - parseInt(b.code.slice(1), 10));
 
 const { pathname } = Astro.url;
 
@@ -95,16 +100,22 @@ const isPrixActive = pathname.startsWith('/prix-carburants/') || pathname.starts
               <input
                 type="search"
                 class="dropdown-search"
-                placeholder="Rechercher un département ou une marque"
-                aria-label="Rechercher un département ou une marque"
+                placeholder="Rechercher un département, une marque ou une autoroute"
+                aria-label="Rechercher un département, une marque ou une autoroute"
                 autocomplete="off"
               />
             </div>
 
             <div class="dropdown-panel-body">
               <div class="dropdown-col dropdown-col-dept">
-                <h3 class="dropdown-heading">Par département</h3>
-                <div class="dropdown-dept-grid">
+                <h3 class="dropdown-heading">
+                  <button type="button" class="dropdown-col-toggle" aria-expanded="false" aria-controls="dropdown-dept-list">
+                    Par département
+                    <svg class="dropdown-col-caret" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                  </button>
+                </h3>
+                <a href="/prix-carburants/departements/" class="dropdown-see-all">Voir tous les départements →</a>
+                <div class="dropdown-dept-grid" id="dropdown-dept-list">
                   {allDepts.map((dept) => (
                     <a href={`/prix-carburants/${dept.slug}/`} class="dropdown-dept-link">
                       <span class="dropdown-dept-num">{dept.num}</span> {dept.name}
@@ -113,11 +124,33 @@ const isPrixActive = pathname.startsWith('/prix-carburants/') || pathname.starts
                 </div>
               </div>
               <div class="dropdown-col dropdown-col-brand">
-                <h3 class="dropdown-heading">Par marque</h3>
-                <div class="dropdown-brand-list">
+                <h3 class="dropdown-heading">
+                  <button type="button" class="dropdown-col-toggle" aria-expanded="false" aria-controls="dropdown-brand-list">
+                    Par marque
+                    <svg class="dropdown-col-caret" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                  </button>
+                </h3>
+                <a href="/prix-carburants/enseigne/" class="dropdown-see-all">Voir toutes les enseignes →</a>
+                <div class="dropdown-brand-list" id="dropdown-brand-list">
                   {brands.map((brand) => (
                     <a href={`/prix-carburants/enseigne/${brand.slug}/`} class="dropdown-brand-link">
                       {brand.name}
+                    </a>
+                  ))}
+                </div>
+              </div>
+              <div class="dropdown-col dropdown-col-highway">
+                <h3 class="dropdown-heading">
+                  <button type="button" class="dropdown-col-toggle" aria-expanded="false" aria-controls="dropdown-highway-list">
+                    Par autoroute
+                    <svg class="dropdown-col-caret" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                  </button>
+                </h3>
+                <a href="/prix-carburants/autoroute/" class="dropdown-see-all">Voir toutes les autoroutes →</a>
+                <div class="dropdown-highway-list" id="dropdown-highway-list">
+                  {highways.map((hw) => (
+                    <a href={`/prix-carburants/autoroute/${hw.slug}/`} class="dropdown-highway-link">
+                      {hw.code}
                     </a>
                   ))}
                 </div>
@@ -375,11 +408,35 @@ const isPrixActive = pathname.startsWith('/prix-carburants/') || pathname.starts
   .dropdown-heading {
     font-size: 1rem;
     font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 0.02em;
     margin: 0 0 0.75rem;
     padding-bottom: 0.5rem;
     border-bottom: 2px solid currentColor;
+  }
+
+  .dropdown-col-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    width: 100%;
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    font: inherit;
+    font-size: 1rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    color: inherit;
+    cursor: default;
+    text-align: left;
+  }
+
+  .dropdown-col-caret {
+    display: none;
+    flex-shrink: 0;
+    transition: transform 0.2s ease;
   }
 
   .dropdown-col-dept .dropdown-heading {
@@ -388,6 +445,27 @@ const isPrixActive = pathname.startsWith('/prix-carburants/') || pathname.starts
 
   .dropdown-col-brand .dropdown-heading {
     color: var(--color-accent);
+  }
+
+  .dropdown-col-highway {
+    flex: 0.9 1 0;
+  }
+
+  .dropdown-col-highway .dropdown-heading {
+    color: var(--color-primary);
+  }
+
+  .dropdown-see-all {
+    display: inline-block;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--color-accent);
+    text-decoration: none;
+    margin-bottom: 0.75rem;
+  }
+
+  .dropdown-see-all:hover {
+    text-decoration: underline;
   }
 
   .dropdown-dept-grid {
@@ -421,12 +499,28 @@ const isPrixActive = pathname.startsWith('/prix-carburants/') || pathname.starts
     font-variant-numeric: tabular-nums;
   }
 
-  .dropdown-brand-list {
+  .dropdown-brand-list,
+  .dropdown-highway-list {
     display: grid;
     grid-template-columns: minmax(0, 1fr);
     gap: 0.125rem 1rem;
     max-height: 22rem;
     overflow-y: auto;
+  }
+
+  .dropdown-highway-link {
+    display: block;
+    padding: 0.25rem 0.375rem;
+    font-size: 0.8125rem;
+    color: var(--color-text);
+    border-radius: 0.25rem;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .dropdown-highway-link:hover {
+    color: var(--color-accent);
+    background: #fff7ed;
   }
 
   .dropdown-empty {
@@ -444,11 +538,11 @@ const isPrixActive = pathname.startsWith('/prix-carburants/') || pathname.starts
   /* Desktop large : sous-menu plus spacieux, davantage de colonnes */
   @media (min-width: 1024px) {
     .dropdown-panel {
-      width: min(92vw, 56rem);
+      width: min(94vw, 64rem);
     }
 
     .dropdown-panel-body {
-      gap: 2.5rem;
+      gap: 2rem;
     }
 
     .dropdown-dept-grid {
@@ -456,13 +550,15 @@ const isPrixActive = pathname.startsWith('/prix-carburants/') || pathname.starts
       max-height: 26rem;
     }
 
-    .dropdown-brand-list {
+    .dropdown-brand-list,
+    .dropdown-highway-list {
       grid-template-columns: repeat(2, minmax(0, 1fr));
       max-height: 26rem;
     }
 
     .dropdown-dept-link,
-    .dropdown-brand-link {
+    .dropdown-brand-link,
+    .dropdown-highway-link {
       font-size: 0.875rem;
       padding: 0.3125rem 0.5rem;
     }
@@ -599,10 +695,36 @@ const isPrixActive = pathname.startsWith('/prix-carburants/') || pathname.starts
     }
 
     .dropdown-dept-grid,
-    .dropdown-brand-list {
+    .dropdown-brand-list,
+    .dropdown-highway-list {
       grid-template-columns: repeat(2, minmax(0, 1fr));
       max-height: none;
       overflow-y: visible;
+    }
+
+    /* Accordéon : chaque colonne est repliée par défaut sur mobile */
+    .dropdown-col-toggle {
+      cursor: pointer;
+    }
+
+    .dropdown-col-caret {
+      display: block;
+    }
+
+    .dropdown-dept-grid,
+    .dropdown-brand-list,
+    .dropdown-highway-list {
+      display: none;
+    }
+
+    .dropdown-col.open .dropdown-dept-grid,
+    .dropdown-col.open .dropdown-brand-list,
+    .dropdown-col.open .dropdown-highway-list {
+      display: grid;
+    }
+
+    .dropdown-col.open .dropdown-col-caret {
+      transform: rotate(180deg);
     }
   }
 </style>
@@ -700,15 +822,37 @@ const isPrixActive = pathname.startsWith('/prix-carburants/') || pathname.starts
     });
   }
 
-  // Recherche live dans le sous-menu (départements + marques)
+  // Accordéon mobile : chaque colonne (département/marque/autoroute) se déplie
+  // indépendamment. Sans effet en desktop, où les 3 colonnes restent toujours visibles.
+  const dropdownCols = Array.from(document.querySelectorAll<HTMLElement>('.dropdown-col'));
+  dropdownCols.forEach((col) => {
+    const colToggle = col.querySelector<HTMLButtonElement>('.dropdown-col-toggle');
+    colToggle?.addEventListener('click', () => {
+      if (isDesktop()) return;
+      const isOpen = col.classList.toggle('open');
+      colToggle.setAttribute('aria-expanded', String(isOpen));
+    });
+  });
+
+  // Recherche live dans le sous-menu (départements + marques + autoroutes)
   if (searchInput && dropdownPanel) {
     const DIACRITICS = new RegExp('[\\u0300-\\u036f]', 'g');
     const normalize = (s: string) => s.normalize('NFD').replace(DIACRITICS, '').toLowerCase();
 
     const deptLinks = Array.from(dropdownPanel.querySelectorAll<HTMLElement>('.dropdown-dept-link'));
     const brandLinks = Array.from(dropdownPanel.querySelectorAll<HTMLElement>('.dropdown-brand-link'));
+    const highwayLinks = Array.from(dropdownPanel.querySelectorAll<HTMLElement>('.dropdown-highway-link'));
     const deptCol = dropdownPanel.querySelector<HTMLElement>('.dropdown-col-dept');
     const brandCol = dropdownPanel.querySelector<HTMLElement>('.dropdown-col-brand');
+    const highwayCol = dropdownPanel.querySelector<HTMLElement>('.dropdown-col-highway');
+
+    // En recherche, on déplie automatiquement les colonnes qui ont des résultats
+    // (sinon l'utilisateur tape dans une liste repliée et ne voit rien).
+    const setColOpen = (col: HTMLElement | null, open: boolean) => {
+      if (!col) return;
+      col.classList.toggle('open', open);
+      col.querySelector('.dropdown-col-toggle')?.setAttribute('aria-expanded', String(open));
+    };
 
     searchInput.addEventListener('input', () => {
       const q = normalize(searchInput.value.trim());
@@ -727,9 +871,22 @@ const isPrixActive = pathname.startsWith('/prix-carburants/') || pathname.starts
         if (match) brandMatches++;
       });
 
+      let highwayMatches = 0;
+      highwayLinks.forEach((el) => {
+        const match = !q || normalize(el.textContent || '').includes(q);
+        el.style.display = match ? '' : 'none';
+        if (match) highwayMatches++;
+      });
+
       if (deptCol) deptCol.style.display = deptMatches ? '' : 'none';
       if (brandCol) brandCol.style.display = brandMatches ? '' : 'none';
-      if (emptyMsg) emptyMsg.hidden = deptMatches + brandMatches > 0;
+      if (highwayCol) highwayCol.style.display = highwayMatches ? '' : 'none';
+      if (emptyMsg) emptyMsg.hidden = deptMatches + brandMatches + highwayMatches > 0;
+
+      // Déplie les colonnes en résultat, replie tout quand le champ est vidé
+      setColOpen(deptCol, q !== '' && deptMatches > 0);
+      setColOpen(brandCol, q !== '' && brandMatches > 0);
+      setColOpen(highwayCol, q !== '' && highwayMatches > 0);
     });
   }
 </script>

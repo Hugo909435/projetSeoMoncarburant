@@ -6,8 +6,11 @@ import statsNational from '../../data/fuel/stats-national.json';
 import statsByRegion from '../../data/fuel/stats-by-region.json';
 import statsByDepartment from '../../data/fuel/stats-by-department.json';
 import departmentsData from '../../data/departments.json';
+import brandsIndex from '../../data/fuel/brands.json';
+import autoroutesIndex from '../../data/fuel/autoroutes.json';
 import meta from '../../data/fuel/meta.json';
 import { rolloutMeta } from '../../utils/station-waves';
+import BrandLogo from '../../components/BrandLogo.astro';
 
 const FUEL_CONFIG = [
   { key: 'Gazole',  label: 'Gazole',          color: '#374151' },
@@ -23,6 +26,16 @@ regions.sort((a, b) => (a['Gazole'] ?? 99) - (b['Gazole'] ?? 99));
 
 const deps = departmentsData as Record<string, { num: string; name: string; slug: string }>;
 const allDepts = Object.values(deps).sort((a, b) => a.num.localeCompare(b.num, 'fr', { numeric: true }));
+
+const topBrands = (brandsIndex as { slug: string; name: string; count: number }[])
+  .slice()
+  .sort((a, b) => b.count - a.count)
+  .slice(0, 8);
+
+const topHighways = (autoroutesIndex as { slug: string; code: string; count: number; gazoleAvg: number | null }[])
+  .slice()
+  .sort((a, b) => b.count - a.count)
+  .slice(0, 8);
 
 const lastUpdate = meta.lastUpdate
   ? new Date(meta.lastUpdate).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })
@@ -133,7 +146,10 @@ const description = `Comparez les prix du carburant dans toute la France. ${meta
 
     <!-- Prix par département -->
     <section class="container section-gap">
-      <h2 class="section-title">Prix du carburant par département</h2>
+      <div class="section-title-row">
+        <h2 class="section-title">Prix du carburant par département</h2>
+        <a href="/prix-carburants/departements/" class="section-see-all">Annuaire complet →</a>
+      </div>
       <div class="dept-grid">
         {allDepts.map(dept => (
           <a href={`/prix-carburants/${dept.slug}/`} class="dept-pill">
@@ -143,6 +159,39 @@ const description = `Comparez les prix du carburant dans toute la France. ${meta
         ))}
       </div>
     </section>
+
+    <!-- Prix par enseigne -->
+    <section class="container section-gap">
+      <div class="section-title-row">
+        <h2 class="section-title">Prix du carburant par enseigne</h2>
+        <a href="/prix-carburants/enseigne/" class="section-see-all">Toutes les enseignes →</a>
+      </div>
+      <div class="brand-grid">
+        {topBrands.map(brand => (
+          <a href={`/prix-carburants/enseigne/${brand.slug}/`} class="brand-pill">
+            <BrandLogo slug={brand.slug} name={brand.name} />
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <!-- Prix sur autoroute -->
+    {topHighways.length > 0 && (
+      <section class="container section-gap">
+        <div class="section-title-row">
+          <h2 class="section-title">Prix du carburant sur autoroute</h2>
+          <a href="/prix-carburants/autoroute/" class="section-see-all">Toutes les autoroutes →</a>
+        </div>
+        <div class="dept-grid">
+          {topHighways.map(hw => (
+            <a href={`/prix-carburants/autoroute/${hw.slug}/`} class="dept-pill">
+              <span class="dept-pill-num">{hw.code}</span>
+              <span class="dept-pill-name">{hw.gazoleAvg != null ? `${hw.gazoleAvg.toFixed(3)} €/L` : `${hw.count} stations`}</span>
+            </a>
+          ))}
+        </div>
+      </section>
+    )}
 
     <!-- Explication -->
     <section class="container section-gap">
@@ -212,6 +261,38 @@ const description = `Comparez les prix du carburant dans toute la France. ${meta
     color: var(--color-primary);
     margin: 0 0 1.5rem;
   }
+  .section-title-row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .section-title-row .section-title { margin-bottom: 1rem; }
+  .section-see-all {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--color-accent);
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  .section-see-all:hover { text-decoration: underline; }
+  .brand-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+  .brand-pill {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.5rem 0.85rem;
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 0.625rem;
+    transition: all 0.15s;
+  }
+  .brand-pill:hover { border-color: var(--color-primary); box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+  .brand-pill :global(.brand-logo-img) { height: 24px; }
   .fuel-cards-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);

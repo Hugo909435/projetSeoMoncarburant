@@ -1,0 +1,448 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import BrandLogo from '../../../components/BrandLogo.astro';
+import StationLink from '../../../components/StationLink.astro';
+import statsNational from '../../../data/fuel/stats-national.json';
+import statsAutoroute from '../../../data/fuel/stats-autoroute.json';
+import autoroutesIndex from '../../../data/fuel/autoroutes.json';
+import departmentsData from '../../../data/departments.json';
+import meta from '../../../data/fuel/meta.json';
+import { formatMaj } from '../../../utils/format-maj';
+import { resolveBrandLogo } from '../../../utils/brand-logo';
+
+export async function getStaticPaths() {
+  const files = import.meta.glob('../../../data/fuel/stations-by-autoroute/*.json', { eager: true });
+  return Object.entries(files).map(([path, data]: [string, any]) => {
+    const slug = path.match(/\/([^/]+)\.json$/)?.[1];
+    if (!slug) return null;
+    return { params: { autoroute: slug }, props: { hwData: data } };
+  }).filter(Boolean);
+}
+
+const { hwData } = Astro.props;
+const { slug, code, stats, top10, count, departments: deptNums, stations } = hwData;
+
+const FUELS = ['Gazole', 'SP95', 'SP98', 'E10', 'E85', 'GPLc'] as const;
+const FUEL_COLORS: Record<string, string> = {
+  Gazole: '#374151', SP95: '#16a34a', SP98: '#2563eb', E10: '#15803d', E85: '#E87722', GPLc: '#ca8a04',
+};
+const FUEL_LABELS: Record<string, string> = {
+  Gazole: 'Gazole', SP95: 'SP95', SP98: 'SP98', E10: 'E10', E85: 'E85', GPLc: 'GPL',
+};
+
+const deps = departmentsData as Record<string, { num: string; name: string; slug: string }>;
+
+function priceDiff(avg: number | null, fuelKey: string) {
+  const nat = statsNational[fuelKey as keyof typeof statsNational];
+  if (avg == null || nat == null) return null;
+  return ((avg - nat) / nat) * 100;
+}
+
+function diffClass(diff: number | null) {
+  if (diff == null) return 'badge-neutral';
+  if (diff < -2) return 'badge-green';
+  if (diff > 2) return 'badge-orange';
+  return 'badge-neutral';
+}
+
+const lastUpdate = meta.lastUpdate
+  ? new Date(meta.lastUpdate).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })
+  : null;
+
+const gazoleAvg = stats.Gazole?.avg;
+const gazoleNat = statsNational['Gazole'];
+const gazolediff = gazoleAvg && gazoleNat ? ((gazoleAvg - gazoleNat) / gazoleNat) * 100 : null;
+
+const gazoleAutorouteNat = statsAutoroute.autoroute?.Gazole;
+const diffVsAutorouteNat = gazoleAvg && gazoleAutorouteNat ? ((gazoleAvg - gazoleAutorouteNat) / gazoleAutorouteNat) * 100 : null;
+
+const title = `Prix carburant Autoroute ${code} - Comparateur Mon Carburant`;
+const descPrix = gazoleAvg ? `Gazole : ${gazoleAvg.toFixed(3)} €/L en moyenne.` : '';
+const description = `Comparez les prix du carburant dans les ${count} stations-service de l'autoroute ${code}. ${descPrix} Données mises à jour quotidiennement.`;
+
+const deptsCovered = (deptNums as string[])
+  .map(num => deps[num])
+  .filter(Boolean)
+  .sort((a, b) => a.name.localeCompare(b.name, 'fr'));
+
+// Autoroutes voisines pour la navigation croisée (exclure l'autoroute courante)
+const siblingHighways = (autoroutesIndex as { slug: string; code: string; count: number; gazoleAvg: number | null }[])
+  .filter(h => h.slug !== slug)
+  .slice(0, 8);
+
+const breadcrumb = [
+  { name: 'Accueil', url: '/' },
+  { name: 'Prix carburants', url: '/prix-carburants/' },
+  { name: 'Autoroutes', url: '/prix-carburants/autoroute/' },
+  { name: `Autoroute ${code}`, url: `/prix-carburants/autoroute/${slug}/` },
+];
+
+const jsonLdBreadcrumb = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: breadcrumb.map((item, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    name: item.name,
+    item: `https://mon-carburant.com${item.url}`,
+  })),
+};
+---
+
+<BaseLayout title={title} description={description} canonical={`/prix-carburants/autoroute/${slug}/`}>
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLdBreadcrumb)} slot="head" />
+
+  <div>
+    <!-- Breadcrumb -->
+    <div class="container" style="padding-top:1rem">
+      <nav aria-label="Fil d'ariane" class="breadcrumb-nav">
+        {breadcrumb.map((item, i) => (
+          <>
+            {i > 0 && <span aria-hidden="true"> › </span>}
+            {i < breadcrumb.length - 1
+              ? <a href={item.url}>{item.name}</a>
+              : <span aria-current="page">{item.name}</span>
+            }
+          </>
+        ))}
+      </nav>
+    </div>
+
+    <!-- Hero -->
+    <section class="hw-hero">
+      <div class="container">
+        <span class="hw-badge" aria-hidden="true">{code}</span>
+        <h1>Prix carburant sur l'autoroute {code}</h1>
+        <p class="hw-subtitle">{count} stations-service référencées · {deptsCovered.length} départements traversés</p>
+        {lastUpdate && <p class="update-info">Données du {lastUpdate}</p>}
+      </div>
+    </section>
+
+    <div class="container page-body">
+
+      <!-- Stats par carburant -->
+      <section class="section-block">
+        <h2>Prix moyens sur l'autoroute {code}</h2>
+        <div class="fuel-stats-grid">
+          {FUELS.map(fuel => {
+            const s = stats[fuel];
+            const avg = s?.avg ?? null;
+            const diff = priceDiff(avg, fuel);
+            return (
+              <div class="fuel-stat-card" style={`--fuel-color: ${FUEL_COLORS[fuel]}`}>
+                <div class="fsc-label">{FUEL_LABELS[fuel]}</div>
+                <div class="fsc-price">
+                  {avg != null ? avg.toFixed(3) : '-'}
+                  {avg != null && <span class="fsc-unit">€/L</span>}
+                </div>
+                {diff != null && (
+                  <div class={`fsc-diff ${diffClass(diff)}`}>
+                    {diff > 0 ? '+' : ''}{diff.toFixed(1)}% vs. France
+                  </div>
+                )}
+                {s?.min != null && s?.max != null && (
+                  <div class="fsc-range">{s.min.toFixed(3)} - {s.max.toFixed(3)}</div>
+                )}
+              </div>
+            );
+          })}
+        </div>
+        {gazolediff != null && (
+          <p class="hw-insight">
+            Sur l'autoroute {code}, le Gazole coûte en moyenne{' '}
+            <strong>{Math.abs(gazolediff).toFixed(1)}% {gazolediff > 0 ? 'plus cher' : 'moins cher'}</strong> que la moyenne nationale toutes stations confondues
+            ({gazoleAvg?.toFixed(3)} €/L vs {gazoleNat?.toFixed(3)} €/L)
+            {diffVsAutorouteNat != null && Math.abs(diffVsAutorouteNat) > 1 && (
+              <>, soit {Math.abs(diffVsAutorouteNat).toFixed(1)}% {diffVsAutorouteNat > 0 ? 'au-dessus' : 'en dessous'} de la moyenne des autres autoroutes françaises ({gazoleAutorouteNat?.toFixed(3)} €/L)</>
+            )}.
+          </p>
+        )}
+      </section>
+
+      <!-- Top 10 moins chères -->
+      {(top10.Gazole?.length > 0 || top10.SP95?.length > 0) && (
+        <section class="section-block">
+          <h2>Stations les moins chères sur l'autoroute {code}</h2>
+          <div class="top10-tabs">
+            {top10.Gazole?.length > 0 && (
+              <div class="top10-group">
+                <h3 class="top10-title" style="color:#374151">Gazole</h3>
+                <table class="stations-table">
+                  <thead>
+                    <tr><th>Marque</th><th>Station</th><th>Ville</th><th>Prix Gazole</th></tr>
+                  </thead>
+                  <tbody>
+                    {top10.Gazole.map((s: any) => (
+                      <tr>
+                        <td class="brand-cell">{s.enseigneSlug ? <BrandLogo slug={s.enseigneSlug} name={s.enseigne ?? s.enseigneSlug} /> : <span class="brand-unknown">{s.enseigne ?? '-'}</span>}</td>
+                        <td class="station-addr"><StationLink id={s.id} adresse={s.adresse} ville={s.ville} /></td>
+                        <td><a href={`/prix-carburants/${deps[s.dep]?.slug ?? s.dep}/`} class="dept-link">{s.ville}</a></td>
+                        <td class="price-highlight">{s.prices.Gazole?.toFixed(3) ?? '-'} €/L</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+            {top10.SP95?.length > 0 && (
+              <div class="top10-group">
+                <h3 class="top10-title" style="color:#16a34a">Sans-Plomb 95</h3>
+                <table class="stations-table">
+                  <thead>
+                    <tr><th>Marque</th><th>Station</th><th>Ville</th><th>Prix SP95</th></tr>
+                  </thead>
+                  <tbody>
+                    {top10.SP95.map((s: any) => (
+                      <tr>
+                        <td class="brand-cell">{s.enseigneSlug ? <BrandLogo slug={s.enseigneSlug} name={s.enseigne ?? s.enseigneSlug} /> : <span class="brand-unknown">{s.enseigne ?? '-'}</span>}</td>
+                        <td class="station-addr"><StationLink id={s.id} adresse={s.adresse} ville={s.ville} /></td>
+                        <td><a href={`/prix-carburants/${deps[s.dep]?.slug ?? s.dep}/`} class="dept-link">{s.ville}</a></td>
+                        <td class="price-highlight">{s.prices.SP95?.toFixed(3) ?? '-'} €/L</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </div>
+        </section>
+      )}
+
+      <!-- Toutes les stations -->
+      <section class="section-block">
+        <h2>Toutes les stations sur l'autoroute {code} ({count})</h2>
+        <div class="table-wrapper">
+          <table class="stations-table full-table" id="hw-stations-table">
+            <thead>
+              <tr>
+                <th>Marque</th>
+                <th>Adresse</th>
+                <th>Ville</th>
+                <th>Dept</th>
+                <th>Gazole</th>
+                <th>SP95</th>
+                <th>SP98</th>
+                <th>E10</th>
+                <th>E85</th>
+                <th title="Date de la dernière déclaration de prix par la station">Déclaré</th>
+              </tr>
+            </thead>
+            <tbody>
+              {stations.slice(0, 30).map((s: any) => (
+                <tr>
+                  <td class="brand-cell">{s.enseigneSlug ? <BrandLogo slug={s.enseigneSlug} name={s.enseigne ?? s.enseigneSlug} /> : <span class="brand-unknown">{s.enseigne ?? '-'}</span>}</td>
+                  <td class="station-addr"><StationLink id={s.id} adresse={s.adresse} ville={s.ville} /></td>
+                  <td>{s.ville}</td>
+                  <td>
+                    <a href={`/prix-carburants/${deps[s.dep]?.slug ?? s.dep}/`} class="dept-pill-link">
+                      {s.dep}
+                    </a>
+                  </td>
+                  <td>{s.prices.Gazole?.toFixed(3) ?? '-'}</td>
+                  <td>{s.prices.SP95?.toFixed(3) ?? '-'}</td>
+                  <td>{s.prices.SP98?.toFixed(3) ?? '-'}</td>
+                  <td>{s.prices.E10?.toFixed(3) ?? '-'}</td>
+                  <td>{s.prices.E85?.toFixed(3) ?? '-'}</td>
+                  <td class="station-maj" title={s.maj ?? ''}>{formatMaj(s.maj)}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        {stations.length > 30 && (
+          <div style="text-align:center;margin-top:1rem">
+            <button
+              id="hw-show-more"
+              class="btn-show-more"
+              data-stations={JSON.stringify(stations.slice(30).map((s: any) => ({
+                adresse: s.adresse, ville: s.ville, dep: s.dep, prices: s.prices, enseigne: s.enseigne, enseigneSlug: s.enseigneSlug, logo: resolveBrandLogo(s.enseigneSlug), maj: s.maj
+              })))}
+            >
+              Afficher les {stations.length - 30} stations restantes ↓
+            </button>
+          </div>
+        )}
+      </section>
+
+      <!-- Départements traversés -->
+      {deptsCovered.length > 0 && (
+        <section class="section-block">
+          <h2>L'autoroute {code} par département</h2>
+          <div class="dept-grid">
+            {deptsCovered.map(dept => (
+              <a href={`/prix-carburants/${dept.slug}/`} class="dept-pill">
+                <span class="dept-pill-num">{dept.num}</span>
+                <span class="dept-pill-name">{dept.name}</span>
+              </a>
+            ))}
+          </div>
+        </section>
+      )}
+
+      <!-- Autres autoroutes -->
+      {siblingHighways.length > 0 && (
+        <section class="section-block">
+          <h2>Comparer avec d'autres autoroutes</h2>
+          <div class="hw-grid">
+            {siblingHighways.map(h => (
+              <a href={`/prix-carburants/autoroute/${h.slug}/`} class="hw-card">
+                <span class="hw-card-code">{h.code}</span>
+                <span class="hw-card-count">{h.count} stations</span>
+                {h.gazoleAvg != null && <span class="hw-card-price">{h.gazoleAvg.toFixed(3)} €/L Gazole</span>}
+              </a>
+            ))}
+          </div>
+        </section>
+      )}
+
+      <!-- Texte SEO -->
+      <section class="section-block seo-text">
+        <h2>Faire le plein sur l'autoroute {code}</h2>
+        <p>
+          Mon Carburant référence <strong>{count} stations-service</strong> sur l'autoroute {code},
+          réparties dans {deptsCovered.length} départements. Les prix affichés proviennent du flux officiel
+          du ministère de l'Économie et sont mis à jour quotidiennement.
+        </p>
+        {gazoleAvg && (
+          <p>
+            Au {lastUpdate}, le prix moyen du Gazole sur l'autoroute {code} est de{' '}
+            <strong>{gazoleAvg.toFixed(3)} €/L</strong>, contre {gazoleNat?.toFixed(3)} €/L en moyenne nationale
+            toutes stations confondues. Les prix varient de {stats.Gazole?.min.toFixed(3)} à {stats.Gazole?.max.toFixed(3)} €/L selon les aires.
+          </p>
+        )}
+        <p>
+          Les stations d'autoroute sont en moyenne plus chères que les stations de centre-ville ou de périphérie :
+          concession, coûts d'exploitation et absence de concurrence directe expliquent cet écart.
+          Consultez notre <a href="/blog/autoroute-ou-nationale-carburant-plus-cher/">comparatif autoroute vs nationale</a>{' '}
+          pour savoir quand il vaut mieux faire le plein avant de prendre l'autoroute.
+        </p>
+        <p>
+          <a href="/prix-carburants/autoroute/">Toutes les autoroutes</a> ·
+          <a href="/prix-carburants/methodologie/">Notre méthodologie</a> ·
+          <a href="/prix-carburants/">Comparateur national</a>
+        </p>
+      </section>
+
+    </div>
+  </div>
+</BaseLayout>
+
+<script>
+  import { formatMaj } from '../../../utils/format-maj';
+  import { escapeHtml } from '../../../utils/escape-html';
+
+  const btn = document.getElementById('hw-show-more');
+  if (btn) {
+    btn.addEventListener('click', () => {
+      const extra = JSON.parse((btn as HTMLButtonElement).dataset.stations || '[]');
+      const tbody = document.querySelector('#hw-stations-table tbody');
+      if (!tbody) return;
+      extra.forEach((s: any) => {
+        const tr = document.createElement('tr');
+        const brandLabel = escapeHtml(s.enseigne || s.enseigneSlug || '-');
+        const brandHtml = s.enseigneSlug && s.logo
+          ? `<span class="brand-logo-wrap"><img src="${escapeHtml(s.logo)}" alt="${brandLabel}" class="brand-logo-img" loading="lazy" onerror="this.style.display='none';this.nextSibling.style.display='inline-block'"/><span class="brand-logo-text" style="display:none">${brandLabel}</span></span>`
+          : `<span class="brand-unknown">${brandLabel}</span>`;
+        tr.innerHTML = `
+          <td class="brand-cell">${brandHtml}</td>
+          <td class="station-addr">${escapeHtml(s.adresse || '-')}</td>
+          <td>${escapeHtml(s.ville)}</td>
+          <td><span class="dept-pill-link">${escapeHtml(s.dep)}</span></td>
+          <td>${s.prices?.Gazole?.toFixed(3) ?? '-'}</td>
+          <td>${s.prices?.SP95?.toFixed(3) ?? '-'}</td>
+          <td>${s.prices?.SP98?.toFixed(3) ?? '-'}</td>
+          <td>${s.prices?.E10?.toFixed(3) ?? '-'}</td>
+          <td>${s.prices?.E85?.toFixed(3) ?? '-'}</td>
+          <td class="station-maj" title="${escapeHtml(s.maj ?? '')}">${formatMaj(s.maj)}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+      btn.remove();
+    });
+  }
+</script>
+
+<style>
+  .breadcrumb-nav { font-size:0.875rem; color:var(--color-text-muted); margin-bottom:0.5rem; }
+  .breadcrumb-nav a { color:var(--color-primary); text-decoration:none; }
+  .breadcrumb-nav a:hover { text-decoration:underline; }
+
+  .hw-hero { background:var(--color-primary); color:#fff; padding:2.5rem 0 2rem; }
+  .hw-badge {
+    display:inline-block; background:var(--color-accent); color:#fff; font-weight:800;
+    font-size:0.9375rem; padding:0.25rem 0.7rem; border-radius:0.375rem; margin-bottom:0.75rem;
+    letter-spacing:0.02em;
+  }
+  .hw-hero h1 { font-size:clamp(1.5rem,3.5vw,2.25rem); font-weight:800; color:#fff; margin:0 0 0.5rem; }
+  .hw-subtitle { color:#94a3b8; margin:0 0 0.5rem; }
+  .update-info { font-size:0.8125rem; color:#64748b; margin:0; }
+
+  .page-body { padding-top:2rem; padding-bottom:3rem; }
+  .section-block { margin-bottom:3rem; }
+  .section-block h2 { font-size:1.25rem; font-weight:700; color:var(--color-primary); margin:0 0 1.25rem; border-bottom:2px solid #e5e7eb; padding-bottom:0.5rem; }
+
+  .fuel-stats-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:0.75rem; }
+  @media(min-width:768px){ .fuel-stats-grid { grid-template-columns:repeat(6,1fr); } }
+  .fuel-stat-card { background:#fff; border:2px solid #e5e7eb; border-top:3px solid var(--fuel-color); border-radius:0.5rem; padding:1rem; }
+  .fsc-label { font-size:0.75rem; color:var(--color-text-muted); font-weight:700; margin-bottom:0.25rem; }
+  .fsc-price { font-size:1.25rem; font-weight:800; color:var(--fuel-color); display:flex; align-items:baseline; gap:0.2rem; }
+  .fsc-unit { font-size:0.7rem; font-weight:500; color:var(--color-text-muted); }
+  .fsc-diff { font-size:0.7rem; padding:0.15rem 0.4rem; border-radius:999px; margin-top:0.25rem; display:inline-block; font-weight:600; }
+  .fsc-range { font-size:0.7rem; color:var(--color-text-muted); margin-top:0.25rem; }
+  .badge-green { background:#dcfce7; color:#166534; }
+  .badge-orange { background:#fff7ed; color:#c2410c; }
+  .badge-neutral { background:#f1f5f9; color:#64748b; }
+
+  .hw-insight { background:#fff7ed; border:1px solid #fed7aa; border-left:4px solid var(--color-accent); border-radius:0.5rem; padding:1rem 1.25rem; margin-top:1.25rem; color:#9a3412; font-size:0.9375rem; }
+
+  .top10-tabs { display:grid; grid-template-columns:1fr; gap:1.5rem; }
+  @media(min-width:768px){ .top10-tabs { grid-template-columns:1fr 1fr; } }
+  .top10-title { font-size:1rem; font-weight:700; margin:0 0 0.75rem; }
+
+  .table-wrapper { overflow-x:auto; }
+  .stations-table { width:100%; border-collapse:collapse; font-size:0.875rem; }
+  .stations-table th { background:#f1f5f9; color:var(--color-primary); padding:0.6rem 0.75rem; text-align:left; font-size:0.8rem; }
+  .stations-table td { padding:0.55rem 0.75rem; border-bottom:1px solid #f1f5f9; }
+  .stations-table tr:hover td { background:#f8fafc; }
+  .station-addr { max-width:200px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .station-maj { white-space: nowrap; font-size: 0.75rem; color: #64748b; }
+  .price-highlight { font-weight:700; color:#16a34a; }
+  .dept-link { color:var(--color-primary); text-decoration:none; font-weight:500; }
+  .dept-link:hover { text-decoration:underline; }
+  .dept-pill-link { font-size:0.75rem; font-weight:700; color:var(--color-primary); background:#f1f5f9; padding:0.15rem 0.4rem; border-radius:0.25rem; }
+  .brand-cell { white-space: nowrap; padding: 0.4rem 0.75rem; }
+  .brand-unknown { font-size: 0.7rem; color: #64748b; background: #f1f5f9; border-radius: 3px; padding: 0.1rem 0.4rem; }
+
+  .dept-grid { display:flex; flex-wrap:wrap; gap:0.5rem; }
+  .dept-pill { display:inline-flex; align-items:center; gap:0.4rem; padding:0.35rem 0.75rem; background:#fff; border:1px solid #e2e8f0; border-radius:999px; text-decoration:none; font-size:0.8125rem; transition:all 0.15s; }
+  .dept-pill:hover { background:var(--color-primary); border-color:var(--color-primary); color:#fff; }
+  .dept-pill-num { font-weight:700; font-size:0.75rem; color:#64748b; background:#f1f5f9; padding:0.1rem 0.35rem; border-radius:0.25rem; }
+  .dept-pill:hover .dept-pill-num { background:rgba(255,255,255,0.2); color:#fff; }
+  .dept-pill-name { color:var(--color-primary); font-weight:500; }
+  .dept-pill:hover .dept-pill-name { color:#fff; }
+
+  .hw-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:0.75rem; }
+  @media(min-width:640px){ .hw-grid { grid-template-columns:repeat(4,1fr); } }
+  .hw-card { display:flex; flex-direction:column; gap:0.25rem; padding:1rem; background:#fff; border:1px solid #e2e8f0; border-radius:0.75rem; text-decoration:none; transition:all 0.15s; }
+  .hw-card:hover { border-color:var(--color-primary); box-shadow:0 2px 8px rgba(0,0,0,0.08); }
+  .hw-card-code { font-weight:800; color:var(--color-primary); font-size:1rem; }
+  .hw-card-count { font-size:0.75rem; color:var(--color-text-muted); }
+  .hw-card-price { font-size:0.75rem; color:#16a34a; font-weight:600; }
+
+  .btn-show-more { background:#fff; border:2px solid var(--color-primary); color:var(--color-primary); padding:0.6rem 1.5rem; border-radius:0.5rem; font-weight:600; cursor:pointer; font-size:0.9rem; transition:all 0.2s; }
+  .btn-show-more:hover { background:var(--color-primary); color:#fff; }
+
+  .seo-text p { color:#374151; line-height:1.7; margin-bottom:0.75rem; }
+  .seo-text a { color:var(--color-accent); }
+
+  .full-table th:nth-child(5), .full-table td:nth-child(5),
+  .full-table th:nth-child(6), .full-table td:nth-child(6),
+  .full-table th:nth-child(7), .full-table td:nth-child(7),
+  .full-table th:nth-child(8), .full-table td:nth-child(8) { display:none; }
+  @media(min-width:768px){
+    .full-table th:nth-child(5), .full-table td:nth-child(5),
+    .full-table th:nth-child(6), .full-table td:nth-child(6),
+    .full-table th:nth-child(7), .full-table td:nth-child(7),
+    .full-table th:nth-child(8), .full-table td:nth-child(8) { display:table-cell; }
+  }
+</style>

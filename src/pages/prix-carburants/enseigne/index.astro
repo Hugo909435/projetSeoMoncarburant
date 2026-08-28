@@ -1,0 +1,199 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import BrandLogo from '../../../components/BrandLogo.astro';
+import brandsIndex from '../../../data/fuel/brands.json';
+import statsNational from '../../../data/fuel/stats-national.json';
+import meta from '../../../data/fuel/meta.json';
+
+type BrandEntry = { slug: string; name: string; count: number };
+
+const brandFiles = import.meta.glob('../../../data/fuel/stations-by-brand/*.json', { eager: true });
+const gazoleAvgBySlug: Record<string, number | null> = {};
+for (const [, data] of Object.entries(brandFiles) as [string, any][]) {
+  gazoleAvgBySlug[data.slug] = data.stats?.Gazole?.avg ?? null;
+}
+
+const brands = (brandsIndex as BrandEntry[])
+  .map(b => ({ ...b, gazoleAvg: gazoleAvgBySlug[b.slug] ?? null }))
+  .sort((a, b) => b.count - a.count);
+
+const totalStations = brands.reduce((sum, b) => sum + b.count, 0);
+
+const lastUpdate = meta.lastUpdate
+  ? new Date(meta.lastUpdate).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })
+  : null;
+
+const title = 'Prix carburant par enseigne : toutes les marques comparées';
+const description = `Comparez les prix du carburant chez ${brands.length} enseignes en France (Total, Leclerc, Intermarché, Carrefour...). ${totalStations} stations référencées, mis à jour quotidiennement.`;
+
+const breadcrumb = [
+  { name: 'Accueil', url: '/' },
+  { name: 'Prix carburants', url: '/prix-carburants/' },
+  { name: 'Enseignes', url: '/prix-carburants/enseigne/' },
+];
+
+const jsonLdBreadcrumb = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: breadcrumb.map((item, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    name: item.name,
+    item: `https://mon-carburant.com${item.url}`,
+  })),
+};
+---
+
+<BaseLayout title={title} description={description} canonical="/prix-carburants/enseigne/">
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLdBreadcrumb)} slot="head" />
+
+  <div>
+    <!-- Breadcrumb -->
+    <div class="container" style="padding-top:1rem">
+      <nav aria-label="Fil d'ariane" class="breadcrumb-nav">
+        {breadcrumb.map((item, i) => (
+          <>
+            {i > 0 && <span aria-hidden="true"> › </span>}
+            {i < breadcrumb.length - 1
+              ? <a href={item.url}>{item.name}</a>
+              : <span aria-current="page">{item.name}</span>
+            }
+          </>
+        ))}
+      </nav>
+    </div>
+
+    <!-- Hero -->
+    <section class="idx-hero">
+      <div class="container">
+        <h1>Prix du carburant par enseigne</h1>
+        <p class="idx-subtitle">{brands.length} enseignes · {totalStations.toLocaleString('fr-FR')} stations référencées</p>
+        {lastUpdate && <p class="update-info">Données du {lastUpdate}</p>}
+      </div>
+    </section>
+
+    <div class="container page-body">
+      <div class="search-wrap">
+        <input
+          type="search"
+          id="brand-search"
+          class="brand-search"
+          placeholder="Rechercher une enseigne (Total, Leclerc, Carrefour...)"
+          aria-label="Rechercher une enseigne"
+          autocomplete="off"
+        />
+      </div>
+
+      <div class="brand-grid">
+        {brands.map(brand => {
+          const nat = statsNational['Gazole'];
+          const diff = brand.gazoleAvg != null && nat != null ? ((brand.gazoleAvg - nat) / nat) * 100 : null;
+          return (
+            <a href={`/prix-carburants/enseigne/${brand.slug}/`} class="brand-card" data-brand-name={brand.name}>
+              <div class="brand-card-logo"><BrandLogo slug={brand.slug} name={brand.name} /></div>
+              <div class="brand-card-name">{brand.name}</div>
+              <div class="brand-card-price">
+                {brand.gazoleAvg != null ? `${brand.gazoleAvg.toFixed(3)} €/L Gazole` : 'Prix indisponibles'}
+                {diff != null && (
+                  <span class={`price-badge ${diff < -2 ? 'badge-green' : diff > 2 ? 'badge-orange' : 'badge-neutral'}`}>
+                    {diff > 0 ? '+' : ''}{diff.toFixed(1)}%
+                  </span>
+                )}
+              </div>
+              <div class="brand-card-count">{brand.count} stations</div>
+            </a>
+          );
+        })}
+      </div>
+
+      <p class="brand-empty" id="brand-empty" hidden>Aucune enseigne ne correspond à votre recherche.</p>
+
+      <!-- Texte SEO -->
+      <section class="section-block seo-text">
+        <h2>Comparer les prix entre enseignes</h2>
+        <p>
+          Les grandes surfaces (Leclerc, Intermarché, Carrefour, Système U...) affichent en général les prix les
+          plus bas grâce à leur politique de marge réduite sur le carburant, tandis que les enseignes pétrolières
+          historiques (TotalEnergies, Esso, BP, Shell) pratiquent des prix plus proches de la moyenne nationale.
+          Mon Carburant calcule chaque jour le prix moyen de chaque enseigne à partir du flux officiel du
+          ministère de l'Économie.
+        </p>
+        <p>
+          Cliquez sur une enseigne pour consulter le détail de ses prix, son classement des stations les moins
+          chères et sa couverture géographique par département.
+        </p>
+        <p>
+          <a href="/prix-carburants/methodologie/">En savoir plus sur notre méthodologie</a> ·
+          <a href="/prix-carburants/">Comparateur national</a>
+        </p>
+      </section>
+    </div>
+  </div>
+</BaseLayout>
+
+<script>
+  const searchInput = document.getElementById('brand-search') as HTMLInputElement | null;
+  const cards = Array.from(document.querySelectorAll<HTMLElement>('.brand-card'));
+  const emptyMsg = document.getElementById('brand-empty');
+  const DIACRITICS = new RegExp('[\\u0300-\\u036f]', 'g');
+  const normalize = (s: string) => s.normalize('NFD').replace(DIACRITICS, '').toLowerCase();
+
+  if (searchInput) {
+    searchInput.addEventListener('input', () => {
+      const q = normalize(searchInput.value.trim());
+      let matches = 0;
+      cards.forEach(card => {
+        const match = !q || normalize(card.dataset.brandName || '').includes(q);
+        card.style.display = match ? '' : 'none';
+        if (match) matches++;
+      });
+      if (emptyMsg) emptyMsg.hidden = matches > 0;
+    });
+  }
+</script>
+
+<style>
+  .breadcrumb-nav { font-size:0.875rem; color:var(--color-text-muted); margin-bottom:0.5rem; }
+  .breadcrumb-nav a { color:var(--color-primary); text-decoration:none; }
+  .breadcrumb-nav a:hover { text-decoration:underline; }
+
+  .idx-hero { background:linear-gradient(135deg, var(--color-primary) 0%, #1a4a66 100%); color:#fff; padding:2.5rem 0 2rem; }
+  .idx-hero h1 { font-size:clamp(1.5rem,3.5vw,2.25rem); font-weight:800; color:#fff; margin:0 0 0.5rem; }
+  .idx-subtitle { color:#94a3b8; margin:0 0 0.5rem; }
+  .update-info { font-size:0.8125rem; color:#64748b; margin:0; }
+
+  .page-body { padding-top:2rem; padding-bottom:3rem; }
+
+  .search-wrap { max-width:28rem; margin-bottom:2rem; }
+  .brand-search {
+    width:100%; padding:0.65rem 1rem; font-size:0.9375rem; font-family:inherit;
+    border:1px solid var(--color-border); border-radius:0.5rem; background:#f9fafb; color:var(--color-text);
+  }
+  .brand-search:focus { outline:2px solid var(--color-accent); outline-offset:1px; background:#fff; }
+
+  .brand-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:0.85rem; }
+  @media(min-width:640px){ .brand-grid { grid-template-columns:repeat(3,1fr); } }
+  @media(min-width:1024px){ .brand-grid { grid-template-columns:repeat(4,1fr); } }
+
+  .brand-card {
+    display:flex; flex-direction:column; gap:0.4rem; padding:1.1rem;
+    background:#fff; border:1px solid #e2e8f0; border-radius:0.75rem; text-decoration:none; transition:all 0.15s;
+  }
+  .brand-card:hover { border-color:var(--color-primary); box-shadow:0 2px 8px rgba(0,0,0,0.08); }
+  .brand-card-logo :global(.brand-logo-img) { height:28px; }
+  .brand-card-name { font-weight:700; color:var(--color-primary); font-size:0.9375rem; }
+  .brand-card-price { font-size:0.8125rem; color:#16a34a; font-weight:600; }
+  .brand-card-count { font-size:0.75rem; color:var(--color-text-muted); }
+
+  .price-badge { display:inline-block; font-size:0.65rem; padding:0.05rem 0.3rem; border-radius:999px; margin-left:0.3rem; font-weight:600; }
+  .badge-green { background:#dcfce7; color:#166534; }
+  .badge-orange { background:#fff7ed; color:#c2410c; }
+  .badge-neutral { background:#f1f5f9; color:#64748b; }
+
+  .brand-empty { text-align:center; color:var(--color-text-muted); font-style:italic; padding:2rem 0; }
+
+  .section-block { margin-top:3rem; }
+  .section-block h2 { font-size:1.25rem; font-weight:700; color:var(--color-primary); margin:0 0 1.25rem; border-bottom:2px solid #e5e7eb; padding-bottom:0.5rem; }
+  .seo-text p { color:#374151; line-height:1.7; margin-bottom:0.75rem; }
+  .seo-text a { color:var(--color-accent); }
+</style>

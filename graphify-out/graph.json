@@ -10,7 +10,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "astro_config",
-      "community": 222,
+      "community": 191,
       "norm_label": "astro.config.mjs"
     },
     {
@@ -20,7 +20,7 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "astro_config_sitelastmod",
-      "community": 222,
+      "community": 191,
       "norm_label": "sitelastmod"
     },
     {
@@ -30,7 +30,7 @@
       "source_location": "L24",
       "_origin": "ast",
       "id": "astro_config_weakurls",
-      "community": 222,
+      "community": 191,
       "norm_label": "weakurls"
     },
     {
@@ -40,7 +40,7 @@
       "source_location": "L106",
       "_origin": "ast",
       "id": "astro_config_articlelastmods",
-      "community": 222,
+      "community": 191,
       "norm_label": "articlelastmods"
     },
     {
@@ -50,7 +50,7 @@
       "source_location": "L154",
       "_origin": "ast",
       "id": "astro_config_serialize",
-      "community": 222,
+      "community": 191,
       "norm_label": "serialize()"
     },
     {
@@ -2564,10 +2564,20 @@
       "norm_label": "brand_dir"
     },
     {
-      "label": "PUBLIC_DATA_DIR",
+      "label": "AUTOROUTE_DIR",
       "file_type": "code",
       "source_file": "scripts/fetch-fuel-data.js",
       "source_location": "L22",
+      "_origin": "ast",
+      "id": "scripts_fetch_fuel_data_autoroute_dir",
+      "community": 5,
+      "norm_label": "autoroute_dir"
+    },
+    {
+      "label": "PUBLIC_DATA_DIR",
+      "file_type": "code",
+      "source_file": "scripts/fetch-fuel-data.js",
+      "source_location": "L23",
       "_origin": "ast",
       "id": "scripts_fetch_fuel_data_public_data_dir",
       "community": 5,
@@ -2577,7 +2587,7 @@
       "label": "BRAND_MAP_FILE",
       "file_type": "code",
       "source_file": "scripts/fetch-fuel-data.js",
-      "source_location": "L23",
+      "source_location": "L24",
       "_origin": "ast",
       "id": "scripts_fetch_fuel_data_brand_map_file",
       "community": 5,
@@ -2587,7 +2597,7 @@
       "label": "CHECK_ONLY",
       "file_type": "code",
       "source_file": "scripts/fetch-fuel-data.js",
-      "source_location": "L26",
+      "source_location": "L27",
       "_origin": "ast",
       "id": "scripts_fetch_fuel_data_check_only",
       "community": 5,
@@ -2597,7 +2607,7 @@
       "label": "FUELS",
       "file_type": "code",
       "source_file": "scripts/fetch-fuel-data.js",
-      "source_location": "L28",
+      "source_location": "L29",
       "_origin": "ast",
       "id": "scripts_fetch_fuel_data_fuels",
       "community": 5,
@@ -2607,7 +2617,7 @@
       "label": "FUEL_ID_MAP",
       "file_type": "code",
       "source_file": "scripts/fetch-fuel-data.js",
-      "source_location": "L31",
+      "source_location": "L32",
       "_origin": "ast",
       "id": "scripts_fetch_fuel_data_fuel_id_map",
       "community": 5,
@@ -2617,7 +2627,7 @@
       "label": "slugifyCity()",
       "file_type": "code",
       "source_file": "scripts/fetch-fuel-data.js",
-      "source_location": "L33",
+      "source_location": "L34",
       "_origin": "ast",
       "id": "scripts_fetch_fuel_data_slugifycity",
       "community": 5,
@@ -2627,7 +2637,7 @@
       "label": "NAMED_ENTITIES",
       "file_type": "code",
       "source_file": "scripts/fetch-fuel-data.js",
-      "source_location": "L37",
+      "source_location": "L38",
       "_origin": "ast",
       "id": "scripts_fetch_fuel_data_named_entities",
       "community": 5,
@@ -2637,7 +2647,7 @@
       "label": "cleanText()",
       "file_type": "code",
       "source_file": "scripts/fetch-fuel-data.js",
-      "source_location": "L55",
+      "source_location": "L56",
       "_origin": "ast",
       "id": "scripts_fetch_fuel_data_cleantext",
       "community": 5,
@@ -2647,7 +2657,7 @@
       "label": "PARTICULES",
       "file_type": "code",
       "source_file": "scripts/fetch-fuel-data.js",
-      "source_location": "L76",
+      "source_location": "L77",
       "_origin": "ast",
       "id": "scripts_fetch_fuel_data_particules",
       "community": 5,
@@ -2657,7 +2667,7 @@
       "label": "titleCaseCity()",
       "file_type": "code",
       "source_file": "scripts/fetch-fuel-data.js",
-      "source_location": "L90",
+      "source_location": "L91",
       "_origin": "ast",
       "id": "scripts_fetch_fuel_data_titlecasecity",
       "community": 5,
@@ -2667,7 +2677,7 @@
       "label": "buildCityNames()",
       "file_type": "code",
       "source_file": "scripts/fetch-fuel-data.js",
-      "source_location": "L118",
+      "source_location": "L119",
       "_origin": "ast",
       "id": "scripts_fetch_fuel_data_buildcitynames",
       "community": 5,
@@ -2677,7 +2687,7 @@
       "label": "BRAND_MAP",
       "file_type": "code",
       "source_file": "scripts/fetch-fuel-data.js",
-      "source_location": "L153",
+      "source_location": "L154",
       "_origin": "ast",
       "id": "scripts_fetch_fuel_data_brand_map",
       "community": 5,
@@ -2687,7 +2697,7 @@
       "label": "normalizeEnseigne()",
       "file_type": "code",
       "source_file": "scripts/fetch-fuel-data.js",
-      "source_location": "L200",
+      "source_location": "L201",
       "_origin": "ast",
       "id": "scripts_fetch_fuel_data_normalizeenseigne",
       "community": 5,
@@ -2697,17 +2707,27 @@
       "label": "ensureDirs()",
       "file_type": "code",
       "source_file": "scripts/fetch-fuel-data.js",
-      "source_location": "L206",
+      "source_location": "L207",
       "_origin": "ast",
       "id": "scripts_fetch_fuel_data_ensuredirs",
       "community": 5,
       "norm_label": "ensuredirs()"
     },
     {
+      "label": "extractHighway()",
+      "file_type": "code",
+      "source_file": "scripts/fetch-fuel-data.js",
+      "source_location": "L221",
+      "_origin": "ast",
+      "id": "scripts_fetch_fuel_data_extracthighway",
+      "community": 5,
+      "norm_label": "extracthighway()"
+    },
+    {
       "label": "loadDepartments()",
       "file_type": "code",
       "source_file": "scripts/fetch-fuel-data.js",
-      "source_location": "L212",
+      "source_location": "L233",
       "_origin": "ast",
       "id": "scripts_fetch_fuel_data_loaddepartments",
       "community": 5,
@@ -2717,7 +2737,7 @@
       "label": "loadTopCities()",
       "file_type": "code",
       "source_file": "scripts/fetch-fuel-data.js",
-      "source_location": "L217",
+      "source_location": "L238",
       "_origin": "ast",
       "id": "scripts_fetch_fuel_data_loadtopcities",
       "community": 5,
@@ -2727,7 +2747,7 @@
       "label": "downloadZip()",
       "file_type": "code",
       "source_file": "scripts/fetch-fuel-data.js",
-      "source_location": "L222",
+      "source_location": "L243",
       "_origin": "ast",
       "id": "scripts_fetch_fuel_data_downloadzip",
       "community": 5,
@@ -2737,7 +2757,7 @@
       "label": "parseXml()",
       "file_type": "code",
       "source_file": "scripts/fetch-fuel-data.js",
-      "source_location": "L234",
+      "source_location": "L255",
       "_origin": "ast",
       "id": "scripts_fetch_fuel_data_parsexml",
       "community": 5,
@@ -2747,7 +2767,7 @@
       "label": "getDepNum()",
       "file_type": "code",
       "source_file": "scripts/fetch-fuel-data.js",
-      "source_location": "L257",
+      "source_location": "L278",
       "_origin": "ast",
       "id": "scripts_fetch_fuel_data_getdepnum",
       "community": 5,
@@ -2757,7 +2777,7 @@
       "label": "normalizeHeure()",
       "file_type": "code",
       "source_file": "scripts/fetch-fuel-data.js",
-      "source_location": "L270",
+      "source_location": "L291",
       "_origin": "ast",
       "id": "scripts_fetch_fuel_data_normalizeheure",
       "community": 5,
@@ -2767,7 +2787,7 @@
       "label": "parseHoraires()",
       "file_type": "code",
       "source_file": "scripts/fetch-fuel-data.js",
-      "source_location": "L296",
+      "source_location": "L317",
       "_origin": "ast",
       "id": "scripts_fetch_fuel_data_parsehoraires",
       "community": 5,
@@ -2777,7 +2797,7 @@
       "label": "normalizePrice()",
       "file_type": "code",
       "source_file": "scripts/fetch-fuel-data.js",
-      "source_location": "L330",
+      "source_location": "L351",
       "_origin": "ast",
       "id": "scripts_fetch_fuel_data_normalizeprice",
       "community": 5,
@@ -2787,7 +2807,7 @@
       "label": "processStations()",
       "file_type": "code",
       "source_file": "scripts/fetch-fuel-data.js",
-      "source_location": "L338",
+      "source_location": "L359",
       "_origin": "ast",
       "id": "scripts_fetch_fuel_data_processstations",
       "community": 5,
@@ -2797,7 +2817,7 @@
       "label": "computeStats()",
       "file_type": "code",
       "source_file": "scripts/fetch-fuel-data.js",
-      "source_location": "L440",
+      "source_location": "L461",
       "_origin": "ast",
       "id": "scripts_fetch_fuel_data_computestats",
       "community": 5,
@@ -2807,7 +2827,7 @@
       "label": "buildNationalStats()",
       "file_type": "code",
       "source_file": "scripts/fetch-fuel-data.js",
-      "source_location": "L451",
+      "source_location": "L472",
       "_origin": "ast",
       "id": "scripts_fetch_fuel_data_buildnationalstats",
       "community": 5,
@@ -2817,7 +2837,7 @@
       "label": "buildDepStats()",
       "file_type": "code",
       "source_file": "scripts/fetch-fuel-data.js",
-      "source_location": "L460",
+      "source_location": "L481",
       "_origin": "ast",
       "id": "scripts_fetch_fuel_data_builddepstats",
       "community": 5,
@@ -2827,7 +2847,7 @@
       "label": "buildRegionStats()",
       "file_type": "code",
       "source_file": "scripts/fetch-fuel-data.js",
-      "source_location": "L472",
+      "source_location": "L493",
       "_origin": "ast",
       "id": "scripts_fetch_fuel_data_buildregionstats",
       "community": 5,
@@ -2837,7 +2857,7 @@
       "label": "stationToLight()",
       "file_type": "code",
       "source_file": "scripts/fetch-fuel-data.js",
-      "source_location": "L489",
+      "source_location": "L510",
       "_origin": "ast",
       "id": "scripts_fetch_fuel_data_stationtolight",
       "community": 5,
@@ -2847,7 +2867,7 @@
       "label": "main()",
       "file_type": "code",
       "source_file": "scripts/fetch-fuel-data.js",
-      "source_location": "L507",
+      "source_location": "L528",
       "_origin": "ast",
       "id": "scripts_fetch_fuel_data_main",
       "community": 5,
@@ -3012,7 +3032,7 @@
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "id": "src_components_alerteprixcoutant",
-      "community": 205,
+      "community": 2,
       "norm_label": "../components/alerteprixcoutant.astro"
     },
     {
@@ -3022,7 +3042,7 @@
       "source_location": "L30",
       "_origin": "ast",
       "id": "src_components_alerteprixcoutant_listefr",
-      "community": 205,
+      "community": 2,
       "norm_label": "listefr()"
     },
     {
@@ -3208,14 +3228,14 @@
       "norm_label": "src"
     },
     {
-      "label": "../../utils/brand-logo",
+      "label": "../../../utils/brand-logo",
       "file_type": "code",
       "source_file": "src/utils/brand-logo",
       "confidence": "EXTRACTED",
       "_origin": "ast",
       "id": "c_users_hbeignon_desktop_projetseomoncarburant_src_utils_brand_logo",
-      "community": 205,
-      "norm_label": "../../utils/brand-logo"
+      "community": 157,
+      "norm_label": "../../../utils/brand-logo"
     },
     {
       "label": "breadcrumbSchema",
@@ -3437,7 +3457,7 @@
       "confidence": "EXTRACTED",
       "_origin": "ast",
       "id": "src_data_departments",
-      "community": 157,
+      "community": 2,
       "norm_label": "../../../data/departments.json"
     },
     {
@@ -3498,7 +3518,7 @@
       "confidence": "EXTRACTED",
       "_origin": "ast",
       "id": "c_users_hbeignon_desktop_projetseomoncarburant_src_utils_escape_html",
-      "community": 248,
+      "community": 157,
       "norm_label": "../../../utils/escape-html"
     },
     {
@@ -3556,7 +3576,7 @@
       "label": "isDesktop()",
       "file_type": "code",
       "source_file": "src/components/Header.astro",
-      "source_location": "L621",
+      "source_location": "L648",
       "_origin": "ast",
       "id": "src_components_header_isdesktop",
       "community": 202,
@@ -3566,7 +3586,7 @@
       "label": "hasRealHover()",
       "file_type": "code",
       "source_file": "src/components/Header.astro",
-      "source_location": "L622",
+      "source_location": "L649",
       "_origin": "ast",
       "id": "src_components_header_hasrealhover",
       "community": 202,
@@ -3576,7 +3596,7 @@
       "label": "closeDropdown()",
       "file_type": "code",
       "source_file": "src/components/Header.astro",
-      "source_location": "L624",
+      "source_location": "L651",
       "_origin": "ast",
       "id": "src_components_header_closedropdown",
       "community": 202,
@@ -3621,7 +3641,7 @@
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "id": "src_components_localidentity",
-      "community": 3,
+      "community": 203,
       "norm_label": "../../../components/localidentity.astro"
     },
     {
@@ -3631,7 +3651,7 @@
       "confidence": "EXTRACTED",
       "_origin": "ast",
       "id": "c_users_hbeignon_desktop_projetseomoncarburant_src_data_local_content",
-      "community": 3,
+      "community": 203,
       "norm_label": "../../../data/local-content"
     },
     {
@@ -3794,7 +3814,7 @@
       "confidence": "EXTRACTED",
       "_origin": "ast",
       "id": "c_users_hbeignon_desktop_projetseomoncarburant_src_data_fuel_config",
-      "community": 222,
+      "community": 2,
       "norm_label": "../../../data/fuel/config"
     },
     {
@@ -4107,7 +4127,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_data_local_content",
-      "community": 3,
+      "community": 203,
       "norm_label": "local-content.ts"
     },
     {
@@ -4117,7 +4137,7 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "src_data_local_content_localfact",
-      "community": 3,
+      "community": 203,
       "norm_label": "localfact"
     },
     {
@@ -4127,7 +4147,7 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "src_data_local_content_localcontent",
-      "community": 3,
+      "community": 203,
       "norm_label": "localcontent"
     },
     {
@@ -4137,7 +4157,7 @@
       "source_location": "L23",
       "_origin": "ast",
       "id": "src_data_local_content_regioncontent",
-      "community": 3,
+      "community": 203,
       "norm_label": "regioncontent"
     },
     {
@@ -4147,7 +4167,7 @@
       "source_location": "L209",
       "_origin": "ast",
       "id": "src_data_local_content_deptcontent",
-      "community": 3,
+      "community": 203,
       "norm_label": "deptcontent"
     },
     {
@@ -4287,7 +4307,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_pages_carte",
-      "community": 2,
+      "community": 200,
       "norm_label": "carte.astro"
     },
     {
@@ -4297,7 +4317,7 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "src_pages_carte_webappschema",
-      "community": 2,
+      "community": 200,
       "norm_label": "webappschema"
     },
     {
@@ -4344,7 +4364,7 @@
       "label": "successMsg",
       "file_type": "code",
       "source_file": "src/pages/contact.astro",
-      "source_location": "L162",
+      "source_location": "L167",
       "_origin": "ast",
       "id": "src_pages_contact_successmsg",
       "community": 18,
@@ -4354,7 +4374,7 @@
       "label": "errorMsg",
       "file_type": "code",
       "source_file": "src/pages/contact.astro",
-      "source_location": "L163",
+      "source_location": "L168",
       "_origin": "ast",
       "id": "src_pages_contact_errormsg",
       "community": 18,
@@ -4364,7 +4384,7 @@
       "label": "clearErrors()",
       "file_type": "code",
       "source_file": "src/pages/contact.astro",
-      "source_location": "L214",
+      "source_location": "L219",
       "_origin": "ast",
       "id": "src_pages_contact_clearerrors",
       "community": 18,
@@ -4374,7 +4394,7 @@
       "label": "validateForm()",
       "file_type": "code",
       "source_file": "src/pages/contact.astro",
-      "source_location": "L225",
+      "source_location": "L230",
       "_origin": "ast",
       "id": "src_pages_contact_validateform",
       "community": 18,
@@ -4384,7 +4404,7 @@
       "label": "showError()",
       "file_type": "code",
       "source_file": "src/pages/contact.astro",
-      "source_location": "L263",
+      "source_location": "L268",
       "_origin": "ast",
       "id": "src_pages_contact_showerror",
       "community": 18,
@@ -4399,6 +4419,16 @@
       "id": "src_pages_index",
       "community": 2,
       "norm_label": "index.astro"
+    },
+    {
+      "label": "String()",
+      "file_type": "code",
+      "source_file": "src/pages/index.astro",
+      "source_location": "L322",
+      "_origin": "ast",
+      "id": "src_pages_index_string",
+      "community": 2,
+      "norm_label": "string()"
     },
     {
       "label": "../../../../data/fuel/stats-by-department.json",
@@ -4527,7 +4557,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_pages_prix_carburants_department",
-      "community": 3,
+      "community": 157,
       "norm_label": "[department].astro"
     },
     {
@@ -4537,7 +4567,7 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "src_pages_prix_carburants_department_getstaticpaths",
-      "community": 3,
+      "community": 157,
       "norm_label": "getstaticpaths()"
     },
     {
@@ -4547,7 +4577,7 @@
       "source_location": "L53",
       "_origin": "ast",
       "id": "src_pages_prix_carburants_department_pricediff",
-      "community": 3,
+      "community": 157,
       "norm_label": "pricediff()"
     },
     {
@@ -4557,7 +4587,7 @@
       "source_location": "L59",
       "_origin": "ast",
       "id": "src_pages_prix_carburants_department_diffclass",
-      "community": 3,
+      "community": 157,
       "norm_label": "diffclass()"
     },
     {
@@ -4567,7 +4597,7 @@
       "confidence": "EXTRACTED",
       "_origin": "ast",
       "id": "c_users_hbeignon_desktop_projetseomoncarburant_src_utils_dept_intro",
-      "community": 3,
+      "community": 157,
       "norm_label": "../../utils/dept-intro"
     },
     {
@@ -4579,6 +4609,136 @@
       "id": "c_users_hbeignon_desktop_projetseomoncarburant_src_utils_format_maj",
       "community": 246,
       "norm_label": "../../../utils/format-maj"
+    },
+    {
+      "label": "[autoroute].astro",
+      "file_type": "code",
+      "source_file": "src/pages/prix-carburants/autoroute/[autoroute].astro",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "src_pages_prix_carburants_autoroute_autoroute",
+      "community": 246,
+      "norm_label": "[autoroute].astro"
+    },
+    {
+      "label": "getStaticPaths()",
+      "file_type": "code",
+      "source_file": "src/pages/prix-carburants/autoroute/[autoroute].astro",
+      "source_location": "L13",
+      "_origin": "ast",
+      "id": "src_pages_prix_carburants_autoroute_autoroute_getstaticpaths",
+      "community": 246,
+      "norm_label": "getstaticpaths()"
+    },
+    {
+      "label": "priceDiff()",
+      "file_type": "code",
+      "source_file": "src/pages/prix-carburants/autoroute/[autoroute].astro",
+      "source_location": "L35",
+      "_origin": "ast",
+      "id": "src_pages_prix_carburants_autoroute_autoroute_pricediff",
+      "community": 246,
+      "norm_label": "pricediff()"
+    },
+    {
+      "label": "diffClass()",
+      "file_type": "code",
+      "source_file": "src/pages/prix-carburants/autoroute/[autoroute].astro",
+      "source_location": "L41",
+      "_origin": "ast",
+      "id": "src_pages_prix_carburants_autoroute_autoroute_diffclass",
+      "community": 246,
+      "norm_label": "diffclass()"
+    },
+    {
+      "label": "../../../data/fuel/stats-autoroute.json",
+      "file_type": "code",
+      "source_file": "src/data/fuel/stats-autoroute.json",
+      "confidence": "EXTRACTED",
+      "_origin": "ast",
+      "id": "src_data_fuel_stats_autoroute",
+      "community": 3,
+      "norm_label": "../../../data/fuel/stats-autoroute.json"
+    },
+    {
+      "label": "../../../data/fuel/autoroutes.json",
+      "file_type": "code",
+      "source_file": "src/data/fuel/autoroutes.json",
+      "confidence": "EXTRACTED",
+      "_origin": "ast",
+      "id": "src_data_fuel_autoroutes",
+      "community": 3,
+      "norm_label": "../../../data/fuel/autoroutes.json"
+    },
+    {
+      "label": "index.astro",
+      "file_type": "code",
+      "source_file": "src/pages/prix-carburants/autoroute/index.astro",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "src_pages_prix_carburants_autoroute_index",
+      "community": 3,
+      "norm_label": "index.astro"
+    },
+    {
+      "label": "FUELS",
+      "file_type": "code",
+      "source_file": "src/pages/prix-carburants/autoroute/index.astro",
+      "source_location": "L8",
+      "_origin": "ast",
+      "id": "src_pages_prix_carburants_autoroute_index_fuels",
+      "community": 3,
+      "norm_label": "fuels"
+    },
+    {
+      "label": "string",
+      "file_type": "code",
+      "source_file": "src/pages/prix-carburants/autoroute/index.astro",
+      "source_location": "L9",
+      "_origin": "ast",
+      "id": "src_pages_prix_carburants_autoroute_index_string",
+      "community": 3,
+      "norm_label": "string"
+    },
+    {
+      "label": "highways",
+      "file_type": "code",
+      "source_file": "src/pages/prix-carburants/autoroute/index.astro",
+      "source_location": "L13",
+      "_origin": "ast",
+      "id": "src_pages_prix_carburants_autoroute_index_highways",
+      "community": 3,
+      "norm_label": "highways"
+    },
+    {
+      "label": "breadcrumb",
+      "file_type": "code",
+      "source_file": "src/pages/prix-carburants/autoroute/index.astro",
+      "source_location": "L30",
+      "_origin": "ast",
+      "id": "src_pages_prix_carburants_autoroute_index_breadcrumb",
+      "community": 3,
+      "norm_label": "breadcrumb"
+    },
+    {
+      "label": "jsonLdBreadcrumb",
+      "file_type": "code",
+      "source_file": "src/pages/prix-carburants/autoroute/index.astro",
+      "source_location": "L36",
+      "_origin": "ast",
+      "id": "src_pages_prix_carburants_autoroute_index_jsonldbreadcrumb",
+      "community": 3,
+      "norm_label": "jsonldbreadcrumb"
+    },
+    {
+      "label": "index.astro",
+      "file_type": "code",
+      "source_file": "src/pages/prix-carburants/departements/index.astro",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "src_pages_prix_carburants_departements_index",
+      "community": 2,
+      "norm_label": "index.astro"
     },
     {
       "label": "[brand].astro",
@@ -4623,11 +4783,81 @@
     {
       "label": "index.astro",
       "file_type": "code",
+      "source_file": "src/pages/prix-carburants/enseigne/index.astro",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "src_pages_prix_carburants_enseigne_index",
+      "community": 205,
+      "norm_label": "index.astro"
+    },
+    {
+      "label": "brandFiles",
+      "file_type": "code",
+      "source_file": "src/pages/prix-carburants/enseigne/index.astro",
+      "source_location": "L10",
+      "_origin": "ast",
+      "id": "src_pages_prix_carburants_enseigne_index_brandfiles",
+      "community": 205,
+      "norm_label": "brandfiles"
+    },
+    {
+      "label": "number",
+      "file_type": "code",
+      "source_file": "src/pages/prix-carburants/enseigne/index.astro",
+      "source_location": "L11",
+      "_origin": "ast",
+      "id": "src_pages_prix_carburants_enseigne_index_number",
+      "community": 205,
+      "norm_label": "number"
+    },
+    {
+      "label": "brands",
+      "file_type": "code",
+      "source_file": "src/pages/prix-carburants/enseigne/index.astro",
+      "source_location": "L16",
+      "_origin": "ast",
+      "id": "src_pages_prix_carburants_enseigne_index_brands",
+      "community": 205,
+      "norm_label": "brands"
+    },
+    {
+      "label": "totalStations",
+      "file_type": "code",
+      "source_file": "src/pages/prix-carburants/enseigne/index.astro",
+      "source_location": "L20",
+      "_origin": "ast",
+      "id": "src_pages_prix_carburants_enseigne_index_totalstations",
+      "community": 205,
+      "norm_label": "totalstations"
+    },
+    {
+      "label": "breadcrumb",
+      "file_type": "code",
+      "source_file": "src/pages/prix-carburants/enseigne/index.astro",
+      "source_location": "L29",
+      "_origin": "ast",
+      "id": "src_pages_prix_carburants_enseigne_index_breadcrumb",
+      "community": 205,
+      "norm_label": "breadcrumb"
+    },
+    {
+      "label": "jsonLdBreadcrumb",
+      "file_type": "code",
+      "source_file": "src/pages/prix-carburants/enseigne/index.astro",
+      "source_location": "L35",
+      "_origin": "ast",
+      "id": "src_pages_prix_carburants_enseigne_index_jsonldbreadcrumb",
+      "community": 205,
+      "norm_label": "jsonldbreadcrumb"
+    },
+    {
+      "label": "index.astro",
+      "file_type": "code",
       "source_file": "src/pages/prix-carburants/index.astro",
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_pages_prix_carburants_index",
-      "community": 157,
+      "community": 2,
       "norm_label": "index.astro"
     },
     {
@@ -4768,7 +4998,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_pages_prix_carburants_ville_city",
-      "community": 246,
+      "community": 203,
       "norm_label": "[city].astro"
     },
     {
@@ -4778,7 +5008,7 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "src_pages_prix_carburants_ville_city_getstaticpaths",
-      "community": 246,
+      "community": 203,
       "norm_label": "getstaticpaths()"
     },
     {
@@ -4788,7 +5018,7 @@
       "source_location": "L35",
       "_origin": "ast",
       "id": "src_pages_prix_carburants_ville_city_pricediff",
-      "community": 246,
+      "community": 203,
       "norm_label": "pricediff()"
     },
     {
@@ -4798,7 +5028,7 @@
       "source_location": "L50",
       "_origin": "ast",
       "id": "src_pages_prix_carburants_ville_city_introsentences",
-      "community": 246,
+      "community": 203,
       "norm_label": "introsentences"
     },
     {
@@ -4808,7 +5038,7 @@
       "source_location": "L61",
       "_origin": "ast",
       "id": "src_pages_prix_carburants_ville_city_breadcrumb",
-      "community": 246,
+      "community": 203,
       "norm_label": "breadcrumb"
     },
     {
@@ -4818,7 +5048,7 @@
       "source_location": "L75",
       "_origin": "ast",
       "id": "src_pages_prix_carburants_ville_city_hascityblason",
-      "community": 246,
+      "community": 203,
       "norm_label": "hascityblason"
     },
     {
@@ -4828,7 +5058,7 @@
       "source_location": "L96",
       "_origin": "ast",
       "id": "src_pages_prix_carburants_ville_city_jsonldbreadcrumb",
-      "community": 246,
+      "community": 203,
       "norm_label": "jsonldbreadcrumb"
     },
     {
@@ -4838,7 +5068,7 @@
       "confidence": "EXTRACTED",
       "_origin": "ast",
       "id": "c_users_hbeignon_desktop_projetseomoncarburant_src_utils_city_intro",
-      "community": 246,
+      "community": 203,
       "norm_label": "../../../utils/city-intro"
     },
     {
@@ -4848,7 +5078,7 @@
       "confidence": "EXTRACTED",
       "_origin": "ast",
       "id": "c_users_hbeignon_desktop_projetseomoncarburant_src_utils_city_identity",
-      "community": 246,
+      "community": 203,
       "norm_label": "../../../utils/city-identity"
     },
     {
@@ -4928,7 +5158,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_utils_city_identity",
-      "community": 169,
+      "community": 203,
       "norm_label": "city-identity.ts"
     },
     {
@@ -4938,7 +5168,7 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "src_utils_city_identity_citydept",
-      "community": 169,
+      "community": 203,
       "norm_label": "citydept"
     },
     {
@@ -4948,7 +5178,7 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "src_utils_city_identity_cityidentityparams",
-      "community": 169,
+      "community": 203,
       "norm_label": "cityidentityparams"
     },
     {
@@ -4958,7 +5188,7 @@
       "source_location": "L21",
       "_origin": "ast",
       "id": "src_utils_city_identity_localfact",
-      "community": 169,
+      "community": 203,
       "norm_label": "localfact"
     },
     {
@@ -4968,7 +5198,7 @@
       "source_location": "L25",
       "_origin": "ast",
       "id": "src_utils_city_identity_dept_article",
-      "community": 169,
+      "community": 203,
       "norm_label": "dept_article"
     },
     {
@@ -4978,7 +5208,7 @@
       "source_location": "L45",
       "_origin": "ast",
       "id": "src_utils_city_identity_deptinphrase",
-      "community": 169,
+      "community": 203,
       "norm_label": "deptinphrase()"
     },
     {
@@ -4988,7 +5218,7 @@
       "source_location": "L52",
       "_origin": "ast",
       "id": "src_utils_city_identity_deptofphrase",
-      "community": 169,
+      "community": 203,
       "norm_label": "deptofphrase()"
     },
     {
@@ -4998,7 +5228,7 @@
       "source_location": "L62",
       "_origin": "ast",
       "id": "src_utils_city_identity_buildcityidentity",
-      "community": 169,
+      "community": 203,
       "norm_label": "buildcityidentity()"
     },
     {
@@ -5008,7 +5238,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_utils_city_intro",
-      "community": 163,
+      "community": 203,
       "norm_label": "city-intro.ts"
     },
     {
@@ -5018,7 +5248,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_utils_city_intro_citystation",
-      "community": 163,
+      "community": 203,
       "norm_label": "citystation"
     },
     {
@@ -5028,7 +5258,7 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "src_utils_city_intro_cityintroparams",
-      "community": 163,
+      "community": 203,
       "norm_label": "cityintroparams"
     },
     {
@@ -5038,7 +5268,7 @@
       "source_location": "L20",
       "_origin": "ast",
       "id": "src_utils_city_intro_fmt",
-      "community": 163,
+      "community": 203,
       "norm_label": "fmt()"
     },
     {
@@ -5048,7 +5278,7 @@
       "source_location": "L21",
       "_origin": "ast",
       "id": "src_utils_city_intro_sign",
-      "community": 163,
+      "community": 203,
       "norm_label": "sign()"
     },
     {
@@ -5058,7 +5288,7 @@
       "source_location": "L23",
       "_origin": "ast",
       "id": "src_utils_city_intro_diffpct",
-      "community": 163,
+      "community": 203,
       "norm_label": "diffpct()"
     },
     {
@@ -5068,7 +5298,7 @@
       "source_location": "L28",
       "_origin": "ast",
       "id": "src_utils_city_intro_cityvariant",
-      "community": 163,
+      "community": 203,
       "norm_label": "cityvariant()"
     },
     {
@@ -5078,7 +5308,7 @@
       "source_location": "L33",
       "_origin": "ast",
       "id": "src_utils_city_intro_cheapestfor",
-      "community": 163,
+      "community": 203,
       "norm_label": "cheapestfor()"
     },
     {
@@ -5088,7 +5318,7 @@
       "source_location": "L42",
       "_origin": "ast",
       "id": "src_utils_city_intro_countwith",
-      "community": 163,
+      "community": 203,
       "norm_label": "countwith()"
     },
     {
@@ -5098,7 +5328,7 @@
       "source_location": "L46",
       "_origin": "ast",
       "id": "src_utils_city_intro_buildcityintro",
-      "community": 163,
+      "community": 203,
       "norm_label": "buildcityintro()"
     },
     {
@@ -5518,7 +5748,7 @@
       "source_location": "L117",
       "_origin": "ast",
       "id": "src_utils_station_intro_stationdisplayname",
-      "community": 193,
+      "community": 191,
       "norm_label": "stationdisplayname()"
     },
     {
@@ -5528,7 +5758,7 @@
       "source_location": "L124",
       "_origin": "ast",
       "id": "src_utils_station_intro_stationheading",
-      "community": 193,
+      "community": 191,
       "norm_label": "stationheading()"
     },
     {
@@ -5658,7 +5888,7 @@
       "source_location": "L76",
       "_origin": "ast",
       "id": "src_utils_station_waves_stationurl",
-      "community": 3,
+      "community": 157,
       "norm_label": "stationurl()"
     },
     {
@@ -8420,6 +8650,56 @@
       "id": "stations_rollout_10_limites_connues",
       "community": 176,
       "norm_label": "10. limites connues"
+    },
+    {
+      "label": "additifs-metalliques-mention-pompe-essence-2026.md",
+      "file_type": "document",
+      "source_file": "src/content/blog/additifs-metalliques-mention-pompe-essence-2026.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "src_content_blog_additifs_metalliques_mention_pompe_essence_2026",
+      "community": 163,
+      "norm_label": "additifs-metalliques-mention-pompe-essence-2026.md"
+    },
+    {
+      "label": "Un arr\u00eat\u00e9 publi\u00e9 au Journal officiel le 26 ao\u00fbt",
+      "file_type": "document",
+      "source_file": "src/content/blog/additifs-metalliques-mention-pompe-essence-2026.md",
+      "source_location": "L40",
+      "_origin": "ast",
+      "id": "src_content_blog_additifs_metalliques_mention_pompe_essence_2026_un_arr\u00eat\u00e9_publi\u00e9_au_journal_officiel_le_26_ao\u00fbt",
+      "community": 163,
+      "norm_label": "un arrete publie au journal officiel le 26 aout"
+    },
+    {
+      "label": "Le mangan\u00e8se, un vieux compagnon de l'essence sans plomb",
+      "file_type": "document",
+      "source_file": "src/content/blog/additifs-metalliques-mention-pompe-essence-2026.md",
+      "source_location": "L48",
+      "_origin": "ast",
+      "id": "src_content_blog_additifs_metalliques_mention_pompe_essence_2026_le_mangan\u00e8se_un_vieux_compagnon_de_l_essence_sans_plomb",
+      "community": 163,
+      "norm_label": "le manganese, un vieux compagnon de l'essence sans plomb"
+    },
+    {
+      "label": "Faut-il s'inqui\u00e9ter pour son moteur ou pour sa sant\u00e9",
+      "file_type": "document",
+      "source_file": "src/content/blog/additifs-metalliques-mention-pompe-essence-2026.md",
+      "source_location": "L56",
+      "_origin": "ast",
+      "id": "src_content_blog_additifs_metalliques_mention_pompe_essence_2026_faut_il_s_inqui\u00e9ter_pour_son_moteur_ou_pour_sa_sant\u00e9",
+      "community": 163,
+      "norm_label": "faut-il s'inquieter pour son moteur ou pour sa sante"
+    },
+    {
+      "label": "Ce qu'il faut retenir en pratique",
+      "file_type": "document",
+      "source_file": "src/content/blog/additifs-metalliques-mention-pompe-essence-2026.md",
+      "source_location": "L62",
+      "_origin": "ast",
+      "id": "src_content_blog_additifs_metalliques_mention_pompe_essence_2026_ce_qu_il_faut_retenir_en_pratique",
+      "community": 163,
+      "norm_label": "ce qu'il faut retenir en pratique"
     },
     {
       "label": "astuces-economiser-carburant.mdx",
@@ -12085,7 +12365,7 @@
       "label": "Y a-t-il une op\u00e9ration prix co\u00fbtant ce week-end ?",
       "file_type": "document",
       "source_file": "src/content/blog/prix-coutant-carburant-calendrier-leclerc-intermarche-carrefour.mdx",
-      "source_location": "L41",
+      "source_location": "L43",
       "_origin": "ast",
       "id": "src_content_blog_prix_coutant_carburant_calendrier_leclerc_intermarche_carrefour_y_a_t_il_une_op\u00e9ration_prix_co\u00fbtant_ce_week_end",
       "community": 225,
@@ -12095,7 +12375,7 @@
       "label": "Les op\u00e9rations prix co\u00fbtant d\u00e9j\u00e0 pass\u00e9es en 2026",
       "file_type": "document",
       "source_file": "src/content/blog/prix-coutant-carburant-calendrier-leclerc-intermarche-carrefour.mdx",
-      "source_location": "L49",
+      "source_location": "L51",
       "_origin": "ast",
       "id": "src_content_blog_prix_coutant_carburant_calendrier_leclerc_intermarche_carrefour_les_op\u00e9rations_prix_co\u00fbtant_d\u00e9j\u00e0_pass\u00e9es_en_2026",
       "community": 225,
@@ -12105,7 +12385,7 @@
       "label": "Un principe commun, des conditions diff\u00e9rentes",
       "file_type": "document",
       "source_file": "src/content/blog/prix-coutant-carburant-calendrier-leclerc-intermarche-carrefour.mdx",
-      "source_location": "L61",
+      "source_location": "L63",
       "_origin": "ast",
       "id": "src_content_blog_prix_coutant_carburant_calendrier_leclerc_intermarche_carrefour_un_principe_commun_des_conditions_diff\u00e9rentes",
       "community": 225,
@@ -12115,7 +12395,7 @@
       "label": "Les p\u00e9riodes habituelles",
       "file_type": "document",
       "source_file": "src/content/blog/prix-coutant-carburant-calendrier-leclerc-intermarche-carrefour.mdx",
-      "source_location": "L75",
+      "source_location": "L77",
       "_origin": "ast",
       "id": "src_content_blog_prix_coutant_carburant_calendrier_leclerc_intermarche_carrefour_les_p\u00e9riodes_habituelles",
       "community": 225,
@@ -12125,7 +12405,7 @@
       "label": "Comment ne pas les rater",
       "file_type": "document",
       "source_file": "src/content/blog/prix-coutant-carburant-calendrier-leclerc-intermarche-carrefour.mdx",
-      "source_location": "L88",
+      "source_location": "L90",
       "_origin": "ast",
       "id": "src_content_blog_prix_coutant_carburant_calendrier_leclerc_intermarche_carrefour_comment_ne_pas_les_rater",
       "community": 225,
@@ -19376,6 +19656,16 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "scripts/fetch-fuel-data.js",
+      "source_location": "L22",
+      "weight": 1.0,
+      "source": "scripts_fetch_fuel_data",
+      "target": "scripts_fetch_fuel_data_autoroute_dir",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/fetch-fuel-data.js",
       "source_location": "L21",
       "weight": 1.0,
       "source": "scripts_fetch_fuel_data",
@@ -19386,7 +19676,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "scripts/fetch-fuel-data.js",
-      "source_location": "L153",
+      "source_location": "L154",
       "weight": 1.0,
       "source": "scripts_fetch_fuel_data",
       "target": "scripts_fetch_fuel_data_brand_map",
@@ -19396,7 +19686,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "scripts/fetch-fuel-data.js",
-      "source_location": "L23",
+      "source_location": "L24",
       "weight": 1.0,
       "source": "scripts_fetch_fuel_data",
       "target": "scripts_fetch_fuel_data_brand_map_file",
@@ -19406,7 +19696,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "scripts/fetch-fuel-data.js",
-      "source_location": "L118",
+      "source_location": "L119",
       "weight": 1.0,
       "source": "scripts_fetch_fuel_data",
       "target": "scripts_fetch_fuel_data_buildcitynames",
@@ -19416,7 +19706,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "scripts/fetch-fuel-data.js",
-      "source_location": "L460",
+      "source_location": "L481",
       "weight": 1.0,
       "source": "scripts_fetch_fuel_data",
       "target": "scripts_fetch_fuel_data_builddepstats",
@@ -19426,7 +19716,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "scripts/fetch-fuel-data.js",
-      "source_location": "L451",
+      "source_location": "L472",
       "weight": 1.0,
       "source": "scripts_fetch_fuel_data",
       "target": "scripts_fetch_fuel_data_buildnationalstats",
@@ -19436,7 +19726,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "scripts/fetch-fuel-data.js",
-      "source_location": "L472",
+      "source_location": "L493",
       "weight": 1.0,
       "source": "scripts_fetch_fuel_data",
       "target": "scripts_fetch_fuel_data_buildregionstats",
@@ -19446,7 +19736,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "scripts/fetch-fuel-data.js",
-      "source_location": "L26",
+      "source_location": "L27",
       "weight": 1.0,
       "source": "scripts_fetch_fuel_data",
       "target": "scripts_fetch_fuel_data_check_only",
@@ -19466,7 +19756,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "scripts/fetch-fuel-data.js",
-      "source_location": "L55",
+      "source_location": "L56",
       "weight": 1.0,
       "source": "scripts_fetch_fuel_data",
       "target": "scripts_fetch_fuel_data_cleantext",
@@ -19476,7 +19766,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "scripts/fetch-fuel-data.js",
-      "source_location": "L440",
+      "source_location": "L461",
       "weight": 1.0,
       "source": "scripts_fetch_fuel_data",
       "target": "scripts_fetch_fuel_data_computestats",
@@ -19526,7 +19816,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "scripts/fetch-fuel-data.js",
-      "source_location": "L222",
+      "source_location": "L243",
       "weight": 1.0,
       "source": "scripts_fetch_fuel_data",
       "target": "scripts_fetch_fuel_data_downloadzip",
@@ -19536,7 +19826,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "scripts/fetch-fuel-data.js",
-      "source_location": "L206",
+      "source_location": "L207",
       "weight": 1.0,
       "source": "scripts_fetch_fuel_data",
       "target": "scripts_fetch_fuel_data_ensuredirs",
@@ -19546,7 +19836,17 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "scripts/fetch-fuel-data.js",
-      "source_location": "L31",
+      "source_location": "L221",
+      "weight": 1.0,
+      "source": "scripts_fetch_fuel_data",
+      "target": "scripts_fetch_fuel_data_extracthighway",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/fetch-fuel-data.js",
+      "source_location": "L32",
       "weight": 1.0,
       "source": "scripts_fetch_fuel_data",
       "target": "scripts_fetch_fuel_data_fuel_id_map",
@@ -19556,7 +19856,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "scripts/fetch-fuel-data.js",
-      "source_location": "L28",
+      "source_location": "L29",
       "weight": 1.0,
       "source": "scripts_fetch_fuel_data",
       "target": "scripts_fetch_fuel_data_fuels",
@@ -19566,7 +19866,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "scripts/fetch-fuel-data.js",
-      "source_location": "L257",
+      "source_location": "L278",
       "weight": 1.0,
       "source": "scripts_fetch_fuel_data",
       "target": "scripts_fetch_fuel_data_getdepnum",
@@ -19576,7 +19876,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "scripts/fetch-fuel-data.js",
-      "source_location": "L212",
+      "source_location": "L233",
       "weight": 1.0,
       "source": "scripts_fetch_fuel_data",
       "target": "scripts_fetch_fuel_data_loaddepartments",
@@ -19586,7 +19886,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "scripts/fetch-fuel-data.js",
-      "source_location": "L217",
+      "source_location": "L238",
       "weight": 1.0,
       "source": "scripts_fetch_fuel_data",
       "target": "scripts_fetch_fuel_data_loadtopcities",
@@ -19596,7 +19896,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "scripts/fetch-fuel-data.js",
-      "source_location": "L507",
+      "source_location": "L528",
       "weight": 1.0,
       "source": "scripts_fetch_fuel_data",
       "target": "scripts_fetch_fuel_data_main",
@@ -19606,7 +19906,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "scripts/fetch-fuel-data.js",
-      "source_location": "L37",
+      "source_location": "L38",
       "weight": 1.0,
       "source": "scripts_fetch_fuel_data",
       "target": "scripts_fetch_fuel_data_named_entities",
@@ -19616,7 +19916,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "scripts/fetch-fuel-data.js",
-      "source_location": "L200",
+      "source_location": "L201",
       "weight": 1.0,
       "source": "scripts_fetch_fuel_data",
       "target": "scripts_fetch_fuel_data_normalizeenseigne",
@@ -19626,7 +19926,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "scripts/fetch-fuel-data.js",
-      "source_location": "L270",
+      "source_location": "L291",
       "weight": 1.0,
       "source": "scripts_fetch_fuel_data",
       "target": "scripts_fetch_fuel_data_normalizeheure",
@@ -19636,7 +19936,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "scripts/fetch-fuel-data.js",
-      "source_location": "L330",
+      "source_location": "L351",
       "weight": 1.0,
       "source": "scripts_fetch_fuel_data",
       "target": "scripts_fetch_fuel_data_normalizeprice",
@@ -19646,7 +19946,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "scripts/fetch-fuel-data.js",
-      "source_location": "L296",
+      "source_location": "L317",
       "weight": 1.0,
       "source": "scripts_fetch_fuel_data",
       "target": "scripts_fetch_fuel_data_parsehoraires",
@@ -19656,7 +19956,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "scripts/fetch-fuel-data.js",
-      "source_location": "L234",
+      "source_location": "L255",
       "weight": 1.0,
       "source": "scripts_fetch_fuel_data",
       "target": "scripts_fetch_fuel_data_parsexml",
@@ -19666,7 +19966,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "scripts/fetch-fuel-data.js",
-      "source_location": "L76",
+      "source_location": "L77",
       "weight": 1.0,
       "source": "scripts_fetch_fuel_data",
       "target": "scripts_fetch_fuel_data_particules",
@@ -19676,7 +19976,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "scripts/fetch-fuel-data.js",
-      "source_location": "L338",
+      "source_location": "L359",
       "weight": 1.0,
       "source": "scripts_fetch_fuel_data",
       "target": "scripts_fetch_fuel_data_processstations",
@@ -19686,7 +19986,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "scripts/fetch-fuel-data.js",
-      "source_location": "L22",
+      "source_location": "L23",
       "weight": 1.0,
       "source": "scripts_fetch_fuel_data",
       "target": "scripts_fetch_fuel_data_public_data_dir",
@@ -19706,7 +20006,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "scripts/fetch-fuel-data.js",
-      "source_location": "L33",
+      "source_location": "L34",
       "weight": 1.0,
       "source": "scripts_fetch_fuel_data",
       "target": "scripts_fetch_fuel_data_slugifycity",
@@ -19716,7 +20016,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "scripts/fetch-fuel-data.js",
-      "source_location": "L489",
+      "source_location": "L510",
       "weight": 1.0,
       "source": "scripts_fetch_fuel_data",
       "target": "scripts_fetch_fuel_data_stationtolight",
@@ -19726,7 +20026,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "scripts/fetch-fuel-data.js",
-      "source_location": "L90",
+      "source_location": "L91",
       "weight": 1.0,
       "source": "scripts_fetch_fuel_data",
       "target": "scripts_fetch_fuel_data_titlecasecity",
@@ -19737,7 +20037,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "scripts/fetch-fuel-data.js",
-      "source_location": "L681",
+      "source_location": "L702",
       "weight": 1.0,
       "source": "scripts_fetch_fuel_data_main",
       "target": "scripts_fetch_fuel_data_slugifycity",
@@ -19748,7 +20048,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "scripts/fetch-fuel-data.js",
-      "source_location": "L415",
+      "source_location": "L436",
       "weight": 1.0,
       "source": "scripts_fetch_fuel_data_processstations",
       "target": "scripts_fetch_fuel_data_slugifycity",
@@ -19759,7 +20059,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "scripts/fetch-fuel-data.js",
-      "source_location": "L357",
+      "source_location": "L378",
       "weight": 1.0,
       "source": "scripts_fetch_fuel_data_processstations",
       "target": "scripts_fetch_fuel_data_cleantext",
@@ -19770,7 +20070,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "scripts/fetch-fuel-data.js",
-      "source_location": "L141",
+      "source_location": "L142",
       "weight": 1.0,
       "source": "scripts_fetch_fuel_data_buildcitynames",
       "target": "scripts_fetch_fuel_data_titlecasecity",
@@ -19781,7 +20081,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "scripts/fetch-fuel-data.js",
-      "source_location": "L573",
+      "source_location": "L594",
       "weight": 1.0,
       "source": "scripts_fetch_fuel_data_main",
       "target": "scripts_fetch_fuel_data_buildcitynames",
@@ -19792,7 +20092,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "scripts/fetch-fuel-data.js",
-      "source_location": "L556",
+      "source_location": "L577",
       "weight": 1.0,
       "source": "scripts_fetch_fuel_data_main",
       "target": "scripts_fetch_fuel_data_ensuredirs",
@@ -19803,32 +20103,10 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "scripts/fetch-fuel-data.js",
-      "source_location": "L510",
+      "source_location": "L800",
       "weight": 1.0,
       "source": "scripts_fetch_fuel_data_main",
-      "target": "scripts_fetch_fuel_data_loaddepartments",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "scripts/fetch-fuel-data.js",
-      "source_location": "L511",
-      "weight": 1.0,
-      "source": "scripts_fetch_fuel_data_main",
-      "target": "scripts_fetch_fuel_data_loadtopcities",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "scripts/fetch-fuel-data.js",
-      "source_location": "L516",
-      "weight": 1.0,
-      "source": "scripts_fetch_fuel_data_main",
-      "target": "scripts_fetch_fuel_data_downloadzip",
+      "target": "scripts_fetch_fuel_data_extracthighway",
       "confidence_score": 1.0
     },
     {
@@ -19839,6 +20117,39 @@
       "source_location": "L531",
       "weight": 1.0,
       "source": "scripts_fetch_fuel_data_main",
+      "target": "scripts_fetch_fuel_data_loaddepartments",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/fetch-fuel-data.js",
+      "source_location": "L532",
+      "weight": 1.0,
+      "source": "scripts_fetch_fuel_data_main",
+      "target": "scripts_fetch_fuel_data_loadtopcities",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/fetch-fuel-data.js",
+      "source_location": "L537",
+      "weight": 1.0,
+      "source": "scripts_fetch_fuel_data_main",
+      "target": "scripts_fetch_fuel_data_downloadzip",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/fetch-fuel-data.js",
+      "source_location": "L552",
+      "weight": 1.0,
+      "source": "scripts_fetch_fuel_data_main",
       "target": "scripts_fetch_fuel_data_parsexml",
       "confidence_score": 1.0
     },
@@ -19847,7 +20158,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "scripts/fetch-fuel-data.js",
-      "source_location": "L343",
+      "source_location": "L364",
       "weight": 1.0,
       "source": "scripts_fetch_fuel_data_processstations",
       "target": "scripts_fetch_fuel_data_getdepnum",
@@ -19858,7 +20169,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "scripts/fetch-fuel-data.js",
-      "source_location": "L317",
+      "source_location": "L338",
       "weight": 1.0,
       "source": "scripts_fetch_fuel_data_parsehoraires",
       "target": "scripts_fetch_fuel_data_normalizeheure",
@@ -19869,7 +20180,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "scripts/fetch-fuel-data.js",
-      "source_location": "L401",
+      "source_location": "L422",
       "weight": 1.0,
       "source": "scripts_fetch_fuel_data_processstations",
       "target": "scripts_fetch_fuel_data_parsehoraires",
@@ -19880,7 +20191,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "scripts/fetch-fuel-data.js",
-      "source_location": "L380",
+      "source_location": "L401",
       "weight": 1.0,
       "source": "scripts_fetch_fuel_data_processstations",
       "target": "scripts_fetch_fuel_data_normalizeprice",
@@ -19891,7 +20202,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "scripts/fetch-fuel-data.js",
-      "source_location": "L553",
+      "source_location": "L574",
       "weight": 1.0,
       "source": "scripts_fetch_fuel_data_main",
       "target": "scripts_fetch_fuel_data_processstations",
@@ -19902,7 +20213,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "scripts/fetch-fuel-data.js",
-      "source_location": "L465",
+      "source_location": "L486",
       "weight": 1.0,
       "source": "scripts_fetch_fuel_data_builddepstats",
       "target": "scripts_fetch_fuel_data_computestats",
@@ -19913,7 +20224,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "scripts/fetch-fuel-data.js",
-      "source_location": "L454",
+      "source_location": "L475",
       "weight": 1.0,
       "source": "scripts_fetch_fuel_data_buildnationalstats",
       "target": "scripts_fetch_fuel_data_computestats",
@@ -19924,7 +20235,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "scripts/fetch-fuel-data.js",
-      "source_location": "L482",
+      "source_location": "L503",
       "weight": 1.0,
       "source": "scripts_fetch_fuel_data_buildregionstats",
       "target": "scripts_fetch_fuel_data_computestats",
@@ -19935,7 +20246,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "scripts/fetch-fuel-data.js",
-      "source_location": "L618",
+      "source_location": "L639",
       "weight": 1.0,
       "source": "scripts_fetch_fuel_data_main",
       "target": "scripts_fetch_fuel_data_computestats",
@@ -19946,7 +20257,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "scripts/fetch-fuel-data.js",
-      "source_location": "L578",
+      "source_location": "L599",
       "weight": 1.0,
       "source": "scripts_fetch_fuel_data_main",
       "target": "scripts_fetch_fuel_data_buildnationalstats",
@@ -19957,7 +20268,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "scripts/fetch-fuel-data.js",
-      "source_location": "L603",
+      "source_location": "L624",
       "weight": 1.0,
       "source": "scripts_fetch_fuel_data_main",
       "target": "scripts_fetch_fuel_data_builddepstats",
@@ -19968,7 +20279,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "scripts/fetch-fuel-data.js",
-      "source_location": "L607",
+      "source_location": "L628",
       "weight": 1.0,
       "source": "scripts_fetch_fuel_data_main",
       "target": "scripts_fetch_fuel_data_buildregionstats",
@@ -20651,6 +20962,30 @@
     {
       "relation": "imports_from",
       "confidence": "EXTRACTED",
+      "source_file": "src/pages/prix-carburants/autoroute/[autoroute].astro",
+      "source": "src_pages_prix_carburants_autoroute_autoroute",
+      "target": "src_layouts_baselayout",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "src/pages/prix-carburants/autoroute/index.astro",
+      "source": "src_pages_prix_carburants_autoroute_index",
+      "target": "src_layouts_baselayout",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "src/pages/prix-carburants/departements/index.astro",
+      "source": "src_pages_prix_carburants_departements_index",
+      "target": "src_layouts_baselayout",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
       "source_file": "src/pages/prix-carburants/[department].astro",
       "source": "src_pages_prix_carburants_department",
       "target": "src_layouts_baselayout",
@@ -20661,6 +20996,14 @@
       "confidence": "EXTRACTED",
       "source_file": "src/pages/prix-carburants/enseigne/[brand].astro",
       "source": "src_pages_prix_carburants_enseigne_brand",
+      "target": "src_layouts_baselayout",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "src/pages/prix-carburants/enseigne/index.astro",
+      "source": "src_pages_prix_carburants_enseigne_index",
       "target": "src_layouts_baselayout",
       "confidence_score": 1.0
     },
@@ -21026,6 +21369,17 @@
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
+      "source_file": "src/pages/prix-carburants/autoroute/[autoroute].astro",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "src_pages_prix_carburants_autoroute_autoroute",
+      "target": "src_components_brandlogo",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
       "source_file": "src/pages/prix-carburants/[department].astro",
       "source_location": "L9",
       "weight": 1.0,
@@ -21041,6 +21395,28 @@
       "source_location": "L3",
       "weight": 1.0,
       "source": "src_pages_prix_carburants_enseigne_brand",
+      "target": "src_components_brandlogo",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/pages/prix-carburants/enseigne/index.astro",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "src_pages_prix_carburants_enseigne_index",
+      "target": "src_components_brandlogo",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/pages/prix-carburants/index.astro",
+      "source_location": "L13",
+      "weight": 1.0,
+      "source": "src_pages_prix_carburants_index",
       "target": "src_components_brandlogo",
       "confidence_score": 1.0
     },
@@ -21079,6 +21455,14 @@
       "confidence": "EXTRACTED",
       "source_file": "src/components/HeroMap.astro",
       "source": "src_components_heromap",
+      "target": "c_users_hbeignon_desktop_projetseomoncarburant_src_utils_brand_logo",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "src/pages/prix-carburants/autoroute/[autoroute].astro",
+      "source": "src_pages_prix_carburants_autoroute_autoroute",
       "target": "c_users_hbeignon_desktop_projetseomoncarburant_src_utils_brand_logo",
       "confidence_score": 1.0
     },
@@ -21404,6 +21788,28 @@
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
+      "source_file": "src/pages/prix-carburants/autoroute/[autoroute].astro",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "src_pages_prix_carburants_autoroute_autoroute",
+      "target": "src_data_departments",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/pages/prix-carburants/departements/index.astro",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "src_pages_prix_carburants_departements_index",
+      "target": "src_data_departments",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
       "source_file": "src/pages/prix-carburants/[department].astro",
       "source_location": "L3",
       "weight": 1.0,
@@ -21620,6 +22026,39 @@
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
+      "source_file": "src/pages/prix-carburants/autoroute/[autoroute].astro",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "src_pages_prix_carburants_autoroute_autoroute",
+      "target": "src_data_fuel_stats_national",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/pages/prix-carburants/autoroute/index.astro",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "src_pages_prix_carburants_autoroute_index",
+      "target": "src_data_fuel_stats_national",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/pages/prix-carburants/departements/index.astro",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "src_pages_prix_carburants_departements_index",
+      "target": "src_data_fuel_stats_national",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
       "source_file": "src/pages/prix-carburants/[department].astro",
       "source_location": "L4",
       "weight": 1.0,
@@ -21635,6 +22074,17 @@
       "source_location": "L5",
       "weight": 1.0,
       "source": "src_pages_prix_carburants_enseigne_brand",
+      "target": "src_data_fuel_stats_national",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/pages/prix-carburants/enseigne/index.astro",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "src_pages_prix_carburants_enseigne_index",
       "target": "src_data_fuel_stats_national",
       "confidence_score": 1.0
     },
@@ -21730,6 +22180,39 @@
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
+      "source_file": "src/pages/prix-carburants/autoroute/[autoroute].astro",
+      "source_location": "L9",
+      "weight": 1.0,
+      "source": "src_pages_prix_carburants_autoroute_autoroute",
+      "target": "src_data_fuel_meta",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/pages/prix-carburants/autoroute/index.astro",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "src_pages_prix_carburants_autoroute_index",
+      "target": "src_data_fuel_meta",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/pages/prix-carburants/departements/index.astro",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "src_pages_prix_carburants_departements_index",
+      "target": "src_data_fuel_meta",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
       "source_file": "src/pages/prix-carburants/[department].astro",
       "source_location": "L5",
       "weight": 1.0,
@@ -21752,8 +22235,19 @@
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
+      "source_file": "src/pages/prix-carburants/enseigne/index.astro",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "src_pages_prix_carburants_enseigne_index",
+      "target": "src_data_fuel_meta",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
       "source_file": "src/pages/prix-carburants/index.astro",
-      "source_location": "L9",
+      "source_location": "L11",
       "weight": 1.0,
       "source": "src_pages_prix_carburants_index",
       "target": "src_data_fuel_meta",
@@ -21884,6 +22378,14 @@
     {
       "relation": "imports_from",
       "confidence": "EXTRACTED",
+      "source_file": "src/pages/prix-carburants/autoroute/[autoroute].astro",
+      "source": "src_pages_prix_carburants_autoroute_autoroute",
+      "target": "c_users_hbeignon_desktop_projetseomoncarburant_src_utils_escape_html",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
       "source_file": "src/pages/prix-carburants/[department].astro",
       "source": "src_pages_prix_carburants_department",
       "target": "c_users_hbeignon_desktop_projetseomoncarburant_src_utils_escape_html",
@@ -21921,7 +22423,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/components/Header.astro",
-      "source_location": "L624",
+      "source_location": "L651",
       "weight": 1.0,
       "source": "src_components_header",
       "target": "src_components_header_closedropdown",
@@ -21931,7 +22433,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/components/Header.astro",
-      "source_location": "L622",
+      "source_location": "L649",
       "weight": 1.0,
       "source": "src_components_header",
       "target": "src_components_header_hasrealhover",
@@ -21951,7 +22453,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/components/Header.astro",
-      "source_location": "L621",
+      "source_location": "L648",
       "weight": 1.0,
       "source": "src_components_header",
       "target": "src_components_header_isdesktop",
@@ -21986,6 +22488,28 @@
       "source_location": "L6",
       "weight": 1.0,
       "source": "src_pages_prix_carburants_enseigne_brand",
+      "target": "src_data_fuel_brands",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/pages/prix-carburants/enseigne/index.astro",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "src_pages_prix_carburants_enseigne_index",
+      "target": "src_data_fuel_brands",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/pages/prix-carburants/index.astro",
+      "source_location": "L9",
+      "weight": 1.0,
+      "source": "src_pages_prix_carburants_index",
       "target": "src_data_fuel_brands",
       "confidence_score": 1.0
     },
@@ -22268,6 +22792,17 @@
       "weight": 1.0,
       "source": "src_components_stationlink",
       "target": "src_components_stationlink_url",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/pages/prix-carburants/autoroute/[autoroute].astro",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "src_pages_prix_carburants_autoroute_autoroute",
+      "target": "src_components_stationlink",
       "confidence_score": 1.0
     },
     {
@@ -22832,7 +23367,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/pages/contact.astro",
-      "source_location": "L214",
+      "source_location": "L219",
       "weight": 1.0,
       "source": "src_pages_contact",
       "target": "src_pages_contact_clearerrors",
@@ -22842,7 +23377,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/pages/contact.astro",
-      "source_location": "L163",
+      "source_location": "L168",
       "weight": 1.0,
       "source": "src_pages_contact",
       "target": "src_pages_contact_errormsg",
@@ -22852,7 +23387,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/pages/contact.astro",
-      "source_location": "L263",
+      "source_location": "L268",
       "weight": 1.0,
       "source": "src_pages_contact",
       "target": "src_pages_contact_showerror",
@@ -22862,7 +23397,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/pages/contact.astro",
-      "source_location": "L162",
+      "source_location": "L167",
       "weight": 1.0,
       "source": "src_pages_contact",
       "target": "src_pages_contact_successmsg",
@@ -22872,7 +23407,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/pages/contact.astro",
-      "source_location": "L225",
+      "source_location": "L230",
       "weight": 1.0,
       "source": "src_pages_contact",
       "target": "src_pages_contact_validateform",
@@ -22883,7 +23418,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "src/pages/contact.astro",
-      "source_location": "L231",
+      "source_location": "L236",
       "weight": 1.0,
       "source": "src_pages_contact_validateform",
       "target": "src_pages_contact_showerror",
@@ -22897,6 +23432,27 @@
       "source_location": "L10",
       "weight": 1.0,
       "source": "src_pages_index",
+      "target": "src_data_fuel_stats_by_department",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/pages/index.astro",
+      "source_location": "L322",
+      "weight": 1.0,
+      "source": "src_pages_index",
+      "target": "src_pages_index_string",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/pages/prix-carburants/departements/index.astro",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "src_pages_prix_carburants_departements_index",
       "target": "src_data_fuel_stats_by_department",
       "confidence_score": 1.0
     },
@@ -23130,6 +23686,14 @@
     {
       "relation": "imports_from",
       "confidence": "EXTRACTED",
+      "source_file": "src/pages/prix-carburants/autoroute/[autoroute].astro",
+      "source": "src_pages_prix_carburants_autoroute_autoroute",
+      "target": "c_users_hbeignon_desktop_projetseomoncarburant_src_utils_format_maj",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
       "source_file": "src/pages/prix-carburants/enseigne/[brand].astro",
       "source": "src_pages_prix_carburants_enseigne_brand",
       "target": "c_users_hbeignon_desktop_projetseomoncarburant_src_utils_format_maj",
@@ -23149,6 +23713,185 @@
       "source_file": "src/pages/prix-carburants/ville/[city].astro",
       "source": "src_pages_prix_carburants_ville_city",
       "target": "c_users_hbeignon_desktop_projetseomoncarburant_src_utils_format_maj",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/pages/prix-carburants/autoroute/[autoroute].astro",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "src_pages_prix_carburants_autoroute_autoroute",
+      "target": "src_data_fuel_autoroutes",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/pages/prix-carburants/autoroute/[autoroute].astro",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "src_pages_prix_carburants_autoroute_autoroute",
+      "target": "src_data_fuel_stats_autoroute",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/pages/prix-carburants/autoroute/[autoroute].astro",
+      "source_location": "L41",
+      "weight": 1.0,
+      "source": "src_pages_prix_carburants_autoroute_autoroute",
+      "target": "src_pages_prix_carburants_autoroute_autoroute_diffclass",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/pages/prix-carburants/autoroute/[autoroute].astro",
+      "source_location": "L13",
+      "weight": 1.0,
+      "source": "src_pages_prix_carburants_autoroute_autoroute",
+      "target": "src_pages_prix_carburants_autoroute_autoroute_getstaticpaths",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/pages/prix-carburants/autoroute/[autoroute].astro",
+      "source_location": "L35",
+      "weight": 1.0,
+      "source": "src_pages_prix_carburants_autoroute_autoroute",
+      "target": "src_pages_prix_carburants_autoroute_autoroute_pricediff",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/pages/prix-carburants/autoroute/[autoroute].astro",
+      "source_location": "L11",
+      "weight": 1.0,
+      "source": "src_pages_prix_carburants_autoroute_autoroute",
+      "target": "src_utils_brand_logo",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/pages/prix-carburants/autoroute/[autoroute].astro",
+      "source_location": "L11",
+      "weight": 1.0,
+      "source": "src_pages_prix_carburants_autoroute_autoroute",
+      "target": "src_utils_brand_logo_resolvebrandlogo",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/pages/prix-carburants/autoroute/[autoroute].astro",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "src_pages_prix_carburants_autoroute_autoroute",
+      "target": "src_utils_format_maj",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/pages/prix-carburants/autoroute/[autoroute].astro",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "src_pages_prix_carburants_autoroute_autoroute",
+      "target": "src_utils_format_maj_formatmaj",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/pages/prix-carburants/autoroute/index.astro",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "src_pages_prix_carburants_autoroute_index",
+      "target": "src_data_fuel_stats_autoroute",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/pages/prix-carburants/autoroute/index.astro",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "src_pages_prix_carburants_autoroute_index",
+      "target": "src_data_fuel_autoroutes",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/pages/prix-carburants/index.astro",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "src_pages_prix_carburants_index",
+      "target": "src_data_fuel_autoroutes",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/pages/prix-carburants/autoroute/index.astro",
+      "source_location": "L30",
+      "weight": 1.0,
+      "source": "src_pages_prix_carburants_autoroute_index",
+      "target": "src_pages_prix_carburants_autoroute_index_breadcrumb",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/pages/prix-carburants/autoroute/index.astro",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "src_pages_prix_carburants_autoroute_index",
+      "target": "src_pages_prix_carburants_autoroute_index_fuels",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/pages/prix-carburants/autoroute/index.astro",
+      "source_location": "L13",
+      "weight": 1.0,
+      "source": "src_pages_prix_carburants_autoroute_index",
+      "target": "src_pages_prix_carburants_autoroute_index_highways",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/pages/prix-carburants/autoroute/index.astro",
+      "source_location": "L36",
+      "weight": 1.0,
+      "source": "src_pages_prix_carburants_autoroute_index",
+      "target": "src_pages_prix_carburants_autoroute_index_jsonldbreadcrumb",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/pages/prix-carburants/autoroute/index.astro",
+      "source_location": "L9",
+      "weight": 1.0,
+      "source": "src_pages_prix_carburants_autoroute_index",
+      "target": "src_pages_prix_carburants_autoroute_index_string",
       "confidence_score": 1.0
     },
     {
@@ -23204,11 +23947,71 @@
       "confidence_score": 1.0
     },
     {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/pages/prix-carburants/enseigne/index.astro",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "src_pages_prix_carburants_enseigne_index",
+      "target": "src_pages_prix_carburants_enseigne_index_brandfiles",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/pages/prix-carburants/enseigne/index.astro",
+      "source_location": "L16",
+      "weight": 1.0,
+      "source": "src_pages_prix_carburants_enseigne_index",
+      "target": "src_pages_prix_carburants_enseigne_index_brands",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/pages/prix-carburants/enseigne/index.astro",
+      "source_location": "L29",
+      "weight": 1.0,
+      "source": "src_pages_prix_carburants_enseigne_index",
+      "target": "src_pages_prix_carburants_enseigne_index_breadcrumb",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/pages/prix-carburants/enseigne/index.astro",
+      "source_location": "L35",
+      "weight": 1.0,
+      "source": "src_pages_prix_carburants_enseigne_index",
+      "target": "src_pages_prix_carburants_enseigne_index_jsonldbreadcrumb",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/pages/prix-carburants/enseigne/index.astro",
+      "source_location": "L11",
+      "weight": 1.0,
+      "source": "src_pages_prix_carburants_enseigne_index",
+      "target": "src_pages_prix_carburants_enseigne_index_number",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/pages/prix-carburants/enseigne/index.astro",
+      "source_location": "L20",
+      "weight": 1.0,
+      "source": "src_pages_prix_carburants_enseigne_index",
+      "target": "src_pages_prix_carburants_enseigne_index_totalstations",
+      "confidence_score": 1.0
+    },
+    {
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "src/pages/prix-carburants/index.astro",
-      "source_location": "L10",
+      "source_location": "L12",
       "weight": 1.0,
       "source": "src_pages_prix_carburants_index",
       "target": "src_utils_station_waves",
@@ -23219,7 +24022,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "src/pages/prix-carburants/index.astro",
-      "source_location": "L10",
+      "source_location": "L12",
       "weight": 1.0,
       "source": "src_pages_prix_carburants_index",
       "target": "src_utils_station_waves_rolloutmeta",
@@ -27281,6 +28084,46 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "src/content/blog/additifs-metalliques-mention-pompe-essence-2026.md",
+      "source_location": "L62",
+      "weight": 1.0,
+      "source": "src_content_blog_additifs_metalliques_mention_pompe_essence_2026",
+      "target": "src_content_blog_additifs_metalliques_mention_pompe_essence_2026_ce_qu_il_faut_retenir_en_pratique",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/content/blog/additifs-metalliques-mention-pompe-essence-2026.md",
+      "source_location": "L56",
+      "weight": 1.0,
+      "source": "src_content_blog_additifs_metalliques_mention_pompe_essence_2026",
+      "target": "src_content_blog_additifs_metalliques_mention_pompe_essence_2026_faut_il_s_inqui\u00e9ter_pour_son_moteur_ou_pour_sa_sant\u00e9",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/content/blog/additifs-metalliques-mention-pompe-essence-2026.md",
+      "source_location": "L48",
+      "weight": 1.0,
+      "source": "src_content_blog_additifs_metalliques_mention_pompe_essence_2026",
+      "target": "src_content_blog_additifs_metalliques_mention_pompe_essence_2026_le_mangan\u00e8se_un_vieux_compagnon_de_l_essence_sans_plomb",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/content/blog/additifs-metalliques-mention-pompe-essence-2026.md",
+      "source_location": "L40",
+      "weight": 1.0,
+      "source": "src_content_blog_additifs_metalliques_mention_pompe_essence_2026",
+      "target": "src_content_blog_additifs_metalliques_mention_pompe_essence_2026_un_arr\u00eat\u00e9_publi\u00e9_au_journal_officiel_le_26_ao\u00fbt",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "src/content/blog/astuces-economiser-carburant.mdx",
       "source_location": "L108",
       "weight": 1.0,
@@ -30592,7 +31435,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/content/blog/prix-coutant-carburant-calendrier-leclerc-intermarche-carrefour.mdx",
-      "source_location": "L88",
+      "source_location": "L90",
       "weight": 1.0,
       "source": "src_content_blog_prix_coutant_carburant_calendrier_leclerc_intermarche_carrefour",
       "target": "src_content_blog_prix_coutant_carburant_calendrier_leclerc_intermarche_carrefour_comment_ne_pas_les_rater",
@@ -30602,7 +31445,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/content/blog/prix-coutant-carburant-calendrier-leclerc-intermarche-carrefour.mdx",
-      "source_location": "L49",
+      "source_location": "L51",
       "weight": 1.0,
       "source": "src_content_blog_prix_coutant_carburant_calendrier_leclerc_intermarche_carrefour",
       "target": "src_content_blog_prix_coutant_carburant_calendrier_leclerc_intermarche_carrefour_les_op\u00e9rations_prix_co\u00fbtant_d\u00e9j\u00e0_pass\u00e9es_en_2026",
@@ -30612,7 +31455,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/content/blog/prix-coutant-carburant-calendrier-leclerc-intermarche-carrefour.mdx",
-      "source_location": "L75",
+      "source_location": "L77",
       "weight": 1.0,
       "source": "src_content_blog_prix_coutant_carburant_calendrier_leclerc_intermarche_carrefour",
       "target": "src_content_blog_prix_coutant_carburant_calendrier_leclerc_intermarche_carrefour_les_p\u00e9riodes_habituelles",
@@ -30622,7 +31465,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/content/blog/prix-coutant-carburant-calendrier-leclerc-intermarche-carrefour.mdx",
-      "source_location": "L61",
+      "source_location": "L63",
       "weight": 1.0,
       "source": "src_content_blog_prix_coutant_carburant_calendrier_leclerc_intermarche_carrefour",
       "target": "src_content_blog_prix_coutant_carburant_calendrier_leclerc_intermarche_carrefour_un_principe_commun_des_conditions_diff\u00e9rentes",
@@ -30632,7 +31475,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/content/blog/prix-coutant-carburant-calendrier-leclerc-intermarche-carrefour.mdx",
-      "source_location": "L41",
+      "source_location": "L43",
       "weight": 1.0,
       "source": "src_content_blog_prix_coutant_carburant_calendrier_leclerc_intermarche_carrefour",
       "target": "src_content_blog_prix_coutant_carburant_calendrier_leclerc_intermarche_carrefour_y_a_t_il_une_op\u00e9ration_prix_co\u00fbtant_ce_week_end",
@@ -32340,5 +33183,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "6939fbdc47ca3acee1013276a458abe79b81bf69"
+  "built_at_commit": "19cb130f75fe251bc1ffa3d94bb5295e2fd8ce64"
 }

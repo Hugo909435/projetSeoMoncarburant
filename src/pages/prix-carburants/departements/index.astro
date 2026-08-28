@@ -1,0 +1,240 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import departmentsData from '../../../data/departments.json';
+import statsByDepartment from '../../../data/fuel/stats-by-department.json';
+import statsNational from '../../../data/fuel/stats-national.json';
+import meta from '../../../data/fuel/meta.json';
+
+type Dept = { num: string; name: string; slug: string; region: string; regionSlug: string };
+
+const deps = departmentsData as Record<string, Dept>;
+
+// Nombre de stations par département : seul le fichier stations-by-department
+// le contient (pas de champ dédié dans stats-by-department.json).
+const deptFiles = import.meta.glob('../../../data/fuel/stations-by-department/*.json', { eager: true });
+const countByDept: Record<string, number> = {};
+for (const [path, data] of Object.entries(deptFiles) as [string, any][]) {
+  const num = path.match(/\/(\w+)\.json$/)?.[1];
+  if (num) countByDept[num] = data.count ?? data.stations?.length ?? 0;
+}
+
+const byRegion = new Map<string, { name: string; depts: (Dept & { count: number; gazoleAvg: number | null })[] }>();
+for (const dept of Object.values(deps)) {
+  if (!byRegion.has(dept.regionSlug)) byRegion.set(dept.regionSlug, { name: dept.region, depts: [] });
+  const stats = (statsByDepartment as Record<string, Record<string, number | null>>)[dept.num];
+  byRegion.get(dept.regionSlug)!.depts.push({
+    ...dept,
+    count: countByDept[dept.num] ?? 0,
+    gazoleAvg: stats?.Gazole ?? null,
+  });
+}
+for (const region of byRegion.values()) {
+  region.depts.sort((a, b) => a.num.localeCompare(b.num, 'fr', { numeric: true }));
+}
+const regions = [...byRegion.entries()]
+  .map(([slug, data]) => ({ slug, ...data }))
+  .sort((a, b) => a.name.localeCompare(b.name, 'fr'));
+
+const totalDepts = Object.keys(deps).length;
+const totalStations = Object.values(countByDept).reduce((sum, c) => sum + c, 0);
+
+const lastUpdate = meta.lastUpdate
+  ? new Date(meta.lastUpdate).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })
+  : null;
+
+const title = 'Prix carburant par département : annuaire complet';
+const description = `Comparez les prix du carburant dans les ${totalDepts} départements français, classés par région. ${totalStations} stations référencées, mis à jour quotidiennement.`;
+
+const breadcrumb = [
+  { name: 'Accueil', url: '/' },
+  { name: 'Prix carburants', url: '/prix-carburants/' },
+  { name: 'Départements', url: '/prix-carburants/departements/' },
+];
+
+const jsonLdBreadcrumb = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: breadcrumb.map((item, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    name: item.name,
+    item: `https://mon-carburant.com${item.url}`,
+  })),
+};
+---
+
+<BaseLayout title={title} description={description} canonical="/prix-carburants/departements/">
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLdBreadcrumb)} slot="head" />
+
+  <div>
+    <!-- Breadcrumb -->
+    <div class="container" style="padding-top:1rem">
+      <nav aria-label="Fil d'ariane" class="breadcrumb-nav">
+        {breadcrumb.map((item, i) => (
+          <>
+            {i > 0 && <span aria-hidden="true"> › </span>}
+            {i < breadcrumb.length - 1
+              ? <a href={item.url}>{item.name}</a>
+              : <span aria-current="page">{item.name}</span>
+            }
+          </>
+        ))}
+      </nav>
+    </div>
+
+    <!-- Hero -->
+    <section class="idx-hero">
+      <div class="container">
+        <h1>Prix du carburant par département</h1>
+        <p class="idx-subtitle">{totalDepts} départements · {totalStations.toLocaleString('fr-FR')} stations référencées</p>
+        {lastUpdate && <p class="update-info">Données du {lastUpdate}</p>}
+      </div>
+    </section>
+
+    <div class="container page-body">
+      <div class="search-wrap">
+        <input
+          type="search"
+          id="dept-search"
+          class="dept-search"
+          placeholder="Rechercher un département (nom ou numéro)"
+          aria-label="Rechercher un département"
+          autocomplete="off"
+        />
+      </div>
+
+      {regions.map(region => (
+        <section class="region-block" data-region-block>
+          <h2>{region.name}</h2>
+          <div class="dept-grid">
+            {region.depts.map(dept => {
+              const nat = statsNational['Gazole'];
+              const diff = dept.gazoleAvg != null && nat != null ? ((dept.gazoleAvg - nat) / nat) * 100 : null;
+              return (
+                <a href={`/prix-carburants/${dept.slug}/`} class="dept-card" data-dept-name={`${dept.name} ${dept.num}`}>
+                  <div class="dept-card-top">
+                    <span class="dept-card-num">{dept.num}</span>
+                    <span class="dept-card-name">{dept.name}</span>
+                  </div>
+                  <div class="dept-card-bottom">
+                    <span class="dept-card-price">
+                      {dept.gazoleAvg != null ? `${dept.gazoleAvg.toFixed(3)} €/L` : 'Prix indisponibles'}
+                      {diff != null && (
+                        <span class={`price-badge ${diff < -2 ? 'badge-green' : diff > 2 ? 'badge-orange' : 'badge-neutral'}`}>
+                          {diff > 0 ? '+' : ''}{diff.toFixed(1)}%
+                        </span>
+                      )}
+                    </span>
+                    <span class="dept-card-count">{dept.count} stations</span>
+                  </div>
+                </a>
+              );
+            })}
+          </div>
+        </section>
+      ))}
+
+      <p class="dept-empty" id="dept-empty" hidden>Aucun département ne correspond à votre recherche.</p>
+
+      <!-- Texte SEO -->
+      <section class="section-block seo-text">
+        <h2>Prix du carburant : des écarts marqués selon les départements</h2>
+        <p>
+          Le prix des carburants varie sensiblement d'un département à l'autre en France, sous l'effet de la
+          concurrence locale, de la densité de stations et de la structure logistique (proximité des dépôts,
+          coûts de transport). Mon Carburant calcule chaque jour le prix moyen de chaque carburant dans les{' '}
+          {totalDepts} départements, à partir du flux officiel du ministère de l'Économie.
+        </p>
+        <p>
+          Cliquez sur un département pour consulter le détail des prix, le classement des stations les moins
+          chères et la liste des villes couvertes.
+        </p>
+        <p>
+          <a href="/prix-carburants/methodologie/">En savoir plus sur notre méthodologie</a> ·
+          <a href="/prix-carburants/">Comparateur national</a>
+        </p>
+      </section>
+    </div>
+  </div>
+</BaseLayout>
+
+<script>
+  const DIACRITICS = new RegExp('[\\u0300-\\u036f]', 'g');
+  const normalize = (s: string) => s.normalize('NFD').replace(DIACRITICS, '').toLowerCase();
+
+  const searchInput = document.getElementById('dept-search') as HTMLInputElement | null;
+  const cards = Array.from(document.querySelectorAll<HTMLElement>('.dept-card'));
+  const regionBlocks = Array.from(document.querySelectorAll<HTMLElement>('[data-region-block]'));
+  const emptyMsg = document.getElementById('dept-empty');
+
+  if (searchInput) {
+    searchInput.addEventListener('input', () => {
+      const q = normalize(searchInput.value.trim());
+      let totalMatches = 0;
+
+      regionBlocks.forEach(block => {
+        let regionMatches = 0;
+        block.querySelectorAll<HTMLElement>('.dept-card').forEach(card => {
+          const match = !q || normalize(card.dataset.deptName || '').includes(q);
+          card.style.display = match ? '' : 'none';
+          if (match) regionMatches++;
+        });
+        block.style.display = regionMatches ? '' : 'none';
+        totalMatches += regionMatches;
+      });
+
+      if (emptyMsg) emptyMsg.hidden = totalMatches > 0;
+    });
+  }
+</script>
+
+<style>
+  .breadcrumb-nav { font-size:0.875rem; color:var(--color-text-muted); margin-bottom:0.5rem; }
+  .breadcrumb-nav a { color:var(--color-primary); text-decoration:none; }
+  .breadcrumb-nav a:hover { text-decoration:underline; }
+
+  .idx-hero { background:linear-gradient(135deg, var(--color-primary) 0%, #1a4a66 100%); color:#fff; padding:2.5rem 0 2rem; }
+  .idx-hero h1 { font-size:clamp(1.5rem,3.5vw,2.25rem); font-weight:800; color:#fff; margin:0 0 0.5rem; }
+  .idx-subtitle { color:#94a3b8; margin:0 0 0.5rem; }
+  .update-info { font-size:0.8125rem; color:#64748b; margin:0; }
+
+  .page-body { padding-top:2rem; padding-bottom:3rem; }
+
+  .search-wrap { max-width:28rem; margin-bottom:2rem; }
+  .dept-search {
+    width:100%; padding:0.65rem 1rem; font-size:0.9375rem; font-family:inherit;
+    border:1px solid var(--color-border); border-radius:0.5rem; background:#f9fafb; color:var(--color-text);
+  }
+  .dept-search:focus { outline:2px solid var(--color-accent); outline-offset:1px; background:#fff; }
+
+  .region-block { margin-bottom:2.5rem; }
+  .region-block h2 { font-size:1.125rem; font-weight:700; color:var(--color-primary); margin:0 0 1rem; padding-bottom:0.4rem; border-bottom:2px solid #e5e7eb; }
+
+  .dept-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:0.75rem; }
+  @media(min-width:640px){ .dept-grid { grid-template-columns:repeat(3,1fr); } }
+  @media(min-width:1024px){ .dept-grid { grid-template-columns:repeat(4,1fr); } }
+
+  .dept-card {
+    display:flex; flex-direction:column; gap:0.5rem; padding:0.85rem 1rem;
+    background:#fff; border:1px solid #e2e8f0; border-radius:0.625rem; text-decoration:none; transition:all 0.15s;
+  }
+  .dept-card:hover { border-color:var(--color-primary); box-shadow:0 2px 8px rgba(0,0,0,0.08); }
+  .dept-card-top { display:flex; align-items:baseline; gap:0.4rem; }
+  .dept-card-num { font-weight:700; font-size:0.75rem; color:#64748b; background:#f1f5f9; padding:0.1rem 0.35rem; border-radius:0.25rem; }
+  .dept-card-name { font-weight:700; color:var(--color-primary); font-size:0.9375rem; }
+  .dept-card-bottom { display:flex; flex-direction:column; gap:0.15rem; }
+  .dept-card-price { font-size:0.8125rem; color:#16a34a; font-weight:600; }
+  .dept-card-count { font-size:0.75rem; color:var(--color-text-muted); }
+
+  .price-badge { display:inline-block; font-size:0.65rem; padding:0.05rem 0.3rem; border-radius:999px; margin-left:0.3rem; font-weight:600; }
+  .badge-green { background:#dcfce7; color:#166534; }
+  .badge-orange { background:#fff7ed; color:#c2410c; }
+  .badge-neutral { background:#f1f5f9; color:#64748b; }
+
+  .dept-empty { text-align:center; color:var(--color-text-muted); font-style:italic; padding:2rem 0; }
+
+  .section-block { margin-top:3rem; }
+  .section-block h2 { font-size:1.25rem; font-weight:700; color:var(--color-primary); margin:0 0 1.25rem; border-bottom:2px solid #e5e7eb; padding-bottom:0.5rem; }
+  .seo-text p { color:#374151; line-height:1.7; margin-bottom:0.75rem; }
+  .seo-text a { color:var(--color-accent); }
+</style>

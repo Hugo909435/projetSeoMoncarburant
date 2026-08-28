@@ -19,6 +19,7 @@ const DEPT_DIR = resolve(DATA_DIR, 'stations-by-department');
 const DETAIL_DIR = resolve(DATA_DIR, 'stations-detail');
 const CITY_DIR = resolve(DATA_DIR, 'stations-by-city');
 const BRAND_DIR = resolve(DATA_DIR, 'stations-by-brand');
+const AUTOROUTE_DIR = resolve(DATA_DIR, 'stations-by-autoroute');
 const PUBLIC_DATA_DIR = resolve(ROOT, 'public/data');
 const BRAND_MAP_FILE = resolve(ROOT, 'src/data/station-brands.json');
 
@@ -204,9 +205,29 @@ function normalizeEnseigne(raw) {
 }
 
 function ensureDirs() {
-  for (const dir of [DATA_DIR, DEPT_DIR, DETAIL_DIR, CITY_DIR, BRAND_DIR, PUBLIC_DATA_DIR]) {
+  for (const dir of [DATA_DIR, DEPT_DIR, DETAIL_DIR, CITY_DIR, BRAND_DIR, AUTOROUTE_DIR, PUBLIC_DATA_DIR]) {
     if (!existsSync(dir)) mkdirSync(dir, { recursive: true });
   }
+}
+
+/**
+ * Extrait le numéro d'autoroute (ex. "A6", "A75") depuis le champ adresse
+ * d'une station. Le flux gouvernemental indique seulement route/autoroute
+ * (@_pop = "A"/"R"), sans numéro : la plupart des adresses des stations
+ * d'autoroute mentionnent toutefois "A6", "AUTOROUTE A75", "A 630", parfois
+ * juste "Autoroute 62" sans le préfixe "A". On ne retient que le premier
+ * numéro plausible (1 à 3 chiffres) pour éviter de capter un code postal.
+ */
+function extractHighway(adresse) {
+  if (!adresse) return null;
+  // Pas de \b final : certaines adresses collent le nom de l'aire au numéro
+  // ("A71Aire de Ste Thorette"). Un chiffre juste après suffit à disqualifier
+  // ("A123" ne doit pas devenir "A12").
+  const withA = adresse.match(/\bA[\s-]?(\d{1,3})(?!\d)/i);
+  if (withA) return `A${withA[1]}`;
+  const spelled = adresse.match(/\bAUTOROUTE\s+(\d{1,3})\b/i);
+  if (spelled) return `A${spelled[1]}`;
+  return null;
 }
 
 function loadDepartments() {
@@ -767,6 +788,87 @@ async function main() {
   brandsIndex.sort((a, b) => b.count - a.count);
   writeFileSync(resolve(DATA_DIR, 'brands.json'), JSON.stringify(brandsIndex, null, 2));
   console.log(`🏪 ${brandCount} fichiers enseigne générés`);
+
+  // Fichiers par autoroute : uniquement les stations pop === 'autoroute',
+  // regroupées par numéro extrait de l'adresse (voir extractHighway).
+  const byHighway = {};
+  let autorouteStationsCount = 0;
+  let autorouteUnclassified = 0;
+  for (const s of stations) {
+    if (s.pop !== 'autoroute') continue;
+    autorouteStationsCount++;
+    const code = extractHighway(s.adresse);
+    if (!code) {
+      autorouteUnclassified++;
+      continue;
+    }
+    if (!byHighway[code]) byHighway[code] = [];
+    byHighway[code].push(s);
+  }
+
+  if (existsSync(AUTOROUTE_DIR)) {
+    for (const f of readdirSync(AUTOROUTE_DIR)) {
+      if (f.endsWith('.json')) unlinkSync(resolve(AUTOROUTE_DIR, f));
+    }
+  }
+
+  let highwayCount = 0;
+  const autoroutesIndex = [];
+  for (const [code, sts] of Object.entries(byHighway)) {
+    if (sts.length < 3) continue;
+
+    const hwStats = {};
+    for (const fuel of FUELS) {
+      hwStats[fuel] = computeStats(sts, fuel);
+    }
+
+    const top10 = {};
+    for (const fuel of ['Gazole', 'SP95']) {
+      top10[fuel] = sts
+        .filter(s => s.prices[fuel] != null)
+        .sort((a, b) => a.prices[fuel] - b.prices[fuel])
+        .slice(0, 10)
+        .map(stationToLight);
+    }
+
+    const deptsCovered = [...new Set(sts.map(s => s.dep))].sort();
+    const slug = code.toLowerCase();
+
+    const payload = {
+      code,
+      slug,
+      stats: hwStats,
+      top10,
+      stations: sts.map(stationToLight),
+      count: sts.length,
+      departments: deptsCovered,
+    };
+
+    writeFileSync(resolve(AUTOROUTE_DIR, `${slug}.json`), JSON.stringify(payload));
+    autoroutesIndex.push({ code, slug, count: sts.length, gazoleAvg: hwStats.Gazole?.avg ?? null });
+    highwayCount++;
+  }
+
+  // Tri numérique par numéro d'autoroute (A1, A2, ... A75, A630) plutôt qu'alphabétique
+  autoroutesIndex.sort((a, b) => parseInt(a.code.slice(1), 10) - parseInt(b.code.slice(1), 10));
+  writeFileSync(resolve(DATA_DIR, 'autoroutes.json'), JSON.stringify(autoroutesIndex, null, 2));
+
+  // Comparaison nationale autoroute vs route, pour la page d'index autoroute
+  const routeStations = stations.filter(s => s.pop === 'route');
+  const autorouteStations = stations.filter(s => s.pop === 'autoroute');
+  const statsAutorouteVsRoute = {
+    autoroute: {},
+    route: {},
+    autorouteCount: autorouteStations.length,
+    routeCount: routeStations.length,
+  };
+  for (const fuel of FUELS) {
+    statsAutorouteVsRoute.autoroute[fuel] = computeStats(autorouteStations, fuel)?.avg ?? null;
+    statsAutorouteVsRoute.route[fuel] = computeStats(routeStations, fuel)?.avg ?? null;
+  }
+  writeFileSync(resolve(DATA_DIR, 'stats-autoroute.json'), JSON.stringify(statsAutorouteVsRoute, null, 2));
+
+  console.log(`🛣️  ${highwayCount} fichiers autoroute générés (${autorouteStationsCount} stations autoroute, ${autorouteUnclassified} non identifiées)`);
 
   // stations-light.json pour le composant FuelSearch (max ~5Mo)
   const lightStations = stations.map(stationToLight);
