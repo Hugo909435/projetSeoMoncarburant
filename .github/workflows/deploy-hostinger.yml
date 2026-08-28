@@ -6,7 +6,7 @@ on:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-    timeout-minutes: 35
+    timeout-minutes: 40
 
     steps:
       - name: Checkout du dépôt
@@ -32,7 +32,7 @@ jobs:
         run: sudo apt-get install -y --no-install-recommends lftp
 
       - name: Déploiement vers Hostinger
-        timeout-minutes: 25
+        timeout-minutes: 30
         env:
           FTP_USER: ${{ secrets.FTP_USER }}
           FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
@@ -86,10 +86,13 @@ jobs:
           # seul niveau de retry, avec exactement 5 connexions espacées par le
           # vrai backoff (30/60/120/240s) au lieu de 20 rapprochées.
           #
-          # mirror:parallel-transfer-count 1 (au lieu de 2) : limite aussi les
-          # connexions simultanées pendant un mirror qui réussit, au cas où
-          # Hostinger plafonne les connexions concurrentes en plus du débit de
-          # connexions.
+          # mirror:parallel-transfer-count reste à 2 : le passage à 1 (tenté
+          # dans une révision précédente pour limiter les connexions
+          # concurrentes) a fait passer le mirror complet au-delà des 25 min
+          # allouées à cette étape (le run précédent avec cette valeur a
+          # timeout après 25 min, alors que les runs à 2 connexions
+          # terminaient en 16-19 min) ; le goulot d'étranglement est donc le
+          # débit de transfert, pas le nombre de connexions concurrentes.
           max_attempts=5
           for attempt in $(seq 1 "$max_attempts"); do
             echo "::group::Tentative de déploiement $attempt/$max_attempts"
@@ -100,7 +103,7 @@ jobs:
                      set net:timeout 30; \
                      set net:max-retries 1; \
                      set net:persist-retries 0; \
-                     set mirror:parallel-transfer-count 1; \
+                     set mirror:parallel-transfer-count 2; \
                      set mirror:parallel-directories no; \
                      set cmd:fail-exit no; \
                      rm -r -f domains; \
