@@ -108,6 +108,11 @@ const fmtHeure = new Intl.DateTimeFormat('fr-FR', {
               {op.stations ? <span class="pco-stations"> dans {op.stations} stations</span> : null}
             </p>
             <p class="pco-item-meta">{op.fuels}. {op.note}</p>
+            {op.stations && op.sourceArticle && op.hasStationList ? (
+              <p class="pco-item-link">
+                <a href={`/blog/${op.sourceArticle}/`}>Voir les {op.stations} stations concernées →</a>
+              </p>
+            ) : null}
           </div>
         </li>
       ))}
@@ -229,6 +234,14 @@ const fmtHeure = new Intl.DateTimeFormat('fr-FR', {
   .pco-item-title { margin: 0 0 0.2rem; font-size: 1rem; line-height: 1.45; }
   .pco-stations { white-space: nowrap; }
   .pco-item-meta { margin: 0; font-size: 0.875rem; color: var(--color-text-muted); }
+  .pco-item-link { margin: 0.35rem 0 0; }
+  .pco-item-link a {
+    font-size: 0.6875rem;
+    font-weight: 700;
+    color: #0369a1;
+    text-decoration: none;
+  }
+  .pco-item-link a:hover { text-decoration: underline; }
 
   .pco-empty p { margin: 0 0 0.75rem; font-size: 0.9375rem; line-height: 1.6; }
   .pco-empty p:last-child { margin-bottom: 0; }

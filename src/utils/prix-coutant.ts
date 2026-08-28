@@ -34,6 +34,9 @@ export interface Operation {
   source: string;
   sourceUrl: string;
   sourceArticle: string;
+  /** true seulement si sourceArticle publie la liste nominative des stations,
+   *  pas juste leur nombre. Sert à afficher le lien "voir les stations". */
+  hasStationList?: boolean;
 }
 
 export interface Signal {

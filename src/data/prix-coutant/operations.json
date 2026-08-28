@@ -1,6 +1,6 @@
 {
   "_comment": "Source unique des opérations carburant à prix coûtant. Ce fichier alimente le composant ProchaineOperation.astro et, à terme, les articles mensuels. Ne jamais recopier une date à la main dans un article : l'ajouter ici. Les enseignes annoncent leurs opérations 2 à 3 jours à l'avance seulement, ce fichier est donc à mettre à jour en début de semaine. Champs : start/end au format AAAA-MM-JJ (dates incluses), type 'prix-coutant' ou 'plafonnement', status 'confirmee' (annoncée officiellement par l'enseigne) ou 'terminee'. Ne jamais saisir une opération non annoncée : les fenêtres seulement probables vont dans fenetresProbables.",
-  "_updatedAt": "2026-08-26",
+  "_updatedAt": "2026-08-28",
   "operations": [
     {
       "id": "leclerc-2026-07-03",
@@ -46,6 +46,22 @@
       "source": "Annonce Système U",
       "sourceUrl": "",
       "sourceArticle": "carburant-prix-coutant-aout-2026"
+    },
+    {
+      "id": "totalenergies-2026-08-29",
+      "brand": "total",
+      "brandName": "TotalEnergies",
+      "type": "prix-coutant",
+      "status": "confirmee",
+      "start": "2026-08-29",
+      "end": "2026-08-30",
+      "stations": 129,
+      "fuels": "Gazole uniquement, à 1,99 €/L",
+      "note": "Opération limitée à 129 stations-service sélectionnées, distincte du plafonnement permanent en cours sur le réseau.",
+      "source": "Annonce TotalEnergies",
+      "sourceUrl": "",
+      "sourceArticle": "totalenergies-plafonne-a-nouveau-carburant-2026",
+      "hasStationList": true
     },
     {
       "id": "totalenergies-plafonnement-2026",
