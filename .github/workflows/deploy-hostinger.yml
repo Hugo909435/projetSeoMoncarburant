@@ -31,36 +31,6 @@ jobs:
       - name: Installation de lftp
         run: sudo apt-get install -y --no-install-recommends lftp
 
-      - name: Nettoyage du dossier domains/ créé par erreur
-        timeout-minutes: 10
-        continue-on-error: true
-        env:
-          FTP_USER: ${{ secrets.FTP_USER }}
-          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
-          FTP_HOST: ${{ secrets.FTP_HOST }}
-        run: |
-          # domains/mon-carburant.com/ contient une copie complète du site,
-          # créée par erreur le temps qu'on identifie le bon chemin de dépôt
-          # (voir historique du fichier). Suppression isolée dans son propre
-          # timeout pour ne pas bouffer le budget du vrai déploiement : une
-          # suppression récursive de ~344 pages en FTP simple est lente.
-          lftp -u "$FTP_USER","$FTP_PASSWORD" -p 21 \
-               -e "set ftp:ssl-allow no; \
-                   set net:timeout 20; \
-                   set net:max-retries 2; \
-                   set net:persist-retries 1; \
-                   rm -r -f domains; \
-                   quit" \
-            "$FTP_HOST"
-
-      - name: Pause entre les deux connexions FTP
-        # Hostinger applique un throttling/blocage temporaire des connexions FTP
-        # répétées depuis le même compte : sans pause, le déploiement qui suit
-        # immédiatement le nettoyage se voit parfois refuser la connexion dès
-        # le login (aucune ligne "Transferring file" avant l'erreur fatale,
-        # preuve que l'échec a lieu avant même le début du transfert).
-        run: sleep 20
-
       - name: Déploiement vers Hostinger
         timeout-minutes: 25
         env:
@@ -75,10 +45,18 @@ jobs:
           # (contrairement à l'ancien compte SFTP) : on mirror directement dans
           # le répertoire courant "." et pas dans domains/mon-carburant.com/public_html/,
           # qui n'existe pas ici.
+          #
+          # Le rm -r -f domains (dossier créé par erreur le temps qu'on
+          # identifie le bon chemin de dépôt, voir historique du fichier) est
+          # fait dans CETTE MÊME session lftp plutôt que dans une étape FTP
+          # séparée : une connexion FTP de plus par run, juste pour un rm qui
+          # ne trouve probablement plus rien à supprimer depuis longtemps,
+          # contribuait inutilement à la rafale de connexions décrite plus
+          # bas. cmd:fail-exit no/yes encadre le rm pour qu'un dossier déjà
+          # absent n'interrompe pas le script avant le mirror.
           # Retry au niveau shell plutôt que de tout miser sur les retries internes
-          # de lftp : Hostinger bloque temporairement les connexions répétées
-          # (cf. l'étape "Pause entre les deux connexions FTP" ci-dessus), donc une
-          # session qui casse en cours de mirror a besoin d'un vrai cooldown avant
+          # de lftp : Hostinger bloque temporairement les connexions répétées,
+          # donc une session qui casse en cours de mirror a besoin d'un vrai cooldown avant
           # de rouvrir une connexion propre, pas juste de reconnexions internes
           # rapprochées qui retombent dans la même fenêtre de throttling. mirror
           # étant incrémental (diff avec le distant), relancer une session neuve
@@ -92,6 +70,26 @@ jobs:
           # tentatives et un cooldown qui s'allonge, le dernier essai n'arrive
           # qu'après 7 minutes de pause cumulée, ce qui laisse largement plus de
           # marge au blocage pour retomber.
+          #
+          # net:persist-retries 0 (au lieu de 3) et net:max-retries 1 (au lieu
+          # de 3) : avant, chaque itération de CETTE boucle relançait un lftp
+          # qui, en interne, retentait déjà de se reconnecter jusqu'à 3 fois
+          # (via reconnect-interval-base/multiplier) avant de rendre la main
+          # au backoff externe. Les deux retries s'empilaient : jusqu'à ~20
+          # connexions FTP réelles en quelques minutes sur les 5 tentatives,
+          # ce qui ressemble à une rafale d'abus côté Hostinger et déclenche
+          # probablement son blocage IP temporaire (cf. le run cité plus haut
+          # où même 7 min de pause cumulée n'ont pas suffi). Un rerun manuel
+          # marche toujours du premier coup parce qu'il obtient un runner
+          # GitHub avec une IP différente, pas encore bloquée. En limitant
+          # chaque process lftp à une seule connexion, cette boucle devient le
+          # seul niveau de retry, avec exactement 5 connexions espacées par le
+          # vrai backoff (30/60/120/240s) au lieu de 20 rapprochées.
+          #
+          # mirror:parallel-transfer-count 1 (au lieu de 2) : limite aussi les
+          # connexions simultanées pendant un mirror qui réussit, au cas où
+          # Hostinger plafonne les connexions concurrentes en plus du débit de
+          # connexions.
           max_attempts=5
           for attempt in $(seq 1 "$max_attempts"); do
             echo "::group::Tentative de déploiement $attempt/$max_attempts"
@@ -100,12 +98,13 @@ jobs:
                      set ftp:ssl-allow no; \
                      set ftp:passive-mode true; \
                      set net:timeout 30; \
-                     set net:max-retries 3; \
-                     set net:reconnect-interval-base 10; \
-                     set net:reconnect-interval-multiplier 1.5; \
-                     set net:persist-retries 3; \
-                     set mirror:parallel-transfer-count 2; \
+                     set net:max-retries 1; \
+                     set net:persist-retries 0; \
+                     set mirror:parallel-transfer-count 1; \
                      set mirror:parallel-directories no; \
+                     set cmd:fail-exit no; \
+                     rm -r -f domains; \
+                     set cmd:fail-exit yes; \
                      lcd dist; \
                      mirror -R --delete --verbose . .; \
                      quit" \
