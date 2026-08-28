@@ -519,9 +519,14 @@ for (const slug of brandSlugs) {
     align-items: center;
     justify-content: center;
     box-sizing: border-box;
+    overflow: hidden;
   }
+  /* !important nécessaire : le CSS de Leaflet (.leaflet-marker-pane img)
+     force width:auto avec une spécificité supérieure à .fuel-pin-logo img,
+     ce qui fait déborder les logos très larges (wordmarks type Shell,
+     Auchan) hors de la bulle en gardant leur ratio d'origine. */
   :global(.fuel-pin-logo img) {
-    width: 17px; height: 17px;
+    width: 17px !important; height: 17px !important;
     object-fit: contain;
   }
   :global(.fuel-pin-logo.fuel-pin-cheap) { background: #fff; border-color: #16a34a; }
