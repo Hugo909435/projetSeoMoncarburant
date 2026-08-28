@@ -1,4 +1,6 @@
 ---
+import { readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import autoroutesIndex from '../../../data/fuel/autoroutes.json';
 import statsAutoroute from '../../../data/fuel/stats-autoroute.json';
@@ -10,11 +12,75 @@ const FUEL_LABELS: Record<string, string> = {
   Gazole: 'Gazole', SP95: 'SP95', SP98: 'SP98', E10: 'E10', E85: 'E85', GPLc: 'GPL',
 };
 
+const AUTOROUTE_NAMES: Record<string, string> = {
+  A1: "Paris → Lille (Autoroute du Nord)",
+  A2: 'Péronne → Belgique',
+  A4: "Paris → Strasbourg (Autoroute de l'Est)",
+  A5: 'Paris → Langres',
+  A6: 'Paris → Lyon (Autoroute du Soleil)',
+  A7: 'Lyon → Marseille (Autoroute du Soleil)',
+  A8: 'Aix-en-Provence → Menton (La Provençale)',
+  A9: 'Orange → Le Perthus (La Languedocienne)',
+  A10: "Paris → Bordeaux (L'Aquitaine)",
+  A11: "Paris → Nantes (L'Océane)",
+  A13: 'Paris → Caen (Autoroute de Normandie)',
+  A15: 'Paris → Cergy',
+  A16: 'Paris → Boulogne-sur-Mer',
+  A19: 'Sens → Artenay',
+  A20: "Vierzon → Montauban (L'Occitane)",
+  A26: 'Calais → Troyes (Autoroute des Anglais)',
+  A28: 'Abbeville → Le Mans',
+  A29: 'Le Havre → Saint-Quentin',
+  A31: 'Beaune → Luxembourg',
+  A35: "Strasbourg → Suisse (L'Alsacienne)",
+  A36: 'Beaune → Allemagne (La Comtoise)',
+  A39: 'Dijon → Bourg-en-Bresse (Autoroute Verte)',
+  A40: 'Mâcon → Chamonix (Autoroute Blanche)',
+  A41: "Genève → Grenoble (L'Alpine)",
+  A43: 'Lyon → Italie (Tunnel du Fréjus)',
+  A46: 'Contournement de Lyon',
+  A48: 'Lyon → Grenoble',
+  A50: 'Marseille → Toulon',
+  A51: 'Marseille → Gap',
+  A61: 'Toulouse → Narbonne (Autoroute des Deux Mers)',
+  A62: 'Bordeaux → Toulouse (Autoroute des Deux Mers)',
+  A63: 'Bordeaux → Bayonne (Côte Basque)',
+  A64: 'Toulouse → Bayonne (La Pyrénéenne)',
+  A71: 'Orléans → Clermont-Ferrand',
+  A75: 'Clermont-Ferrand → Montpellier (La Méridienne)',
+  A81: 'Le Mans → Rennes',
+  A83: 'Nantes → Niort',
+  A85: 'Angers → Vierzon',
+  A86: 'Rocade de Paris',
+  A89: 'Bordeaux → Lyon',
+  A630: 'Rocade de Bordeaux',
+};
+
 const highways = (autoroutesIndex as { slug: string; code: string; count: number; gazoleAvg: number | null }[])
   .slice()
   .sort((a, b) => a.count === b.count ? 0 : b.count - a.count);
 
 const totalAutorouteStations = statsAutoroute.autorouteCount ?? highways.reduce((sum, h) => sum + h.count, 0);
+
+// Coordonnées des stations d'autoroute (lat/lng + code) embarquées dans la
+// page pour le bouton « Me localiser » : permet de calculer, pour chaque
+// autoroute affichée, la distance jusqu'à sa station la plus proche sans
+// fetch réseau séparé ni charger la carte complète (stations-light.json,
+// 9800 stations) utilisée sur la page d'accueil.
+type LightStation = {
+  lat: number; lng: number; adresse: string; pop?: string;
+};
+const knownCodes = new Set(highways.map(h => h.code));
+const stationsLightPath = resolve(process.cwd(), 'public/data/stations-light.json');
+const allStations: LightStation[] = JSON.parse(readFileSync(stationsLightPath, 'utf-8'));
+const geoStations = allStations
+  .filter(s => s.pop === 'autoroute' && typeof s.lat === 'number' && typeof s.lng === 'number')
+  .map(s => {
+    const match = s.adresse?.match(/\bA[\s-]?(\d{1,3})(?!\d)/i);
+    const code = match ? `A${match[1]}` : null;
+    return { lat: s.lat, lng: s.lng, code: code && knownCodes.has(code) ? code : null };
+  })
+  .filter(s => s.code !== null);
 
 const gazoleAutoroute = statsAutoroute.autoroute?.Gazole;
 const gazoleRoute = statsAutoroute.route?.Gazole;
@@ -70,6 +136,17 @@ const jsonLdBreadcrumb = {
         <h1>Prix des carburants sur autoroute</h1>
         <p class="hw-subtitle">{highways.length} autoroutes référencées · {totalAutorouteStations} stations-service</p>
         {lastUpdate && <p class="update-info">Données du {lastUpdate}</p>}
+
+        <button type="button" id="hw-geo-btn" class="hw-geo-btn" aria-label="Me localiser pour afficher la distance jusqu'à chaque autoroute">
+          <svg class="hw-geo-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="3"/>
+            <path d="M12 2v3M12 19v3M2 12h3M19 12h3"/>
+          </svg>
+          <span id="hw-geo-btn-label">Me localiser</span>
+        </button>
+        <p id="hw-geo-status" class="hw-geo-status" role="status" aria-live="polite" aria-atomic="true"></p>
+
+        <script type="application/json" id="hw-geo-data" set:html={JSON.stringify(geoStations).replace(/</g, '\\u003c')} />
       </div>
     </section>
 
@@ -102,44 +179,34 @@ const jsonLdBreadcrumb = {
       <section class="section-block">
         <h2>Toutes les autoroutes</h2>
         <p class="dept-intro">Cliquez sur une autoroute pour voir le détail des stations et de leurs prix.</p>
-        <div class="table-wrapper">
-          <table class="fuel-table">
-            <thead>
-              <tr>
-                <th scope="col">Autoroute</th>
-                <th scope="col">Stations</th>
-                <th scope="col">Gazole moyen</th>
-              </tr>
-            </thead>
-            <tbody>
-              {highways.map(h => {
-                const nat = statsNational['Gazole'];
-                const diff = h.gazoleAvg != null && nat != null ? ((h.gazoleAvg - nat) / nat) * 100 : null;
-                return (
-                  <tr>
-                    <td>
-                      <a href={`/prix-carburants/autoroute/${h.slug}/`} class="hw-link">
-                        Autoroute {h.code}
-                      </a>
-                    </td>
-                    <td class="price-cell">{h.count}</td>
-                    <td class="price-cell">
-                      {h.gazoleAvg != null ? (
-                        <span>
-                          {h.gazoleAvg.toFixed(3)} €/L
-                          {diff != null && (
-                            <span class={`price-badge ${diff < -2 ? 'badge-green' : diff > 2 ? 'badge-orange' : 'badge-neutral'}`}>
-                              {diff > 0 ? '+' : ''}{diff.toFixed(1)}%
-                            </span>
-                          )}
+        <div class="hw-grid">
+          {highways.map(h => {
+            const nat = statsNational['Gazole'];
+            const diff = h.gazoleAvg != null && nat != null ? ((h.gazoleAvg - nat) / nat) * 100 : null;
+            const name = AUTOROUTE_NAMES[h.code] ?? `Autoroute ${h.code}`;
+            return (
+              <a href={`/prix-carburants/autoroute/${h.slug}/`} class="hw-card" data-code={h.code}>
+                <span class="hw-card-badge">{h.code}</span>
+                <span class="hw-card-body">
+                  <span class="hw-card-name">{name}</span>
+                  <span class="hw-card-count">{h.count} station{h.count > 1 ? 's' : ''}</span>
+                </span>
+                <span class="hw-card-side">
+                  {h.gazoleAvg != null && (
+                    <span class="hw-card-price">
+                      {h.gazoleAvg.toFixed(3)} €/L
+                      {diff != null && (
+                        <span class={`price-badge ${diff < -2 ? 'badge-green' : diff > 2 ? 'badge-orange' : 'badge-neutral'}`}>
+                          {diff > 0 ? '+' : ''}{diff.toFixed(1)}%
                         </span>
-                      ) : '-'}
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
+                      )}
+                    </span>
+                  )}
+                  <span class="hw-card-dist" data-dist-for={h.code} hidden></span>
+                </span>
+              </a>
+            );
+          })}
         </div>
       </section>
 
@@ -178,6 +245,23 @@ const jsonLdBreadcrumb = {
   .hw-subtitle { color:#94a3b8; margin:0 0 0.5rem; }
   .update-info { font-size:0.8125rem; color:#64748b; margin:0; }
 
+  .hw-geo-btn {
+    display:inline-flex; align-items:center; gap:0.5rem; margin-top:1.25rem;
+    padding:0.65rem 1.25rem; background:rgba(255,255,255,0.1); border:2px solid var(--color-accent);
+    border-radius:999px; color:#fff; font-size:0.9rem; font-weight:700; cursor:pointer;
+    transition:background 0.15s, transform 0.15s;
+  }
+  .hw-geo-btn:hover { background:var(--color-accent); transform:translateY(-1px); }
+  .hw-geo-btn:active { transform:none; }
+  .hw-geo-btn:disabled { cursor:wait; opacity:0.7; }
+  .hw-geo-icon { flex-shrink:0; }
+  .hw-geo-btn.is-loading .hw-geo-icon { animation:hw-spin 0.9s linear infinite; }
+  @keyframes hw-spin { to { transform:rotate(360deg); } }
+
+  .hw-geo-status { min-height:1.4rem; margin:0.625rem 0 0; font-size:0.875rem; color:#94a3b8; }
+  .hw-geo-status.is-error { color:#fca5a5; }
+  .hw-geo-status.is-ok { color:#86efac; }
+
   .page-body { padding-top:2rem; padding-bottom:3rem; }
   .section-block { margin-bottom:3rem; }
   .section-block h2 { font-size:1.25rem; font-weight:700; color:var(--color-primary); margin:0 0 1.25rem; border-bottom:2px solid #e5e7eb; padding-bottom:0.5rem; }
@@ -195,14 +279,27 @@ const jsonLdBreadcrumb = {
 
   .dept-intro { color:var(--color-text-muted); font-size:0.875rem; margin:-0.5rem 0 1rem; }
 
-  .table-wrapper { overflow-x:auto; }
-  .fuel-table { width:100%; border-collapse:collapse; font-size:0.9rem; max-width:36rem; }
-  .fuel-table th { background:var(--color-primary); color:#fff; padding:0.75rem 1rem; text-align:left; font-size:0.8125rem; font-weight:600; }
-  .fuel-table td { padding:0.7rem 1rem; border-bottom:1px solid #f1f5f9; }
-  .fuel-table tr:hover td { background:#f8fafc; }
-  .hw-link { color:var(--color-primary); text-decoration:none; font-weight:700; }
-  .hw-link:hover { text-decoration:underline; }
-  .price-cell { font-variant-numeric:tabular-nums; }
+  .hw-grid { display:grid; grid-template-columns:1fr; gap:0.75rem; }
+  @media(min-width:640px){ .hw-grid { grid-template-columns:repeat(2,1fr); } }
+  @media(min-width:1024px){ .hw-grid { grid-template-columns:repeat(3,1fr); } }
+
+  .hw-card {
+    display:flex; align-items:center; gap:0.85rem; padding:1rem 1.15rem; min-height:4.75rem;
+    background:var(--color-primary); border-radius:0.75rem; text-decoration:none;
+    transition:transform 0.15s, box-shadow 0.15s; min-width:0; max-width:100%; box-sizing:border-box; overflow:hidden;
+  }
+  .hw-card:hover { transform:translateY(-2px); box-shadow:0 6px 16px rgba(15,45,63,0.25); }
+  .hw-card-badge {
+    flex-shrink:0; display:flex; align-items:center; justify-content:center;
+    min-width:2.75rem; padding:0.35rem 0.5rem; background:var(--color-accent);
+    color:#0F2D3F; font-weight:800; font-size:0.875rem; border-radius:0.4rem;
+  }
+  .hw-card-body { display:flex; flex-direction:column; gap:0.15rem; min-width:0; flex:1 1 8rem; }
+  .hw-card-name { color:#fff; font-weight:700; font-size:0.9375rem; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .hw-card-count { color:#94a3b8; font-size:0.8125rem; }
+  .hw-card-side { margin-left:auto; flex-shrink:0; display:flex; flex-direction:column; align-items:flex-end; gap:0.3rem; }
+  .hw-card-price { color:#e2e8f0; font-size:0.8125rem; font-weight:600; text-align:right; white-space:nowrap; }
+  .hw-card-dist { display:inline-block; font-size:0.7rem; font-weight:700; color:#93c5fd; background:rgba(37,99,235,0.25); border-radius:999px; padding:0.1rem 0.55rem; white-space:nowrap; }
   .price-badge { display:inline-block; font-size:0.7rem; padding:0.1rem 0.35rem; border-radius:999px; margin-left:0.35rem; font-weight:600; }
   .badge-green { background:#dcfce7; color:#166534; }
   .badge-orange { background:#fff7ed; color:#c2410c; }
@@ -211,3 +308,113 @@ const jsonLdBreadcrumb = {
   .seo-text p { color:#374151; line-height:1.7; margin-bottom:0.75rem; }
   .seo-text a { color:var(--color-accent); }
 </style>
+
+<script>
+  type GeoStation = {
+    lat: number; lng: number;
+    code: string | null;
+  };
+
+  const btnEl = document.getElementById('hw-geo-btn') as HTMLButtonElement | null;
+  const btnLabelEl = document.getElementById('hw-geo-btn-label') as HTMLElement | null;
+  const statusEl = document.getElementById('hw-geo-status') as HTMLElement | null;
+  const dataEl = document.getElementById('hw-geo-data') as HTMLScriptElement | null;
+
+  function setStatus(msg: string, type: 'ok' | 'error' | '' = '') {
+    if (!statusEl) return;
+    statusEl.textContent = msg;
+    statusEl.className = 'hw-geo-status' + (type ? ' is-' + type : '');
+  }
+
+  function haversineKm(lat1: number, lng1: number, lat2: number, lng2: number): number {
+    const R = 6371;
+    const dLat = (lat2 - lat1) * Math.PI / 180;
+    const dLng = (lng2 - lng1) * Math.PI / 180;
+    const a = Math.sin(dLat / 2) ** 2 +
+      Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * Math.sin(dLng / 2) ** 2;
+    return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  }
+
+  function updateDistances(lat: number, lng: number) {
+    if (!dataEl) return;
+    let stations: GeoStation[];
+    try {
+      stations = JSON.parse(dataEl.textContent || '[]');
+    } catch {
+      setStatus('Impossible de charger les stations d\'autoroute.', 'error');
+      return;
+    }
+
+    const minByCode = new Map<string, number>();
+    for (const s of stations) {
+      if (!s.code) continue;
+      const d = haversineKm(lat, lng, s.lat, s.lng);
+      const cur = minByCode.get(s.code);
+      if (cur === undefined || d < cur) minByCode.set(s.code, d);
+    }
+
+    let shown = 0;
+    document.querySelectorAll<HTMLElement>('.hw-card-dist').forEach(el => {
+      const code = el.dataset.distFor;
+      const d = code ? minByCode.get(code) : undefined;
+      if (d !== undefined) {
+        el.textContent = `${d.toFixed(1)} km`;
+        el.hidden = false;
+        shown++;
+      }
+    });
+
+    const grid = document.querySelector('.hw-grid');
+    if (grid) {
+      const cards = Array.from(grid.querySelectorAll<HTMLElement>('.hw-card'));
+      cards.sort((a, b) => {
+        const da = minByCode.get(a.dataset.code || '') ?? Infinity;
+        const db = minByCode.get(b.dataset.code || '') ?? Infinity;
+        return da - db;
+      });
+      cards.forEach(c => grid.appendChild(c));
+    }
+
+    setStatus(
+      shown > 0
+        ? 'Autoroutes triées par distance jusqu\'à la station la plus proche.'
+        : 'Impossible de calculer les distances depuis votre position.',
+      shown > 0 ? 'ok' : 'error'
+    );
+  }
+
+  function locateMe() {
+    if (!navigator.geolocation) {
+      setStatus('La géolocalisation n\'est pas disponible sur votre navigateur.', 'error');
+      return;
+    }
+
+    btnEl?.setAttribute('disabled', 'true');
+    btnEl?.classList.add('is-loading');
+    if (btnLabelEl) btnLabelEl.textContent = 'Localisation en cours...';
+    setStatus('Localisation en cours...');
+
+    navigator.geolocation.getCurrentPosition(
+      pos => {
+        btnEl?.removeAttribute('disabled');
+        btnEl?.classList.remove('is-loading');
+        if (btnLabelEl) btnLabelEl.textContent = 'Me localiser';
+        updateDistances(pos.coords.latitude, pos.coords.longitude);
+      },
+      err => {
+        btnEl?.removeAttribute('disabled');
+        btnEl?.classList.remove('is-loading');
+        if (btnLabelEl) btnLabelEl.textContent = 'Me localiser';
+        const messages: Record<number, string> = {
+          1: 'Localisation refusée. Autorisez l\'accès à votre position pour utiliser cette fonction.',
+          2: 'Impossible de déterminer votre position actuellement.',
+          3: 'La localisation a pris trop de temps. Réessayez.',
+        };
+        setStatus(messages[err.code] || 'Impossible d\'utiliser votre position.', 'error');
+      },
+      { enableHighAccuracy: true, timeout: 10000, maximumAge: 60000 }
+    );
+  }
+
+  btnEl?.addEventListener('click', () => locateMe());
+</script>
