@@ -510,6 +510,24 @@ for (const slug of brandSlugs) {
   :global(.fuel-pin-exp)   { background: #ea580c; }
   :global(.fuel-pin-na)    { background: #94a3b8; }
 
+  /* Pin avec logo de la marque : pastille blanche, anneau coloré selon le prix */
+  :global(.fuel-pin-logo) {
+    width: 26px; height: 26px;
+    background: #fff;
+    border-width: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+  }
+  :global(.fuel-pin-logo img) {
+    width: 17px; height: 17px;
+    object-fit: contain;
+  }
+  :global(.fuel-pin-logo.fuel-pin-cheap) { background: #fff; border-color: #16a34a; }
+  :global(.fuel-pin-logo.fuel-pin-exp)   { background: #fff; border-color: #ea580c; }
+  :global(.fuel-pin-logo.fuel-pin-na)    { background: #fff; border-color: #94a3b8; }
+
   :global(.fm-user-pin) {
     width: 16px; height: 16px; border-radius: 50%; background: #2563eb;
     border: 3px solid #fff;
@@ -1011,11 +1029,18 @@ for (const slug of brandSlugs) {
           if (typeof s.lat !== 'number' || typeof s.lng !== 'number') continue;
           const gz = s.prices?.Gazole;
           const cls = gz == null ? 'fuel-pin-na' : gz <= nat ? 'fuel-pin-cheap' : 'fuel-pin-exp';
-          const icon = L.divIcon({
-            className: '',
-            html: `<div class="fuel-pin ${cls}" style="width:12px;height:12px" title="${escapeHtml(s.ville || '')}"></div>`,
-            iconSize: [12, 12],
-          });
+          const logoUrl = s.enseigneSlug ? brandLogos[s.enseigneSlug] : null;
+          const icon = logoUrl
+            ? L.divIcon({
+                className: '',
+                html: `<div class="fuel-pin fuel-pin-logo ${cls}" title="${escapeHtml(s.ville || '')}"><img src="${logoUrl}" alt="" loading="lazy" /></div>`,
+                iconSize: [26, 26],
+              })
+            : L.divIcon({
+                className: '',
+                html: `<div class="fuel-pin ${cls}" style="width:12px;height:12px" title="${escapeHtml(s.ville || '')}"></div>`,
+                iconSize: [12, 12],
+              });
           cluster.addLayer(
             L.marker([s.lat, s.lng], { icon })
               .bindPopup(buildPopup(s), { className: 'fm-popup', maxWidth: 270 })
