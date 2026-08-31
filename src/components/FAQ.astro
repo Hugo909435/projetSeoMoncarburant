@@ -1,5 +1,7 @@
 ---
-// FAQ avec injection du schema JSON-LD FAQPage
+// FAQ visuelle (accordéon). Pas de schema FAQPage : Google restreint les rich
+// results FAQ aux sites gouvernementaux/santé depuis août 2023, ce balisage
+// est inéligible sur ce site et n'apporte aucun bénéfice SERP.
 interface FAQItem {
   question: string;
   answer: string;
@@ -10,19 +12,6 @@ interface Props {
 }
 
 const { items } = Astro.props;
-
-const faqSchema = {
-  '@context': 'https://schema.org',
-  '@type': 'FAQPage',
-  mainEntity: items.map((item) => ({
-    '@type': 'Question',
-    name: item.question,
-    acceptedAnswer: {
-      '@type': 'Answer',
-      text: item.answer,
-    },
-  })),
-};
 ---
 
 <section class="faq-section" aria-label="Questions fréquentes">
@@ -52,8 +41,6 @@ const faqSchema = {
     ))}
   </dl>
 </section>
-
-<script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
 
 <script>
   // Accordion FAQ - js minimal

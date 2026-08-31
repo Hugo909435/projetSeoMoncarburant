@@ -49,7 +49,6 @@ const {
   imageAlt,
   readingTime,
   faq,
-  howToSteps,
   tags,
 } = article;
 
@@ -68,12 +67,21 @@ const breadcrumb = [
   { label: title, href: `/blog/${slug}/` },
 ];
 
+const authorSameAs = author
+  ? [author.website, author.linkedin].filter((url): url is string => Boolean(url))
+  : [];
+
 const articleSchema = {
   '@context': 'https://schema.org',
   '@type': 'Article',
   headline: title,
   description: metaDescription,
-  image: featuredImage.startsWith('http') ? featuredImage : `https://mon-carburant.com${featuredImage}`,
+  image: {
+    '@type': 'ImageObject',
+    url: featuredImage.startsWith('http') ? featuredImage : `https://mon-carburant.com${featuredImage}`,
+    width: 1200,
+    height: 630,
+  },
   datePublished: publishedAt.toISOString(),
   dateModified: (updatedAt ?? publishedAt).toISOString(),
   author: author
@@ -81,33 +89,17 @@ const articleSchema = {
         '@type': 'Person',
         name: author.name,
         url: `https://mon-carburant.com/auteur/${author.slug}/`,
+        ...(authorSameAs.length > 0 ? { sameAs: authorSameAs } : {}),
       }
     : { '@type': 'Organization', name: 'Mon Carburant' },
   publisher: {
     '@type': 'Organization',
     name: 'Mon Carburant',
-    logo: { '@type': 'ImageObject', url: 'https://mon-carburant.com/images/logo.png' },
+    logo: { '@type': 'ImageObject', url: 'https://mon-carburant.com/images/logo.png', width: 512, height: 512 },
   },
   mainEntityOfPage: { '@type': 'WebPage', '@id': pageUrl },
   keywords: tags.join(', '),
 };
-
-const howToSchema = howToSteps && howToSteps.length > 0
-  ? {
-      '@context': 'https://schema.org',
-      '@type': 'HowTo',
-      name: title,
-      description: metaDescription,
-      step: howToSteps.map((s, i) => ({
-        '@type': 'HowToStep',
-        position: i + 1,
-        name: s.name,
-        text: s.text,
-      })),
-    }
-  : null;
-
-const jsonLdSchemas = howToSchema ? [articleSchema, howToSchema] : articleSchema;
 
 const dateFormatter = new Intl.DateTimeFormat('fr-FR', {
   day: 'numeric',
@@ -132,7 +124,7 @@ const updatedDateFormatted =
   publishedAt={publishedAt.toISOString()}
   updatedAt={updatedAt?.toISOString()}
   authorName={author?.name}
-  jsonLd={jsonLdSchemas}
+  jsonLd={articleSchema}
 >
   <article class="article-page">
     <div class="container">

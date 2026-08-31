@@ -25,6 +25,7 @@ interface AuthorData {
   photo: string;
   photoAlt?: string;
   expertise: string[];
+  website?: string;
   linkedin?: string;
 }
 
@@ -67,22 +68,36 @@ const breadcrumb = [
   { label: title, href: `/piliers/${slug}/` },
 ];
 
+const authorSameAs = author
+  ? [author.website, author.linkedin].filter((url): url is string => Boolean(url))
+  : [];
+
 const articleSchema = {
   '@context': 'https://schema.org',
   '@type': 'Article',
   '@id': pageUrl,
   headline: title,
   description: metaDescription,
-  image: featuredImage.startsWith('http') ? featuredImage : `https://mon-carburant.com${featuredImage}`,
+  image: {
+    '@type': 'ImageObject',
+    url: featuredImage.startsWith('http') ? featuredImage : `https://mon-carburant.com${featuredImage}`,
+    width: 1200,
+    height: 630,
+  },
   datePublished: publishedAt.toISOString(),
   dateModified: (updatedAt ?? publishedAt).toISOString(),
   author: author
-    ? { '@type': 'Person', name: author.name, url: `https://mon-carburant.com/auteur/${author.slug}/` }
+    ? {
+        '@type': 'Person',
+        name: author.name,
+        url: `https://mon-carburant.com/auteur/${author.slug}/`,
+        ...(authorSameAs.length > 0 ? { sameAs: authorSameAs } : {}),
+      }
     : { '@type': 'Organization', name: 'Mon Carburant' },
   publisher: {
     '@type': 'Organization',
     name: 'Mon Carburant',
-    logo: { '@type': 'ImageObject', url: 'https://mon-carburant.com/images/logo.png' },
+    logo: { '@type': 'ImageObject', url: 'https://mon-carburant.com/images/logo.png', width: 512, height: 512 },
   },
 };
 
