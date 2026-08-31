@@ -1,7 +1,7 @@
 ---
 title: "Prix coûtant carburant en septembre 2026 : avant la rentrée"
-metaTitle: "Prix coûtant carburant : le point avant la rentrée"
-metaDescription: "Leclerc, Intermarché, Carrefour et Système U n'ont pas encore annoncé de date pour la rentrée 2026. Le point sur les prix et le plafond TotalEnergies."
+metaTitle: "Carburant à prix coûtant ce week-end : rentrée 2026"
+metaDescription: "Une opération prix coûtant ce week-end ? Le point à jour sur Leclerc, Intermarché, Carrefour et Système U pour la rentrée 2026, et le plafond TotalEnergies."
 slug: "carburant-prix-coutant-septembre-2026"
 excerpt: "Aucune enseigne n'a encore annoncé de date pour la rentrée 2026. En attendant, le point sur les prix à la pompe, le plafond TotalEnergies et les fenêtres à surveiller dans les prochains jours."
 publishedAt: 2026-08-24

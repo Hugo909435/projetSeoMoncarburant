@@ -1,7 +1,7 @@
 ---
 title: "Carburant à prix coûtant en août 2026 : où en profiter"
-metaTitle: "Carburant prix coûtant août 2026 : le point"
-metaDescription: "Système U, TotalEnergies, Leclerc : les opérations carburant à prix coûtant d'août 2026, les prix relevés et les fenêtres encore à venir."
+metaTitle: "Bilan carburant prix coûtant août 2026 : le récap"
+metaDescription: "Système U, TotalEnergies, Leclerc : le bilan complet des opérations carburant à prix coûtant du mois d'août 2026, enseigne par enseigne."
 slug: "carburant-prix-coutant-aout-2026"
 excerpt: "Système U a ouvert le mois les 2 et 3 août, TotalEnergies plafonne jusqu'au 30. Le point sur les opérations carburant à prix coûtant d'août 2026 et sur celles qui restent à venir."
 publishedAt: 2026-08-11

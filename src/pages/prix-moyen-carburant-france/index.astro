@@ -1,0 +1,253 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PriceHistoryChart from '../../components/PriceHistoryChart.astro';
+import AdUnit from '../../components/AdUnit.astro';
+import statsNational from '../../data/fuel/stats-national.json';
+import priceHistory from '../../data/fuel/price-history.json';
+import fuelMeta from '../../data/fuel/meta.json';
+import { FUEL_COLORS, type FuelStatKey } from '../../data/fuel/config';
+
+const FUELS: { key: FuelStatKey; label: string }[] = [
+  { key: 'Gazole', label: 'Gazole' },
+  { key: 'SP95', label: 'SP95' },
+  { key: 'E10', label: 'SP95-E10' },
+  { key: 'SP98', label: 'SP98' },
+  { key: 'E85', label: 'E85' },
+  { key: 'GPLc', label: 'GPL' },
+];
+
+const history = priceHistory as { date: string; prices: Partial<Record<FuelStatKey, number>> }[];
+const recentHistory = history.slice(-30).slice().reverse();
+
+const lastUpdateDate = fuelMeta.lastUpdate ? new Date(fuelMeta.lastUpdate) : new Date();
+const monthLabel = new Intl.DateTimeFormat('fr-FR', { month: 'long', year: 'numeric', timeZone: 'Europe/Paris' }).format(lastUpdateDate);
+const lastUpdateLabel = `${new Intl.DateTimeFormat('fr-FR', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'Europe/Paris' }).format(lastUpdateDate)} à ${new Intl.DateTimeFormat('fr-FR', { hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Paris' }).format(lastUpdateDate)}`;
+
+const title = `Prix moyen carburant en France : ${monthLabel}`;
+const description = `Prix moyen officiel du gazole, SP95, SP95-E10, SP98, E85 et GPL en France en ${monthLabel}. Données actualisées quotidiennement (ministère de l'Économie).`;
+
+function trend(key: FuelStatKey) {
+  const withValue = history.filter((h) => h.prices[key] != null);
+  if (withValue.length < 2) return null;
+  const first = withValue[Math.max(0, withValue.length - 30)].prices[key]!;
+  const last = withValue[withValue.length - 1].prices[key]!;
+  return { diff: last - first, pct: ((last - first) / first) * 100 };
+}
+
+const dateFormatter = new Intl.DateTimeFormat('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
+
+const breadcrumb = [
+  { name: 'Accueil', url: '/' },
+  { name: 'Prix moyen carburant', url: '/prix-moyen-carburant-france/' },
+];
+
+const jsonLdBreadcrumb = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: breadcrumb.map((item, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    name: item.name,
+    item: `https://mon-carburant.com${item.url}`,
+  })),
+};
+
+const faq = [
+  {
+    q: `Quel est le prix moyen du gazole en France aujourd'hui ?`,
+    a: `Au ${lastUpdateLabel}, le prix moyen national du gazole est de ${statsNational.Gazole?.toFixed(3)} €/L, selon le relevé quotidien du ministère de l'Économie sur les stations-service de France métropolitaine et des DOM.`,
+  },
+  {
+    q: `Quel est le prix moyen de l'essence (SP95, SP95-E10, SP98) en France ?`,
+    a: `Le SP95-E10 s'établit à ${statsNational.E10?.toFixed(3)} €/L en moyenne, le SP95 à ${statsNational.SP95?.toFixed(3)} €/L et le SP98 à ${statsNational.SP98?.toFixed(3)} €/L. Ces moyennes sont recalculées chaque jour à partir des prix déclarés par les stations.`,
+  },
+  {
+    q: 'Comment est calculé ce prix moyen ?',
+    a: `Le prix moyen national est la moyenne arithmétique des prix déclarés par les stations-service de France, à partir du flux officiel de données ouvertes du ministère de l'Économie (data.economie.gouv.fr). Il ne tient pas compte de la fréquentation de chaque station.`,
+  },
+  {
+    q: 'Le prix du carburant a-t-il augmenté ou baissé récemment ?',
+    a: FUELS.filter((f) => f.key === 'Gazole').map((f) => {
+      const t = trend(f.key);
+      if (!t) return 'Les données de tendance ne sont pas encore disponibles.';
+      return t.diff > 0
+        ? `Sur les 30 derniers jours, le gazole a augmenté de ${Math.abs(t.diff).toFixed(3)} €/L (soit ${t.pct.toFixed(1)}%).`
+        : `Sur les 30 derniers jours, le gazole a baissé de ${Math.abs(t.diff).toFixed(3)} €/L (soit ${Math.abs(t.pct).toFixed(1)}%).`;
+    })[0],
+  },
+];
+
+const jsonLdFaq = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faq.map((item) => ({
+    '@type': 'Question',
+    name: item.q,
+    acceptedAnswer: { '@type': 'Answer', text: item.a },
+  })),
+};
+---
+
+<BaseLayout title={title} description={description} canonical="/prix-moyen-carburant-france/" jsonLd={[jsonLdBreadcrumb, jsonLdFaq]}>
+  <div>
+    <!-- Breadcrumb -->
+    <div class="container" style="padding-top:1rem">
+      <nav aria-label="Fil d'ariane" class="breadcrumb-nav">
+        {breadcrumb.map((item, i) => (
+          <>
+            {i > 0 && <span aria-hidden="true"> › </span>}
+            {i < breadcrumb.length - 1
+              ? <a href={item.url}>{item.name}</a>
+              : <span aria-current="page">{item.name}</span>}
+          </>
+        ))}
+      </nav>
+    </div>
+
+    <!-- Hero -->
+    <section class="pm-hero">
+      <div class="container">
+        <h1>Prix moyen des carburants en France</h1>
+        <p class="pm-subtitle">Moyenne nationale officielle, {monthLabel}</p>
+        <p class="pm-update">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Mis à jour le <time datetime={fuelMeta.lastUpdate}>{lastUpdateLabel}</time>
+        </p>
+      </div>
+    </section>
+
+    <div class="container page-body">
+
+      <!-- Prix du jour -->
+      <section class="section-block">
+        <h2>Prix moyen par carburant aujourd'hui</h2>
+        <div class="pm-price-grid">
+          {FUELS.map(({ key, label }) => {
+            const avg = statsNational[key as keyof typeof statsNational];
+            const t = trend(key);
+            return (
+              <div class="pm-price-card" style={`--c: ${FUEL_COLORS[key]}`}>
+                <span class="pm-price-label">{label}</span>
+                <span class="pm-price-value">
+                  {avg != null ? avg.toFixed(3) : 'n/d'}
+                  <small>€/L</small>
+                </span>
+                {t && (
+                  <span class={`pm-price-trend ${t.diff > 0 ? 'up' : t.diff < 0 ? 'down' : ''}`}>
+                    {t.diff > 0 ? '+' : ''}{t.diff.toFixed(3)} €/L (30j)
+                  </span>
+                )}
+              </div>
+            );
+          })}
+        </div>
+        <p class="pm-source">
+          Données officielles issues du flux quotidien du{' '}
+          <a href="https://data.economie.gouv.fr/explore/dataset/prix_des_carburants_en_france_flux_instantane_v2" rel="noopener noreferrer" target="_blank">ministère de l'Économie</a>,
+          calculées à partir des prix déclarés par {fuelMeta.totalStations.toLocaleString('fr-FR')} stations-service.
+        </p>
+      </section>
+
+      <!-- Graphique -->
+      <section class="section-block">
+        <h2>Évolution du prix moyen sur {history.length} jours</h2>
+        <PriceHistoryChart fuels={['Gazole', 'SP95', 'SP98', 'E10']} title="Évolution du prix moyen national" />
+      </section>
+
+      <AdUnit />
+
+      <!-- Historique 30 jours -->
+      <section class="section-block">
+        <h2>Historique des prix moyens (30 derniers jours)</h2>
+        <div class="table-wrapper">
+          <table class="pm-table">
+            <thead>
+              <tr>
+                <th>Date</th>
+                {FUELS.map(({ label }) => <th>{label}</th>)}
+              </tr>
+            </thead>
+            <tbody>
+              {recentHistory.map((entry) => (
+                <tr>
+                  <td class="pm-table-date">{dateFormatter.format(new Date(entry.date))}</td>
+                  {FUELS.map(({ key }) => (
+                    <td>{entry.prices[key] != null ? entry.prices[key]!.toFixed(3) : '-'}</td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- FAQ -->
+      <section class="section-block seo-text">
+        <h2>Questions fréquentes</h2>
+        {faq.map((item) => (
+          <div class="pm-faq-item">
+            <h3>{item.q}</h3>
+            <p>{item.a}</p>
+          </div>
+        ))}
+      </section>
+
+      <!-- Texte de clôture + maillage -->
+      <section class="section-block seo-text">
+        <p>
+          Ce prix moyen national est une moyenne arithmétique : il donne une tendance de marché, mais les écarts
+          entre stations restent importants (jusqu'à 20 à 30 centimes par litre selon l'emplacement et l'enseigne).
+          Pour trouver la station la moins chère près de chez vous, utilisez notre{' '}
+          <a href="/prix-carburants/">comparateur de prix carburant en temps réel</a>, qui référence
+          {' '}{fuelMeta.totalStations.toLocaleString('fr-FR')} stations partout en France.
+        </p>
+        <p>
+          Pour comprendre les causes de l'évolution des prix en 2026 (Brent, taxes, marges de raffinage), consultez
+          notre article <a href="/blog/prix-carburant-2026/">Prix du carburant 2026 : évolution, causes et prévisions</a>.
+        </p>
+      </section>
+
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .breadcrumb-nav { font-size:0.875rem; color:var(--color-text-muted); margin-bottom:0.5rem; }
+  .breadcrumb-nav a { color:var(--color-primary); text-decoration:none; }
+  .breadcrumb-nav a:hover { text-decoration:underline; }
+
+  .pm-hero { background:var(--color-primary); color:#fff; padding:2.5rem 0 2rem; }
+  .pm-hero h1 { font-size:clamp(1.5rem,3.5vw,2.25rem); font-weight:800; color:#fff; margin:0 0 0.5rem; }
+  .pm-subtitle { color:#94a3b8; margin:0 0 0.5rem; }
+  .pm-update { display:inline-flex; align-items:center; gap:0.4rem; font-size:0.8125rem; color:#cbd5e1; margin:0; }
+
+  .page-body { padding-top:2rem; padding-bottom:3rem; }
+  .section-block { margin-bottom:3rem; }
+  .section-block h2 { font-size:1.25rem; font-weight:700; color:var(--color-primary); margin:0 0 1.25rem; border-bottom:2px solid #e5e7eb; padding-bottom:0.5rem; }
+
+  .pm-price-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:0.875rem; margin-bottom:1rem; }
+  @media(min-width:768px){ .pm-price-grid { grid-template-columns:repeat(6,1fr); } }
+  .pm-price-card { background:#fff; border:2px solid #e5e7eb; border-top:3px solid var(--c); border-radius:0.625rem; padding:1rem; }
+  .pm-price-label { display:block; font-size:0.8125rem; font-weight:700; color:var(--color-text-muted); margin-bottom:0.375rem; }
+  .pm-price-value { font-size:1.375rem; font-weight:800; color:var(--c); display:flex; align-items:baseline; gap:0.2rem; }
+  .pm-price-value small { font-size:0.75rem; font-weight:500; color:var(--color-text-muted); }
+  .pm-price-trend { display:block; font-size:0.75rem; color:var(--color-text-muted); margin-top:0.375rem; }
+  .pm-price-trend.up { color:#c2410c; }
+  .pm-price-trend.down { color:#166534; }
+
+  .pm-source { font-size:0.8125rem; color:var(--color-text-muted); margin:0.5rem 0 0; }
+  .pm-source a { color:var(--color-text-muted); text-decoration:underline; }
+
+  .table-wrapper { overflow-x:auto; }
+  .pm-table { width:100%; border-collapse:collapse; font-size:0.875rem; }
+  .pm-table th { background:#f1f5f9; color:var(--color-primary); padding:0.6rem 0.75rem; text-align:left; font-size:0.8rem; white-space:nowrap; }
+  .pm-table td { padding:0.55rem 0.75rem; border-bottom:1px solid #f1f5f9; white-space:nowrap; }
+  .pm-table tr:hover td { background:#f8fafc; }
+  .pm-table-date { font-weight:600; color:var(--color-primary); }
+
+  .seo-text p { color:#374151; line-height:1.7; margin-bottom:0.75rem; }
+  .seo-text a { color:var(--color-accent); }
+  .pm-faq-item { margin-bottom:1.5rem; }
+  .pm-faq-item h3 { font-size:1rem; font-weight:700; color:var(--color-primary); margin:0 0 0.5rem; }
+  .pm-faq-item p { color:#374151; line-height:1.7; margin:0; }
+</style>

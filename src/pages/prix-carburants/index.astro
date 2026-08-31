@@ -41,8 +41,8 @@ const lastUpdate = meta.lastUpdate
   ? new Date(meta.lastUpdate).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })
   : null;
 
-const title = 'Prix des carburants en France : comparateur en temps réel';
-const description = `Comparez les prix du carburant dans toute la France. ${meta.totalStations} stations référencées, prix mis à jour quotidiennement depuis les données officielles.`;
+const title = 'Comparateur carburant : prix essence et gazole';
+const description = "Comparateur de carburant en temps réel : gazole, SP95, SP95-E10, SP98 dans toute la France. Données officielles, mises à jour quotidiennement.";
 ---
 
 <BaseLayout title={title} description={description} canonical="/prix-carburants/">
@@ -53,8 +53,8 @@ const description = `Comparez les prix du carburant dans toute la France. ${meta
     <section class="fuel-hero">
       <div class="container">
         <div class="fuel-hero-inner">
-          <h1>Prix des carburants en France</h1>
-          <p class="fuel-hero-sub">Comparateur en temps réel · {meta.totalStations.toLocaleString('fr-FR')} stations</p>
+          <h1>Comparateur de carburant en France</h1>
+          <p class="fuel-hero-sub">Prix en temps réel · {meta.totalStations.toLocaleString('fr-FR')} stations</p>
           {lastUpdate && (
             <p class="fuel-update-badge">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
