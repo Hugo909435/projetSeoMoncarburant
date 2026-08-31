@@ -7,6 +7,7 @@ import brandsIndex from '../../../data/fuel/brands.json';
 import departmentsData from '../../../data/departments.json';
 import meta from '../../../data/fuel/meta.json';
 import { formatMaj } from '../../../utils/format-maj';
+import AdUnit from '../../../components/AdUnit.astro';
 
 export async function getStaticPaths() {
   const brandFiles = import.meta.glob('../../../data/fuel/stations-by-brand/*.json', { eager: true });
@@ -203,6 +204,8 @@ const jsonLdBreadcrumb = {
           </div>
         </section>
       )}
+
+      <AdUnit />
 
       <!-- Toutes les stations (30 premières + bouton "voir plus") -->
       <section class="section-block">

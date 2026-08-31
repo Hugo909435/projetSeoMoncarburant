@@ -125,6 +125,7 @@ const updatedDateFormatted =
   updatedAt={updatedAt?.toISOString()}
   authorName={author?.name}
   jsonLd={articleSchema}
+  hideAds
 >
   <article class="article-page">
     <div class="container">
@@ -174,6 +175,8 @@ const updatedDateFormatted =
           />
         </div>
       </header>
+
+      <AdUnit />
 
       <!-- Corps : TOC sidebar + contenu -->
       <div class="article-body">

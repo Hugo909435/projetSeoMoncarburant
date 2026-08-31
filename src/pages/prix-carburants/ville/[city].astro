@@ -12,6 +12,7 @@ import { deptContent } from '../../../data/local-content';
 import LocalIdentity from '../../../components/LocalIdentity.astro';
 import { formatMaj } from '../../../utils/format-maj';
 import { existsSync } from 'node:fs';
+import AdUnit from '../../../components/AdUnit.astro';
 
 export async function getStaticPaths() {
   const cityFiles = import.meta.glob('../../../data/fuel/stations-by-city/*.json', { eager: true });
@@ -169,6 +170,8 @@ const jsonLdBreadcrumb = {
           })}
         </div>
       </section>
+
+      <AdUnit />
 
       <!-- Stations triées par prix -->
       <section class="section-block">

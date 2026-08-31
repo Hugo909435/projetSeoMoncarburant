@@ -16,6 +16,7 @@ import departments from '../../../data/departments.json';
 import cityNames from '../../../data/fuel/city-names.json';
 import { publishedStations, rolloutMeta } from '../../../utils/station-waves';
 import { FUEL_KEYS } from '../../../data/fuel/config';
+import AdUnit from '../../../components/AdUnit.astro';
 
 type Dept = { num: string; name: string; slug: string };
 
@@ -144,6 +145,8 @@ const coveragePct = rolloutMeta.totalStations
           </div>
         </section>
       )}
+
+      <AdUnit />
 
       <section class="section-block">
         <div class="table-wrapper">

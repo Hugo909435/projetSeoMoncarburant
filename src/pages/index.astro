@@ -6,6 +6,7 @@ import Newsletter from '../components/Newsletter.astro';
 import FuelSearch from '../components/FuelSearch.astro';
 import HeroMap from '../components/HeroMap.astro';
 import AlertePrixCoutant from '../components/AlertePrixCoutant.astro';
+import AdUnit from '../components/AdUnit.astro';
 import statsNational from '../data/fuel/stats-national.json';
 import statsByDepartment from '../data/fuel/stats-by-department.json';
 import fuelMeta from '../data/fuel/meta.json';
@@ -129,7 +130,6 @@ const webAppSchema = {
   description="Comparez gratuitement les prix du carburant en temps réel grâce aux données officielles. Trouvez la station la moins chère près de chez vous : SP95, SP98, Gazole, E85."
   canonical="https://mon-carburant.com/"
   jsonLd={[websiteSchema, organizationSchema, webAppSchema]}
-  hideAds
 >
   <!-- Préconnexion aux tuiles de la carte (chargée en différé, cf. HeroMap) -->
   <link rel="preconnect" href="https://a.tile.openstreetmap.org" slot="head" />
@@ -238,6 +238,8 @@ const webAppSchema = {
       </p>
     </div>
   </section>
+
+  <AdUnit />
 
   <!-- Derniers articles -->
   {latestArticles.length > 0 && (

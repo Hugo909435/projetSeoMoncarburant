@@ -125,6 +125,7 @@ const updatedDateFormatted =
   updatedAt={updatedAt?.toISOString()}
   authorName={author?.name}
   jsonLd={articleSchema}
+  hideAds
 >
   <article class="pilier-page">
     <div class="container">
@@ -171,6 +172,8 @@ const updatedDateFormatted =
           />
         </div>
       </header>
+
+      <AdUnit />
 
       <!-- Sommaire des satellites -->
       {satellites.length > 0 && (

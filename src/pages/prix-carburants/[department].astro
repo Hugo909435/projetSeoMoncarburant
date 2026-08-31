@@ -11,6 +11,7 @@ import { resolveBrandLogo } from '../../utils/brand-logo';
 import StationLink from '../../components/StationLink.astro';
 import { stationUrl } from '../../utils/station-waves';
 import { formatMaj } from '../../utils/format-maj';
+import AdUnit from '../../components/AdUnit.astro';
 
 export async function getStaticPaths() {
   const deptFiles = import.meta.glob('../../data/fuel/stations-by-department/*.json', { eager: true });
@@ -265,6 +266,8 @@ const jsonLdGasStations = dept.num === '53'
           </div>
         </section>
       )}
+
+      <AdUnit />
 
       <!-- Toutes les stations -->
       <section class="section-block">

@@ -5,6 +5,7 @@ import statsNational from '../../../data/fuel/stats-national.json';
 import statsByRegion from '../../../data/fuel/stats-by-region.json';
 import departmentsData from '../../../data/departments.json';
 import meta from '../../../data/fuel/meta.json';
+import AdUnit from '../../../components/AdUnit.astro';
 
 export function getStaticPaths() {
   return Object.entries(statsByRegion).map(([slug, data]) => ({
@@ -103,6 +104,8 @@ const description = `Comparez les prix du carburant en ${regionName}. Gazole, SP
         </div>
       </section>
     )}
+
+    <AdUnit />
 
     <!-- Explication -->
     <section class="container section-gap">

@@ -27,6 +27,7 @@ import {
   type StationLike,
 } from '../../../../utils/station-intro';
 import { decodeHoraires, horairesToSchema, isAlwaysOpen } from '../../../../utils/station-hours';
+import AdUnit from '../../../../components/AdUnit.astro';
 import { formatMaj } from '../../../../utils/format-maj';
 import { isWeakStation, weaknessReason } from '../../../../utils/station-quality.mjs';
 
@@ -532,6 +533,8 @@ function priceDiff(price: number | null | undefined, fuelKey: string) {
           )}
         </section>
       )}
+
+      <AdUnit />
 
       <!-- Localisation -->
       <section class="section-block">

@@ -5,6 +5,7 @@ import statsByDepartment from '../data/fuel/stats-by-department.json';
 import departments from '../data/departments.json';
 import meta from '../data/fuel/meta.json';
 import { FUEL_CONFIGS } from '../data/fuel/config';
+import AdUnit from '../components/AdUnit.astro';
 
 export function getStaticPaths() {
   return (Object.keys(FUEL_CONFIGS) as Array<keyof typeof FUEL_CONFIGS>).map((fuel) => ({
@@ -108,6 +109,8 @@ function priceToColor(price: number | null): string {
           </div>
         </section>
       )}
+
+      <AdUnit />
 
       <!-- Heatmap visuelle -->
       {depsWithPrice.length > 0 && (
