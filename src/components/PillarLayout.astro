@@ -145,7 +145,7 @@ const updatedDateFormatted =
                 alt={author.photoAlt ?? `Photo de ${author.name}`}
                 width="32"
                 height="32"
-                loading="eager"
+                loading="lazy"
                 decoding="async"
                 class="meta-photo"
                 onerror="this.src='/images/authors/placeholder.svg'"

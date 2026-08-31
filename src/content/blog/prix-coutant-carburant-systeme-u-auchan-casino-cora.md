@@ -9,7 +9,7 @@ author: "hugo-beignon"
 category: "economies"
 pillar: "reduire-facture-carburant"
 tags: ["prix coûtant", "système u", "auchan", "casino", "cora", "carburant", "économies", "bon plan"]
-featuredImage: "/images/articles/prix-coutant-carburant-systeme-u-auchan-casino-cora.jpg"
+featuredImage: "/images/articles/prix-coutant-carburant-systeme-u-auchan-casino-cora.webp"
 imageAlt: "Gros plan sur plusieurs pistolets de distributeurs de carburant côte à côte à une pompe"
 readingTime: 5
 relatedArticles: ["prix-coutant-carburant-calendrier-leclerc-intermarche-carrefour", "leclerc-carburant-prix-coutant-juillet-2026", "intermarche-carburant-prix-coutant-2026", "reduire-facture-carburant"]

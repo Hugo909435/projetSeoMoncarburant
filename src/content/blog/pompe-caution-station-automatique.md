@@ -9,7 +9,7 @@ author: "hugo-beignon"
 category: "carburants"
 tags: ["caution carburant", "pompe automatique", "pré-autorisation bancaire", "station-service", "paiement carburant"]
 relatedArticles: ["pompe-essence-fonctionnement", "panne-essence-autoroute", "erreur-carburant-mauvais-plein"]
-featuredImage: "/images/articles/pompe-caution-station-automatique.jpg"
+featuredImage: "/images/articles/pompe-caution-station-automatique.webp"
 imageAlt: "Station-service Shell éclairée la nuit, voiture garée devant les pompes automatiques"
 readingTime: 5
 ctaTitle: "Trouvez une station avec un vrai vendeur avant de partir"

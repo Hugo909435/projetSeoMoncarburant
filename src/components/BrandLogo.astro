@@ -1,5 +1,5 @@
 ---
-import { resolveBrandLogo } from '../utils/brand-logo';
+import { resolveBrandLogo, getBrandLogoDimensions } from '../utils/brand-logo';
 
 interface Props {
   slug: string;
@@ -9,6 +9,7 @@ const { slug, name } = Astro.props;
 
 // Résolution du fichier logo au build (svg vectoriel, sinon png/webp fourni).
 const src = resolveBrandLogo(slug);
+const dimensions = src ? getBrandLogoDimensions(src) : null;
 ---
 
 {src ? (
@@ -16,6 +17,8 @@ const src = resolveBrandLogo(slug);
     <img
       src={src}
       alt={name}
+      width={dimensions?.width}
+      height={dimensions?.height}
       class="brand-logo-img"
       loading="lazy"
       decoding="async"
