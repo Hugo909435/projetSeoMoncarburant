@@ -53,6 +53,19 @@ grep '^metaDescription:' src/content/blog/*.md src/content/piliers/*.md | while 
 done
 ```
 
+### ❌ Jamais de pub AdSense (`<AdUnit />`) à l'intérieur d'un tableau
+
+L'expérience client passe avant la monétisation. Un bloc `<AdUnit />` ne doit
+**jamais** se retrouver à l'intérieur d'un `<table>` (ni entre `<thead>`/`<tbody>`,
+ni dans un `<tr>`/`<td>`), que ce soit dans les pages `.astro` ou dans le contenu
+Markdown/MDX des articles.
+
+Placement correct : toujours en dehors du tableau, entre deux `<section>`, ou
+avant/après le `<div class="table-wrapper">` qui contient le tableau.
+
+Avant tout commit touchant une page avec `<AdUnit` et `<table`, vérifier qu'aucune
+balise `<AdUnit` ne se trouve entre un `<table` et son `</table>` correspondant.
+
 ## graphify
 
 This project has a knowledge graph at graphify-out/ with god nodes, community structure, and cross-file relationships.
