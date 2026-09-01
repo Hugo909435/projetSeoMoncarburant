@@ -24,6 +24,8 @@ RewriteRule ^blog/netto-carburant-prix-2026/?$ /blog/ [R=301,L]
 RewriteRule ^blog/avia-carburant-prix-2026/?$ /blog/ [R=301,L]
 RewriteRule ^blog/total-carburant-prix-2026/?$ /blog/ [R=301,L]
 RewriteRule ^blog/shell-carburant-prix-2026/?$ /blog/ [R=301,L]
+# Article obsolète (opération de juillet passée), fusionné dans la page calendrier
+RewriteRule ^blog/leclerc-carburant-prix-coutant-juillet-2026/?$ /blog/prix-coutant-carburant-calendrier-leclerc-intermarche-carrefour/ [R=301,L]
 
 # Sécurité : En-têtes HTTP
 <IfModule mod_headers.c>

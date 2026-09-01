@@ -11,7 +11,7 @@ tags: ["leclerc", "intermarché", "carrefour", "comparatif", "grande surface", "
 featuredImage: "/images/articles/carburant-moins-cher-leclerc-intermarche-carrefour-2026.webp"
 imageAlt: "Comparaison des prix du carburant entre les stations Leclerc, Intermarché et Carrefour"
 readingTime: 4
-relatedArticles: ["leclerc-carburant-prix-coutant-juillet-2026", "intermarche-carburant-prix-coutant-2026", "carrefour-carburant-prix-2026", "carburant-prix-remonte-juillet-2026"]
+relatedArticles: ["prix-coutant-carburant-calendrier-leclerc-intermarche-carrefour", "intermarche-carburant-prix-coutant-2026", "carrefour-carburant-prix-2026", "carburant-prix-remonte-juillet-2026"]
 ctaTitle: "Comparez Leclerc, Intermarché et Carrefour près de chez vous"
 ctaDescription: "Notre comparateur référence les prix de plus de 11 000 stations-service en France, mis à jour quotidiennement via les données officielles."
 faq:
@@ -63,7 +63,7 @@ Avec un écart national aussi faible entre les trois enseignes, la station indiv
 Le plus simple reste de vérifier au cas par cas :
 
 - Notre [comparateur de prix](/prix-carburants/) liste les stations Leclerc, Intermarché et Carrefour les plus proches, triées par prix.
-- Pour approfondir chaque enseigne, nos guides dédiés détaillent leurs opérations à prix coûtant respectives : [Leclerc](/blog/leclerc-carburant-prix-coutant-juillet-2026/), [Intermarché](/blog/intermarche-carburant-prix-coutant-2026/) et [Carrefour](/blog/carrefour-carburant-prix-2026/).
+- Pour approfondir chaque enseigne, nos guides dédiés détaillent leurs opérations à prix coûtant respectives : [le calendrier Leclerc, Intermarché et Carrefour](/blog/prix-coutant-carburant-calendrier-leclerc-intermarche-carrefour/), [les avantages carburant Intermarché](/blog/intermarche-carburant-prix-coutant-2026/) et [la carte Pass Carrefour](/blog/carrefour-carburant-prix-2026/).
 
 Ces opérations ponctuelles, quand elles tombent, font une différence bien plus grande que le classement moyen des enseignes : elles peuvent effacer 5 à 10 centimes de plus, temporairement, quelle que soit la marque du supermarché le plus proche de chez vous.
 

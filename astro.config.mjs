@@ -142,6 +142,11 @@ export default defineConfig({
     '/blog/avia-carburant-prix-2026/': '/blog/',
     '/blog/total-carburant-prix-2026/': '/blog/',
     '/blog/shell-carburant-prix-2026/': '/blog/',
+    // Article obsolète (opération du 3-4 juillet passée) : contenu repris et
+    // tenu à jour dans la page calendrier, qui concentre déjà l'essentiel du
+    // trafic sur "carburant prix coûtant".
+    '/blog/leclerc-carburant-prix-coutant-juillet-2026/':
+      '/blog/prix-coutant-carburant-calendrier-leclerc-intermarche-carrefour/',
   },
   compressHTML: true,
   prefetch: {

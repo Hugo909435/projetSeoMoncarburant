@@ -87,6 +87,8 @@ Un calcul que ces outils font rarement : est-ce qu'un détour de 6 km pour gagne
 
 Les cartes de fidélité des grandes surfaces méritent d'être signalées séparément. E.Leclerc, Intermarché et Carrefour organisent régulièrement des opérations où la carte donne droit à 8 à 15 centimes de remise supplémentaire par litre, parfois cumulables avec les bons de réduction en caisse. Sur un plein de 60 litres, une remise de 10 centimes fait 6 €, soit un litre et demi offert. Ces opérations sont ponctuelles mais fréquentes, surtout avant les grands week-ends.
 
+Ces mêmes enseignes organisent aussi, à part, quelques opérations carburant à prix coûtant par an : le litre est alors vendu sans aucune marge, en général sans carte ni montant d'achat minimum, mais sur une fenêtre de 24 à 48 heures seulement et annoncée 2 à 3 jours à l'avance. Notre [calendrier des opérations carburant à prix coûtant](/blog/prix-coutant-carburant-calendrier-leclerc-intermarche-carrefour/) suit les dates de Leclerc, Intermarché et Carrefour au fil de l'année.
+
 ### Quel carburant choisir pour votre moteur ?
 
 L'écart de prix entre SP95-E10 et SP98 dépasse régulièrement 8 centimes par litre, parfois 10 à 12 centimes en stations d'autoroute. Pour un automobiliste consommant 900 litres par an, opter pour le SP95-E10 plutôt que le SP98 représente 70 à 110 € d'économies annuelles.

@@ -12,7 +12,7 @@ tags: ["prix coûtant", "août 2026", "système u", "totalenergies", "leclerc", 
 featuredImage: "/images/articles/carburant-prix-coutant-aout-2026.webp"
 imageAlt: "Station-service Super U avec son totem de prix et un camion-citerne en cours de livraison"
 readingTime: 5
-relatedArticles: ["carburant-prix-coutant-septembre-2026", "prix-coutant-carburant-calendrier-leclerc-intermarche-carrefour", "leclerc-carburant-prix-coutant-juillet-2026", "totalenergies-plafonne-a-nouveau-carburant-2026", "prix-coutant-carburant-systeme-u-auchan-casino-cora", "reduire-facture-carburant"]
+relatedArticles: ["carburant-prix-coutant-septembre-2026", "prix-coutant-carburant-calendrier-leclerc-intermarche-carrefour", "totalenergies-plafonne-a-nouveau-carburant-2026", "prix-coutant-carburant-systeme-u-auchan-casino-cora", "reduire-facture-carburant"]
 ctaTitle: "Trouvez la station la moins chère près de chez vous"
 ctaDescription: "Notre comparateur référence les prix de plus de 11 000 stations-service en France, mis à jour quotidiennement via les données officielles."
 faq:

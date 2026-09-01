@@ -12,7 +12,7 @@ tags: ["prix coûtant", "système u", "auchan", "casino", "cora", "carburant", "
 featuredImage: "/images/articles/prix-coutant-carburant-systeme-u-auchan-casino-cora.webp"
 imageAlt: "Gros plan sur plusieurs pistolets de distributeurs de carburant côte à côte à une pompe"
 readingTime: 5
-relatedArticles: ["prix-coutant-carburant-calendrier-leclerc-intermarche-carrefour", "leclerc-carburant-prix-coutant-juillet-2026", "intermarche-carburant-prix-coutant-2026", "reduire-facture-carburant"]
+relatedArticles: ["prix-coutant-carburant-calendrier-leclerc-intermarche-carrefour", "intermarche-carburant-prix-coutant-2026", "reduire-facture-carburant"]
 ctaTitle: "Comparez les prix carburant de toutes les enseignes"
 ctaDescription: "Notre comparateur référence les prix de plus de 11 000 stations-service en France, mis à jour quotidiennement via les données officielles."
 faq:
