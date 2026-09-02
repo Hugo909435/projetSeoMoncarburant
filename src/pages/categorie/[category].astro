@@ -1,6 +1,7 @@
 ---
 // Listing par catégorie
 import { getCollection } from 'astro:content';
+import { Image } from 'astro:assets';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ArticleCard from '../../components/ArticleCard.astro';
 import Breadcrumb from '../../components/Breadcrumb.astro';
@@ -74,7 +75,7 @@ const pageUrl = `https://mon-carburant.com/categorie/${category}/`;
             {piliers.map((p) => (
               <a href={`/piliers/${p.data.slug}/`} class="pilier-card">
                 <div class="pilier-card-image">
-                  <img src={p.data.featuredImage} alt={p.data.imageAlt} width="320" height="180" loading="lazy" decoding="async" />
+                  <Image src={p.data.featuredImage} alt={p.data.imageAlt} width={320} height={180} loading="lazy" decoding="async" />
                   <span class="badge pilier-badge">Guide complet</span>
                 </div>
                 <div class="pilier-card-body">

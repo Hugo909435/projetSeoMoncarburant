@@ -13,7 +13,7 @@ const MAX_DIM = 1600; // large assez pour une image héro d'article en 2x
 const WEBP_QUALITY = 78;
 const JPEG_QUALITY = 78;
 
-const DIRS = ['public/images/articles', 'public/images/authors'];
+const DIRS = ['src/assets/articles', 'public/images/authors'];
 
 async function optimize(path) {
   const before = statSync(path).size;

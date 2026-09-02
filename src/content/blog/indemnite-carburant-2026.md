@@ -9,7 +9,7 @@ updatedAt: 2026-05-19
 author: "hugo-beignon"
 category: "carburants"
 tags: ["actualite", "indemnite-carburant", "aide-gouvernementale", "grands-rouleurs", "2026"]
-featuredImage: "/images/articles/indemnite-carburant-2026.webp"
+featuredImage: "../../assets/articles/indemnite-carburant-2026.webp"
 imageAlt: "Capture du simulateur d'indemnité carburant 2026 sur impots.gouv.fr et billet de 50 euros sur un volant de voiture"
 readingTime: 7
 faq:

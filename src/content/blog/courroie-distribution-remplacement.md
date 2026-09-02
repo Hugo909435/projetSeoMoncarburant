@@ -9,7 +9,7 @@ updatedAt: 2026-06-09
 author: "hugo-beignon"
 category: "entretien"
 tags: ["courroie de distribution", "entretien moteur", "kit distribution", "remplacement courroie", "sécurité voiture"]
-featuredImage: "/images/articles/courroie-distribution-remplacement.webp"
+featuredImage: "../../assets/articles/courroie-distribution-remplacement.webp"
 imageAlt: "Courroie de distribution et galets tendeurs visibles sur un moteur ouvert en atelier"
 readingTime: 9
 pillar: "entretien-voiture-guide"

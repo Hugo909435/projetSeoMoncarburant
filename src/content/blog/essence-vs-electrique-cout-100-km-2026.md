@@ -9,7 +9,7 @@ author: "hugo-beignon"
 category: "economies"
 pillar: "reduire-facture-carburant"
 tags: ["voiture électrique", "coût au 100 km", "recharge", "essence", "gazole", "E85", "comparatif", "2026"]
-featuredImage: "/images/articles/essence-vs-electrique-cout-100-km-2026.webp"
+featuredImage: "../../assets/articles/essence-vs-electrique-cout-100-km-2026.webp"
 imageAlt: "Câble de recharge Type 2 branché sur la trappe de charge d'une voiture électrique"
 readingTime: 9
 relatedArticles: ["diesel-ou-essence-2026-achat", "e85-superethanol-vaut-il-le-coup", "prix-carburant-2026", "reduire-consommation-carburant", "reduire-facture-carburant"]

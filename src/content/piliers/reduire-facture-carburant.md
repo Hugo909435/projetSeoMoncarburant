@@ -9,7 +9,7 @@ updatedAt: 2026-05-28
 author: "hugo-beignon"
 category: "economies"
 tags: ["économies carburant", "budget carburant", "prix carburant", "réduire facture", "aides carburant"]
-featuredImage: "/images/articles/guide-economiser-carburant.webp"
+featuredImage: "../../assets/articles/guide-economiser-carburant.webp"
 imageAlt: "Automobiliste comparant les prix du carburant à la pompe pour réduire sa facture en 2026"
 readingTime: 11
 relatedArticles: ["indemnite-carburant-2026", "e85-superethanol-vaut-il-le-coup", "entretien-baisser-consommation"]

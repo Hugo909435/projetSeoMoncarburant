@@ -9,7 +9,7 @@ updatedAt: 2026-05-19
 author: "hugo-beignon"
 category: "carburants"
 tags: ["prix carburant", "essence", "diesel", "e85", "actualité 2026", "ticpe"]
-featuredImage: "/images/articles/prix-carburant-2026.webp"
+featuredImage: "../../assets/articles/prix-carburant-2026.webp"
 imageAlt: "Panneau d'affichage des prix d'une station-service française avec les tarifs SP95, SP98, diesel et E85 en 2026"
 readingTime: 8
 relatedArticles: ["sp95-vs-sp98", "reduire-facture-carburant", "indemnite-carburant-2026"]

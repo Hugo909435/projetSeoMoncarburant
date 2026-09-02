@@ -9,7 +9,7 @@ updatedAt: 2026-08-28
 author: "hugo-beignon"
 category: "carburants"
 tags: ["additifs métalliques", "manganèse", "sp95", "sp98", "sp95-e10", "réglementation", "août 2026"]
-featuredImage: "/images/articles/additifs-metalliques-pompe-essence-2026.webp"
+featuredImage: "../../assets/articles/additifs-metalliques-pompe-essence-2026.webp"
 imageAlt: "Trois pistolets de pompe à essence, SP98, SP95-E10 et gazole, avec leurs codes couleur normalisés"
 readingTime: 6
 pillar: "sp95-vs-sp98"

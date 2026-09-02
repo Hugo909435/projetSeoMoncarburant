@@ -8,7 +8,7 @@ publishedAt: 2026-07-15
 author: "hugo-beignon"
 category: "carburants"
 tags: ["prix carburant", "juillet 2026", "tensions internationales", "brent", "gazole", "géopolitique"]
-featuredImage: "/images/articles/carburant-prix-remonte-juillet-2026.webp"
+featuredImage: "../../assets/articles/carburant-prix-remonte-juillet-2026.webp"
 imageAlt: "Homme d'affaires traçant un graphique en barres ascendant, symbolisant la hausse des prix"
 readingTime: 4
 relatedArticles: ["pourquoi-le-prix-du-carburant-a-flambe-en-2026", "pourquoi-prix-carburant-eleves-juin-2026", "prix-carburant-2026"]

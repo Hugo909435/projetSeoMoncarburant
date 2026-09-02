@@ -9,7 +9,7 @@ updatedAt: 2026-08-31
 author: "hugo-beignon"
 category: "carburants"
 tags: ["totalenergies", "plafonnement prix", "prix carburant", "patrick pouyanné", "superprofits", "moyen-orient", "gazole", "essence"]
-featuredImage: "/images/articles/totalenergies-plafonne-prix-carburant-2026.webp"
+featuredImage: "../../assets/articles/totalenergies-plafonne-prix-carburant-2026.webp"
 imageAlt: "Station-service TotalEnergies avec ses pompes et son enseigne rouge et bleue"
 readingTime: 6
 relatedArticles: ["totalenergies-menace-lever-plafond-taxe-superprofits-2026", "carburant-prix-remonte-juillet-2026", "prix-carburant-2026"]

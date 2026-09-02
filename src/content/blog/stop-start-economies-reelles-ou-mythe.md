@@ -8,7 +8,7 @@ publishedAt: 2026-06-15
 author: "hugo-beignon"
 category: "economies"
 tags: ["stop-start", "consommation carburant", "économies", "conduite urbaine", "batterie", "entretien"]
-featuredImage: "/images/articles/stop-start-economies-reelles-ou-mythe.webp"
+featuredImage: "../../assets/articles/stop-start-economies-reelles-ou-mythe.webp"
 imageAlt: "Tableau de bord d'une voiture affichant le voyant Stop & Start actif à un feu rouge en ville"
 readingTime: 7
 pillar: "reduire-facture-carburant"

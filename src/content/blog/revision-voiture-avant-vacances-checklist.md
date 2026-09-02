@@ -8,7 +8,7 @@ publishedAt: 2026-07-04
 author: "hugo-beignon"
 category: "entretien"
 tags: ["révision voiture", "vacances", "checklist entretien", "consommation carburant", "entretien voiture"]
-featuredImage: "/images/articles/revision-voiture-avant-vacances.webp"
+featuredImage: "../../assets/articles/revision-voiture-avant-vacances.webp"
 imageAlt: "Voiture garée sur une plage ensoleillée au bord de la mer, prête pour un départ en vacances"
 readingTime: 5
 pillar: "entretien-baisser-consommation"

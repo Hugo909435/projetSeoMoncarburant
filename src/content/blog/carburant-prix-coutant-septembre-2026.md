@@ -9,7 +9,7 @@ author: "hugo-beignon"
 category: "economies"
 pillar: "reduire-facture-carburant"
 tags: ["prix coûtant", "septembre 2026", "rentrée", "leclerc", "intermarché", "carrefour", "système u", "carburant", "économies"]
-featuredImage: "/images/articles/carburant-prix-coutant-septembre-2026.webp"
+featuredImage: "../../assets/articles/carburant-prix-coutant-septembre-2026.webp"
 imageAlt: "Station-service d'un hypermarché Leclerc, avec ses pompes à carburant et son auvent"
 readingTime: 5
 relatedArticles: ["prix-coutant-carburant-calendrier-leclerc-intermarche-carrefour", "carburant-prix-coutant-aout-2026", "totalenergies-plafonne-a-nouveau-carburant-2026", "gazole-hausse-31-centimes-six-semaines-2026", "prix-coutant-carburant-vaut-il-le-coup"]

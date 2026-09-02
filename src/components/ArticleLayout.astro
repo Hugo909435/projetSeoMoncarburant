@@ -1,6 +1,7 @@
 ---
 // Layout complet pour les articles satellites
 import type { CollectionEntry } from 'astro:content';
+import { Image } from 'astro:assets';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Breadcrumb from './Breadcrumb.astro';
 import TableOfContents from './TableOfContents.astro';
@@ -78,7 +79,7 @@ const articleSchema = {
   description: metaDescription,
   image: {
     '@type': 'ImageObject',
-    url: featuredImage.startsWith('http') ? featuredImage : `https://mon-carburant.com${featuredImage}`,
+    url: `https://mon-carburant.com${featuredImage.src}`,
     width: 1200,
     height: 630,
   },
@@ -118,7 +119,7 @@ const updatedDateFormatted =
   title={metaTitle}
   description={metaDescription}
   canonical={pageUrl}
-  image={featuredImage}
+  image={featuredImage.src}
   imageAlt={imageAlt}
   type="article"
   publishedAt={publishedAt.toISOString()}
@@ -164,11 +165,11 @@ const updatedDateFormatted =
 
         <!-- Image principale (eager loading car above-the-fold) -->
         <div class="article-featured-image">
-          <img
+          <Image
             src={featuredImage}
             alt={imageAlt}
-            width="1200"
-            height="630"
+            width={1200}
+            height={630}
             loading="eager"
             decoding="async"
             fetchpriority="high"
@@ -183,6 +184,9 @@ const updatedDateFormatted =
         {headings.filter(h => h.depth <= 3).length > 1 && (
           <div class="article-toc">
             <TableOfContents headings={headings} />
+            <div class="toc-ad">
+              <AdUnit />
+            </div>
           </div>
         )}
 
@@ -273,6 +277,10 @@ const updatedDateFormatted =
     margin-top: 2rem;
   }
 
+  .toc-ad {
+    display: none;
+  }
+
   @media (min-width: 1024px) {
     .article-body {
       grid-template-columns: 1fr 16rem;
@@ -286,6 +294,11 @@ const updatedDateFormatted =
 
     .article-content {
       order: 1;
+    }
+
+    .toc-ad {
+      display: block;
+      margin-top: 1rem;
     }
   }
 

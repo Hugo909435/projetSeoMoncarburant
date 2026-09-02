@@ -9,7 +9,7 @@ updatedAt: 2026-05-15
 author: "hugo-beignon"
 category: "carburants"
 tags: ["pompe à essence", "station-service", "fonctionnement", "sécurité"]
-featuredImage: "/images/articles/pompe-essence-fonctionnement.webp"
+featuredImage: "../../assets/articles/pompe-essence-fonctionnement.webp"
 imageAlt: "Vue rapprochée d'un pistolet de pompe à essence inséré dans le réservoir d'une voiture"
 readingTime: 7
 pillar: "sp95-vs-sp98"

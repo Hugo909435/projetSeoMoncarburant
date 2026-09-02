@@ -9,7 +9,7 @@ updatedAt: 2026-08-16
 author: "hugo-beignon"
 category: "carburants"
 tags: ["gazole", "diesel", "prix carburant", "août 2026", "raffinage", "SP95-E10", "distillat"]
-featuredImage: "/images/articles/gazole-hausse-31-centimes-six-semaines-2026.webp"
+featuredImage: "../../assets/articles/gazole-hausse-31-centimes-six-semaines-2026.webp"
 imageAlt: "Rangée de pistolets de distribution noirs sur une pompe de station-service, repères de couleur visibles sur les embouts"
 readingTime: 5
 pillar: "sp95-vs-sp98"

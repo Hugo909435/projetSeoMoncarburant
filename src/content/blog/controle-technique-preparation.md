@@ -9,7 +9,7 @@ updatedAt: 2026-07-01
 author: "hugo-beignon"
 category: "entretien"
 tags: ["contrôle technique", "checklist entretien", "contre-visite", "entretien voiture", "sécurité routière"]
-featuredImage: "/images/articles/controle-technique-preparation.webp"
+featuredImage: "../../assets/articles/controle-technique-preparation.webp"
 imageAlt: "Mécanicien vérifiant le moteur d'une voiture, capot ouvert, avant le contrôle technique"
 readingTime: 4
 pillar: "entretien-voiture-guide"

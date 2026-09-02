@@ -8,7 +8,7 @@ publishedAt: 2026-07-15
 author: "hugo-beignon"
 category: "carburants"
 tags: ["panne d'essence", "autoroute", "panne sèche", "dépannage autoroute", "amende", "sécurité routière"]
-featuredImage: "/images/articles/panne-essence-autoroute.webp"
+featuredImage: "../../assets/articles/panne-essence-autoroute.webp"
 imageAlt: "Borne d'appel d'urgence SOS orange au bord d'une autoroute, derrière la glissière de sécurité"
 readingTime: 7
 relatedArticles: ["voyant-reserve-combien-de-km", "autoroute-ou-nationale-carburant-plus-cher", "erreur-carburant-mauvais-plein"]

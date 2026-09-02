@@ -9,7 +9,7 @@ updatedAt: 2026-06-29
 author: "hugo-beignon"
 category: "carburants"
 tags: ["carrefour", "prix coûtant", "carburant", "grande surface", "bon plan", "carte pass"]
-featuredImage: "/images/articles/carrefour-carburant-prix-2026.webp"
+featuredImage: "../../assets/articles/carrefour-carburant-prix-2026.webp"
 imageAlt: "Station-service Carrefour avec affichage des prix carburant"
 readingTime: 4
 relatedArticles: ["intermarche-carburant-prix-coutant-2026", "prix-carburant-2026", "carburant-moins-cher-leclerc-intermarche-carrefour-2026", "prix-coutant-carburant-calendrier-leclerc-intermarche-carrefour"]

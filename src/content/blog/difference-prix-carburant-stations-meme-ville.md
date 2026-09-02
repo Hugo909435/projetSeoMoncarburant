@@ -8,7 +8,7 @@ publishedAt: 2026-07-13
 author: "hugo-beignon"
 category: "carburants"
 tags: ["prix carburant", "stations-service", "marge carburant", "comparateur prix", "économies"]
-featuredImage: "/images/articles/difference-prix-carburant-stations-meme-ville.webp"
+featuredImage: "../../assets/articles/difference-prix-carburant-stations-meme-ville.webp"
 imageAlt: "Totem de prix affichant les tarifs SP95, SP98, Super et Gazole à l'entrée d'une station-service"
 readingTime: 7
 pillar: "reduire-facture-carburant"

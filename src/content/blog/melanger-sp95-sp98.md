@@ -8,7 +8,7 @@ author: "hugo-beignon"
 category: "carburants"
 excerpt: "SP95 et SP98 dans le même réservoir : aucun risque. Les deux essences sont conformes à la norme EN 228 et chimiquement compatibles. Explication technique et cas concrets."
 tags: ["sp95", "sp98", "mélange carburant", "essence", "réservoir", "indice octane"]
-featuredImage: "/images/articles/melanger-sp95-sp98.webp"
+featuredImage: "../../assets/articles/melanger-sp95-sp98.webp"
 imageAlt: "Pistolet de pompe à essence SP98 au-dessus d'un réservoir de voiture en station-service française"
 readingTime: 6
 pillar: "sp95-vs-sp98"

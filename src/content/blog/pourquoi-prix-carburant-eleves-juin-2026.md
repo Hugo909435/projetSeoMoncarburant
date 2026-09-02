@@ -9,7 +9,7 @@ updatedAt: 2026-06-02
 author: "hugo-beignon"
 category: "carburants"
 tags: ["prix carburant", "juin 2026", "essence", "diesel", "brent", "ticpe", "opep"]
-featuredImage: "/images/articles/pourquoi-prix-carburant-eleves-juin-2026.webp"
+featuredImage: "../../assets/articles/pourquoi-prix-carburant-eleves-juin-2026.webp"
 imageAlt: "Compteur d'une pompe à carburant dans une station-service affichant le montant et le volume distribué"
 readingTime: 5
 relatedArticles: ["prix-carburant-2026", "pourquoi-le-prix-du-carburant-a-flambe-en-2026", "indemnite-carburant-2026"]

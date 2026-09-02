@@ -9,7 +9,7 @@ updatedAt: 2026-05-28
 author: "hugo-beignon"
 category: "carburants"
 tags: ["sp95-e10", "compatibilité", "bioéthanol", "e10", "essence"]
-featuredImage: "/images/articles/compatibilite-sp95-e10.webp"
+featuredImage: "../../assets/articles/compatibilite-sp95-e10.webp"
 imageAlt: "Trappe à carburant d'une voiture indiquant la compatibilité au SP95-E10 en station-service"
 readingTime: 7
 pillar: "sp95-vs-sp98"

@@ -9,7 +9,7 @@ author: "hugo-beignon"
 category: "economies"
 pillar: "reduire-facture-carburant"
 tags: ["prix carburant", "autoroute", "nationale", "station-service", "économies", "vacances"]
-featuredImage: "/images/articles/autoroute-ou-nationale-carburant-plus-cher.webp"
+featuredImage: "../../assets/articles/autoroute-ou-nationale-carburant-plus-cher.webp"
 imageAlt: "Panneau de prix d'une station-service sur une aire d'autoroute avec des voitures en arrière-plan"
 readingTime: 8
 relatedArticles: ["prix-carburant-2026", "climatisation-voiture-consommation", "stop-start-economies-reelles-ou-mythe"]

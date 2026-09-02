@@ -65,11 +65,36 @@ const {
       gtag('js', new Date());
       gtag('config', GA_ID, { anonymize_ip: true, cookie_flags: 'SameSite=None;Secure' });
     </script>
-    <script async src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}></script>
-    <script
-      async
-      crossorigin="anonymous"
-      src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADS_CLIENT}`}></script>
+
+    <!-- gtag.js et adsbygoogle.js pèsent l'essentiel du Total Blocking Time au
+         chargement (cf. audit PageSpeed) alors que le consentement est refusé
+         par défaut : on diffère leur chargement au premier signe d'activité
+         (scroll/clic/touche) ou, à défaut, 4s après le rendu. Les appels gtag()
+         ci-dessus continuent d'empiler dans dataLayer entre-temps, exactement
+         comme pour un chargement asynchrone classique : rien n'est perdu. -->
+    <script is:inline define:vars={{ GA_ID, ADS_CLIENT }}>
+      function loadDeferredThirdParty() {
+        if (window.__thirdPartyLoaded) return;
+        window.__thirdPartyLoaded = true;
+        clearTimeout(fallbackTimer);
+        events.forEach((ev) => window.removeEventListener(ev, loadDeferredThirdParty));
+
+        const gtagScript = document.createElement('script');
+        gtagScript.async = true;
+        gtagScript.src = `https://www.googletagmanager.com/gtag/js?id=${GA_ID}`;
+        document.head.appendChild(gtagScript);
+
+        const adsScript = document.createElement('script');
+        adsScript.async = true;
+        adsScript.crossOrigin = 'anonymous';
+        adsScript.src = `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADS_CLIENT}`;
+        document.head.appendChild(adsScript);
+      }
+
+      const events = ['scroll', 'pointerdown', 'touchstart', 'keydown'];
+      events.forEach((ev) => window.addEventListener(ev, loadDeferredThirdParty, { passive: true, once: true }));
+      const fallbackTimer = setTimeout(loadDeferredThirdParty, 4000);
+    </script>
 
     <!-- Préchargement des ressources critiques -->
     <link rel="preload" href="/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin fetchpriority="high" />

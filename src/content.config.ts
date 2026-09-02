@@ -1,8 +1,11 @@
-import { defineCollection, z } from 'astro:content';
+import { defineCollection, z, type SchemaContext } from 'astro:content';
 import { glob } from 'astro/loaders';
 
 // Schéma commun aux articles et piliers
-const articleSchema = z.object({
+// featuredImage passe par image() (astro:assets) : Astro génère au build les
+// variantes de taille réellement utilisées (vignette liste, carte, hero...)
+// au lieu de servir systématiquement le fichier source complet.
+const articleSchema = ({ image }: SchemaContext) => z.object({
   title: z.string().max(70),
   metaTitle: z.string().max(60),
   metaDescription: z.string().max(160),
@@ -13,7 +16,7 @@ const articleSchema = z.object({
   author: z.string(), // slug de l'auteur
   category: z.enum(['economies', 'carburants', 'entretien']),
   tags: z.array(z.string()),
-  featuredImage: z.string(),
+  featuredImage: image(),
   imageAlt: z.string(),
   readingTime: z.number(),
   pillar: z.string().optional(), // slug du pilier parent

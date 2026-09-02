@@ -8,7 +8,7 @@ publishedAt: 2026-08-25
 author: "hugo-beignon"
 category: "carburants"
 tags: ["actualite", "budget-2027", "indemnite-carburant", "cheque-energie", "aide-gouvernementale", "grands-rouleurs", "2026"]
-featuredImage: "/images/articles/reconduction-aides-carburant-budget-2027.webp"
+featuredImage: "../../assets/articles/reconduction-aides-carburant-budget-2027.webp"
 imageAlt: "Main tenant le pistolet d'une pompe à essence pendant le plein d'une voiture"
 readingTime: 5
 relatedArticles: ["indemnite-carburant-2026", "indemnite-carburant-delai-rallonge-2026", "totalenergies-plafonne-a-nouveau-carburant-2026"]

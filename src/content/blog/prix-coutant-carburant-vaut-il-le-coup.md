@@ -9,7 +9,7 @@ author: "hugo-beignon"
 category: "economies"
 pillar: "reduire-facture-carburant"
 tags: ["prix coûtant", "leclerc", "intermarché", "carrefour", "économies", "bon plan", "carburant"]
-featuredImage: "/images/articles/prix-coutant-carburant-vaut-il-le-coup.webp"
+featuredImage: "../../assets/articles/prix-coutant-carburant-vaut-il-le-coup.webp"
 imageAlt: "Station-service de grande surface avec pompes en libre-service et voitures en train de faire le plein"
 readingTime: 7
 relatedArticles: ["prix-coutant-carburant-calendrier-leclerc-intermarche-carrefour", "carburant-moins-cher-leclerc-intermarche-carrefour-2026", "prix-coutant-carburant-systeme-u-auchan-casino-cora", "reduire-facture-carburant"]

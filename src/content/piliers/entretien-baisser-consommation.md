@@ -9,7 +9,7 @@ updatedAt: 2026-05-05
 author: hugo-beignon
 category: entretien
 tags: [entretien, consommation, pneus, vidange, filtres, economies, huile-moteur, bougies]
-featuredImage: /images/articles/entretien-consommation.webp
+featuredImage: ../../assets/articles/entretien-consommation.webp
 imageAlt: "Mécanicien effectuant la révision complète d'un véhicule en atelier"
 readingTime: 12
 relatedArticles: [courroie-distribution-remplacement, controle-technique-preparation, climatisation-voiture-consommation, revision-voiture-avant-vacances-checklist]

@@ -1,6 +1,7 @@
 ---
 // Carte d'article pour les listings
 import type { CollectionEntry } from 'astro:content';
+import { Image } from 'astro:assets';
 
 interface Props {
   article: CollectionEntry<'blog'>;
@@ -26,13 +27,13 @@ const dateFormatted = new Intl.DateTimeFormat('fr-FR', {
 <article class:list={['article-card', { featured }]}>
   <a href={`/blog/${slug}/`} class="card-image-link" tabindex="-1" aria-hidden="true">
     <div class="card-image-wrapper">
-      <img
+      <Image
         src={featuredImage}
         alt={imageAlt}
         loading="lazy"
         decoding="async"
-        width="800"
-        height="450"
+        width={800}
+        height={450}
         class="card-image"
       />
       <span class="card-category badge">{categoryLabels[category]}</span>

@@ -9,7 +9,7 @@ updatedAt: 2026-05-28
 author: "hugo-beignon"
 category: "entretien"
 tags: ["entretien voiture", "contrôle technique", "carnet d'entretien", "vidange", "sécurité routière"]
-featuredImage: "/images/articles/entretien-voiture-guide.webp"
+featuredImage: "../../assets/articles/entretien-voiture-guide.webp"
 imageAlt: "Mécanicien réalisant l'entretien d'une voiture dans un atelier en France"
 readingTime: 11
 relatedArticles: ["stop-start-economies-reelles-ou-mythe", "climatisation-voiture-consommation"]

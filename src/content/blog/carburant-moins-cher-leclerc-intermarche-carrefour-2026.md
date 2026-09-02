@@ -8,7 +8,7 @@ publishedAt: 2026-07-22
 author: "hugo-beignon"
 category: "carburants"
 tags: ["leclerc", "intermarché", "carrefour", "comparatif", "grande surface", "carburant", "prix carburant"]
-featuredImage: "/images/articles/carburant-moins-cher-leclerc-intermarche-carrefour-2026.webp"
+featuredImage: "../../assets/articles/carburant-moins-cher-leclerc-intermarche-carrefour-2026.webp"
 imageAlt: "Comparaison des prix du carburant entre les stations Leclerc, Intermarché et Carrefour"
 readingTime: 4
 relatedArticles: ["prix-coutant-carburant-calendrier-leclerc-intermarche-carrefour", "intermarche-carburant-prix-coutant-2026", "carrefour-carburant-prix-2026", "carburant-prix-remonte-juillet-2026"]

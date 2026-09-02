@@ -9,7 +9,7 @@ author: "hugo-beignon"
 category: "economies"
 pillar: "reduire-facture-carburant"
 tags: ["climatisation", "recyclage air", "recirculation air", "économie carburant", "éco-conduite"]
-featuredImage: "/images/articles/bouton-recyclage-air-economie-carburant.jpg"
+featuredImage: "../../assets/articles/bouton-recyclage-air-economie-carburant.jpg"
 imageAlt: "Bouton de recyclage d'air entouré sur le tableau de bord d'une voiture : pictogramme d'une voiture avec une flèche courbée pointant vers le bouton"
 readingTime: 7
 relatedArticles: ["climatisation-voiture-consommation", "stop-start-economies-reelles-ou-mythe", "reduire-facture-carburant"]

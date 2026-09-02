@@ -8,7 +8,7 @@ publishedAt: 2026-07-07
 author: "hugo-beignon"
 category: "carburants"
 tags: ["voyant réserve", "panne sèche", "autonomie carburant", "réservoir essence", "voyant carburant"]
-featuredImage: "/images/articles/voyant-reserve-combien-de-km.webp"
+featuredImage: "../../assets/articles/voyant-reserve-combien-de-km.webp"
 imageAlt: "Gros plan sur la jauge à carburant d'un tableau de bord, aiguille sur E et voyant de réserve allumé en orange"
 readingTime: 5
 relatedArticles: ["erreur-carburant-mauvais-plein", "pompe-essence-fonctionnement", "pression-pneus-consommation"]

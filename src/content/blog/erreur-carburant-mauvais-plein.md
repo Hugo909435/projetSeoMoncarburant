@@ -9,7 +9,7 @@ author: "hugo-beignon"
 category: "carburants"
 tags: ["erreur carburant", "mauvais carburant", "diesel", "essence", "panne", "entretien"]
 relatedArticles: ["compatibilite-sp95-e10", "melanger-sp95-sp98", "pompe-essence-fonctionnement"]
-featuredImage: "/images/articles/erreur-carburant-mauvais-plein.webp"
+featuredImage: "../../assets/articles/erreur-carburant-mauvais-plein.webp"
 imageAlt: "Pistolet de pompe à essence mal inséré dans le réservoir d'une voiture, symbole d'erreur de carburant"
 readingTime: 4
 ctaTitle: "Besoin de refaire le plein sereinement ?"

@@ -9,7 +9,7 @@ updatedAt: 2026-07-20
 author: "hugo-beignon"
 category: "carburants"
 tags: ["diesel", "essence", "achat voiture", "carburant 2026"]
-featuredImage: "/images/articles/diesel-ou-essence-2026-achat.webp"
+featuredImage: "../../assets/articles/diesel-ou-essence-2026-achat.webp"
 imageAlt: "Deux pistolets de pompe à essence et diesel côte à côte en station-service"
 readingTime: 4
 pillar: "sp95-vs-sp98"

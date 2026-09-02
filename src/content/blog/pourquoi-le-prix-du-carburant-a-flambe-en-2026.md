@@ -9,7 +9,7 @@ updatedAt: 2026-07-01
 author: "hugo-beignon"
 category: "carburants"
 tags: ["prix carburant", "détroit d'ormuz", "pétrole", "brent", "géopolitique", "2026"]
-featuredImage: "/images/articles/pourquoi-prix-carburant-flambe-2026-ormuz.webp"
+featuredImage: "../../assets/articles/pourquoi-prix-carburant-flambe-2026-ormuz.webp"
 imageAlt: "Pétrolier traversant le détroit d'Ormuz, voie maritime stratégique entre l'Iran et Oman pour le pétrole mondial"
 readingTime: 7
 pillar: "sp95-vs-sp98"

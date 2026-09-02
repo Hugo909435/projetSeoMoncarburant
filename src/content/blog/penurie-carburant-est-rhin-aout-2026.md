@@ -9,7 +9,7 @@ updatedAt: 2026-08-16
 author: "hugo-beignon"
 category: "carburants"
 tags: ["pénurie carburant", "Grand Est", "Alsace", "Rhin", "sécheresse", "août 2026", "approvisionnement"]
-featuredImage: "/images/articles/penurie-carburant-est-rhin-aout-2026.webp"
+featuredImage: "../../assets/articles/penurie-carburant-est-rhin-aout-2026.webp"
 imageAlt: "Cargo fluvial naviguant sur le Rhin en août 2026 devant Kaub, coque haute sur l'eau et larges bancs de graviers découverts sur la rive"
 readingTime: 5
 relatedArticles: ["pourquoi-prix-carburant-eleves-juin-2026", "compatibilite-sp95-e10", "voyant-reserve-combien-de-km"]

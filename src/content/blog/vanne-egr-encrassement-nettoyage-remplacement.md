@@ -9,7 +9,7 @@ updatedAt: 2026-07-24
 author: "hugo-beignon"
 category: "entretien"
 tags: ["vanne EGR", "encrassement moteur", "entretien diesel", "voyant moteur"]
-featuredImage: "/images/articles/vanne-egr-encrassement.webp"
+featuredImage: "../../assets/articles/vanne-egr-encrassement.webp"
 imageAlt: "Vanne rouge anodisée montée sur la tuyauterie d'admission d'un moteur, vue rapprochée sous le capot"
 readingTime: 5
 pillar: "entretien-voiture-guide"

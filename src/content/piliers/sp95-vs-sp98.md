@@ -9,7 +9,7 @@ author: "hugo-beignon"
 category: "carburants"
 excerpt: "SP95 ou SP98 ? Pour 95 % des conducteurs, le SP95 suffit et économise 5 centimes par litre. Différences techniques, véhicules concernés et calculs d'économies réels."
 tags: ["sp95", "sp98", "essence", "comparatif", "indice octane"]
-featuredImage: "/images/articles/sp95-vs-sp98.webp"
+featuredImage: "../../assets/articles/sp95-vs-sp98.webp"
 imageAlt: "Deux pistolets de pompe à essence SP95 et SP98 côte à côte dans une station-service française"
 readingTime: 9
 relatedArticles: [pompe-essence-fonctionnement, prix-carburant-2026]

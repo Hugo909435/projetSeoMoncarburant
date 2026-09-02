@@ -8,7 +8,7 @@ publishedAt: 2026-06-24
 author: "hugo-beignon"
 category: "economies"
 tags: ["climatisation", "consommation carburant", "économies", "été", "éco-conduite", "entretien"]
-featuredImage: "/images/articles/climatisation-voiture-consommation.webp"
+featuredImage: "../../assets/articles/climatisation-voiture-consommation.webp"
 imageAlt: "Main d'un conducteur réglant la climatisation sur le tableau de bord d'une voiture en été"
 readingTime: 8
 pillar: "reduire-facture-carburant"

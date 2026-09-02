@@ -8,7 +8,7 @@ publishedAt: 2026-09-01
 author: "hugo-beignon"
 category: "carburants"
 tags: ["excellium", "diesel", "totalenergies", "additifs carburant", "entretien diesel"]
-featuredImage: "/images/articles/gasoil-excellium-probleme-moteur.webp"
+featuredImage: "../../assets/articles/gasoil-excellium-probleme-moteur.webp"
 imageAlt: "Station-service TotalEnergies avec ses pompes diesel et essence sous l'auvent, sur une aire d'autoroute"
 readingTime: 7
 pillar: "sp95-vs-sp98"

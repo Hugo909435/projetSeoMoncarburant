@@ -8,7 +8,7 @@ publishedAt: 2026-06-28
 author: "hugo-beignon"
 category: "carburants"
 tags: ["e85", "superéthanol", "bioéthanol", "flex-fuel", "boîtier éthanol", "économies carburant"]
-featuredImage: "/images/articles/e85-superethanol-vaut-il-le-coup.webp"
+featuredImage: "../../assets/articles/e85-superethanol-vaut-il-le-coup.webp"
 imageAlt: "Pompe E85 superéthanol en station-service française avec affichage du prix au litre"
 readingTime: 8
 pillar: "sp95-vs-sp98"
