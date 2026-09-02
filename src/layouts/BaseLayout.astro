@@ -4,8 +4,10 @@ import '../styles/global.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import SEO from '../components/SEO.astro';
-import CookieBanner from '../components/CookieBanner.astro';
 import AdUnit from '../components/AdUnit.astro';
+
+const GA_ID = 'G-34QJT89RZV';
+const ADS_CLIENT = 'ca-pub-3886240842343078';
 
 interface Props {
   title: string;
@@ -47,6 +49,28 @@ const {
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="generator" content={Astro.generator} />
 
+    <!-- Google Consent Mode v2 : état par défaut (refusé) avant tout tag Google.
+         Le message de confidentialité Google (AdSense > Confidentialité et messages)
+         met ensuite ce signal à jour lui-même selon le choix de l'utilisateur. -->
+    <script is:inline define:vars={{ GA_ID }}>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag('consent', 'default', {
+        ad_storage: 'denied',
+        ad_user_data: 'denied',
+        ad_personalization: 'denied',
+        analytics_storage: 'denied',
+        wait_for_update: 500,
+      });
+      gtag('js', new Date());
+      gtag('config', GA_ID, { anonymize_ip: true, cookie_flags: 'SameSite=None;Secure' });
+    </script>
+    <script async src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}></script>
+    <script
+      async
+      crossorigin="anonymous"
+      src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADS_CLIENT}`}></script>
+
     <!-- Préchargement des ressources critiques -->
     <link rel="preload" href="/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin fetchpriority="high" />
     <link rel="preload" href="/fonts/manrope-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin fetchpriority="high" />
@@ -80,6 +104,5 @@ const {
     </main>
     {!hideAds && <AdUnit />}
     <Footer />
-    <CookieBanner />
   </body>
 </html>

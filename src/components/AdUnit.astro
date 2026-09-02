@@ -1,7 +1,8 @@
 ---
-// Bloc pub Google AdSense, respectueux du consentement RGPD (voir CookieBanner.astro).
-// Rien ne se charge tant que l'utilisateur n'a pas accepté la catégorie "Publicité" :
-// le <ins> reste vide et inerte jusqu'à ce que le script adsbygoogle soit injecté.
+// Bloc pub Google AdSense. Le script adsbygoogle.js est chargé une fois pour
+// toutes dans BaseLayout.astro ; le consentement (RGPD) est géré par le message
+// de confidentialité Google (AdSense > Confidentialité et messages) via
+// Google Consent Mode, pas par ce composant.
 const ADS_CLIENT = 'ca-pub-3886240842343078';
 const DEFAULT_SLOT = '9482478582';
 
@@ -23,6 +24,7 @@ const { slot = DEFAULT_SLOT, class: className } = Astro.props;
     data-ad-format="auto"
     data-full-width-responsive="true"></ins>
 </div>
+<script is:inline>(window.adsbygoogle = window.adsbygoogle || []).push({});</script>
 
 <style>
   .ad-slot {
