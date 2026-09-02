@@ -186,6 +186,7 @@ const updatedDateFormatted =
             <TableOfContents headings={headings} />
             <div class="toc-ad">
               <AdUnit />
+              <AdUnit />
             </div>
           </div>
         )}
@@ -287,9 +288,13 @@ const updatedDateFormatted =
       align-items: start;
     }
 
-    /* TOC à droite sur desktop */
+    /* TOC à droite sur desktop, bloc fixe (sommaire + pubs) qui ne bouge pas au scroll */
     .article-toc {
       order: 2;
+      position: sticky;
+      top: 5rem;
+      max-height: calc(100vh - 6rem);
+      overflow-y: auto;
     }
 
     .article-content {
@@ -298,6 +303,15 @@ const updatedDateFormatted =
 
     .toc-ad {
       display: block;
+      margin-top: 1rem;
+    }
+
+    .toc-ad :global(.ad-slot) {
+      margin: 1rem 0 0;
+      padding: 0;
+    }
+
+    .toc-ad :global(.ad-slot) + :global(.ad-slot) {
       margin-top: 1rem;
     }
   }
