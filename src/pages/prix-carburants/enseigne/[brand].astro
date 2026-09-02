@@ -396,12 +396,16 @@ const jsonLdBreadcrumb = {
   .stations-table th { background:#f1f5f9; color:var(--color-primary); padding:0.6rem 0.75rem; text-align:left; font-size:0.8rem; }
   .stations-table td { padding:0.55rem 0.75rem; border-bottom:1px solid #f1f5f9; }
   .stations-table tr:hover td { background:#f8fafc; }
-  .station-addr { max-width:200px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-  .station-maj { white-space: nowrap; font-size: 0.75rem; color: #64748b; }
   .price-highlight { font-weight:700; color:#16a34a; }
   .dept-link { color:var(--color-primary); text-decoration:none; font-weight:500; }
   .dept-link:hover { text-decoration:underline; }
-  .dept-pill-link { font-size:0.75rem; font-weight:700; color:var(--color-primary); background:#f1f5f9; padding:0.15rem 0.4rem; border-radius:0.25rem; }
+  /* :global() sur tout le tableau "Toutes les stations" : le bouton "Afficher plus" injecte des
+     lignes via innerHTML (script client). Ces éléments n'ont jamais l'attribut data-astro-cid
+     ajouté au build, donc aucun style scopé classique ne les touche. On duplique ici en version
+     globale toutes les classes utilisées par ces lignes injectées. */
+  :global(.station-addr) { max-width:200px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  :global(.station-maj) { white-space: nowrap; font-size: 0.75rem; color: #64748b; }
+  :global(.dept-pill-link) { font-size:0.75rem; font-weight:700; color:var(--color-primary); background:#f1f5f9; padding:0.15rem 0.4rem; border-radius:0.25rem; }
 
   .dept-intro { color:var(--color-text-muted); font-size:0.875rem; margin:-0.5rem 0 1rem; }
   .dept-grid { display:flex; flex-wrap:wrap; gap:0.5rem; }
