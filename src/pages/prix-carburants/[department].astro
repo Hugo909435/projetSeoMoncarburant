@@ -437,11 +437,12 @@ const jsonLdGasStations = dept.num === '53'
   .pop-route { background: #e0f2fe; color: #075985; }
   .brand-cell { white-space: nowrap; padding: 0.4rem 0.75rem; }
   .brand-unknown { font-size: 0.7rem; color: #64748b; background: #f1f5f9; border-radius: 3px; padding: 0.1rem 0.4rem; }
-  /* Ciblage :global requis : les lignes injectées par le bouton "Afficher toutes les stations"
-     (script client, innerHTML) n'ont pas l'attribut data-astro-cid du style scopé de BrandLogo.astro. */
-  .brand-cell :global(.brand-logo-wrap) { display: inline-flex; align-items: center; vertical-align: middle; }
-  .brand-cell :global(.brand-logo-img) { height: 32px; width: auto; border-radius: 3px; display: block; }
-  .brand-cell :global(.brand-logo-text) { font-size: 0.75rem; font-weight: 600; color: var(--color-primary); background: #f1f5f9; border-radius: 3px; padding: 0.1rem 0.4rem; white-space: nowrap; }
+  /* Toute la chaîne de sélecteur doit être dans :global() : les lignes injectées par le bouton
+     "Afficher toutes les stations" (script client, innerHTML) n'ont pas l'attribut data-astro-cid
+     du style scopé de BrandLogo.astro, ni sur l'image ni sur le <td class="brand-cell"> parent. */
+  :global(.brand-cell .brand-logo-wrap) { display: inline-flex; align-items: center; vertical-align: middle; }
+  :global(.brand-cell .brand-logo-img) { height: 32px; width: auto; border-radius: 3px; display: block; }
+  :global(.brand-cell .brand-logo-text) { font-size: 0.75rem; font-weight: 600; color: var(--color-primary); background: #f1f5f9; border-radius: 3px; padding: 0.1rem 0.4rem; white-space: nowrap; }
   .cities-grid {
     display: flex;
     flex-wrap: wrap;
