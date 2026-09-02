@@ -329,6 +329,26 @@
   var $tg   = document.getElementById('tgl-analytics');
   var $tgAd = document.getElementById('tgl-ads');
 
+  /* ── Google Consent Mode v2 (état par défaut, avant tout tag) ─── */
+  window.dataLayer = window.dataLayer || [];
+  function gtag() { window.dataLayer.push(arguments); }
+  window.gtag = gtag;
+  gtag('consent', 'default', {
+    ad_storage: 'denied',
+    ad_user_data: 'denied',
+    ad_personalization: 'denied',
+    analytics_storage: 'denied',
+    wait_for_update: 500
+  });
+  function updateConsent(c) {
+    gtag('consent', 'update', {
+      ad_storage: c.ads ? 'granted' : 'denied',
+      ad_user_data: c.ads ? 'granted' : 'denied',
+      ad_personalization: c.ads ? 'granted' : 'denied',
+      analytics_storage: c.analytics ? 'granted' : 'denied'
+    });
+  }
+
   /* ── Persistance ─────────────────────────────────────────────── */
   function load() {
     try { return JSON.parse(localStorage.getItem(KEY)); } catch (e) { return null; }
@@ -342,9 +362,6 @@
   /* ── Google Analytics 4 (chargement conditionnel) ───────────── */
   function loadGA4() {
     if (document.getElementById('_ga4s')) return;
-    window.dataLayer = window.dataLayer || [];
-    function gtag() { window.dataLayer.push(arguments); }
-    window.gtag = gtag;
     gtag('js', new Date());
     gtag('config', GA, { anonymize_ip: true, cookie_flags: 'SameSite=None;Secure' });
     var s = document.createElement('script');
@@ -407,6 +424,7 @@
     hideBanner();
     hideModal();
     $r.classList.add('is-open');
+    updateConsent(c);
     if (c.analytics) loadGA4();
     if (c.ads) loadAds();
   }
@@ -415,6 +433,7 @@
   var existing = load();
   if (existing) {
     $r.classList.add('is-open');
+    updateConsent(existing);
     if (existing.analytics) {
       // Retarder le chargement de GA4 pour ne pas pénaliser le LCP/FCP
       setTimeout(loadGA4, 2000);
