@@ -50,11 +50,15 @@ const {
     <meta name="generator" content={Astro.generator} />
 
     <!-- Google Consent Mode v2 : état par défaut (refusé) avant tout tag Google.
-         Le message de confidentialité Google (AdSense > Confidentialité et messages)
-         met ensuite ce signal à jour lui-même selon le choix de l'utilisateur. -->
+         Le message de confidentialité Google met ensuite ce signal à jour, mais
+         il n'envoie analytics_storage QUE si l'option "Activer le mode
+         Consentement à des fins d'analyse" est cochée dans AdSense >
+         Confidentialité et messages > Réglementations européennes > Paramètres.
+         Sans cette case, analytics_storage reste refusé et GA4 ne collecte rien. -->
     <script is:inline define:vars={{ GA_ID }}>
       window.dataLayer = window.dataLayer || [];
       function gtag() { dataLayer.push(arguments); }
+      window.gtag = gtag;
       gtag('consent', 'default', {
         ad_storage: 'denied',
         ad_user_data: 'denied',
@@ -66,23 +70,26 @@ const {
       gtag('config', GA_ID, { anonymize_ip: true, cookie_flags: 'SameSite=None;Secure' });
     </script>
 
-    <!-- gtag.js et adsbygoogle.js pèsent l'essentiel du Total Blocking Time au
-         chargement (cf. audit PageSpeed) alors que le consentement est refusé
-         par défaut : on diffère leur chargement au premier signe d'activité
-         (scroll/clic/touche) ou, à défaut, 4s après le rendu. Les appels gtag()
-         ci-dessus continuent d'empiler dans dataLayer entre-temps, exactement
-         comme pour un chargement asynchrone classique : rien n'est perdu. -->
-    <script is:inline define:vars={{ GA_ID, ADS_CLIENT }}>
-      function loadDeferredThirdParty() {
-        if (window.__thirdPartyLoaded) return;
-        window.__thirdPartyLoaded = true;
-        clearTimeout(fallbackTimer);
-        events.forEach((ev) => window.removeEventListener(ev, loadDeferredThirdParty));
+    <!-- gtag.js et le message de consentement Google partent immédiatement.
+         Les différer revenait à perdre toute la mesure : tant que gtag.js n'est
+         pas chargé aucun hit n'est envoyé, et tant que le message Google n'est
+         pas chargé le consentement reste refusé, donc GA4 ne collecte rien.
+         Le message est ici appelé directement (endpoint Funding Choices) plutôt
+         que via adsbygoogle.js ; le script est idempotent, son rechargement
+         éventuel par adsbygoogle.js est sans effet. -->
+    <script async src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}></script>
+    <script async src={`https://fundingchoicesmessages.google.com/i/${ADS_CLIENT}?ers=1`}></script>
 
-        const gtagScript = document.createElement('script');
-        gtagScript.async = true;
-        gtagScript.src = `https://www.googletagmanager.com/gtag/js?id=${GA_ID}`;
-        document.head.appendChild(gtagScript);
+    <!-- adsbygoogle.js pèse l'essentiel du Total Blocking Time (cf. audit
+         PageSpeed) et ne conditionne aucune mesure : lui seul reste différé au
+         premier signe d'activité (scroll/clic/touche) ou, à défaut, 4s après le
+         rendu. Les push adsbygoogle des AdUnit empilent en attendant. -->
+    <script is:inline define:vars={{ ADS_CLIENT }}>
+      function loadDeferredAds() {
+        if (window.__adsLoaded) return;
+        window.__adsLoaded = true;
+        clearTimeout(fallbackTimer);
+        events.forEach((ev) => window.removeEventListener(ev, loadDeferredAds));
 
         const adsScript = document.createElement('script');
         adsScript.async = true;
@@ -92,8 +99,8 @@ const {
       }
 
       const events = ['scroll', 'pointerdown', 'touchstart', 'keydown'];
-      events.forEach((ev) => window.addEventListener(ev, loadDeferredThirdParty, { passive: true, once: true }));
-      const fallbackTimer = setTimeout(loadDeferredThirdParty, 4000);
+      events.forEach((ev) => window.addEventListener(ev, loadDeferredAds, { passive: true, once: true }));
+      const fallbackTimer = setTimeout(loadDeferredAds, 4000);
     </script>
 
     <!-- Préchargement des ressources critiques -->
