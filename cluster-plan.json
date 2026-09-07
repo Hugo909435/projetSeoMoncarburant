@@ -1,0 +1,187 @@
+{
+  "version": "1.9.0",
+  "seed_keyword": "voiture électrique ou essence budget carburant",
+  "created_at": "2026-09-07",
+  "context": "Diversification hors du sujet 'prix coûtant' (news-driven) pour mon-carburant.com. Pillar existant 'reduire-facture-carburant' conservé et renforcé avec 2 spokes quick-win ; nouveau pillar créé sur électrique vs thermique, sujet évergreen à fort volume et non lié à l'actualité promotionnelle.",
+  "existing_pillar_reinforcement": {
+    "pillar_url": "/piliers/reduire-facture-carburant/",
+    "new_spokes": [
+      {
+        "title": "Faut-il une application pour trouver l'essence la moins chère ?",
+        "keyword": "application essence moins chère",
+        "volume_signal": "élevé (7+ apps/comparateurs en SERP : Essence&Co, SLMC, Waze, Google Maps)",
+        "template": "explainer",
+        "wordCount": 1300,
+        "url": "/blog/meilleures-applications-essence-moins-chere/",
+        "status": "on_hold",
+        "note": "Publication reportée le 07/09/2026 : le site prépare sa propre application, décision prise de sortir cet article seulement au lancement, avec l'app maison mise en avant plutôt qu'un angle générique dès maintenant. Voir cluster-briefs/00-...md."
+      },
+      {
+        "title": "Quel jour faire le plein pour payer moins cher ?",
+        "keyword": "meilleur jour faire le plein essence",
+        "volume_signal": "moyen-élevé, requête récurrente hors actualité",
+        "template": "how-to",
+        "wordCount": 1200,
+        "url": "/blog/meilleur-jour-faire-le-plein/",
+        "status": "written",
+        "note": "Rédigé et publié le 07/09/2026. Image sourcée sur Wikimedia Commons (Tony Webster, CC BY 2.0, crédit dans l'article). Build vérifié avec succès (716 pages)."
+      }
+    ]
+  },
+  "pillar": {
+    "title": "Voiture électrique ou thermique : quel budget carburant/énergie réel en 2026",
+    "keyword": "voiture électrique ou essence",
+    "volume_signal": "élevé, marché concurrentiel (Sipa Automobiles, go-electra, iautos, monkitenergie)",
+    "template": "ultimate-guide",
+    "wordCount": 3500,
+    "url": "/piliers/voiture-electrique-ou-thermique-budget/",
+    "status": "written",
+    "note": "Rédigé et publié le 07/09/2026. Image sourcée sur Wikimedia Commons (Michael Movchin/Felix Müller, CC BY-SA 3.0, crédit dans l'article). Lien direct vers le spoke existant (cout-100km) ; les 6 autres spokes non encore écrits sont référencés via des marqueurs <!-- cluster-link:ID --> à remplacer au fil de leur rédaction. Build vérifié avec succès."
+  },
+  "clusters": [
+    {
+      "name": "Coût à l'usage",
+      "posts": [
+        {
+          "title": "Coût au 100 km : électrique vs essence vs diesel en 2026",
+          "keyword": "coût 100 km électrique essence diesel",
+          "template": "comparison",
+          "wordCount": 1600,
+          "url": "/blog/essence-vs-electrique-cout-100-km-2026/",
+          "status": "existing_to_upgrade",
+          "note": "Article existant à absorber dans le cluster comme spoke principal plutôt que dupliquer."
+        },
+        {
+          "title": "Recharge à domicile vs plein d'essence : combien ça coûte vraiment",
+          "keyword": "coût recharge électrique vs essence",
+          "template": "explainer",
+          "wordCount": 1400,
+          "url": "/blog/recharge-domicile-vs-plein-essence-cout/",
+          "status": "planned"
+        },
+        {
+          "title": "Autonomie voiture électrique en hiver : ce qui change pour le budget",
+          "keyword": "autonomie voiture électrique hiver",
+          "template": "explainer",
+          "wordCount": 1300,
+          "url": "/blog/autonomie-voiture-electrique-hiver-budget/",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "name": "Aides et fiscalité",
+      "posts": [
+        {
+          "title": "Bonus écologique 2026 : montants et conditions pour passer à l'électrique",
+          "keyword": "bonus écologique 2026",
+          "template": "explainer",
+          "wordCount": 1500,
+          "url": "/blog/bonus-ecologique-2026-montants-conditions/",
+          "status": "planned"
+        },
+        {
+          "title": "Prime à la conversion en 2026 : ce qui reste vraiment disponible",
+          "keyword": "prime à la conversion 2026",
+          "template": "explainer",
+          "wordCount": 1300,
+          "url": "/blog/prime-conversion-2026-ce-qui-reste/",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "name": "Réglementation et transition",
+      "posts": [
+        {
+          "title": "ZFE et Crit'Air 2026 : quelles voitures essence et diesel sont concernées",
+          "keyword": "ZFE crit'air 2026 voitures interdites",
+          "template": "explainer",
+          "wordCount": 1700,
+          "url": "/blog/zfe-critair-2026-voitures-essence-diesel/",
+          "status": "planned"
+        },
+        {
+          "title": "Faut-il passer à l'électrique avant l'interdiction du thermique ?",
+          "keyword": "interdiction voiture thermique électrique transition",
+          "template": "how-to",
+          "wordCount": 1400,
+          "url": "/blog/passer-electrique-avant-interdiction-thermique/",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "name": "Assurance et entretien",
+      "note": "Axe monétisation affiliation, ajouté le 07/09/2026 en complément de l'objectif de revenus (voir cluster-plan.md). Programmes visés : LeLynx/LesFurets/Hyperassur (assurance, Awin/Effiliation), idGarages/Vroomly (entretien, Kwanko).",
+      "posts": [
+        {
+          "title": "Assurance auto électrique vs thermique : quelle différence de prix",
+          "keyword": "assurance auto électrique vs thermique",
+          "template": "comparison",
+          "wordCount": 1400,
+          "url": "/blog/assurance-auto-electrique-vs-thermique-prix/",
+          "status": "written_draft",
+          "monetization": "affiliate_cpl",
+          "note": "Rédigé le 07/09/2026, publié en draft: true. Contient un placeholder <!-- affiliate-link:assurance-comparateur --> en attendant la validation du programme (Awin/Effiliation). Basculer draft: false une fois le lien réel intégré."
+        },
+        {
+          "title": "Entretien voiture électrique : combien ça coûte vraiment",
+          "keyword": "entretien voiture électrique coût",
+          "template": "explainer",
+          "wordCount": 1400,
+          "url": "/blog/entretien-voiture-electrique-cout-reel/",
+          "status": "written_draft",
+          "monetization": "affiliate_cpa",
+          "note": "Rédigé le 07/09/2026, publié en draft: true. Contient un placeholder <!-- affiliate-link:entretien-comparateur --> en attendant la validation du programme (Kwanko). Basculer draft: false une fois le lien réel intégré."
+        }
+      ]
+    }
+  ],
+  "links": [
+    { "from": "pillar", "to": "cluster-0-post-0", "type": "mandatory", "anchor": "coût au 100 km électrique vs essence" },
+    { "from": "pillar", "to": "cluster-0-post-1", "type": "mandatory", "anchor": "recharge à domicile vs plein d'essence" },
+    { "from": "pillar", "to": "cluster-0-post-2", "type": "mandatory", "anchor": "autonomie en hiver" },
+    { "from": "pillar", "to": "cluster-1-post-0", "type": "mandatory", "anchor": "bonus écologique 2026" },
+    { "from": "pillar", "to": "cluster-1-post-1", "type": "mandatory", "anchor": "prime à la conversion" },
+    { "from": "pillar", "to": "cluster-2-post-0", "type": "mandatory", "anchor": "ZFE et Crit'Air 2026" },
+    { "from": "pillar", "to": "cluster-2-post-1", "type": "mandatory", "anchor": "passer à l'électrique avant l'interdiction" },
+    { "from": "cluster-0-post-0", "to": "pillar", "type": "mandatory", "anchor": "budget carburant électrique vs thermique" },
+    { "from": "cluster-0-post-1", "to": "pillar", "type": "mandatory", "anchor": "budget carburant électrique vs thermique" },
+    { "from": "cluster-0-post-2", "to": "pillar", "type": "mandatory", "anchor": "budget carburant électrique vs thermique" },
+    { "from": "cluster-1-post-0", "to": "pillar", "type": "mandatory", "anchor": "budget carburant électrique vs thermique" },
+    { "from": "cluster-1-post-1", "to": "pillar", "type": "mandatory", "anchor": "budget carburant électrique vs thermique" },
+    { "from": "cluster-2-post-0", "to": "pillar", "type": "mandatory", "anchor": "budget carburant électrique vs thermique" },
+    { "from": "cluster-2-post-1", "to": "pillar", "type": "mandatory", "anchor": "budget carburant électrique vs thermique" },
+    { "from": "cluster-0-post-0", "to": "cluster-0-post-1", "type": "recommended", "anchor": "coût de la recharge à domicile" },
+    { "from": "cluster-0-post-0", "to": "cluster-0-post-2", "type": "recommended", "anchor": "l'hiver change la donne" },
+    { "from": "cluster-0-post-1", "to": "cluster-0-post-2", "type": "recommended", "anchor": "autonomie en hiver" },
+    { "from": "cluster-0-post-2", "to": "cluster-0-post-0", "type": "recommended", "anchor": "coût au 100 km" },
+    { "from": "cluster-0-post-2", "to": "cluster-0-post-1", "type": "recommended", "anchor": "coût de la recharge à domicile" },
+    { "from": "cluster-1-post-0", "to": "cluster-1-post-1", "type": "recommended", "anchor": "prime à la conversion" },
+    { "from": "cluster-1-post-1", "to": "cluster-1-post-0", "type": "recommended", "anchor": "bonus écologique" },
+    { "from": "cluster-2-post-0", "to": "cluster-2-post-1", "type": "recommended", "anchor": "passer à l'électrique" },
+    { "from": "cluster-2-post-1", "to": "cluster-2-post-0", "type": "recommended", "anchor": "restrictions ZFE Crit'Air" },
+    { "from": "cluster-2-post-0", "to": "cluster-1-post-0", "type": "cross-cluster", "anchor": "bonus écologique" },
+    { "from": "cluster-0-post-1", "to": "cluster-1-post-1", "type": "cross-cluster", "anchor": "prime à la conversion" },
+    { "from": "cluster-2-post-1", "to": "cluster-0-post-0", "type": "cross-cluster", "anchor": "coût réel au 100 km" },
+    { "from": "cluster-1-post-0", "to": "cluster-2-post-0", "type": "cross-cluster", "anchor": "restrictions ZFE avant d'acheter" },
+    { "from": "cluster-0-post-2", "to": "cluster-2-post-1", "type": "cross-cluster", "anchor": "faut-il anticiper le passage à l'électrique" },
+    { "from": "pillar", "to": "cluster-3-post-0", "type": "mandatory", "anchor": "assurance auto électrique vs thermique" },
+    { "from": "pillar", "to": "cluster-3-post-1", "type": "mandatory", "anchor": "entretien voiture électrique" },
+    { "from": "cluster-3-post-0", "to": "pillar", "type": "mandatory", "anchor": "budget carburant électrique vs thermique" },
+    { "from": "cluster-3-post-1", "to": "pillar", "type": "mandatory", "anchor": "budget carburant électrique vs thermique" },
+    { "from": "cluster-3-post-0", "to": "cluster-3-post-1", "type": "recommended", "anchor": "coût d'entretien réel" },
+    { "from": "cluster-3-post-1", "to": "cluster-3-post-0", "type": "recommended", "anchor": "l'assurance coûte aussi différemment" },
+    { "from": "cluster-3-post-0", "to": "cluster-0-post-0", "type": "cross-cluster", "anchor": "coût au 100 km électrique vs essence" },
+    { "from": "cluster-3-post-1", "to": "cluster-0-post-0", "type": "cross-cluster", "anchor": "coût au 100 km" }
+  ],
+  "serp_matrix_notes": "Recherches WebSearch effectuées sur 4 axes (coût électrique/essence, ZFE/Crit'Air, bonus écologique, apps essence moins chère) : SERPs totalement distincts (0 domaine partagé entre les 4 groupes) -> 4 clusters séparés confirmés. Cohérence interne au cluster 'Coût à l'usage' vérifiée par recoupement thématique (mêmes sources : Sipa Automobiles, go-electra, monkitenergie apparaissent sur les 3 sous-requêtes).",
+  "scorecard": {
+    "coverage": 0.0,
+    "linkDensity": 3.5,
+    "orphanPages": 0,
+    "cannibalization": 0,
+    "contentGaps": 11
+  }
+}
