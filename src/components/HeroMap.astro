@@ -115,7 +115,7 @@ for (const slug of brandSlugs) {
   </div>
 
   <!-- Carte Leaflet + liste des stations -->
-  <div class="hm-map-wrap">
+  <div class="hm-map-wrap" id="hm-map-wrap">
     <div class="container">
       <div class="hm-map-layout">
         <div
@@ -180,6 +180,18 @@ for (const slug of brandSlugs) {
     background: linear-gradient(135deg, var(--color-primary) 0%, #1a4a68 100%);
     padding: 3rem 0 2.25rem;
     color: #fff;
+  }
+
+  /* Sur petit écran, la carte (l'objectif de la recherche) doit rester
+     proche du formulaire : on resserre les espacements du hero pour ne pas
+     l'enfoncer plus bas qu'elle ne l'est déjà. */
+  @media (max-width: 640px) {
+    .hm-top { padding: 1.75rem 0 1.5rem; }
+    .hm-title { margin-bottom: 0.625rem; }
+    .hm-subtitle { margin-bottom: 1.125rem; }
+    .hm-freshness { margin-bottom: 0.625rem; }
+    .hm-suggestions { margin-top: 0.625rem; }
+    .hm-geo-btn { margin-top: 0.625rem; }
   }
 
   .hm-eyebrow {
@@ -313,6 +325,21 @@ for (const slug of brandSlugs) {
   }
   .hm-chip:active { transform: none; }
 
+  /* En dessous de 640px, 8 chips + le libellé passent sur 3-4 lignes en
+     mode "wrap" et repoussent d'autant la carte plus bas : on les fait
+     défiler horizontalement sur une seule ligne à la place. */
+  @media (max-width: 640px) {
+    .hm-suggestions {
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      padding-bottom: 0.25rem;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    .hm-suggestions::-webkit-scrollbar { display: none; }
+    .hm-suggestions-label, .hm-chip { flex-shrink: 0; }
+  }
+
   .hm-status {
     min-height: 1.4rem;
     margin: 0.625rem 0 0;
@@ -366,6 +393,9 @@ for (const slug of brandSlugs) {
   .hm-map-wrap {
     background: #fff;
     padding: 2rem 0;
+    /* Décale l'ancre de scroll sous le header sticky (4rem) pour que la
+       carte ne se retrouve pas collée/masquée sous lui après un scroll. */
+    scroll-margin-top: 4.5rem;
   }
 
   .hm-map-layout {
@@ -815,6 +845,7 @@ for (const slug of brandSlugs) {
   import { escapeHtml } from '../utils/escape-html';
 
   const mapEl  = document.getElementById('hm-map') as HTMLElement | null;
+  const mapWrapEl = document.getElementById('hm-map-wrap') as HTMLElement | null;
   const formEl = document.getElementById('hm-form') as HTMLFormElement | null;
   const inputEl  = document.getElementById('hm-input') as HTMLInputElement | null;
   const statusEl = document.getElementById('hm-status') as HTMLElement | null;
@@ -869,6 +900,15 @@ for (const slug of brandSlugs) {
     if (!statusEl) return;
     statusEl.textContent = msg;
     statusEl.className = 'hm-status' + (type ? ' is-' + type : '');
+  }
+
+  // Sur mobile, la carte est empilée sous le formulaire (une seule colonne)
+  // et sort de l'écran : sans ce scroll, l'utilisateur ne voit jamais le
+  // résultat de sa recherche tant qu'il ne fait pas défiler lui-même.
+  function scrollToMap() {
+    if (!mapWrapEl) return;
+    if (!window.matchMedia('(max-width: 900px)').matches) return;
+    mapWrapEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
   type Station = {
@@ -926,6 +966,7 @@ for (const slug of brandSlugs) {
   let stations: Station[] = [];
   let leafletMap: any = null;
   let mapReady = false;
+  let mapInitStarted = false;
   let pendingSearch: string | null = null;
   let pendingGeo: { lat: number; lng: number } | null = null;
   let userMarker: any = null;
@@ -1204,6 +1245,8 @@ for (const slug of brandSlugs) {
   }
 
   async function initMap() {
+    if (mapInitStarted) return;
+    mapInitStarted = true;
     try {
       await Promise.all([
         loadCss('/vendor/leaflet/leaflet.css'),
@@ -1277,18 +1320,32 @@ for (const slug of brandSlugs) {
 
   formEl?.addEventListener('submit', e => {
     e.preventDefault();
+    scrollToMap();
     doSearch(inputEl?.value || '');
   });
 
-  geoBtnEl?.addEventListener('click', () => locateMe());
+  geoBtnEl?.addEventListener('click', () => {
+    initMap();
+    scrollToMap();
+    locateMe();
+  });
 
   suggestionsEl?.addEventListener('click', e => {
     const btn = (e.target as HTMLElement)?.closest('.hm-chip') as HTMLElement | null;
     const city = btn?.dataset.city;
     if (!city) return;
     if (inputEl) inputEl.value = city;
+    initMap();
+    scrollToMap();
     doSearch(city);
   });
+
+  // Dès que l'utilisateur montre l'intention de chercher (il touche le
+  // champ), on démarre le chargement de la carte tout de suite plutôt que
+  // d'attendre l'idle callback ci-dessous : le temps de taper sa ville et de
+  // valider, Leaflet a de bonnes chances d'être prêt, et l'écran ne reste
+  // pas bloqué sur "La carte se charge..." juste après le scroll automatique.
+  inputEl?.addEventListener('focus', () => initMap(), { once: true });
 
   // La carte est une amélioration progressive, pas le contenu prioritaire de
   // la page (le spinner + le formulaire de recherche suffisent au premier
