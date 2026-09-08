@@ -354,7 +354,7 @@ const jsonLd: Record<string, unknown>[] = [
       ? {
           makesOffer: FUEL_KEYS.filter((f) => s.prices[f] != null).map((f) => ({
             '@type': 'Offer',
-            itemOffered: { '@type': 'Product', name: f === 'GPLc' ? 'GPL' : f },
+            itemOffered: { '@type': 'Service', name: f === 'GPLc' ? 'GPL' : f },
             price: s.prices[f],
             priceCurrency: 'EUR',
             eligibleQuantity: { '@type': 'QuantitativeValue', unitCode: 'LTR', value: 1 },

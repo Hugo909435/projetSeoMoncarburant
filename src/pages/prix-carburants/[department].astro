@@ -136,7 +136,7 @@ const jsonLdGasStations = dept.num === '53'
           ...(s.enseigne ? { brand: { '@type': 'Brand', name: s.enseigne } } : {}),
           makesOffer: FUELS.filter(f => s.prices?.[f] != null).map(f => ({
             '@type': 'Offer',
-            itemOffered: { '@type': 'Product', name: FUEL_LABELS[f] },
+            itemOffered: { '@type': 'Service', name: FUEL_LABELS[f] },
             price: s.prices[f].toFixed(3),
             priceCurrency: 'EUR',
             availability: 'https://schema.org/InStock',
