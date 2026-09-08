@@ -5,14 +5,14 @@ metaDescription: "TotalEnergies replafonne l'essence à 1,99 €/L et le diesel 
 slug: "totalenergies-plafonne-a-nouveau-carburant-2026"
 excerpt: "Le 22 juillet 2026, TotalEnergies a remis en place son plafond à 1,99 €/L pour l'essence et 2,25 €/L pour le diesel dans toutes ses stations, en réaction à la reprise du conflit au Moyen-Orient."
 publishedAt: 2026-07-25
-updatedAt: 2026-08-31
+updatedAt: 2026-09-08
 author: "hugo-beignon"
 category: "carburants"
 tags: ["totalenergies", "plafonnement prix", "prix carburant", "patrick pouyanné", "superprofits", "moyen-orient", "gazole", "essence"]
 featuredImage: "../../assets/articles/totalenergies-plafonne-prix-carburant-2026.webp"
 imageAlt: "Station-service TotalEnergies avec ses pompes et son enseigne rouge et bleue"
 readingTime: 6
-relatedArticles: ["totalenergies-menace-lever-plafond-taxe-superprofits-2026", "carburant-prix-remonte-juillet-2026", "prix-carburant-2026"]
+relatedArticles: ["totalenergies-menace-lever-plafond-taxe-superprofits-2026", "carburant-prix-coutant-septembre-2026", "michel-edouard-leclerc-carburant-240-euros-litre", "prix-carburant-2026"]
 ctaTitle: "Trouvez la station la moins chère près de chez vous"
 ctaDescription: "Notre comparateur référence les prix de plus de 11 000 stations-service en France, mis à jour quotidiennement via les données officielles."
 faq:
@@ -28,12 +28,24 @@ faq:
     answer: "Oui, mais uniquement dans 129 stations-service Relais situées sur autoroutes et voies express. TotalEnergies y aligne exceptionnellement le prix du gazole sur celui de l'essence (1,99 €/L au lieu de 2,25 €/L) les 29 et 30 août 2026, sans condition de fidélité ni montant d'achat minimum. Dans le reste du réseau, le plafond gazole reste à 2,25 €/L."
   - question: "Le plafonnement TotalEnergies va-t-il durer après l'été ?"
     answer: "Le 29 août 2026, Patrick Pouyanné a confirmé sur France Inter que le plafonnement resterait en vigueur tant que durera le conflit au Moyen-Orient. Le PDG a toutefois averti que TotalEnergies pourrait y renoncer si une taxe sur les superprofits pétroliers venait à être instaurée, ce qui conditionne la poursuite du dispositif à un choix politique encore incertain."
+  - question: "Le plafond TotalEnergies est-il toujours actif début septembre 2026 ?"
+    answer: "Oui, sans changement. Au 8 septembre 2026, le plafond reste fixé à 1,99 €/L pour l'essence et 2,25 €/L pour le diesel, dans les mêmes conditions qu'annoncées le 29 août. Aucune nouvelle échéance n'a été communiquée par le groupe depuis, la mesure restant liée à la durée du conflit au Moyen-Orient."
+  - question: "L'écart entre le plafond et les prix du marché s'est-il creusé à la rentrée ?"
+    answer: "Oui, nettement pour l'essence. Au 7 septembre 2026, les prix moyens nationaux atteignaient 2,117 €/L pour le SP95-E10 et 2,211 €/L pour le SP98, contre un plafond à 1,99 €/L, soit un écart de 12 à 22 centimes. Pour le gazole, la bascule est plus notable encore : le prix moyen national est passé à 2,280 €/L, dépassant désormais le plafond de 2,25 €/L, ce qui rend le dispositif avantageux même pour le diesel, alors que ce n'était pas encore le cas fin août."
 draft: false
 ---
 
 C'est la troisième fois en un an que TotalEnergies ressort la même carte. Le 22 juillet 2026, le groupe a annoncé le retour de son plafonnement à 1,99 €/L pour l'essence et 2,25 €/L pour le diesel, dans toutes ses stations de France métropolitaine. Officiellement, la décision répond à la reprise du conflit au Moyen-Orient et à la remontée des prix internationaux du pétrole. Officieusement, le timing interroge, puisque l'annonce précède de quelques jours la publication de résultats trimestriels particulièrement généreux.
 
 <p class="text-sm text-slate-500 italic">Photo : Tabl-trai, <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.fr" target="_blank" rel="noopener">CC BY-SA 4.0</a>, via Wikimedia Commons.</p>
+
+## Mise à jour du 8 septembre 2026 : le gazole rattrape à son tour le plafond
+
+Une semaine après la rentrée, le plafond TotalEnergies n'a pas bougé : toujours 1,99 €/L pour l'essence et 2,25 €/L pour le diesel, dans les mêmes conditions qu'annoncées par Patrick Pouyanné le 29 août. Ce qui a changé, en revanche, c'est l'écart avec le marché.
+
+Au 7 septembre 2026, les prix moyens nationaux s'établissaient à 2,117 €/L pour le SP95-E10, 2,153 €/L pour le SP95 et 2,211 €/L pour le SP98, en hausse de plus de 3 % sur sept jours. L'écart avec le plafond essence, qui tournait autour de 4 à 14 centimes fin août, atteint désormais 12 à 22 centimes selon le carburant. Côté diesel, le basculement est plus net : le prix moyen national est passé à 2,280 €/L, dépassant pour la première fois le plafond fixé à 2,25 €/L. Jusque-là, le plafond gazole restait théorique pour la plupart des automobilistes, puisque le prix de marché lui était inférieur. Ce n'est plus le cas.
+
+Cette accélération a d'ailleurs poussé Michel-Édouard Leclerc à évoquer, le 5 septembre sur LCI, [un risque de carburant à 2,40 €/L](/blog/michel-edouard-leclerc-carburant-240-euros-litre/), tout en reconnaissant une forte incertitude sur la suite. Dans ce contexte, le plafond TotalEnergies, qu'il s'agisse de l'essence ou désormais du diesel, redevient un repère concret pour limiter la facture à la pompe. Pour le point complet sur les prix et les opérations en cours à la rentrée, voir notre [bilan carburant de septembre 2026](/blog/carburant-prix-coutant-septembre-2026/).
 
 ## Mise à jour du 31 août 2026 : le plafond maintenu, mais sous conditions
 
@@ -374,4 +386,4 @@ Reste que pour l'automobiliste qui fait le plein, le calcul est simple et bien r
 
 ## Ce qu'il faut retenir à la rentrée
 
-Le plafonnement TotalEnergies n'est ni une exclusivité ni un engagement permanent : il s'active et se désactive au gré des tensions internationales. Il a tenu jusqu'à la rentrée, mais sa poursuite reste désormais conditionnée à deux facteurs, la durée du conflit au Moyen-Orient et l'absence d'une taxe sur les superprofits pétroliers. Pour l'instant, il offre un filet de sécurité bienvenu, à condition de rouler près d'une station du groupe. Comme toujours, le réflexe le plus rentable reste de comparer avant de faire le plein : notre [comparateur en temps réel](/prix-carburants/) référence plus de 11 000 stations, TotalEnergies comprises, mises à jour quotidiennement à partir des données officielles.
+Le plafonnement TotalEnergies n'est ni une exclusivité ni un engagement permanent : il s'active et se désactive au gré des tensions internationales. Il a tenu jusqu'à la rentrée et reste, début septembre 2026, dans les mêmes conditions qu'annoncées le 29 août, mais sa poursuite reste conditionnée à deux facteurs, la durée du conflit au Moyen-Orient et l'absence d'une taxe sur les superprofits pétroliers. Avec des prix de marché qui ont dépassé le plafond gazole et creusé l'écart sur l'essence, le dispositif offre désormais un filet de sécurité plus large qu'à la fin de l'été, à condition de rouler près d'une station du groupe. Comme toujours, le réflexe le plus rentable reste de comparer avant de faire le plein : notre [comparateur en temps réel](/prix-carburants/) référence plus de 11 000 stations, TotalEnergies comprises, mises à jour quotidiennement à partir des données officielles.
