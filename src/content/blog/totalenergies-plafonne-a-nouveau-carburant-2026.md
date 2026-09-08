@@ -24,8 +24,8 @@ faq:
     answer: "Lancé le 13 mars 2026, Avantage Carburant réserve un plafond à 1,99 €/L, y compris pour le diesel, aux clients ayant un contrat d'électricité et/ou de gaz chez TotalEnergies, inscrits au Club TotalEnergies et ayant activé l'avantage dans leur espace client. La limite est de 2 000 litres par an, avec un maximum de deux pleins de 150 litres par jour."
   - question: "Combien peut-on économiser grâce à ce plafonnement ?"
     answer: "Pour un conducteur roulant 1 000 km par mois avec un véhicule consommant 6 L/100 km, le plafond à 1,99 €/L face à un prix de marché autour de 2,15 €/L représente une économie d'environ 9,60 euros par mois, soit un peu plus de 115 euros sur l'année. L'écart est plus marqué encore pour les clients Avantage Carburant qui roulent au diesel."
-  - question: "Le gazole est-il aussi à 1,99 €/L le week-end du 29-30 août ?"
-    answer: "Oui, mais uniquement dans 129 stations-service Relais situées sur autoroutes et voies express. TotalEnergies y aligne exceptionnellement le prix du gazole sur celui de l'essence (1,99 €/L au lieu de 2,25 €/L) les 29 et 30 août 2026, sans condition de fidélité ni montant d'achat minimum. Dans le reste du réseau, le plafond gazole reste à 2,25 €/L."
+  - question: "Le gazole était-il aussi à 1,99 €/L le week-end du 29-30 août ?"
+    answer: "Oui, mais uniquement dans 129 stations-service Relais situées sur autoroutes et voies express, et uniquement pour ce week-end précis. TotalEnergies avait exceptionnellement aligné le prix du gazole sur celui de l'essence (1,99 €/L au lieu de 2,25 €/L) les 29 et 30 août 2026, sans condition de fidélité ni montant d'achat minimum. Cette offre ponctuelle a pris fin le 30 août 2026 et ne s'applique plus ; le plafond gazole général reste à 2,25 €/L."
   - question: "Le plafonnement TotalEnergies va-t-il durer après l'été ?"
     answer: "Le 29 août 2026, Patrick Pouyanné a confirmé sur France Inter que le plafonnement resterait en vigueur tant que durera le conflit au Moyen-Orient. Le PDG a toutefois averti que TotalEnergies pourrait y renoncer si une taxe sur les superprofits pétroliers venait à être instaurée, ce qui conditionne la poursuite du dispositif à un choix politique encore incertain."
   - question: "Le plafond TotalEnergies est-il toujours actif début septembre 2026 ?"
@@ -53,11 +53,13 @@ Samedi 29 août 2026, Patrick Pouyanné a confirmé au micro de France Inter que
 
 Sur le terrain, les prix hors plafond continuent de grimper. En moyenne nationale, le litre de SP95-E10 s'établit désormais à 2,036 €, le SP98 à 2,131 € et le gazole à 2,219 €, toujours sous l'effet de la guerre au Moyen-Orient. Une accalmie avait pourtant été observée cet été, avec un repli du cours du pétrole qui avait profité aux vacanciers, mais la rentrée a ramené une situation instable et les prix sont repartis à la hausse. Le plafond TotalEnergies à 1,99 €/L pour l'essence reste, dans ce contexte, nettement sous les prix moyens constatés ailleurs.
 
-## Gazole à 1,99 €/L dans 129 stations autoroute les 29 et 30 août
+## Gazole à 1,99 €/L dans 129 stations autoroute les 29 et 30 août (offre terminée)
 
-Mise à jour du 28 août 2026 : pour le dernier grand week-end de départs de l'été, TotalEnergies va plus loin que son plafond habituel. Les 29 et 30 août 2026, le gazole est aligné sur le prix de l'essence, à 1,99 €/L au lieu de 2,25 €/L, dans 129 stations-service Relais du réseau autoroutier et des voies express. L'offre est ouverte à tous, sans carte de fidélité ni montant d'achat minimum. Partout ailleurs sur le réseau, le plafond gazole reste à 2,25 €/L.
+**Cette offre ponctuelle a pris fin le 30 août 2026 et ne s'applique plus.** Elle est conservée ci-dessous à titre d'archive. Le plafond général de TotalEnergies, lui, reste en vigueur (voir la mise à jour du 8 septembre 2026 en haut de cet article).
 
-Voici la liste complète des 129 stations concernées, classées par autoroute.
+Pour le dernier grand week-end de départs de l'été, TotalEnergies était allé plus loin que son plafond habituel. Les 29 et 30 août 2026, le gazole avait été aligné sur le prix de l'essence, à 1,99 €/L au lieu de 2,25 €/L, dans 129 stations-service Relais du réseau autoroutier et des voies express. L'offre était ouverte à tous, sans carte de fidélité ni montant d'achat minimum. Partout ailleurs sur le réseau, le plafond gazole était resté à 2,25 €/L.
+
+Voici, à titre d'archive, la liste complète des 129 stations qui étaient concernées, classées par autoroute.
 
 **A1**
 
