@@ -67,6 +67,7 @@ const authors = defineCollection({
     email: z.string().email().optional(),
     website: z.string().optional(),
     linkedin: z.string().optional(),
+    github: z.string().optional(),
   }),
 });
 
