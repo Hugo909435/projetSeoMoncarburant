@@ -32,7 +32,9 @@ draft: false
 ---
 
 <div class="bg-slate-50 border-l-4 border-blue-600 p-6 my-8 rounded">
+
 **En bref :** L'E85 coûte 0,85 €/L en moyenne en juin 2026, soit 58 % de moins que le SP95-E10 (2,03 €/L). Mais la surconsommation de 25 % ramène le coût réel à environ 1,06 €/L équivalent. Pour un automobiliste roulant 15 000 km/an, le passage à l'E85 représente une économie de 600 à 900 € par an. Le boîtier homologué (700 à 1 600 €) est rentabilisé en 1 à 2 ans. Verdict : clairement rentable pour les gros rouleurs, à calculer au cas par cas pour les petits kilométrages.
+
 </div>
 
 À 0,85 €/L en moyenne en juin 2026, l'E85 est de loin le carburant le moins cher à la pompe en France. Face à un SP95-E10 qui flirte avec les 2,03 €/L et un gazole à 2,15 €/L, la tentation est forte. Mais le superéthanol cache une équation plus complexe qu'un simple prix au litre : surconsommation, coût de conversion, disponibilité en station, entretien spécifique. Avant de sauter le pas, voici les chiffres qui permettent de trancher.

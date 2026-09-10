@@ -32,7 +32,9 @@ draft: false
 ---
 
 <div class="bg-slate-50 border-l-4 border-blue-600 p-6 my-8 rounded">
+
 **En bref :** La climatisation consomme entre 0,5 et 2 L/100 km selon les conditions. En ville à basse vitesse, l'impact peut atteindre 20 % de surconsommation. Sur autoroute, il descend à 3-7 %. Le compresseur de clim pompe 2 à 6 chevaux sur le moteur en fonctionnement, et c'est votre réservoir qui fait les frais. Bonne nouvelle : quelques réglages simples suffisent à diviser l'addition par deux sans transformer votre voiture en sauna.
+
 </div>
 
 On est en plein mois de juin, il fait 33 °C dehors, et votre voiture garée en plein soleil affiche probablement 55 °C à l'intérieur. Vous montez, vous mettez la clim à fond, et vous ne pensez plus à rien d'autre qu'à respirer. On est tous passés par là.

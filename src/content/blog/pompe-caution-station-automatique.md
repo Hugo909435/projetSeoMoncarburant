@@ -31,7 +31,9 @@ draft: false
 ---
 
 <div class="bg-slate-50 border-l-4 border-blue-600 p-6 my-8 rounded">
+
 **En bref :** En station automatique, le terminal ne connaît pas le montant de votre plein avant que vous ne commenciez à pomper. Il demande donc à votre banque de réserver une somme forfaitaire, en général entre 120 et 150 €, pour être certain de pouvoir se faire payer. Une fois le plein terminé, seul le montant réel est débité, et le reste de la réservation est libéré sous quelques jours.
+
 </div>
 
 Vous vous arrêtez dans une station libre-service, hors des heures d'ouverture de la boutique. Vous insérez votre carte, et l'écran affiche une autorisation de 120, 130 ou 150 €, bien plus que les 40 ou 50 € de votre plein habituel. Un réflexe d'inquiétude, presque toujours suivi de la même question : pourquoi la machine me prend-elle autant d'un coup ?

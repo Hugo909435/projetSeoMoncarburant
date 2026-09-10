@@ -30,7 +30,9 @@ draft: false
 ---
 
 <div class="bg-slate-50 border-l-4 border-blue-600 p-6 my-8 rounded">
+
 **En bref :** À taxe égale, deux stations d'une même ville peuvent afficher 10 à 30 centimes d'écart au litre. La TICPE et la TVA sont fixées au niveau national, ce n'est donc pas la fiscalité qui bouge, c'est la marge commerciale. Elle dépend du modèle économique de la station (hypermarché, indépendant, autoroute), du volume vendu, du loyer de l'emplacement et de l'intensité de la concurrence directe à quelques centaines de mètres.
+
 </div>
 
 Vous faites le plein à une station, votre voisin fait le sien deux rues plus loin, et vous découvrez en comparant vos tickets un écart de 15 centimes par litre. Sur un plein de 50 litres, ça représente 7,50 euros jetés par la fenêtre, pour le même produit, dans la même ville, le même jour. La question mérite d'être posée : comment un litre de SP95-E10 peut-il coûter des prix aussi différents à quelques minutes de trajet ?

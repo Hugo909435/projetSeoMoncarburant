@@ -30,7 +30,9 @@ draft: false
 ---
 
 <div class="bg-slate-50 border-l-4 border-blue-600 p-6 my-8 rounded">
+
 **En bref :** Une pompe à essence aspire le carburant depuis une cuve souterraine grâce à une pompe immergée, le fait passer par un débitmètre qui mesure le volume au millilitre près, puis le délivre par un pistolet équipé d'un système de coupure automatique à dépression. Toute la mécanique est verrouillée par des sécurités électroniques, thermiques et anti-vapeurs.
+
 </div>
 
 Chaque jour, plus de 10 millions d'automobilistes français font le plein sans jamais se demander comment fonctionne réellement cette machine. Pourtant, derrière le geste banal d'insérer un pistolet dans le réservoir se cache un système mécanique et électronique précis, soumis à des contrôles stricts et conçu pour distribuer le carburant sans erreur de mesure ni risque d'accident.

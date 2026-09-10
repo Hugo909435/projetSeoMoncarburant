@@ -32,7 +32,9 @@ draft: false
 ---
 
 <div class="bg-slate-50 border-l-4 border-blue-600 p-6 my-8 rounded">
+
 **En bref :** Le Stop & Start coupe le moteur à chaque arrêt pour éviter le ralenti inutile. En ville, les économies sont réelles : l'ADEME les estime entre 3 et 8 % selon la densité du trafic. Sur route ou autoroute, le système s'active à peine et le gain devient négligeable. Les coûts d'entretien (batterie AGM plus chère, démarreur renforcé) existent mais sont intégrés dans la conception du véhicule. Verdict : utile en ville, sans intérêt sur les longs trajets.
+
 </div>
 
 La première fois, c'est souvent un choc. Vous vous arrêtez à un feu rouge, et le moteur s'éteint. Le silence s'installe. Puis vous lâchez le frein, et il repart comme si de rien n'était. Pour beaucoup d'automobilistes, cette micro-coupure automatique reste une source d'inconfort, voire d'inquiétude : est-ce que ça use le moteur ? Est-ce que ça économise vraiment quelque chose ? Ou est-ce surtout un argument marketing pour paraître vertueux ?

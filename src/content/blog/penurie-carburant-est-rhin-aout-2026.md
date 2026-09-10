@@ -30,7 +30,9 @@ draft: false
 ---
 
 <div class="bg-slate-50 border-l-4 border-blue-600 p-6 my-8 rounded">
+
 **En bref :** Le Rhin est tombé à un niveau jamais vu, et l'Alsace n'a pas de raffinerie pour compenser. Les barges qui l'approvisionnent ne chargent plus qu'à 30 % de leur capacité, d'où jusqu'à 30 % de stations alsaciennes en rupture d'au moins un carburant mi-août 2026, et 25 à 50 % d'indisponibilité dans le Haut-Rhin et le Territoire de Belfort. Ce n'est pas une pénurie nationale : ailleurs en France, environ 3 % des stations sont concernées. L'essence souffre plus que le gazole. Le meilleur geste reste le plus ennuyeux : ne pas se ruer sur les pompes.
+
 </div>
 
 Si vous avez fait le tour de trois stations autour de Mulhouse cette semaine pour tomber trois fois sur des pistolets sanglés, vous n'avez pas eu de malchance. Vous avez rencontré un problème de fleuve.

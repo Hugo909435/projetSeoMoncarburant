@@ -44,7 +44,9 @@ draft: false
 ---
 
 <div class="bg-amber-50 border-l-4 border-amber-500 p-6 my-8 rounded">
+
 **En bref :** La courroie de distribution est la seule pièce d'entretien dont la rupture détruit le moteur instantanément sur la quasi-totalité des véhicules récents. Elle ne donne aucun signe avant de céder. Coût préventif : 300 à 900 €. Coût après rupture : 3 000 à 8 000 €, parfois plus. La seule protection efficace est le respect strict des intervalles constructeurs.
+
 </div>
 
 Parmi tous les postes d'entretien d'un véhicule, la courroie de distribution occupe une place à part. Ce n'est pas la pièce la plus connue ni la plus visible. Mais c'est, de loin, la plus dangereuse à négliger : sa rupture soudaine provoque en quelques millisecondes la destruction complète du moteur, sans aucun signe précurseur et sans possibilité de limiter les dégâts une fois qu'elle se produit.

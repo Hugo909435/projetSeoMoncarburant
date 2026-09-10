@@ -32,7 +32,9 @@ draft: false
 ---
 
 <div class="bg-slate-50 border-l-4 border-blue-600 p-6 my-8 rounded">
+
 **En bref :** Le bouton avec la voiture et la flèche courbée en boucle active le recyclage (ou recirculation) d'air : il ferme l'arrivée d'air extérieur et ne fait tourner que l'air déjà présent dans l'habitacle. Quand la climatisation fonctionne, cela soulage réellement le compresseur, avec un gain estimé entre 1 et 3 % sur la consommation en usage courant, jusqu'à 5-6 % en ville par forte chaleur. Clim éteinte, le bouton ne change rien à votre consommation. Ce n'est pas un bouton magique à 10 %, mais un vrai petit levier, à condition de ne pas le laisser activé en permanence.
+
 </div>
 
 Il est là, sur presque tous les tableaux de bord depuis trente ans : un petit pictogramme représentant une voiture vue de côté, avec une flèche qui s'enroule en boucle à l'intérieur. La plupart des conducteurs l'ont déjà pressé sans vraiment savoir ce qu'il fait, ou l'ignorent tout simplement. Certains articles en ligne le présentent comme un bouton secret capable de faire économiser jusqu'à 10 % de carburant. La réalité est plus nuancée, mais elle vaut la peine d'être expliquée correctement, parce que ce bouton a un vrai effet, seulement pas celui qu'on croit.

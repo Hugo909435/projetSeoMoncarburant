@@ -239,10 +239,35 @@ img {
   font-size: 0.875rem;
 }
 
+/* Tableaux du contenu éditorial.
+   Le conteneur .table-scroll est ajouté au build par le plugin rehype
+   src/plugins/rehype-responsive-tables.mjs, qui pose aussi les data-label
+   utilisés par le rendu mobile plus bas. */
+.prose .table-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin-bottom: 1.5rem;
+}
+
+/* Le conteneur est focusable pour permettre le défilement au clavier : on
+   retire le liseré permanent, on le garde à la navigation clavier. */
+.prose .table-scroll:focus {
+  outline: none;
+}
+
+.prose .table-scroll:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
 .prose table {
   width: 100%;
   border-collapse: collapse;
   margin-bottom: 1.5rem;
+}
+
+.prose .table-scroll table {
+  margin-bottom: 0;
 }
 
 .prose th,
@@ -256,6 +281,80 @@ img {
   background: #f9fafb;
   font-weight: 600;
   color: var(--color-primary);
+}
+
+/* Mobile : chaque ligne devient une fiche autonome. L'en-tête disparaît et
+   l'intitulé de colonne est réaffiché devant chaque valeur, ce qui supprime
+   le défilement horizontal et le texte compressé sur les petits écrans. */
+@media (max-width: 639px) {
+  .prose .table-scroll {
+    overflow-x: visible;
+  }
+
+  .prose .table-scroll table,
+  .prose .table-scroll tbody,
+  .prose .table-scroll tr,
+  .prose .table-scroll td {
+    display: block;
+    width: 100%;
+  }
+
+  /* Masqué visuellement, conservé pour les lecteurs d'écran et le SEO. */
+  .prose .table-scroll thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  .prose .table-scroll tr {
+    border: 1px solid var(--color-border);
+    border-radius: 0.5rem;
+    margin-bottom: 0.75rem;
+    overflow: hidden;
+  }
+
+  .prose .table-scroll td {
+    border: 0;
+    border-top: 1px solid var(--color-border);
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.5rem 0.875rem;
+    text-align: right;
+  }
+
+  .prose .table-scroll td::before {
+    content: attr(data-label);
+    font-weight: 600;
+    color: var(--color-text-muted);
+    font-size: 0.8125rem;
+    text-align: left;
+    flex: 0 1 auto;
+  }
+
+  /* Première colonne : sert de titre de fiche, sans intitulé redondant. */
+  .prose .table-scroll td:first-child {
+    background: #f9fafb;
+    border-top: 0;
+    font-weight: 600;
+    color: var(--color-primary);
+    text-align: left;
+    padding: 0.625rem 0.875rem;
+  }
+
+  .prose .table-scroll td:first-child::before {
+    content: none;
+  }
+
+  /* Cellule vide : l'intitulé seul n'apporte rien, on masque la ligne. */
+  .prose .table-scroll td:empty {
+    display: none;
+  }
 }
 
 /* Badge catégorie */

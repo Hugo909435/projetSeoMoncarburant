@@ -4,6 +4,7 @@ import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
 import { isWeakStation } from './src/utils/station-quality.mjs';
+import rehypeResponsiveTables from './src/plugins/rehype-responsive-tables.mjs';
 
 // Date de dernière mise à jour du site (rebuild quotidien des prix carburant).
 // Sert de signal de fraîcheur <lastmod> dans le sitemap.
@@ -151,6 +152,11 @@ export default defineConfig({
   compressHTML: true,
   prefetch: {
     defaultStrategy: 'hover',
+  },
+  markdown: {
+    // Tableaux du contenu éditorial : défilement isolé sur tablette, empilement
+    // en fiches sur mobile. Voir src/plugins/rehype-responsive-tables.mjs.
+    rehypePlugins: [rehypeResponsiveTables],
   },
   integrations: [
     mdx(),

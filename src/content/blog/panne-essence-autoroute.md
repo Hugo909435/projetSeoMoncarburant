@@ -40,7 +40,9 @@ draft: false
 ---
 
 <div class="bg-slate-50 border-l-4 border-blue-600 p-6 my-8 rounded">
+
 **En bref :** La panne d'essence sur autoroute n'est pas une infraction en soi, mais s'arrêter sur la bande d'arrêt d'urgence pour cette raison en est une : 35 € d'amende, majorable à 75 €, car la panne sèche est jugée prévisible. Ajoutez le dépannage obligatoire par un professionnel agréé, facturé 151 € en journée et 226,50 € la nuit ou le week-end, et l'oubli de plein devient une mésaventure à 200 € ou plus. Les bons réflexes : feux de détresse, gilet jaune, tout le monde derrière la glissière, puis appel depuis la borne orange ou le 112.
+
 </div>
 
 Le voyant de réserve s'est allumé il y a 40 km, vous pensiez tenir jusqu'à la prochaine aire, et le moteur commence à hoqueter sur la voie de droite. La panne d'essence sur autoroute arrive plus souvent qu'on ne le croit, et elle coûte cher : une amende d'abord, un dépannage à tarif réglementé ensuite. Voici ce que dit la loi, ce qu'il faut faire dans l'ordre, et ce que ça va vous coûter.

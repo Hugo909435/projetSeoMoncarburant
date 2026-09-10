@@ -26,7 +26,9 @@ draft: true
 ---
 
 <div class="bg-slate-50 border-l-4 border-blue-600 p-6 my-8 rounded">
+
 **En bref :** L'entretien d'une voiture électrique coûte environ 30 % de moins qu'une thermique équivalente (ADEME), grâce à l'absence de vidange, d'embrayage et de courroie de distribution. Restent les pneus, les freins (moins sollicités grâce au freinage régénératif) et le liquide de refroidissement de la batterie. Le seul poste potentiellement lourd, le remplacement de la batterie hors garantie, reste un scénario rare sous les 8 ans ou 160 000 km de garantie constructeur.
+
 </div>
 
 <p class="text-sm text-slate-500 italic">Photo : Nenad Stojković, <a href="https://creativecommons.org/licenses/by/2.0/deed.fr" target="_blank" rel="noopener">CC BY 2.0</a>, via Wikimedia Commons.</p>

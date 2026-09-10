@@ -26,7 +26,9 @@ draft: true
 ---
 
 <div class="bg-slate-50 border-l-4 border-blue-600 p-6 my-8 rounded">
+
 **En bref :** Assurer une voiture électrique coûte en moyenne 9 à 16 % de plus qu'une thermique équivalente, entre 793 et 818 €/an contre 684 à 753 €/an en 2026. L'écart s'explique par la valeur à neuf plus élevée, le coût de réparation de la batterie et une sinistralité encore mal connue des assureurs. Comparer plusieurs devis reste le moyen le plus efficace de réduire la facture, les écarts entre assureurs dépassent souvent celui lié à la seule motorisation.
+
 </div>
 
 <p class="text-sm text-slate-500 italic">Photo : Joseluismalaga, <a href="https://creativecommons.org/licenses/by-sa/3.0/deed.fr" target="_blank" rel="noopener">CC BY-SA 3.0</a>, via Wikimedia Commons.</p>

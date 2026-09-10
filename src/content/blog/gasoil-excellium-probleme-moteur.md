@@ -32,7 +32,9 @@ draft: false
 ---
 
 <div class="bg-slate-50 border-l-4 border-blue-600 p-6 my-8 rounded">
+
 **En bref :** Le gasoil Excellium de TotalEnergies n'est pas un carburant différent du gazole classique sur le fond : même base conforme à la norme EN 590, avec un paquet d'additifs détergents, anticorrosion et un indice de cétane supérieur à 51. Le vrai phénomène derrière les plaintes en ligne, c'est l'effet détergent sur un moteur déjà très encrassé, qui peut décoller d'anciens dépôts et perturber temporairement le filtre à carburant. Depuis le 7 avril 2026, TotalEnergies a d'ailleurs suspendu sa distribution, sans lien avec un problème mécanique.
+
 </div>
 
 <p class="text-sm text-slate-500 italic">Photo : Tabl-trai, CC BY-SA 4.0, via Wikimedia Commons.</p>

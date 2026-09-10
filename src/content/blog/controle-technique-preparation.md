@@ -42,7 +42,9 @@ draft: false
 ---
 
 <div class="bg-amber-50 border-l-4 border-amber-500 p-6 my-8 rounded">
+
 **En bref :** La moitié des contre-visites concernent des points que l'on peut vérifier soi-même en dix minutes : éclairage, pneus, niveaux, essuie-glaces et papiers. Un rapide passage en revue la veille du rendez-vous suffit souvent à éviter un deuxième déplacement.
+
 </div>
 
 Personne n'aime le contrôle technique. Ce n'est pas tant le prix qui agace, c'est l'idée de revenir une deuxième fois pour un défaut qu'on aurait pu repérer soi-même en cinq minutes.

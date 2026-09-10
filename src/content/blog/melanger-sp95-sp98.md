@@ -32,7 +32,9 @@ draft: false
 ---
 
 <div class="bg-slate-50 border-l-4 border-blue-600 p-6 my-8 rounded">
+
 **En bref :** Oui, mélanger SP95 et SP98 dans le même réservoir est sans aucun risque. Les deux essences sont chimiquement compatibles, conformes à la même norme européenne (EN 228), et miscibles en toutes proportions. L'indice d'octane résultant est simplement une moyenne pondérée des deux volumes. Aucun rinçage, aucune précaution particulière.
+
 </div>
 
 La scène est familière : vous roulez habituellement au SP98, mais la seule station ouverte sur votre trajet ne propose que du SP95. Ou l'inverse : vous avez toujours fait le plein de SP95, et vous voulez passer au SP98 sans vider le réservoir. Dans les deux cas, la question se pose spontanément : mélanger ces deux essences est-il dangereux pour le moteur ?

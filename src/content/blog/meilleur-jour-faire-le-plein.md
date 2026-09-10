@@ -37,7 +37,9 @@ draft: false
 ---
 
 <div class="bg-slate-50 border-l-4 border-blue-600 p-6 my-8 rounded">
+
 **En bref :** Faire le plein le lundi ou le mardi coûte en moyenne 1 à 2 centimes de moins par litre qu'un vendredi, parce que la demande grimpe avant les départs en week-end. L'effet est réel mais modeste : le choix de la station (hypermarché plutôt qu'autoroute) pèse dix fois plus lourd, avec un écart de 15 à 40 centimes par litre. Le bon réflexe reste de comparer les prix avant de partir, quel que soit le jour.
+
 </div>
 
 Vous avez sûrement déjà entendu le conseil : "ne fais jamais le plein le week-end, c'est plus cher". L'idée circule depuis des années, relayée par des astuces glanées ici et là. Elle repose sur un vrai mécanisme économique, mais son impact réel sur votre budget est nettement plus modeste que ce qu'on imagine, surtout comparé à d'autres leviers bien plus efficaces.

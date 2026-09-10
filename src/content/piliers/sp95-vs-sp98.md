@@ -34,7 +34,9 @@ draft: false
 ---
 
 <div class="bg-slate-50 border-l-4 border-blue-600 p-6 my-8 rounded">
+
 **En bref :** Le SP95 et le SP98 sont deux essences sans plomb qui se distinguent par leur indice d'octane (95 vs 98). Pour 95 % des voitures essence en France, le SP95 suffit et permet d'économiser environ 5 centimes par litre. Le SP98 n'est nécessaire que pour les voitures haut de gamme, sportives ou très anciennes dont le constructeur l'exige explicitement.
+
 </div>
 
 Chaque semaine, des millions d'automobilistes français se retrouvent devant le même dilemme à la station-service : SP95 ou SP98 ? La différence de prix est visible, mais la différence de performance, elle, reste floue pour la plupart.

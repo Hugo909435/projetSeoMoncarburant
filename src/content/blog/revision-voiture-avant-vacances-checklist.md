@@ -39,7 +39,9 @@ draft: false
 ---
 
 <div class="bg-amber-50 border-l-4 border-amber-500 p-6 my-8 rounded">
+
 **En bref :** Avant un grand départ, une vérification de 20 minutes (pneus en charge, niveaux, essuie-glaces, freins, filtre à air) suffit à limiter le risque de panne et à réduire la consommation sur tout le trajet. Rien de technique : juste un oeil attentif sous le capot et autour de la voiture.
+
 </div>
 
 Chaque été, ce sont les mêmes images sur les aires d'autoroute : une roue de secours qu'on gonfle en urgence, un pare-brise couvert d'insectes qu'on n'arrive plus à essuyer, un moteur qui chauffe sous 35 degrés avec quatre passagers et les valises. La plupart de ces galères se voient venir.

@@ -28,7 +28,9 @@ draft: false
 ---
 
 <div class="bg-slate-50 border-l-4 border-blue-600 p-6 my-8 rounded">
+
 **En bref :** Depuis le 27 août 2026, un arrêté oblige les pompes de SP95, SP98 et SP95-E10 à afficher "Contient des additifs métalliques" lorsque le carburant contient du manganèse, un additif utilisé pour augmenter l'indice d'octane. La teneur est plafonnée à 2 mg/L. Rien d'alarmant pour votre moteur, mais l'occasion de comprendre ce qui se cache vraiment dans le réservoir.
+
 </div>
 
 Vous avez peut-être remarqué, ces derniers jours, un petit autocollant ou une mention à l'écran qui n'était pas là avant, du genre "Contient des additifs métalliques". Pas de panique, votre station n'a rien changé à sa recette. C'est la loi qui a changé, et depuis le 27 août 2026, elle oblige certaines pompes à dire ce qu'elles disent depuis toujours dans les petites lignes : que le carburant contient parfois un ingrédient chimique dont personne ne parle jamais, le manganèse.

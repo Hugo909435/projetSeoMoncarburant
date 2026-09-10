@@ -29,7 +29,9 @@ draft: false
 ---
 
 <div class="bg-slate-50 border-l-4 border-blue-600 p-6 my-8 rounded">
+
 **En bref :** En usage urbain avec recharge à domicile, l'électrique coûte 2 à 3 fois moins cher au kilomètre qu'une thermique (2-3 €/100 km contre 7-9 €/100 km). L'entretien est environ 30 % moins cher (ADEME), mais l'assurance est 9 à 16 % plus chère. Le bonus écologique peut atteindre 7 700 €, la prime à la conversion nationale a en revanche disparu fin 2024. Les ZFE ne visent que la circulation dans certaines métropoles, pas la détention d'un véhicule thermique.
+
 </div>
 
 <p class="text-sm text-slate-500 italic">Photo : Michael Movchin (photo originale), Felix Müller (retouche), <a href="https://creativecommons.org/licenses/by-sa/3.0/deed.fr" target="_blank" rel="noopener">CC BY-SA 3.0</a>, via Wikimedia Commons.</p>

@@ -28,7 +28,9 @@ draft: false
 ---
 
 <div class="bg-slate-50 border-l-4 border-blue-600 p-6 my-8 rounded">
+
 **En bref :** La vanne EGR renvoie une partie des gaz d'échappement vers l'admission pour réduire les rejets d'oxydes d'azote. Avec les suies et la calamine, elle finit par s'encrasser, surtout en diesel et sur les petits trajets. Un nettoyage suffit souvent, mais si le mécanisme ou le capteur est abîmé, il faut remplacer la vanne.
+
 </div>
 
 Perte de puissance au démarrage, ralenti qui hoquette, voyant moteur qui s'allume sans prévenir : ces symptômes ramènent souvent au même coupable, la vanne EGR. C'est une pièce discrète, cachée sous le capot, dont personne ne se soucie jusqu'au jour où elle fait des siennes.
