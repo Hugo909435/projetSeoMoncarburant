@@ -12,6 +12,14 @@ jobs:
       - name: Checkout du dépôt
         uses: actions/checkout@v4
         with:
+          # Sans ref explicite, checkout se fige sur le SHA qui a déclenché le
+          # run appelant. Quand ce workflow est invoqué juste après le job
+          # fetch-and-update (qui vient de pousser un nouveau commit de
+          # données), ce SHA figé pointe encore vers l'état d'AVANT ce commit :
+          # le build et le déploiement se faisaient donc sur les données du
+          # cycle précédent, jamais les plus fraîches. ref: main force la
+          # récupération du HEAD réel de la branche au moment du checkout.
+          ref: main
           fetch-depth: 1
 
       - name: Configuration de Node.js
