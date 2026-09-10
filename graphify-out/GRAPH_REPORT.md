@@ -1,16 +1,16 @@
-# Graph Report - projetSeoMoncarburant  (2026-09-09)
+# Graph Report - projetSeoMoncarburant  (2026-09-10)
 
 ## Corpus Check
-- 610 files · ~1,431,776 words
+- 611 files · ~1,442,229 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 1745 nodes · 1917 edges · 275 communities (144 shown, 131 thin omitted)
+- 1754 nodes · 1925 edges · 268 communities (141 shown, 127 thin omitted)
 - Extraction: 97% EXTRACTED · 2% INFERRED · 0% AMBIGUOUS · INFERRED: 45 edges (avg confidence: 0.82)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `5ddfff62`
+- Built from commit: `ad79e7ec`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -257,20 +257,14 @@
 - [[_COMMUNITY_Community 240|Community 240]]
 - [[_COMMUNITY_Community 241|Community 241]]
 - [[_COMMUNITY_Community 242|Community 242]]
-- [[_COMMUNITY_Community 243|Community 243]]
-- [[_COMMUNITY_Community 244|Community 244]]
 - [[_COMMUNITY_Community 246|Community 246]]
 - [[_COMMUNITY_Community 247|Community 247]]
 - [[_COMMUNITY_Community 248|Community 248]]
-- [[_COMMUNITY_Community 249|Community 249]]
 - [[_COMMUNITY_Community 250|Community 250]]
 - [[_COMMUNITY_Community 251|Community 251]]
-- [[_COMMUNITY_Community 252|Community 252]]
 - [[_COMMUNITY_Community 253|Community 253]]
-- [[_COMMUNITY_Community 254|Community 254]]
 - [[_COMMUNITY_Community 255|Community 255]]
 - [[_COMMUNITY_Community 256|Community 256]]
-- [[_COMMUNITY_Community 257|Community 257]]
 - [[_COMMUNITY_Community 258|Community 258]]
 - [[_COMMUNITY_Community 259|Community 259]]
 - [[_COMMUNITY_Community 260|Community 260]]
@@ -287,7 +281,6 @@
 - [[_COMMUNITY_Community 271|Community 271]]
 - [[_COMMUNITY_Community 272|Community 272]]
 - [[_COMMUNITY_Community 273|Community 273]]
-- [[_COMMUNITY_Community 274|Community 274]]
 
 ## God Nodes (most connected - your core abstractions)
 1. `../../layouts/BaseLayout.astro` - 29 edges
@@ -316,27 +309,27 @@
 ## Import Cycles
 - None detected.
 
-## Communities (275 total, 131 thin omitted)
+## Communities (268 total, 127 thin omitted)
 
 ### Community 0 - "Article Layout Components"
-Cohesion: 0.22
-Nodes (5): ../components/ArticleCard.astro, dateFormatted, string, personSchema, breadcrumb
+Cohesion: 0.18
+Nodes (10): ../../../data/fuel/city-names.json, FUEL_KEYS, breadcrumb, jsonLd, plan, rolloutMeta, stationUrl(), WaveEntry (+2 more)
 
 ### Community 1 - "Leaflet Map Core"
 Cohesion: 0.07
 Nodes (12): a(), Ae(), bi(), ei(), ii(), O(), Pi(), Re() (+4 more)
 
 ### Community 2 - "Fuel Search Interface"
-Cohesion: 0.22
-Nodes (6): ../../data/fuel/config, ../../components/AdUnit.astro, ../components/FuelSearch.astro, ../../../data/departments.json, ../../../../data/fuel/stats-by-department.json, ../../data/fuel/stats-national.json
+Cohesion: 0.18
+Nodes (11): ../components/FuelSearch.astro, ../components/FullStationsMap.astro, ../components/HeroMap.astro, ../../../data/departments.json, ../../data/fuel/meta.json, ../../../../data/fuel/stats-by-department.json, ../../data/fuel/stats-national.json, ../data/station-brands.json (+3 more)
 
 ### Community 3 - "City Identity & Fuel Config"
-Cohesion: 0.16
-Nodes (14): [], ../../../data/fuel/stats-autoroute.json, breadcrumb, FUELS, geoStations, haversineKm(), highways, jsonLdBreadcrumb (+6 more)
+Cohesion: 0.13
+Nodes (14): [], DIRS, breadcrumb, FUELS, geoStations, haversineKm(), highways, jsonLdBreadcrumb (+6 more)
 
 ### Community 4 - "Project Dependencies"
-Cohesion: 0.07
-Nodes (26): devDependencies, sharp, typescript, name, private, scripts, astro, build (+18 more)
+Cohesion: 0.05
+Nodes (39): dependencies, adm-zip, astro, astro-seo, @astrojs/mdx, @astrojs/rss, @astrojs/sitemap, fast-xml-parser (+31 more)
 
 ### Community 5 - "Fuel Data Pipeline"
 Cohesion: 0.08
@@ -375,8 +368,8 @@ Cohesion: 0.21
 Nodes (11): DEPARTMENTS, __dirname, download(), fail, fileLooksValid(), FORCE, manifest, processGroup() (+3 more)
 
 ### Community 14 - "Cookie Consent UI"
-Cohesion: 0.09
-Nodes (19): ../../../data/local-content, ../../../utils/city-identity, ../../../utils/city-intro, ../../utils/dept-intro, ../../../components/LocalIdentity.astro, deptContent, LocalContent, LocalFact (+11 more)
+Cohesion: 0.08
+Nodes (24): ../../../data/local-content, ../../../utils/city-identity, ../../../utils/city-intro, ../../utils/dept-intro, ../../../utils/format-maj, ../../../utils/station-waves, ../../../components/LocalIdentity.astro, ../../../components/StationLink.astro (+16 more)
 
 ### Community 15 - "Fuel Economy Calculators"
 Cohesion: 0.28
@@ -495,8 +488,8 @@ Cohesion: 0.13
 Nodes (14): Combien pouvez-vous économiser au total ?, Comment réduire sa facture de carburant rapidement ?, De combien peut-on baisser sa consommation de carburant ?, Existe-t-il des aides pour le carburant en 2026 ?, Foire aux questions, Grande distribution, autoroutes, zones touristiques : les écarts à connaître, Le choix du carburant influe-t-il sur le budget ?, Les outils pour comparer les prix en temps réel (+6 more)
 
 ### Community 157 - "Community 157"
-Cohesion: 0.20
-Nodes (14): ../../../utils/brand-logo, ../../../utils/escape-html, ../../../utils/station-waves, ../components/FullStationsMap.astro, ../components/HeroMap.astro, ../data/station-brands.json, BRAND_LOGO_ALIASES, BRAND_LOGO_EXTS (+6 more)
+Cohesion: 0.38
+Nodes (6): BRAND_LOGO_ALIASES, BRAND_LOGO_EXTS, Dimensions, getBrandLogoDimensions(), pngDimensions(), svgDimensions()
 
 ### Community 158 - "Community 158"
 Cohesion: 0.14
@@ -543,8 +536,8 @@ Cohesion: 0.25
 Nodes (7): Ce qu'il faut retenir, Ce que les chiffres disent vraiment, Comment fonctionne le Stop & Start, Faut-il désactiver son Stop & Start ?, Les coûts que les constructeurs ne mettent pas en avant, Quand le Stop & Start est vraiment efficace, Quand le Stop & Start ne sert presque à rien
 
 ### Community 169 - "Community 169"
-Cohesion: 0.09
-Nodes (23): ../../components/PriceHistoryChart.astro, dateFormatter, history, lines, padding, values, ../../../data/fuel/city-names.json, FUEL_COLORS (+15 more)
+Cohesion: 0.11
+Nodes (19): ../../components/PriceHistoryChart.astro, dateFormatter, history, lines, padding, values, FUEL_COLORS, FuelConfig (+11 more)
 
 ### Community 170 - "Community 170"
 Cohesion: 0.29
@@ -568,7 +561,7 @@ Nodes (5): Ce qu'il faut retenir, La checklist avant de partir, Le nouveau réfl
 
 ### Community 175 - "Community 175"
 Cohesion: 0.33
-Nodes (5): Ce que l'État peut, et ne peut pas, faire sur le prix à la pompe, L'ampleur du choc en 2026, Le déclencheur : le blocage du détroit d'Ormuz, Pourquoi les prix rebaissent depuis juin, Pourquoi un blocage si lointain fait monter votre plein
+Nodes (5): Ce que l'État peut, et ne peut pas, faire sur le prix à la pompe, L'accalmie de juin n'a pas tenu : où en sont les prix, L'ampleur du choc en 2026, Le déclencheur : le blocage du détroit d'Ormuz, Pourquoi un blocage si lointain fait monter votre plein
 
 ### Community 176 - "Community 176"
 Cohesion: 0.08
@@ -583,24 +576,24 @@ Cohesion: 0.14
 Nodes (21): addDays(), buildStationPath(), DATA_DIR, DEPT_DIR, DETAIL_DIR, __dirname, DRY_RUN, loadJson() (+13 more)
 
 ### Community 191 - "Community 191"
-Cohesion: 0.60
-Nodes (4): initMap(), loadCss(), loadScript(), mapEl
+Cohesion: 0.47
+Nodes (5): ../../../utils/escape-html, initMap(), loadCss(), loadScript(), mapEl
 
 ### Community 192 - "Community 192"
 Cohesion: 0.09
 Nodes (21): 1. Le E85 rend toute la démarche inutile, 2. Le paiement, 3. Le carburant que vous cherchez n'existe pas là-bas, Allemagne : uniquement le gazole, et uniquement avant midi, Andorre : le plus gros gain, la plus grosse contrainte, Belgique : l'essence oui, le gazole non, Espagne : le meilleur choix pour les vacanciers du sud, Essence (E10 côté français, Super 95 côté étranger) (+13 more)
 
 ### Community 193 - "Community 193"
-Cohesion: 0.17
-Nodes (11): ../../../../utils/station-hours, ../../../../utils/station-intro, ../../../../components/BrandCell.astro, ../../../components/BrandLogo.astro, src, DayHours, decodeHoraires(), horairesToSchema() (+3 more)
+Cohesion: 0.13
+Nodes (14): articleLastmods, siteLastmod, weakUrls, ../../data/fuel/config, ../../../../utils/station-hours, ../../../../utils/station-intro, DayHours, decodeHoraires() (+6 more)
 
 ### Community 194 - "Community 194"
 Cohesion: 0.14
 Nodes (13): 10. Top 5 changements à plus fort impact, 11. Recommandations schema, 12. Reformulation de contenu, 1. GEO Readiness Score : 78/100, 2. Répartition par plateforme, 3. Accès des crawlers IA (robots.txt), 4. Statut llms.txt, 5. Analyse des signaux de marque (+5 more)
 
 ### Community 195 - "Community 195"
-Cohesion: 0.20
-Nodes (11): ../../components/ArticleLayout.astro, ./AuthorBox.astro, ../../components/Breadcrumb.astro, breadcrumbSchema, ./FAQ.astro, ../components/Newsletter.astro, ../../components/PillarLayout.astro, displayed (+3 more)
+Cohesion: 0.06
+Nodes (29): ../utils/prix-coutant, ../../components/AdUnit.astro, ../components/AlertePrixCoutant.astro, ../components/ArticleCard.astro, dateFormatted, string, ../../components/ArticleLayout.astro, ./AuthorBox.astro (+21 more)
 
 ### Community 196 - "Community 196"
 Cohesion: 0.17
@@ -619,8 +612,8 @@ Cohesion: 0.18
 Nodes (10): Ce qu'il faut retenir, Ce que ce calcul ne dit pas, Ce que l'on compare, exactement, Le coût que personne ne compte : l'abonnement, Le kWh que vous payez n'est pas celui qui entre dans la batterie, Le seuil à retenir : 0,61 €/kWh, Le tableau qui répond à la question, Le trouble-fête : l'E85 à 0,865 €/L (+2 more)
 
 ### Community 200 - "Community 200"
-Cohesion: 0.12
-Nodes (12): ../styles/global.css, ../components/Footer.astro, ../components/SEO.astro, ../../data/fuel/meta.json, ../../layouts/BaseLayout.astro, webAppSchema, brandFiles, brands (+4 more)
+Cohesion: 0.22
+Nodes (4): ../styles/global.css, ../components/Footer.astro, ../components/SEO.astro, ../../layouts/BaseLayout.astro
 
 ### Community 201 - "Community 201"
 Cohesion: 0.20
@@ -707,8 +700,8 @@ Cohesion: 0.29
 Nodes (7): buildCityIntro(), cheapestFor(), CityIntroParams, CityStation, cityVariant(), countWith(), diffPct()
 
 ### Community 223 - "Community 223"
-Cohesion: 0.33
-Nodes (5): Ce que ça change concrètement, Faut-il attendre une baisse ?, La parenthèse sous 2 € s'est refermée le 14 août, Pourquoi le gazole et pas l'essence, Six semaines de relevés, un renversement complet
+Cohesion: 0.29
+Nodes (6): Ce que ça change concrètement, Faut-il attendre une baisse ?, La parenthèse sous 2 € s'est refermée le 14 août, Mise à jour du 10 septembre 2026 : la hausse a continué, Pourquoi le gazole et pas l'essence, Six semaines de relevés, un renversement complet
 
 ### Community 224 - "Community 224"
 Cohesion: 0.33
@@ -723,8 +716,8 @@ Cohesion: 0.22
 Nodes (8): Ce qu'il faut retenir à la rentrée, Ce que dit le communiqué de TotalEnergies, Gazole à 1,99 €/L dans 129 stations autoroute les 29 et 30 août (offre terminée), Le programme Avantage Carburant, une exception à part, Mise à jour du 31 août 2026 : le plafond maintenu, mais sous conditions, Mise à jour du 8 septembre 2026 : le gazole rattrape à son tour le plafond, Pourquoi les prix remontent depuis la mi-juillet, Une communication qui tombe (bien) à point nommé
 
 ### Community 227 - "Community 227"
-Cohesion: 0.33
-Nodes (4): authors, blog, collections, piliers
+Cohesion: 0.25
+Nodes (7): Ce que dit la loi, en trois lignes, Ce que ça coûte vraiment, carburant compris, Depuis 2024, le M+S ne suffit plus, L'amende de 135 euros existe, mais n'est pas appliquée, L'erreur la plus fréquente : ce n'est pas le département, c'est la commune, Les 34 départements, et le prix du gazole dans chacun, À faire avant le 1er novembre
 
 ### Community 228 - "Community 228"
 Cohesion: 0.40
@@ -779,8 +772,8 @@ Cohesion: 0.50
 Nodes (3): Combien ça coûte réellement, Comment éviter l'erreur la prochaine fois, Pourquoi il ne faut surtout pas démarrer
 
 ### Community 246 - "Community 246"
-Cohesion: 0.21
-Nodes (4): ../../../utils/format-maj, ../../../components/StationLink.astro, url, formatMaj()
+Cohesion: 0.25
+Nodes (5): ../../../utils/brand-logo, ../../../../components/BrandCell.astro, ../../../components/BrandLogo.astro, src, ../../../data/fuel/stats-autoroute.json
 
 ### Community 247 - "Community 247"
 Cohesion: 0.12
@@ -789,10 +782,6 @@ Nodes (15): Assurance : l'angle mort souvent oublié, Carburant vs électricité
 ### Community 248 - "Community 248"
 Cohesion: 0.25
 Nodes (8): cityDir, deps, __dirname, download(), files, OUT, ROOT, sleep()
-
-### Community 249 - "Community 249"
-Cohesion: 0.17
-Nodes (12): dependencies, adm-zip, astro-seo, @astrojs/mdx, @astrojs/rss, @astrojs/sitemap, fast-xml-parser, @fontsource-variable/inter (+4 more)
 
 ### Community 250 - "Community 250"
 Cohesion: 0.20
@@ -806,10 +795,6 @@ Nodes (7): buildCityIdentity(), CityDept, CityIdentityParams, DEPT_ARTICLE, dept
 Cohesion: 0.40
 Nodes (4): Ce qu'a dit Patrick Pouyanné sur France Inter, Ce qu'il faut retenir, Des prix à la pompe toujours sous tension, La menace liée à la taxe sur les superprofits
 
-### Community 254 - "Community 254"
-Cohesion: 0.29
-Nodes (5): articleLastmods, siteLastmod, weakUrls, isWeakStation(), weaknessReason()
-
 ### Community 255 - "Community 255"
 Cohesion: 0.20
 Nodes (9): Brief : Entretien voiture électrique, le coût réel, Concurrence identifiée, Intégration affiliation (nouveau, spécifique à ce cluster), Liens internes obligatoires, Mots-clés, Métadonnées, Points de vigilance, Rappel règles CLAUDE.md (+1 more)
@@ -817,10 +802,6 @@ Nodes (9): Brief : Entretien voiture électrique, le coût réel, Concurrence id
 ### Community 256 - "Community 256"
 Cohesion: 0.20
 Nodes (9): Ce qu'il faut retenir, Ce que ça change sur le budget total, Ce qui disparaît avec l'électrique, Ce qui reste, et parfois coûte un peu plus, Comparatif chiffré du coût d'entretien annuel, Le coût caché : la batterie, Le frein régénératif change la donne, Trouver un entretien moins cher (+1 more)
-
-### Community 257 - "Community 257"
-Cohesion: 0.25
-Nodes (3): astro, ../../../components/Pagination.astro, string
 
 ### Community 258 - "Community 258"
 Cohesion: 0.22
@@ -887,24 +868,24 @@ Cohesion: 0.83
 Nodes (4): ../../../../components/StationMiniMap.astro, initMap(), loadCss(), loadScript()
 
 ## Knowledge Gaps
-- **1128 isolated node(s):** `siteLastmod`, `weakUrls`, `articleLastmods`, `name`, `type` (+1123 more)
+- **1136 isolated node(s):** `siteLastmod`, `weakUrls`, `articleLastmods`, `name`, `type` (+1131 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **131 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **127 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `../../layouts/BaseLayout.astro` connect `Community 200` to `Article Layout Components`, `Community 257`, `Fuel Search Interface`, `Community 195`, `City Identity & Fuel Config`, `Community 193`, `Community 169`, `Community 202`, `Cookie Consent UI`, `Contact Page UI`, `Community 246`?**
-  _High betweenness centrality (0.015) - this node is a cross-community bridge._
-- **Why does `astro` connect `Community 257` to `Community 249`?**
-  _High betweenness centrality (0.007) - this node is a cross-community bridge._
-- **Why does `dependencies` connect `Community 249` to `Community 257`, `Project Dependencies`?**
-  _High betweenness centrality (0.007) - this node is a cross-community bridge._
+- **Why does `../../layouts/BaseLayout.astro` connect `Community 200` to `Article Layout Components`, `Community 193`, `Fuel Search Interface`, `Community 195`, `City Identity & Fuel Config`, `Community 169`, `Community 202`, `Cookie Consent UI`, `Contact Page UI`, `Community 246`?**
+  _High betweenness centrality (0.014) - this node is a cross-community bridge._
 - **What connects `siteLastmod`, `weakUrls`, `articleLastmods` to the rest of the system?**
-  _1128 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _1136 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Leaflet Map Core` be split into smaller, more focused modules?**
   _Cohesion score 0.06825396825396825 - nodes in this community are weakly interconnected._
+- **Should `City Identity & Fuel Config` be split into smaller, more focused modules?**
+  _Cohesion score 0.1286549707602339 - nodes in this community are weakly interconnected._
 - **Should `Project Dependencies` be split into smaller, more focused modules?**
-  _Cohesion score 0.07407407407407407 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.046511627906976744 - nodes in this community are weakly interconnected._
 - **Should `Fuel Data Pipeline` be split into smaller, more focused modules?**
   _Cohesion score 0.08232118758434548 - nodes in this community are weakly interconnected._
+- **Should `French City Emblems` be split into smaller, more focused modules?**
+  _Cohesion score 0.14166666666666666 - nodes in this community are weakly interconnected._

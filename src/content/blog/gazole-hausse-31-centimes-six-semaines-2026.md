@@ -5,7 +5,7 @@ metaDescription: "Le gazole a pris 31 c/L depuis le 1er juillet 2026 et dépasse
 slug: "gazole-hausse-31-centimes-six-semaines-2026"
 excerpt: "Nos relevés sur 9 804 stations : le gazole est passé de 1,899 à 2,210 €/L en six semaines, quand le SP95-E10 n'a pris que 10 centimes. Pourquoi le diesel décroche seul."
 publishedAt: 2026-08-16
-updatedAt: 2026-08-16
+updatedAt: 2026-09-10
 author: "hugo-beignon"
 category: "carburants"
 tags: ["gazole", "diesel", "prix carburant", "août 2026", "raffinage", "SP95-E10", "distillat"]
@@ -26,17 +26,39 @@ faq:
   - question: "Combien cette hausse coûte-t-elle par an à un conducteur diesel ?"
     answer: "Pour un véhicule diesel consommant 6 L/100 km et parcourant 13 000 km par an, soit environ 780 litres, une hausse de 31,1 centimes par litre représente près de 243 € de surcoût annuel. Sur un simple plein de 50 litres, l'écart avec le 1er juillet atteint 15,55 €."
   - question: "Le prix du gazole va-t-il redescendre ?"
-    answer: "Rien ne le garantit à court terme. L'interdiction d'exportation russe court jusqu'en 2027, les stocks européens sont bas et les capacités de raffinage du continent ont été réduites depuis des années. Une détente supposerait soit un retour d'offre importée, soit un recul du brut lié à un apaisement au Moyen-Orient. À l'inverse, l'automne et l'hiver augmentent traditionnellement la demande de distillats, ce qui joue plutôt contre une baisse rapide."
+    answer: "Rien ne le garantit à court terme, et la rentrée a confirmé le contraire : au 9 septembre 2026, le gazole atteint 2,293 €/L, soit 8,3 centimes de plus qu'à la publication de cet article et près de 39 centimes de plus qu'au 1er juillet. L'interdiction d'exportation russe court jusqu'en 2027, les stocks européens sont bas, les stocks américains de distillats sont au plus bas depuis 1982 et le Brent a repassé les 100 dollars le baril le 9 septembre. Une détente supposerait soit un retour d'offre importée, soit un apaisement au Moyen-Orient. À l'inverse, l'automne et l'hiver augmentent traditionnellement la demande de distillats, ce qui joue plutôt contre une baisse rapide."
 draft: false
 ---
 
 <div class="bg-slate-50 border-l-4 border-blue-600 p-6 my-8 rounded">
+
 **En bref :** En six semaines, le gazole est passé de 1,899 à 2,210 €/L de moyenne nationale, soit **+31,1 centimes (+16,4 %)**. Sur la même période, le SP95-E10 n'a pris que 10,6 centimes et l'E85 à peine 2,6. Ce n'est donc pas le pétrole qui flambe, c'est le gazole en particulier : la Russie a fermé le robinet de ses exportations de diesel, et l'Europe, déficitaire en raffinage, en importe plus de la moitié. Conséquence visible à la pompe : le 1er juillet, le gazole était **0,3 centime moins cher** que le SP95-E10. Aujourd'hui il est **20,2 centimes plus cher**.
+
 </div>
 
 Il y a un chiffre qui résume l'été 2026 pour les automobilistes diesel : **31 centimes**. C'est ce que le litre de gazole a pris entre le 1er juillet et le 16 août, d'après nos relevés quotidiens sur 9 804 stations françaises.
 
 Pour comparer, le SP95-E10 a pris 10,6 centimes sur la même période. Le GPL, lui, a *baissé* d'un centime. Quand un seul carburant s'envole pendant que les autres bougent à peine, ce n'est pas le baril qu'il faut regarder.
+
+---
+
+## Mise à jour du 10 septembre 2026 : la hausse a continué
+
+Depuis la publication de cet article, rien ne s'est détendu, et le mouvement s'est même élargi à l'essence. Au **9 septembre 2026**, nos relevés donnent :
+
+| Carburant | 16 août | 9 septembre | Variation |
+|---|---|---|---|
+| **Gazole** | 2,210 € | **2,293 €** | +8,3 c |
+| SP95-E10 | 2,008 € | 2,124 € | +11,6 c |
+| SP98 | 2,093 € | 2,220 € | +12,7 c |
+| E85 | 0,864 € | 0,879 € | +1,5 c |
+| GPL | 1,051 € | 1,051 € | stable |
+
+Sur les seuls sept derniers jours, le gazole a pris **6,6 centimes** et le SP95-E10 **5,5 centimes**. Depuis le 1er juillet, la hausse du gazole atteint désormais près de **39 centimes par litre**.
+
+Deux éléments nouveaux expliquent cette accélération de rentrée. D'abord, **le Brent a franchi les 100 dollars le baril le 9 septembre**, pour la première fois depuis le 24 juillet, sur fond de reprise des échanges de tirs entre les États-Unis et l'Iran et de trafic quasiment interrompu pour les produits raffinés dans le détroit d'Ormuz. Ensuite, les **frappes ukrainiennes sur les raffineries russes** de fin août ont encore réduit l'offre mondiale de produits raffinés, dans un marché où les stocks américains de distillats sont tombés à leur plus bas niveau depuis 1982.
+
+Autrement dit, le diagnostic posé mi-août reste valable, en pire : ce n'est toujours pas un choc sur le brut seul, c'est un choc sur la capacité à le transformer en gazole. La différence, c'est que l'essence est désormais entraînée elle aussi, cette fois par le baril. Le détail du volet géopolitique est repris dans notre article sur [le blocage du détroit d'Ormuz](/blog/pourquoi-le-prix-du-carburant-a-flambe-en-2026/).
 
 ---
 
@@ -109,6 +131,6 @@ Pour la vision d'ensemble sur l'année, taxes et prévisions comprises, notre an
 
 ---
 
-*Article publié le 16 août 2026. Prix moyens nationaux calculés à partir de nos relevés quotidiens sur 9 804 stations, issus des données officielles de [prix-carburants.gouv.fr](https://www.prix-carburants.gouv.fr/), dernière mise à jour le 16 août 2026. Les moyennes nationales masquent des écarts importants d'une région et d'une station à l'autre.*
+*Article publié le 16 août 2026, mis à jour le 10 septembre 2026. Prix moyens nationaux calculés à partir de nos relevés quotidiens sur 9 805 stations, issus des données officielles de [prix-carburants.gouv.fr](https://www.prix-carburants.gouv.fr/), dernier relevé du 9 septembre 2026. Les moyennes nationales masquent des écarts importants d'une région et d'une station à l'autre.*
 
 *Photo d'illustration : Markus Spiske, [rawpixel](https://www.rawpixel.com/image/432814/free-photo-image-gasoline-fuel-gas-station), domaine public [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/deed.fr), image recadrée.*
