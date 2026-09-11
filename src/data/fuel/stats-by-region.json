@@ -2,7 +2,7 @@
   "bourgogne-franche-comte": {
     "name": "Bourgogne-Franche-Comté",
     "Gazole": 2.312,
-    "SP95": 2.194,
+    "SP95": 2.195,
     "SP98": 2.23,
     "E10": 2.132,
     "E85": 0.888,
@@ -10,7 +10,7 @@
   },
   "provence-alpes-cote-d-azur": {
     "name": "Provence-Alpes-Côte d'Azur",
-    "Gazole": 2.303,
+    "Gazole": 2.304,
     "SP95": 2.165,
     "SP98": 2.202,
     "E10": 2.104,
@@ -38,11 +38,29 @@
   "auvergne-rhone-alpes": {
     "name": "Auvergne-Rhône-Alpes",
     "Gazole": 2.303,
-    "SP95": 2.147,
+    "SP95": 2.148,
     "SP98": 2.201,
     "E10": 2.111,
     "E85": 0.887,
     "GPLc": 1.06
+  },
+  "bretagne": {
+    "name": "Bretagne",
+    "Gazole": 2.279,
+    "SP95": 2.188,
+    "SP98": 2.218,
+    "E10": 2.135,
+    "E85": 0.852,
+    "GPLc": 1.005
+  },
+  "hauts-de-france": {
+    "name": "Hauts-de-France",
+    "Gazole": 2.291,
+    "SP95": 2.187,
+    "SP98": 2.22,
+    "E10": 2.117,
+    "E85": 0.869,
+    "GPLc": 1.034
   },
   "occitanie": {
     "name": "Occitanie",
@@ -53,29 +71,11 @@
     "E85": 0.884,
     "GPLc": 1.075
   },
-  "bretagne": {
-    "name": "Bretagne",
-    "Gazole": 2.279,
-    "SP95": 2.188,
-    "SP98": 2.218,
-    "E10": 2.136,
-    "E85": 0.852,
-    "GPLc": 1.005
-  },
-  "hauts-de-france": {
-    "name": "Hauts-de-France",
-    "Gazole": 2.29,
-    "SP95": 2.186,
-    "SP98": 2.22,
-    "E10": 2.117,
-    "E85": 0.869,
-    "GPLc": 1.034
-  },
   "normandie": {
     "name": "Normandie",
-    "Gazole": 2.288,
-    "SP95": 2.198,
-    "SP98": 2.219,
+    "Gazole": 2.289,
+    "SP95": 2.197,
+    "SP98": 2.218,
     "E10": 2.138,
     "E85": 0.877,
     "GPLc": 1.031
@@ -113,7 +113,7 @@
     "SP95": 2.175,
     "SP98": 2.243,
     "E10": 2.146,
-    "E85": 0.863,
+    "E85": 0.864,
     "GPLc": 1.027
   }
 }
