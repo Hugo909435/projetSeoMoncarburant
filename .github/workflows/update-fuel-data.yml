@@ -2,10 +2,10 @@ name: Mise à jour quotidienne des prix carburant
 
 on:
   schedule:
-    # Toutes les 3h, en filet de sécurité (le flux gouvernemental /opendata/jour n'est
-    # régénéré qu'une fois par jour ~minuit ; ce cadencement sert surtout à rattraper
-    # un run manqué ou en échec, pas à obtenir une fraîcheur intra-journée).
-    - cron: '0 */3 * * *'
+    # Toutes les heures : le flux gouvernemental interrogé (/opendata/instantane) est
+    # mis à jour en continu au fil des déclarations de prix des stations, donc ce
+    # cadencement capte plus de changements intra-journée qu'un passage toutes les 3h.
+    - cron: '0 * * * *'
   workflow_dispatch:
     inputs:
       force_rebuild:
