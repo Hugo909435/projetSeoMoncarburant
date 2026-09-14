@@ -18,8 +18,17 @@
 /** Au-delà de ce délai, le prix affiché n'est plus une information fiable. */
 export const STALE_DAYS = 90;
 
-/** En dessous de ce nombre de carburants cotés, la page n'a rien à comparer. */
-export const MIN_FUELS = 2;
+/**
+ * En dessous de ce nombre de carburants cotés, la page n'a rien à comparer.
+ *
+ * Un seul prix frais suffit : la fiche porte aussi l'adresse, les horaires, les
+ * services, le rang dans la commune et les stations voisines. Le seuil était à
+ * 2, mais le flux officiel retire régulièrement un carburant d'une station d'un
+ * relevé à l'autre (plusieurs dizaines de stations TotalEnergies ne déclaraient
+ * plus que le gazole le 14/09/2026). Ces fiches basculaient alors en noindex
+ * puis revenaient, et Google les excluait de l'index.
+ */
+export const MIN_FUELS = 1;
 
 /**
  * Vrai si la fiche est trop pauvre pour être proposée à l'indexation.
@@ -45,7 +54,9 @@ export function isWeakStation(station, now = Date.now()) {
 /** Raison lisible du noindex, pour le diagnostic. */
 export function weaknessReason(station, now = Date.now()) {
   const fuels = Object.values(station?.prices ?? {}).filter((v) => v != null);
-  if (fuels.length < MIN_FUELS) return `moins de ${MIN_FUELS} carburants cotés`;
+  if (fuels.length < MIN_FUELS) {
+    return MIN_FUELS === 1 ? 'aucun carburant coté' : `moins de ${MIN_FUELS} carburants cotés`;
+  }
   if ((station?.adresse ?? '').trim().length < 5) return 'adresse inexploitable';
   if (!station?.maj) return 'aucune date de déclaration';
   const days = (now - new Date(station.maj).getTime()) / 86400000;

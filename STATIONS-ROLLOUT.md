@@ -278,12 +278,12 @@ produit en série. Ils comptent davantage que la cadence.
 ### Les fiches trop pauvres ne sont pas indexées
 
 Toutes les stations ont une page, elle reste utile à qui cherche cette adresse.
-Mais **563 fiches (5,7 % du parc) sont rendues en `noindex` et exclues du
-sitemap**, parce qu'elles n'ont pas de quoi tenir debout :
+Mais **environ 420 fiches (4 % du parc au 14/09/2026) sont rendues en `noindex`
+et exclues du sitemap**, parce qu'elles n'ont pas de quoi tenir debout :
 
 | Critère | Effet |
 |---|---|
-| Moins de 2 carburants cotés | noindex |
+| Aucun carburant coté | noindex |
 | Adresse inexploitable (moins de 5 caractères) | noindex |
 | Dernière déclaration de prix vieille de plus de 90 jours | noindex |
 
@@ -292,13 +292,16 @@ page et par `astro.config.mjs`. Une seule définition, donc pas de risque qu'une
 page soit `noindex` tout en restant au sitemap. Le build affiche le compte :
 
 ```
-[sitemap] 563 fiche(s) station exclue(s) : données insuffisantes.
+[sitemap] 422 fiche(s) station exclue(s) : données insuffisantes.
 ```
 
 Ces fiches affichent en outre un encart avertissant le visiteur que la donnée
 est incomplète ou ancienne, avec le motif exact.
 
 Pour durcir ou assouplir, modifier `MIN_FUELS` et `STALE_DAYS` dans ce fichier.
+Le seuil `MIN_FUELS` était à 2 jusqu'au 14/09/2026 : le flux officiel retire
+souvent un carburant d'une station d'un relevé à l'autre, et les fiches à un
+seul prix frais basculaient en noindex puis revenaient (exclusion Google).
 
 ### Le texte est volontairement court
 
