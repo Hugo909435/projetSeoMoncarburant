@@ -12,7 +12,7 @@ featuredImage: "../../assets/articles/stop-start-economies-reelles-ou-mythe.webp
 imageAlt: "Tableau de bord d'une voiture affichant le voyant Stop & Start actif à un feu rouge en ville"
 readingTime: 7
 pillar: "reduire-facture-carburant"
-relatedArticles: ["climatisation-voiture-consommation", "autoroute-ou-nationale-carburant-plus-cher", "reduire-facture-carburant"]
+relatedArticles: ["climatisation-voiture-consommation", "consommation-carburant-hiver", "autoroute-ou-nationale-carburant-plus-cher", "reduire-facture-carburant"]
 ctaTitle: "Réduisez votre facture carburant dès maintenant"
 ctaDescription: "Notre comparateur référence les prix de plus de 11 000 stations-service en France. Mise à jour quotidienne via les données officielles."
 faq:

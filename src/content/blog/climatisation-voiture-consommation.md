@@ -12,7 +12,7 @@ featuredImage: "../../assets/articles/climatisation-voiture-consommation.webp"
 imageAlt: "Main d'un conducteur réglant la climatisation sur le tableau de bord d'une voiture en été"
 readingTime: 8
 pillar: "reduire-facture-carburant"
-relatedArticles: ["stop-start-economies-reelles-ou-mythe", "autoroute-ou-nationale-carburant-plus-cher", "reduire-facture-carburant"]
+relatedArticles: ["stop-start-economies-reelles-ou-mythe", "consommation-carburant-hiver", "autoroute-ou-nationale-carburant-plus-cher", "reduire-facture-carburant"]
 ctaTitle: "Trouvez le carburant le moins cher près de chez vous"
 ctaDescription: "Notre comparateur référence les prix de plus de 11 000 stations-service en France. Mise à jour quotidienne via les données officielles."
 faq:
