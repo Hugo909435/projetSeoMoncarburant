@@ -1,13 +1,13 @@
 ---
 title: "SP95 ou SP98 : quelle essence choisir pour votre voiture en 2026 ?"
 metaTitle: "SP95 vs SP98 : guide complet pour bien choisir (2026)"
-metaDescription: "SP95 ou SP98 : différences, prix, voitures concernées. Notre guide 2026 vous aide à choisir la bonne essence et à économiser jusqu'à 6 centimes par litre."
+metaDescription: "SP95 ou SP98 : différences, prix, voitures concernées. Notre guide 2026 vous aide à choisir la bonne essence et à économiser plusieurs centimes par litre."
 slug: "sp95-vs-sp98"
 publishedAt: 2026-05-15
-updatedAt: 2026-05-15
+updatedAt: 2026-09-16
 author: "hugo-beignon"
 category: "carburants"
-excerpt: "SP95 ou SP98 ? Pour 95 % des conducteurs, le SP95 suffit et économise 5 centimes par litre. Différences techniques, véhicules concernés et calculs d'économies réels."
+excerpt: "SP95 ou SP98 ? Pour 95 % des conducteurs, le SP95 suffit et économise environ 4 centimes par litre. Différences techniques, véhicules concernés et calculs d'économies réels."
 tags: ["sp95", "sp98", "essence", "comparatif", "indice octane"]
 featuredImage: "../../assets/articles/sp95-vs-sp98.webp"
 imageAlt: "Deux pistolets de pompe à essence SP95 et SP98 côte à côte dans une station-service française"
@@ -19,7 +19,7 @@ faq:
   - question: "Puis-je mettre du SP98 dans une voiture qui prend du SP95 ?"
     answer: "Oui, sans aucun problème. Le SP98 a un indice d'octane plus élevé, ce qui le rend compatible avec tous les moteurs prévus pour du SP95. L'inverse n'est en revanche pas toujours vrai."
   - question: "Le SP98 fait-il vraiment consommer moins ?"
-    answer: "Non, pas de manière significative sur un moteur classique. Les économies de carburant constatées (1 à 2%) sont largement inférieures au surcoût du SP98 (environ 5 centimes par litre en 2026)."
+    answer: "Non, pas de manière significative sur un moteur classique. Les économies de carburant constatées (1 à 2%) restent proches, voire inférieures, au surcoût du SP98 (environ 4 centimes par litre à la mi-septembre 2026)."
   - question: "Quelle différence entre SP95-E10 et SP95 classique ?"
     answer: "Le SP95-E10 contient jusqu'à 10% de bioéthanol contre 5% maximum pour le SP95 classique. Le E10 est légèrement moins cher mais aussi moins énergétique, et n'est pas compatible avec tous les véhicules."
   - question: "Le SP98 nettoie-t-il vraiment le moteur ?"
@@ -27,7 +27,7 @@ faq:
   - question: "Quelle essence pour une voiture ancienne (avant 2000) ?"
     answer: "Les voitures essence d'avant 1990 sans catalyseur peuvent nécessiter du SP98 ou un additif lubrifiant pour soupapes. Pour les véhicules entre 1990 et 2000, vérifiez le carnet d'entretien ou consultez un mécanicien spécialisé."
   - question: "Combien coûte la différence SP95/SP98 sur un plein ?"
-    answer: "Avec un écart moyen de 5 centimes par litre en mai 2026 et un plein de 50 litres, le SP98 coûte environ 2,60 € de plus que le SP95 par plein, soit environ 47 € de surcoût annuel pour 15 000 km."
+    answer: "Avec un écart moyen de 4 centimes par litre à la mi-septembre 2026 et un plein de 50 litres, le SP98 coûte environ 2,10 € de plus que le SP95 par plein, soit environ 38 € de surcoût annuel pour 15 000 km."
   - question: "Puis-je mélanger SP95 et SP98 dans le réservoir ?"
     answer: "Oui, sans aucun risque pour le moteur. Le mélange ne pose aucun problème mécanique ni chimique, les deux sont des essences sans plomb conformes à la norme EN 228."
 draft: false
@@ -41,11 +41,11 @@ draft: false
 
 Chaque semaine, des millions d'automobilistes français se retrouvent devant le même dilemme à la station-service : SP95 ou SP98 ? La différence de prix est visible, mais la différence de performance, elle, reste floue pour la plupart.
 
-En mai 2026, le SP95 s'affiche en moyenne à **2,075 €/L** et le SP98 à **2,127 €/L** en France, selon les données officielles de prix-carburants.gouv.fr. Un écart de **5 centimes par litre**, soit 2,60 € de plus par plein de 50 litres, ou environ **47 € de surcoût annuel** pour un conducteur qui parcourt 15 000 km.
+À la mi-septembre 2026, le SP95 s'affiche en moyenne à **2,208 €/L** et le SP98 à **2,250 €/L** en France, selon les données officielles de prix-carburants.gouv.fr. Un écart d'environ **4 centimes par litre**, soit 2,10 € de plus par plein de 50 litres, ou environ **38 € de surcoût annuel** pour un conducteur qui parcourt 15 000 km.
 
 Selon l'UFIP (Union Française des Industries Pétrolières), le SP95 et son équivalent E10 représentent la grande majorité des ventes d'essence en France. Pourtant, la confusion sur l'utilité réelle du SP98 persiste, entretenue par des idées reçues tenaces.
 
-Ce guide, rédigé par [Hugo Beignon](/auteur/hugo-beignon/), spécialiste carburants et mobilité, mis à jour en mai 2026, répond à toutes les questions sur ces deux carburants : différences techniques, compatibilité avec votre véhicule, calcul d'impact économique réel, et cas précis où le SP98 est justifié.
+Ce guide, rédigé par [Hugo Beignon](/auteur/hugo-beignon/), spécialiste carburants et mobilité, mis à jour en septembre 2026, répond à toutes les questions sur ces deux carburants : différences techniques, compatibilité avec votre véhicule, calcul d'impact économique réel, et cas précis où le SP98 est justifié.
 
 ---
 
@@ -59,8 +59,8 @@ Ce guide, rédigé par [Hugo Beignon](/auteur/hugo-beignon/), spécialiste carbu
 |---|---|---|
 | Indice d'octane (RON) | 95 | 98 |
 | Bioéthanol maximum | 5 % | 5 % |
-| Prix moyen France (mai 2026) | 2,075 €/L | 2,127 €/L |
-| Écart de prix |, | +5,2 cts/L |
+| Prix moyen France (septembre 2026) | 2,208 €/L | 2,250 €/L |
+| Écart de prix | référence | +4,2 cts/L |
 | Compatibilité véhicules | Quasi-universelle | Quasi-universelle |
 | Gain énergétique vs SP95 | Référence | +1 à 2 % sur moteurs optimisés |
 | Disponibilité en station | ~99 % des stations | ~90 % des stations |
@@ -119,7 +119,7 @@ La réponse officielle se trouve dans **votre carnet d'entretien** ou **sur l'é
 
 ## Différence de prix SP95/SP98 en 2026 : combien ça coûte vraiment ?
 
-En mai 2026, l'écart entre SP95 et SP98 est de **5,2 centimes par litre** (source : prix-carburants.gouv.fr, données officielles remontées quotidiennement par les stations-service).
+À la mi-septembre 2026, l'écart entre SP95 et SP98 est d'environ **4,2 centimes par litre** (source : prix-carburants.gouv.fr, données officielles remontées quotidiennement par les stations-service).
 
 **Calcul pour un automobiliste moyen :**
 
@@ -128,10 +128,10 @@ En mai 2026, l'écart entre SP95 et SP98 est de **5,2 centimes par litre** (sour
 | Distance annuelle | 15 000 km |
 | Consommation moyenne | 6 L/100 km |
 | Volume annuel | 900 litres |
-| Surcoût annuel SP98 vs SP95 | 900 × 0,052 € = **46,80 €** |
-| Surcoût par plein (50 L) | 50 × 0,052 € = **2,60 €** |
+| Surcoût annuel SP98 vs SP95 | 900 × 0,042 € = **37,80 €** |
+| Surcoût par plein (50 L) | 50 × 0,042 € = **2,10 €** |
 
-Ce surcoût est-il compensé par des économies de consommation ? Sur un moteur ordinaire conçu pour du SP95, le SP98 peut améliorer la consommation de 1 à 2 % au maximum. Sur 900 litres, cela représente 9 à 18 litres économisés, soit **19 à 37 € d'économies**. Bien en dessous du surcoût de 47 €. **Le bilan financier est négatif pour la grande majorité des automobilistes.**
+Ce surcoût est-il compensé par des économies de consommation ? Sur un moteur ordinaire conçu pour du SP95, le SP98 peut améliorer la consommation de 1 à 2 % au maximum. Sur 900 litres, cela représente 9 à 18 litres économisés, soit **20 à 40 € d'économies** au prix du SP95 actuel. Un gain qui reste au mieux à l'équilibre avec le surcoût de 38 €, et négatif dans la majorité des cas puisque le gain de 1 à 2 % n'est atteint que sur des moteurs spécifiquement optimisés. **Le bilan financier reste défavorable ou neutre pour la grande majorité des automobilistes.**
 
 La seule situation où le SP98 est économiquement rentable : les moteurs haute performance dont la cartographie d'injection exploite pleinement le RON 98 pour réduire la consommation de plus de 3 %. C'est le cas de certains moteurs Porsche, BMW M et Mercedes AMG, mais pas des moteurs de série.
 
@@ -192,7 +192,7 @@ Le **SP95-E10** est fréquemment confondu avec le SP95 classique. Les différenc
 |---|---|---|---|
 | Indice d'octane (RON) | 95 | 95 | 98 |
 | Bioéthanol maximum | 5 % | 10 % | 5 % |
-| Prix moyen (mai 2026) | 2,075 €/L | ~2,034 €/L | 2,127 €/L |
+| Prix moyen (septembre 2026) | 2,208 €/L | ~2,153 €/L | 2,250 €/L |
 | Compatibilité estimée | ~100 % des moteurs SP95 | ~85 % du parc essence | ~100 % des moteurs SP95 |
 
 L'E10 est le carburant essence le moins cher des trois, mais il n'est pas compatible avec tous les véhicules. Les voitures d'avant 2000, certains deux-roues motorisés, et quelques modèles spécifiques y sont incompatibles en raison de matériaux du circuit carburant (joints, durites) sensibles aux taux d'éthanol élevés. Vérifiez la compatibilité sur le site officiel du ministère de la Transition écologique ou sur la liste sav-iml.com avant de l'utiliser.

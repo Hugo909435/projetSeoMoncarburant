@@ -12,7 +12,7 @@ tags: ["totalenergies", "patrick pouyanné", "superprofits", "plafonnement prix"
 featuredImage: "../../assets/articles/totalenergies-plafonne-prix-carburant-2026.webp"
 imageAlt: "Station-service TotalEnergies avec ses pompes et son enseigne rouge et bleue"
 readingTime: 5
-relatedArticles: ["totalenergies-plafonne-a-nouveau-carburant-2026", "carburant-prix-remonte-juillet-2026", "prix-carburant-2026"]
+relatedArticles: ["essence-hausse-gazole-depasse-plafond-septembre-2026", "totalenergies-plafonne-a-nouveau-carburant-2026", "carburant-prix-remonte-juillet-2026"]
 ctaTitle: "Trouvez la station la moins chère près de chez vous"
 ctaDescription: "Notre comparateur référence les prix de plus de 11 000 stations-service en France, mis à jour quotidiennement via les données officielles."
 faq:

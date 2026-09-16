@@ -13,7 +13,7 @@ featuredImage: "../../assets/articles/gazole-hausse-31-centimes-six-semaines-202
 imageAlt: "Rangée de pistolets de distribution noirs sur une pompe de station-service, repères de couleur visibles sur les embouts"
 readingTime: 5
 pillar: "sp95-vs-sp98"
-relatedArticles: ["penurie-carburant-est-rhin-aout-2026", "diesel-ou-essence-2026-achat", "e85-superethanol-vaut-il-le-coup"]
+relatedArticles: ["essence-hausse-gazole-depasse-plafond-septembre-2026", "penurie-carburant-est-rhin-aout-2026", "diesel-ou-essence-2026-achat"]
 ctaTitle: "Comparez le prix du gazole près de chez vous"
 ctaDescription: "Nos relevés couvrent 9 804 stations et sont mis à jour chaque jour à partir des données officielles. Sur un plein de 50 litres, l'écart entre deux stations voisines dépasse souvent 5 euros."
 faq:

@@ -5,7 +5,7 @@ metaDescription: "Le blocage du détroit d'Ormuz a fait flamber le carburant en 
 slug: "pourquoi-le-prix-du-carburant-a-flambe-en-2026"
 excerpt: "Début mars 2026, l'Iran bloque le détroit d'Ormuz, par où transite environ 20 % du pétrole mondial. Le Brent bondit, votre plein grimpe. Après une accalmie estivale, la hausse repart en septembre."
 publishedAt: 2026-06-05
-updatedAt: 2026-09-10
+updatedAt: 2026-09-16
 author: "hugo-beignon"
 category: "carburants"
 tags: ["prix carburant", "détroit d'ormuz", "pétrole", "brent", "géopolitique", "2026"]
@@ -13,7 +13,7 @@ featuredImage: "../../assets/articles/pourquoi-prix-carburant-flambe-2026-ormuz.
 imageAlt: "Pétrolier traversant le détroit d'Ormuz, voie maritime stratégique entre l'Iran et Oman pour le pétrole mondial"
 readingTime: 7
 pillar: "sp95-vs-sp98"
-relatedArticles: ["prix-carburant-2026", "pourquoi-prix-carburant-eleves-juin-2026", "indemnite-carburant-2026"]
+relatedArticles: ["essence-hausse-gazole-depasse-plafond-septembre-2026", "prix-carburant-2026", "pourquoi-prix-carburant-eleves-juin-2026"]
 ctaTitle: "Trouvez la station la moins chère près de chez vous"
 ctaDescription: "Notre comparateur référence les prix de plus de 11 000 stations-service en France, mis à jour quotidiennement via les données officielles."
 faq:
@@ -24,13 +24,13 @@ faq:
   - question: "Pourquoi mon plein augmente-t-il alors que le blocage est à des milliers de kilomètres ?"
     answer: "Parce que le pétrole est un marché mondial. Le carburant vendu en France est fabriqué à partir de brut dont le prix de référence européen est le Brent, coté en dollars. Quand le Brent monte, le coût de production du gazole et de l'essence monte partout, avec un décalage de quelques jours à quelques semaines avant d'atteindre la pompe. Le taux de change euro/dollar joue aussi : un euro plus faible renchérit les importations libellées en dollars et amplifie la hausse ; un euro plus fort l'atténue."
   - question: "Où en est le prix du carburant en septembre 2026 ?"
-    answer: "La détente de juin n'a pas duré. D'après nos relevés sur 9 805 stations, le gazole est remonté à 2,293 €/L le 9 septembre 2026 et le SP95-E10 à 2,124 €/L, soit une hausse de 6,6 centimes pour le gazole en sept jours et de 11,7 centimes en un mois. Le Brent a franchi les 100 dollars le baril le 9 septembre, pour la première fois depuis le 24 juillet, après une reprise des tirs entre les États-Unis et l'Iran et une quasi-interruption du trafic de produits raffinés dans le détroit d'Ormuz. Le SP95-E10 est repassé au-dessus de 2 euros le litre depuis la mi-août."
+    answer: "La détente de juin n'a pas duré. Le gazole atteint 2,332 €/L et le SP95-E10 2,153 €/L à la mi-septembre 2026, en hausse continue depuis fin août. Le gazole vient même de dépasser le plafond de 2,25 €/L que TotalEnergies s'était engagé à maintenir. Le Brent a franchi les 100 dollars le baril le 9 septembre, pour la première fois depuis le 24 juillet, après une reprise des tirs entre les États-Unis et l'Iran et une quasi-interruption du trafic de produits raffinés dans le détroit d'Ormuz."
   - question: "Le prix du carburant va-t-il continuer à monter ?"
     answer: "À court terme, la hausse du Brent n'a pas fini de se diffuser jusqu'aux pompes : il s'écoule en général une à trois semaines entre le mouvement du baril et le prix affiché en station. S'y ajoutent deux facteurs propres au gazole : les frappes ukrainiennes sur les raffineries russes de fin août, et des stocks américains de distillats au plus bas depuis 1982. Une détente supposerait un apaisement au Moyen-Orient et une réouverture des flux dans le détroit d'Ormuz, dont aucun n'est acquis à ce stade."
 draft: false
 ---
 
-En 2026, le prix du carburant a flambé parce que l'Iran a bloqué le **détroit d'Ormuz** début mars, le passage par lequel transite environ **20 % du pétrole mondial**. L'**Agence internationale de l'énergie (AIE)** a qualifié l'événement, en mars 2026, de plus grande perturbation de l'approvisionnement de l'histoire du marché pétrolier mondial. Le **pétrole Brent** a bondi de 10 à 13 % en quelques jours, et votre plein a suivi quelques semaines plus tard. L'accalmie du début d'été n'a pas tenu : le Brent a repassé les **100 dollars le baril le 9 septembre 2026**, et le gazole est remonté à **2,293 €/L**. Voici, simplement, pourquoi.
+En 2026, le prix du carburant a flambé parce que l'Iran a bloqué le **détroit d'Ormuz** début mars, le passage par lequel transite environ **20 % du pétrole mondial**. L'**Agence internationale de l'énergie (AIE)** a qualifié l'événement, en mars 2026, de plus grande perturbation de l'approvisionnement de l'histoire du marché pétrolier mondial. Le **pétrole Brent** a bondi de 10 à 13 % en quelques jours, et votre plein a suivi quelques semaines plus tard. L'accalmie du début d'été n'a pas tenu : le Brent a repassé les **100 dollars le baril le 9 septembre 2026**, et le gazole atteint désormais **2,332 €/L**, au-dessus du plafond fixé par TotalEnergies. Voici, simplement, pourquoi.
 
 ## Le déclencheur : le blocage du détroit d'Ormuz
 
@@ -52,20 +52,22 @@ L'[Agence internationale de l'énergie](https://www.iea.org/) (AIE) a, en mars 2
 
 ## L'accalmie de juin n'a pas tenu : où en sont les prix
 
-*Section mise à jour le 10 septembre 2026.*
+*Section mise à jour le 16 septembre 2026.*
 
-Pendant quelques semaines, la mécanique a bien joué en sens inverse. Portés par des **négociations entre les États-Unis et l'Iran**, les prix se sont détendus à partir de début juin : le gazole était revenu à son plus bas niveau depuis la mi-mars, et le SP95-E10 était repassé sous 2 euros le litre, environ une station sur trois affichant moins de 2 euros.
+Pendant quelques semaines, la mécanique a bien joué en sens inverse. Portés par des **négociations entre les États-Unis et l'Iran**, les prix s'étaient détendus à partir de début juin : le gazole était revenu à son plus bas niveau depuis la mi-mars, et le SP95-E10 était repassé sous 2 euros le litre, environ une station sur trois affichant moins de 2 euros.
 
-Cette parenthèse est refermée. Voici l'état des prix moyens nationaux d'après nos relevés quotidiens sur 9 805 stations :
+Cette parenthèse est refermée, et la hausse continue de s'accélérer. Voici l'état des prix moyens nationaux d'après nos relevés quotidiens :
 
-| Carburant | 9 septembre 2026 | Sur 7 jours | Sur 30 jours |
+| Carburant | 15-16 septembre 2026 | Sur 7 jours | Sur 30 jours |
 |---|---|---|---|
-| **Gazole** | 2,293 € | +6,6 c (+2,96 %) | +11,7 c (+5,38 %) |
-| SP95-E10 | 2,124 € | +5,5 c (+2,66 %) | +14,6 c (+7,38 %) |
-| SP95-E5 | 2,168 € | +6,4 c (+3,04 %) | +13,5 c (+6,64 %) |
-| SP98 | 2,220 € | +6,2 c (+2,87 %) | +14,4 c (+6,94 %) |
-| E85 | 0,879 € | +0,5 c | +1,9 c |
-| GPL | 1,051 € | stable | -0,2 c |
+| **Gazole** | 2,332 € | +3,9 c (+1,7 %) | +11,4 c (+5,1 %) |
+| SP95-E10 | 2,153 € | +2,9 c (+1,4 %) | environ +13 c (+6-7 %) |
+| SP95-E5 | 2,208 € | +4,0 c (+1,8 %) | environ +13 c (+6-7 %) |
+| SP98 | 2,250 € | +3,0 c (+1,4 %) | environ +13 c (+6 %) |
+| E85 | 0,886 € | +0,7 c | +1,9 c |
+| GPL | 1,051 € | stable | stable |
+
+Autre fait marquant depuis cette mise à jour : le gazole vient de dépasser le plafond de 2,25 €/L que TotalEnergies s'est engagé à maintenir tant que dure le conflit, et c'est désormais l'essence qui accélère le plus vite sur une semaine glissante. Nous détaillons ce basculement dans notre [point sur l'accélération de l'essence et le plafond gazole dépassé](/blog/essence-hausse-gazole-depasse-plafond-septembre-2026/).
 
 Trois facteurs se sont accumulés fin août et début septembre :
 
@@ -73,7 +75,7 @@ Trois facteurs se sont accumulés fin août et début septembre :
 - **Le trafic de produits raffinés s'est quasiment tari dans le détroit d'Ormuz** : quatre navires l'ont franchi lors d'une journée de début septembre, contre une moyenne habituelle d'une quinzaine.
 - **Les capacités de raffinage sont touchées de toutes parts** : frappes ukrainiennes sur les raffineries russes fin août, dégâts sur des sites au Moyen-Orient depuis mars, et des stocks américains de distillats tombés à leur plus bas niveau depuis 1982.
 
-Ce dernier point explique pourquoi le **gazole** souffre plus que l'essence : il s'agit d'un choc sur le raffinage, pas seulement sur le brut. Nous avons détaillé cette mécanique dans notre analyse de la [hausse de 31 centimes du gazole](/blog/gazole-hausse-31-centimes-six-semaines-2026/).
+Ce dernier point explique pourquoi le **gazole** a le plus souffert jusqu'ici : il s'agit d'un choc sur le raffinage, pas seulement sur le brut. Nous avons détaillé cette mécanique dans notre analyse de la [hausse de 31 centimes du gazole](/blog/gazole-hausse-31-centimes-six-semaines-2026/).
 
 À court terme, la hausse du baril n'a pas fini de se diffuser jusqu'aux pompes : comptez une à trois semaines de décalage. Pour suivre les tarifs station par station, le service public [prix-carburants.gouv.fr](https://www.prix-carburants.gouv.fr/) recense les prix pratiqués partout en France, à partir des données transmises par les distributeurs. La réglementation aide aussi à comparer : la **DGCCRF** impose que les prix affichés en station soient visibles depuis la route et mis à jour à chaque changement tarifaire. Pour comprendre pourquoi les prix restent structurellement élevés au-delà des à-coups géopolitiques, voyez notre analyse des [raisons d'un carburant cher en 2026](/blog/pourquoi-prix-carburant-eleves-juin-2026/).
 

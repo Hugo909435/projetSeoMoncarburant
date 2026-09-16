@@ -5,7 +5,7 @@ metaDescription: "Aucune opération prix coûtant à la rentrée 2026. Le point 
 slug: "carburant-prix-coutant-septembre-2026"
 excerpt: "La rentrée scolaire s'est achevée sans opération prix coûtant chez Leclerc, Intermarché, Carrefour ou Système U. Le point sur les prix début septembre et la prochaine fenêtre à surveiller."
 publishedAt: 2026-08-24
-updatedAt: 2026-09-08
+updatedAt: 2026-09-16
 author: "hugo-beignon"
 category: "economies"
 pillar: "reduire-facture-carburant"
@@ -13,14 +13,14 @@ tags: ["prix coûtant", "septembre 2026", "rentrée", "leclerc", "intermarché",
 featuredImage: "../../assets/articles/carburant-prix-coutant-septembre-2026.webp"
 imageAlt: "Station-service d'un hypermarché Leclerc, avec ses pompes à carburant et son auvent"
 readingTime: 5
-relatedArticles: ["prix-coutant-carburant-calendrier-leclerc-intermarche-carrefour", "michel-edouard-leclerc-carburant-240-euros-litre", "totalenergies-menace-lever-plafond-taxe-superprofits-2026", "carburant-prix-coutant-aout-2026", "prix-coutant-carburant-vaut-il-le-coup"]
+relatedArticles: ["essence-hausse-gazole-depasse-plafond-septembre-2026", "prix-coutant-carburant-calendrier-leclerc-intermarche-carrefour", "michel-edouard-leclerc-carburant-240-euros-litre", "totalenergies-menace-lever-plafond-taxe-superprofits-2026"]
 ctaTitle: "Trouvez la station la moins chère près de chez vous"
 ctaDescription: "Notre comparateur référence les prix de plus de 11 000 stations-service en France, mis à jour quotidiennement via les données officielles."
 faq:
   - question: "Une opération prix coûtant a-t-elle finalement eu lieu à la rentrée 2026 ?"
-    answer: "Non. Au 8 septembre 2026, aucune des quatre enseignes suivies (Leclerc, Intermarché, Carrefour, Système U) n'a communiqué de date pour la rentrée. Leclerc et Intermarché avaient organisé leurs dernières opérations les 3, 4 et 5 juillet, Système U les 2 et 3 août. La fenêtre de la rentrée scolaire, historiquement l'une des plus actives de l'année pour ce type d'opération, s'est donc refermée sans annonce, un cas rare depuis le début de cette série."
-  - question: "Combien coûte le carburant début septembre 2026 ?"
-    answer: "Au 7 septembre 2026, les prix moyens nationaux s'établissaient à 2,280 €/L pour le gazole, 2,153 €/L pour le SP95, 2,117 €/L pour le SP95-E10, 2,211 €/L pour le SP98, 1,051 €/L pour le GPL et 0,878 €/L pour le Superéthanol E85. Le gazole comme l'essence restent orientés à la hausse depuis fin août, avec une progression de près de 3 % sur sept jours."
+    answer: "Non. À la mi-septembre 2026, aucune des quatre enseignes suivies (Leclerc, Intermarché, Carrefour, Système U) n'a communiqué de date. Leclerc et Intermarché avaient organisé leurs dernières opérations les 3, 4 et 5 juillet, Système U les 2 et 3 août. La fenêtre de la rentrée scolaire, historiquement l'une des plus actives de l'année pour ce type d'opération, s'est donc refermée sans annonce, un cas rare depuis le début de cette série."
+  - question: "Combien coûte le carburant à la mi-septembre 2026 ?"
+    answer: "Au 15-16 septembre 2026, les prix moyens nationaux s'établissent à 2,332 €/L pour le gazole, 2,208 €/L pour le SP95, 2,153 €/L pour le SP95-E10, 2,250 €/L pour le SP98, 1,051 €/L pour le GPL et 0,886 €/L pour le Superéthanol E85. Le gazole vient de dépasser le plafond TotalEnergies de 2,25 €/L, et c'est désormais l'essence qui accélère le plus vite d'une semaine sur l'autre."
   - question: "Le plafond TotalEnergies s'applique-t-il encore en septembre 2026 ?"
     answer: "Oui. Le 29 août 2026 sur France Inter, Patrick Pouyanné a annoncé que le plafond à 1,99 €/L pour l'essence et 2,25 €/L pour le diesel serait maintenu tant que durerait le conflit au Moyen-Orient, sans date de fin fixe cette fois. Le PDG a toutefois prévenu que le groupe pourrait y renoncer en cas de taxe sur les superprofits pétroliers."
   - question: "Combien économise-t-on vraiment avec une opération à prix coûtant ?"
@@ -30,7 +30,7 @@ faq:
 draft: false
 ---
 
-Contrairement aux éditions précédentes de cette série, celle-ci se referme sur un constat inhabituel : la rentrée scolaire est passée sans qu'aucune enseigne n'ait annoncé d'opération prix coûtant. Ce n'était pourtant pas faute de fenêtre : fin août et début septembre concentrent d'ordinaire le plus grand nombre d'opérations de l'année. Voici ce qu'on sait avec certitude au 8 septembre 2026 : où en sont les prix, ce que fait TotalEnergies, et quelle est la prochaine fenêtre à surveiller.
+Contrairement aux éditions précédentes de cette série, celle-ci se referme sur un constat inhabituel : la rentrée scolaire est passée sans qu'aucune enseigne n'ait annoncé d'opération prix coûtant. Ce n'était pourtant pas faute de fenêtre : fin août et début septembre concentrent d'ordinaire le plus grand nombre d'opérations de l'année. Voici ce qu'on sait avec certitude à la mi-septembre 2026 : où en sont les prix, ce que fait TotalEnergies, et quelle est la prochaine fenêtre à surveiller.
 
 <p class="text-sm text-slate-500 italic">Photo : Lionel Allorge, <a href="https://creativecommons.org/licenses/by-sa/3.0/deed.fr" target="_blank" rel="noopener">CC BY-SA 3.0</a>, via Wikimedia Commons. Photo d'illustration, station Leclerc.</p>
 
@@ -38,7 +38,7 @@ Contrairement aux éditions précédentes de cette série, celle-ci se referme s
 
 ## Leclerc, Intermarché, Carrefour, Système U : la rentrée s'est passée d'opération
 
-Au 8 septembre 2026, les quatre enseignes suivies dans cette série n'ont rien annoncé pour la rentrée :
+À la mi-septembre 2026, les quatre enseignes suivies dans cette série n'ont rien annoncé pour la rentrée :
 
 - **E.Leclerc** a organisé sa dernière opération les 3 et 4 juillet, dans 711 stations. Rien depuis.
 - **Intermarché**, via Netto, a suivi les 4 et 5 juillet, sur le sans-plomb et le gazole uniquement. Pas de nouvelle date.
@@ -53,18 +53,18 @@ Aucun décrochage de prix n'a par ailleurs été mesuré dans les données offic
 
 Le contexte reste tendu, avec un gazole qui continue de grignoter du terrain semaine après semaine.
 
-| Carburant | Prix moyen national (7 septembre 2026) | Évolution sur 7 jours |
+| Carburant | Prix moyen national (15-16 septembre 2026) | Évolution sur 7 jours |
 |-----------|--------------------------------------|-------------------------|
-| Gazole B7 | 2,280 €/L | +2,89 % |
-| SP95-E5 | 2,153 €/L | +3,41 % |
-| SP95-E10 | 2,117 €/L | +3,62 % |
-| SP98 | 2,211 €/L | +3,41 % |
-| GPL-c | 1,051 €/L | -0,19 % |
-| Superéthanol E85 | 0,878 €/L | +0,69 % |
+| Gazole B7 | 2,332 €/L | +2,28 % |
+| SP95-E5 | 2,208 €/L | +2,55 % |
+| SP95-E10 | 2,153 €/L | +1,70 % |
+| SP98 | 2,250 €/L | +1,76 % |
+| GPL-c | 1,051 €/L | stable |
+| Superéthanol E85 | 0,886 €/L | +0,91 % |
 
-*Moyennes nationales relevées le 7 septembre 2026, toutes enseignes confondues. Source : données agrégées depuis [prix-carburants.gouv.fr](https://www.prix-carburants.gouv.fr/).*
+*Moyennes nationales relevées les 15 et 16 septembre 2026, toutes enseignes confondues. Source : données agrégées depuis [prix-carburants.gouv.fr](https://www.prix-carburants.gouv.fr/).*
 
-Le gazole reste le carburant le plus sous tension en valeur absolue, mais c'est surtout l'essence qui accélère depuis fin août, avec une hausse proche de 3,5 % en sept jours. Vendredi 5 septembre sur LCI, [Michel-Édouard Leclerc a évoqué un risque de carburant à 2,40 €/L](/blog/michel-edouard-leclerc-carburant-240-euros-litre/), tout en reconnaissant une incertitude totale sur l'évolution des prix.
+Le gazole reste le carburant le plus sous tension en valeur absolue, et vient de dépasser le plafond TotalEnergies de 2,25 €/L, mais c'est désormais l'essence qui accélère le plus vite d'une semaine sur l'autre. Vendredi 5 septembre sur LCI, [Michel-Édouard Leclerc a évoqué un risque de carburant à 2,40 €/L](/blog/michel-edouard-leclerc-carburant-240-euros-litre/), tout en reconnaissant une incertitude totale sur l'évolution des prix. Pour le détail de ce basculement essence/gazole, voir notre [point du 16 septembre](/blog/essence-hausse-gazole-depasse-plafond-septembre-2026/).
 
 Dans ce contexte, une opération à prix coûtant garde tout son intérêt : elle s'ajoute à un écart déjà réel entre les stations de grande surface et la moyenne nationale, généralement de 5 à 10 centimes par litre.
 
@@ -111,4 +111,4 @@ Pour le détail des conditions par enseigne et le suivi des dates, notre [calend
 
 ---
 
-*Article publié le 24 août 2026, mis à jour le 8 septembre 2026 avec le bilan de la rentrée et les prix du 7 septembre. Les prix moyens sont issus des données de [prix-carburants.gouv.fr](https://www.prix-carburants.gouv.fr/) et varient selon les régions et les stations. Cet article sera mis à jour dès qu'une opération sera annoncée.*
+*Article publié le 24 août 2026, mis à jour le 16 septembre 2026 avec les prix des 15-16 septembre. Les prix moyens sont issus des données de [prix-carburants.gouv.fr](https://www.prix-carburants.gouv.fr/) et varient selon les régions et les stations. Cet article sera mis à jour dès qu'une opération sera annoncée.*
