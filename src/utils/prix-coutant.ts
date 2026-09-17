@@ -59,8 +59,7 @@ export interface Fenetre {
 export const PARIS_TZ = 'Europe/Paris';
 
 /** URL de la page de référence, vers laquelle pointent tous les rappels. */
-export const PAGE_PRIX_COUTANT =
-  '/blog/prix-coutant-carburant-calendrier-leclerc-intermarche-carrefour/';
+export const PAGE_PRIX_COUTANT = '/prix-coutant-carburant/';
 
 /** Les dates sont manipulées à midi UTC : aucun changement d'heure ne peut
  *  faire basculer un jour. */
@@ -122,4 +121,52 @@ export function etatPrixCoutant() {
     signalDate: signalsData.generatedAt ? new Date(signalsData.generatedAt) : null,
     verifieLe: operationsData._updatedAt as string,
   };
+}
+
+export interface TimelineEntry {
+  kind: 'passee' | 'a-venir';
+  brand?: string;
+  brandName?: string;
+  label: string;
+  start: string;
+  end: string;
+  stations: number | null;
+  note: string;
+}
+
+/**
+ * Chronologie complète : opérations prix coûtant déjà passées cette année,
+ * puis fenêtres probables à venir. Sert la page /prix-coutant-carburant/, qui
+ * affiche un calendrier plutôt que de la prose à réécrire chaque saison.
+ */
+export function timelinePrixCoutant(): TimelineEntry[] {
+  const operations = operationsData.operations as Operation[];
+  const fenetres = operationsData.fenetresProbables as Fenetre[];
+  const today = aujourdhui();
+
+  const passees: TimelineEntry[] = operations
+    .filter((op) => op.type === 'prix-coutant' && op.end < today)
+    .map((op) => ({
+      kind: 'passee',
+      brand: op.brand,
+      brandName: op.brandName,
+      label: op.brandName,
+      start: op.start,
+      end: op.end,
+      stations: op.stations,
+      note: op.note,
+    }));
+
+  const aVenir: TimelineEntry[] = fenetres
+    .filter((f) => f.to >= today)
+    .map((f) => ({
+      kind: 'a-venir',
+      label: f.label,
+      start: f.from,
+      end: f.to,
+      stations: null,
+      note: f.note,
+    }));
+
+  return [...passees.sort((a, b) => a.start.localeCompare(b.start)), ...aVenir.sort((a, b) => a.start.localeCompare(b.start))];
 }

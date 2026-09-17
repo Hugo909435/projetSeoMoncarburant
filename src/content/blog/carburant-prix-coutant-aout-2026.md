@@ -12,7 +12,7 @@ tags: ["prix coûtant", "août 2026", "système u", "totalenergies", "leclerc", 
 featuredImage: "../../assets/articles/carburant-prix-coutant-aout-2026.webp"
 imageAlt: "Station-service Super U avec son totem de prix et un camion-citerne en cours de livraison"
 readingTime: 5
-relatedArticles: ["carburant-prix-coutant-septembre-2026", "prix-coutant-carburant-calendrier-leclerc-intermarche-carrefour", "totalenergies-plafonne-a-nouveau-carburant-2026", "prix-coutant-carburant-systeme-u-auchan-casino-cora", "reduire-facture-carburant"]
+relatedArticles: ["carburant-prix-coutant-septembre-2026", "totalenergies-plafonne-a-nouveau-carburant-2026", "prix-coutant-carburant-systeme-u-auchan-casino-cora", "reduire-facture-carburant"]
 ctaTitle: "Trouvez la station la moins chère près de chez vous"
 ctaDescription: "Notre comparateur référence les prix de plus de 11 000 stations-service en France, mis à jour quotidiennement via les données officielles."
 faq:
@@ -125,7 +125,7 @@ Dans les deux cas, les dates ne seront communiquées que deux à trois jours à 
 
 **Comparez avant de vous déplacer.** Une station qui n'est pas en opération peut très bien être moins chère qu'une station en prix coûtant située 10 kilomètres plus loin. Notre [comparateur de prix](/prix-carburants/) affiche les tarifs réels constatés, enseigne par enseigne, mis à jour quotidiennement.
 
-Pour le détail des conditions par enseigne et le suivi des dates, notre [calendrier des opérations prix coûtant](/blog/prix-coutant-carburant-calendrier-leclerc-intermarche-carrefour/) reste la page de référence.
+Pour le détail des conditions par enseigne et le suivi des dates, notre [calendrier des opérations prix coûtant](/prix-coutant-carburant/) reste la page de référence.
 
 ---
 

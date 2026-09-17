@@ -5,7 +5,12 @@ import type { CollectionEntry } from 'astro:content';
 import PillarLayout from '../../components/PillarLayout.astro';
 
 export async function getStaticPaths() {
-  const piliers = await getCollection('piliers', ({ data }) => !data.draft);
+  // Piliers qui vivent à la racine du site plutôt que sous /piliers/ (route dédiée).
+  const ROOT_PILIERS = ['prix-coutant-carburant'];
+  const piliers = await getCollection(
+    'piliers',
+    ({ data }) => !data.draft && !ROOT_PILIERS.includes(data.slug)
+  );
   return piliers.map((entry) => ({
     params: { slug: entry.data.slug },
     props: { entry },

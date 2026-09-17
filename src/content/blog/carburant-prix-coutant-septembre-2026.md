@@ -13,7 +13,7 @@ tags: ["prix coûtant", "septembre 2026", "rentrée", "leclerc", "intermarché",
 featuredImage: "../../assets/articles/carburant-prix-coutant-septembre-2026.webp"
 imageAlt: "Station-service d'un hypermarché Leclerc, avec ses pompes à carburant et son auvent"
 readingTime: 5
-relatedArticles: ["essence-hausse-gazole-depasse-plafond-septembre-2026", "prix-coutant-carburant-calendrier-leclerc-intermarche-carrefour", "michel-edouard-leclerc-carburant-240-euros-litre", "totalenergies-menace-lever-plafond-taxe-superprofits-2026"]
+relatedArticles: ["essence-hausse-gazole-depasse-plafond-septembre-2026", "michel-edouard-leclerc-carburant-240-euros-litre", "totalenergies-menace-lever-plafond-taxe-superprofits-2026"]
 ctaTitle: "Trouvez la station la moins chère près de chez vous"
 ctaDescription: "Notre comparateur référence les prix de plus de 11 000 stations-service en France, mis à jour quotidiennement via les données officielles."
 faq:
@@ -107,7 +107,7 @@ Aucune date n'est confirmée à ce stade, et ne le sera pas avant plusieurs sema
 
 **Comparez avant de vous déplacer.** Une station hors opération peut très bien être moins chère qu'une station en prix coûtant située 10 kilomètres plus loin. Notre [comparateur de prix](/prix-carburants/) affiche les tarifs réels constatés, enseigne par enseigne, mis à jour quotidiennement.
 
-Pour le détail des conditions par enseigne et le suivi des dates, notre [calendrier des opérations prix coûtant](/blog/prix-coutant-carburant-calendrier-leclerc-intermarche-carrefour/) reste la page de référence.
+Pour le détail des conditions par enseigne et le suivi des dates, notre [calendrier des opérations prix coûtant](/prix-coutant-carburant/) reste la page de référence.
 
 ---
 

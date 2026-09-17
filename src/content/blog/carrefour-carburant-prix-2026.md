@@ -12,7 +12,7 @@ tags: ["carrefour", "prix coûtant", "carburant", "grande surface", "bon plan", 
 featuredImage: "../../assets/articles/carrefour-carburant-prix-2026.webp"
 imageAlt: "Station-service Carrefour avec affichage des prix carburant"
 readingTime: 4
-relatedArticles: ["intermarche-carburant-prix-coutant-2026", "prix-carburant-2026", "carburant-moins-cher-leclerc-intermarche-carrefour-2026", "prix-coutant-carburant-calendrier-leclerc-intermarche-carrefour"]
+relatedArticles: ["intermarche-carburant-prix-coutant-2026", "prix-carburant-2026", "carburant-moins-cher-leclerc-intermarche-carrefour-2026"]
 ctaTitle: "Trouvez la station Carrefour la moins chère près de chez vous"
 ctaDescription: "Notre comparateur référence les 993 stations Carrefour avec leurs prix mis à jour quotidiennement via les données officielles."
 faq:

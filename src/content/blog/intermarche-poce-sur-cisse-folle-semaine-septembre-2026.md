@@ -12,7 +12,7 @@ tags: ["intermarché", "prix coûtant", "pocé-sur-cisse", "carburant", "indre-e
 featuredImage: "../../assets/articles/intermarche-poce-sur-cisse-folle-semaine-septembre-2026.webp"
 imageAlt: "Pompes à carburant alignées dans une station-service"
 readingTime: 3
-relatedArticles: ["intermarche-carburant-prix-coutant-2026", "prix-coutant-carburant-calendrier-leclerc-intermarche-carrefour", "prix-coutant-carburant-vaut-il-le-coup", "carburant-prix-coutant-septembre-2026"]
+relatedArticles: ["intermarche-carburant-prix-coutant-2026", "prix-coutant-carburant-vaut-il-le-coup", "carburant-prix-coutant-septembre-2026"]
 ctaTitle: "Comparez les prix carburant en Indre-et-Loire"
 ctaDescription: "Notre comparateur référence les stations d'Indre-et-Loire et du réseau Intermarché avec les prix mis à jour quotidiennement."
 faq:
@@ -57,7 +57,7 @@ Notre [comparateur de prix par département](/prix-carburants/indre-et-loire-37/
 
 ## D'autres opérations prix coûtant en cours
 
-Ce type d'offre n'est pas propre à Pocé-sur-Cisse : plusieurs enseignes de la grande distribution organisent régulièrement des opérations similaires sur tout le territoire, notamment autour de la rentrée scolaire. Pour ne rien manquer des prochaines opérations prix coûtant, consultez notre [calendrier des opérations prix coûtant](/blog/prix-coutant-carburant-calendrier-leclerc-intermarche-carrefour/) et notre article sur [le fonctionnement du prix coûtant chez Intermarché](/blog/intermarche-carburant-prix-coutant-2026/).
+Ce type d'offre n'est pas propre à Pocé-sur-Cisse : plusieurs enseignes de la grande distribution organisent régulièrement des opérations similaires sur tout le territoire, notamment autour de la rentrée scolaire. Pour ne rien manquer des prochaines opérations prix coûtant, consultez notre [calendrier des opérations prix coûtant](/prix-coutant-carburant/) et notre article sur [le fonctionnement du prix coûtant chez Intermarché](/blog/intermarche-carburant-prix-coutant-2026/).
 
 ---
 

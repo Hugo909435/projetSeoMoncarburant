@@ -1,0 +1,649 @@
+---
+// Page de référence "prix coûtant", à la racine du site : ce n'est ni un
+// article de blog ni un pilier de silo classique, mais un tableau de bord
+// vivant (statut du week-end, comparatif enseignes, calendrier). D'où une
+// mise en page dédiée plutôt qu'un rendu de Content collection.
+import { getCollection, getEntry } from 'astro:content';
+import { Image } from 'astro:assets';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import BrandLogo from '../components/BrandLogo.astro';
+import ProchaineOperation from '../components/ProchaineOperation.astro';
+import FAQ from '../components/FAQ.astro';
+import AdUnit from '../components/AdUnit.astro';
+import { timelinePrixCoutant } from '../utils/prix-coutant';
+
+const entry = await getEntry('piliers', 'prix-coutant-carburant');
+if (!entry) throw new Error('Entrée prix-coutant-carburant introuvable');
+const { title, metaTitle, metaDescription, publishedAt, updatedAt, featuredImage, imageAlt, faq, relatedArticles } = entry.data;
+
+const pageUrl = 'https://mon-carburant.com/prix-coutant-carburant/';
+
+const allArticles = await getCollection('blog', ({ data }) => !data.draft);
+const satellites = allArticles
+  .filter((a) => relatedArticles.includes(a.data.slug))
+  .sort((a, b) => b.data.publishedAt.getTime() - a.data.publishedAt.getTime());
+
+const timeline = timelinePrixCoutant();
+
+const dateFormatter = new Intl.DateTimeFormat('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
+const rangeFormatter = new Intl.DateTimeFormat('fr-FR', { day: 'numeric', month: 'long' });
+const toDate = (iso: string) => new Date(`${iso}T12:00:00Z`);
+const formatRange = (start: string, end: string) =>
+  start === end
+    ? dateFormatter.format(toDate(start))
+    : `${rangeFormatter.format(toDate(start))} - ${dateFormatter.format(toDate(end))}`;
+
+const updatedLabel = dateFormatter.format(updatedAt ?? publishedAt);
+
+const enseignes = [
+  {
+    slug: 'leclerc',
+    name: 'E.Leclerc',
+    carte: 'non',
+    carteLabel: 'Aucune carte requise',
+    montant: 'non',
+    montantLabel: 'Aucun minimum d’achat',
+  },
+  {
+    slug: 'intermarche',
+    name: 'Intermarché',
+    carte: 'partielle',
+    carteLabel: 'Non pour le prix coûtant, Intermarché+ pour les remises complémentaires',
+    montant: 'partielle',
+    montantLabel: 'Parfois, selon l’opération',
+  },
+  {
+    slug: 'carrefour',
+    name: 'Carrefour',
+    carte: 'oui',
+    carteLabel: 'Souvent liée à la carte Pass',
+    montant: 'oui',
+    montantLabel: 'Souvent, seuil d’achats en magasin',
+  },
+  {
+    slug: 'super-u',
+    name: 'Système U',
+    carte: 'non',
+    carteLabel: 'Aucune carte requise',
+    montant: 'non',
+    montantLabel: 'Aucun minimum d’achat',
+  },
+];
+
+const tips = [
+  {
+    title: 'Suivez les applications',
+    text: "Leclerc, Intermarché et Carrefour annoncent leurs opérations via leur appli mobile ou par SMS, en général 2 à 3 jours avant le début.",
+  },
+  {
+    title: 'Repérez votre station',
+    text: "Toutes les stations d'une enseigne ne participent pas systématiquement, surtout dans les réseaux coopératifs (Leclerc, Intermarché) où chaque point de vente garde son autonomie.",
+  },
+  {
+    title: "Anticipez l'affluence",
+    text: 'Ces opérations attirent du monde, surtout en fin de journée. Le matin ou le début d’après-midi restent les créneaux les plus tranquilles.',
+  },
+  {
+    title: 'Comparez avant de partir',
+    text: 'Notre comparateur vérifie, enseigne par enseigne, quelles stations affichent les tarifs les plus bas près de chez vous.',
+  },
+];
+
+const pageSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  '@id': pageUrl,
+  name: title,
+  description: metaDescription,
+  url: pageUrl,
+  datePublished: publishedAt.toISOString(),
+  dateModified: (updatedAt ?? publishedAt).toISOString(),
+  isPartOf: { '@type': 'WebSite', name: 'Mon Carburant', url: 'https://mon-carburant.com' },
+};
+
+const enseignesSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: 'Enseignes suivies pour le prix coûtant carburant',
+  itemListElement: enseignes.map((e, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    name: e.name,
+    url: `https://mon-carburant.com/prix-carburants/enseigne/${e.slug}/`,
+  })),
+};
+---
+
+<BaseLayout
+  title={metaTitle}
+  description={metaDescription}
+  canonical={pageUrl}
+  image={featuredImage.src}
+  imageAlt={imageAlt}
+  type="website"
+  publishedAt={publishedAt.toISOString()}
+  updatedAt={updatedAt?.toISOString()}
+  jsonLd={[pageSchema, enseignesSchema]}
+  hideAds
+>
+  <div class="pcc-topbar container">
+    <Breadcrumb items={[{ label: 'Accueil', href: '/' }, { label: 'Carburant à prix coûtant', href: '/prix-coutant-carburant/' }]} />
+  </div>
+
+  <section class="pcc-hero">
+    <div class="pcc-hero-inner container">
+      <p class="pcc-eyebrow">Leclerc · Intermarché · Carrefour · Système U</p>
+      <h1 class="pcc-title">Carburant à prix coûtant</h1>
+      <p class="pcc-subtitle">
+        Le statut du week-end en cours, le comparatif des quatre enseignes et le calendrier des opérations, à jour en continu.
+      </p>
+    </div>
+    <div class="pcc-widget-wrap container">
+      <ProchaineOperation />
+    </div>
+  </section>
+
+  <section class="pcc-section pcc-intro container">
+    <div class="pcc-text-ad-row">
+      <p class="pcc-text-ad-copy">
+        Leclerc, Intermarché, Carrefour et Système U organisent chacun, plusieurs fois par an, des opérations
+        d'essence et de carburant à prix coûtant : le litre est vendu sans marge, au prix d'achat par l'enseigne.
+        Chez Leclerc en particulier, le carburant à prix coûtant est ouvert à tous, sans carte de fidélité. Ces
+        fenêtres durent en général 24 à 48 heures, sont annoncées seulement 2 à 3 jours à l'avance, et reviennent
+        aux mêmes moments chaque année : avant les grands départs d'été, à la rentrée scolaire, aux vacances de la
+        Toussaint et en fin d'année. Cette page centralise trois informations mises à jour en continu : le statut
+        de l'opération carburant à prix coûtant ce week-end, les conditions d'accès propres à chaque enseigne
+        (carte de fidélité, montant d'achat minimum), et le calendrier complet des opérations 2026, déjà passées
+        ou probables.
+      </p>
+      <AdUnit class="pcc-text-ad" />
+    </div>
+  </section>
+
+  <section class="pcc-section container" aria-labelledby="pcc-enseignes-title">
+    <h2 id="pcc-enseignes-title" class="pcc-section-title">Comparez les 4 enseignes</h2>
+    <div class="pcc-brand-grid">
+      {enseignes.map((e) => (
+        <a href={`/prix-carburants/enseigne/${e.slug}/`} class="pcc-brand-card">
+          <span class="pcc-brand-logo"><BrandLogo slug={e.slug} name={e.name} /></span>
+          <span class="pcc-brand-name">{e.name}</span>
+          <span class="pcc-brand-row">
+            <span class:list={['pcc-pill', `pcc-pill-${e.carte}`]}>{e.carte === 'non' ? 'Sans carte' : e.carte === 'oui' ? 'Carte requise' : 'Carte partielle'}</span>
+          </span>
+          <span class="pcc-brand-detail">{e.carteLabel}</span>
+          <span class="pcc-brand-row">
+            <span class:list={['pcc-pill', `pcc-pill-${e.montant}`]}>{e.montant === 'non' ? 'Sans minimum' : e.montant === 'oui' ? 'Minimum requis' : 'Minimum partiel'}</span>
+          </span>
+          <span class="pcc-brand-detail">{e.montantLabel}</span>
+          <span class="pcc-brand-cta">Voir les stations →</span>
+        </a>
+      ))}
+    </div>
+    <div class="pcc-text-ad-row">
+      <p class="pcc-text-ad-copy">
+        Le mécanisme est le même partout : l'enseigne renonce temporairement à sa marge habituelle sur le
+        carburant (déjà faible, 1 à 3 centimes par litre en temps normal) pour attirer du monde en magasin.
+        Les conditions d'accès, elles, varient sensiblement. Leclerc reste l'enseigne la plus simple d'accès :
+        l'opération est ouverte à tous, sans condition. Système U suit le même principe, sans carte ni montant
+        minimum. Chez Intermarché, le prix coûtant lui-même est ouvert à tous, mais certaines remises
+        complémentaires nécessitent la carte Intermarché+. Chez Carrefour, à l'inverse, les remises carburant
+        sont plus fréquemment couplées à une carte Pass ou à un montant minimum de courses, ce qui les rend un
+        peu moins automatiques mais potentiellement cumulables avec le programme de fidélité.
+      </p>
+      <AdUnit class="pcc-text-ad" />
+    </div>
+  </section>
+
+  <section class="pcc-section container" aria-labelledby="pcc-calendrier-title">
+    <h2 id="pcc-calendrier-title" class="pcc-section-title">Le calendrier 2026</h2>
+    <div class="pcc-text-ad-row">
+      <p class="pcc-text-ad-copy">
+        Sans qu'aucune date ne soit jamais garantie à l'avance, ces opérations reviennent presque chaque année
+        aux mêmes moments : avant les grands départs d'été (fin juin, début juillet), à la rentrée scolaire (fin
+        août, début septembre), aux vacances de la Toussaint (fin octobre) et en fin d'année (mi-décembre). La
+        vague de l'été 2026 s'est déroulée en deux temps : Leclerc et Intermarché début juillet, Système U début
+        août, puis TotalEnergies fin août avec une opération limitée à 129 stations. La rentrée, qui concentre
+        habituellement le plus grand nombre d'opérations de l'année, a fait exception cette fois : aucune des
+        quatre enseignes n'a communiqué de date entre fin août et début septembre. Les dates précises ne sont en
+        général communiquées que quelques jours à l'avance, par SMS, notification d'application ou affichage en
+        station.
+      </p>
+      <AdUnit class="pcc-text-ad" />
+    </div>
+    <ol class="pcc-timeline">
+      {timeline.map((t) => (
+        <li class:list={['pcc-timeline-item', `pcc-timeline-${t.kind}`]}>
+          <span class="pcc-timeline-dot" aria-hidden="true"></span>
+          <div class="pcc-timeline-body">
+            <span class="pcc-timeline-badge">{t.kind === 'passee' ? 'Passée' : 'À venir (probable)'}</span>
+            <p class="pcc-timeline-heading">
+              {t.brandName ?? t.label} <span class="pcc-timeline-dates">{formatRange(t.start, t.end)}</span>
+              {t.stations ? <span class="pcc-timeline-stations"> · {t.stations} stations</span> : null}
+            </p>
+            <p class="pcc-timeline-note">{t.note}</p>
+          </div>
+        </li>
+      ))}
+    </ol>
+  </section>
+
+  <section class="pcc-section container" aria-labelledby="pcc-tips-title">
+    <h2 id="pcc-tips-title" class="pcc-section-title">Comment ne pas rater la prochaine</h2>
+    <div class="pcc-tips-grid">
+      {tips.map((tip, i) => (
+        <div class="pcc-tip-card">
+          <span class="pcc-tip-number">{String(i + 1).padStart(2, '0')}</span>
+          <h3 class="pcc-tip-title">{tip.title}</h3>
+          <p class="pcc-tip-text">{tip.text}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="pcc-section container">
+    {faq && faq.length > 0 && <FAQ items={faq} />}
+  </section>
+
+  <section class="pcc-cta-wrap container">
+    <div class="pcc-cta">
+      <h2>{entry.data.ctaTitle ?? 'Trouvez la station la moins chère près de chez vous'}</h2>
+      {entry.data.ctaDescription && <p>{entry.data.ctaDescription}</p>}
+      <a href="/prix-carburants/" class="pcc-cta-btn">Comparer les prix →</a>
+    </div>
+  </section>
+
+  {satellites.length > 0 && (
+    <section class="pcc-section container" aria-labelledby="pcc-guides-title">
+      <h2 id="pcc-guides-title" class="pcc-section-title">Guides par enseigne</h2>
+      <div class="pcc-guide-grid">
+        {satellites.slice(0, 6).map((a) => (
+          <a href={`/blog/${a.data.slug}/`} class="pcc-guide-card">
+            <Image
+              src={a.data.featuredImage}
+              alt={a.data.imageAlt}
+              loading="lazy"
+              decoding="async"
+              width={480}
+              height={270}
+              class="pcc-guide-image"
+            />
+            <div class="pcc-guide-body">
+              <h3 class="pcc-guide-title">{a.data.title}</h3>
+              <p class="pcc-guide-excerpt">{a.data.excerpt}</p>
+            </div>
+          </a>
+        ))}
+      </div>
+    </section>
+  )}
+
+  <p class="pcc-footnote container">
+    Dernière vérification le {updatedLabel}. Le statut du week-end en cours est recalculé plusieurs fois par jour à partir des annonces des enseignes ; les périodes et conditions décrites sont celles habituellement constatées et peuvent varier d'une année et d'un magasin à l'autre.
+  </p>
+</BaseLayout>
+
+<style>
+  /* .container est défini globalement (src/styles/global.css) avec des
+     gouttières responsives (1rem mobile, 1.5rem tablette, 2rem desktop) :
+     ne pas le redéfinir ici pour rester cohérent avec le reste du site. */
+
+  .pcc-topbar {
+    padding-top: 1.5rem;
+  }
+
+  /* Hero : bande sombre pleine largeur, tranche nette avec le reste du site */
+  .pcc-hero {
+    background: radial-gradient(120% 160% at 15% 0%, #163a52 0%, var(--color-primary) 55%, #081c28 100%);
+    padding: 2.5rem 0 0;
+    margin-top: 1rem;
+  }
+
+  .pcc-hero-inner {
+    padding-bottom: 2.5rem;
+  }
+
+  .pcc-eyebrow {
+    font-family: var(--font-display);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #f5a35c;
+    margin: 0 0 0.75rem;
+  }
+
+  .pcc-title {
+    font-size: clamp(2.25rem, 5vw, 3.25rem);
+    line-height: 1.05;
+    color: #fff;
+    margin: 0 0 1rem;
+    max-width: min(20ch, 100%);
+  }
+
+  .pcc-subtitle {
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.78);
+    max-width: min(46ch, 100%);
+    margin: 0;
+  }
+
+  /* Le widget déborde sur la bande sombre : effet "ticket" flottant */
+  .pcc-widget-wrap {
+    transform: translateY(2.25rem);
+    filter: drop-shadow(0 20px 35px rgba(8, 20, 30, 0.35));
+  }
+
+  .pcc-section {
+    padding: 4rem 0 0;
+  }
+
+  .pcc-intro {
+    padding-top: 2.75rem;
+  }
+
+  /* Bloc réutilisable : texte à gauche, petite pub à droite. Utilisé pour
+     l'intro et pour les paragraphes d'explication sous "Comparez les 4
+     enseignes" et "Le calendrier 2026". */
+  .pcc-text-ad-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 2rem;
+    margin-top: 1.5rem;
+  }
+
+  .pcc-intro .pcc-text-ad-row {
+    margin-top: 0;
+  }
+
+  .pcc-text-ad-copy {
+    flex: 1;
+    min-width: 0;
+    max-width: min(68ch, 100%);
+    font-size: 0.9375rem;
+    line-height: 1.7;
+    color: var(--color-text-secondary);
+    margin: 0;
+    overflow-wrap: anywhere;
+  }
+
+  :global(.pcc-text-ad) {
+    flex-shrink: 0;
+    width: 300px;
+    max-width: 300px;
+    max-height: 300px;
+    overflow: hidden;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  @media (max-width: 860px) {
+    .pcc-text-ad-row { flex-direction: column; }
+    :global(.pcc-text-ad) { width: 100%; margin: 0 auto !important; }
+  }
+
+  .pcc-section-title {
+    font-size: 1.625rem;
+    margin: 0 0 1.5rem;
+  }
+
+  /* Enseignes */
+  .pcc-brand-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  @media (min-width: 480px) {
+    .pcc-brand-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (min-width: 860px) {
+    .pcc-brand-grid { grid-template-columns: repeat(4, 1fr); }
+  }
+
+  .pcc-brand-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    min-width: 0;
+    padding: 1.25rem 1.25rem 1.5rem;
+    background: #fff;
+    border: 1px solid var(--color-border);
+    border-radius: 0.875rem;
+    text-decoration: none;
+    color: var(--color-text);
+    transition: border-color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .pcc-brand-card:hover {
+    border-color: var(--color-accent);
+    transform: translateY(-3px);
+    box-shadow: 0 12px 24px -12px rgba(15, 45, 63, 0.25);
+  }
+
+  .pcc-brand-logo { margin-bottom: 0.25rem; }
+  .pcc-brand-name { font-family: var(--font-display); font-weight: 700; color: var(--color-primary); }
+
+  .pcc-brand-row { margin-top: 0.25rem; }
+  .pcc-pill {
+    display: inline-flex;
+    padding: 0.2rem 0.6rem;
+    border-radius: 999px;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+  }
+  .pcc-pill-non { background: #dcfce7; color: #15803d; }
+  .pcc-pill-partielle { background: #fef3c7; color: #92400e; }
+  .pcc-pill-oui { background: #fee2e2; color: #b91c1c; }
+
+  .pcc-brand-detail { font-size: 0.8125rem; color: var(--color-text-secondary); line-height: 1.45; }
+
+  .pcc-brand-cta {
+    margin-top: auto;
+    padding-top: 0.75rem;
+    font-size: 0.8125rem;
+    font-weight: 700;
+    color: var(--color-accent);
+  }
+
+  /* Timeline */
+  .pcc-timeline {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    position: relative;
+  }
+
+  .pcc-timeline::before {
+    content: '';
+    position: absolute;
+    left: 5px;
+    top: 0.5rem;
+    bottom: 0.5rem;
+    width: 2px;
+    background: var(--color-border);
+  }
+
+  .pcc-timeline-item {
+    position: relative;
+    padding-left: 2rem;
+    padding-bottom: 1.75rem;
+  }
+
+  .pcc-timeline-item:last-child { padding-bottom: 0; }
+
+  .pcc-timeline-dot {
+    position: absolute;
+    left: 0;
+    top: 0.3rem;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #94a3b8;
+  }
+
+  .pcc-timeline-passee .pcc-timeline-dot { background: #16a34a; }
+  .pcc-timeline-a-venir .pcc-timeline-dot {
+    background: #fff;
+    border: 2px solid var(--color-accent);
+  }
+
+  .pcc-timeline-badge {
+    display: inline-block;
+    font-size: 0.6875rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--color-text-secondary);
+    margin-bottom: 0.25rem;
+  }
+
+  .pcc-timeline-heading { margin: 0 0 0.2rem; font-weight: 700; color: var(--color-primary); }
+  .pcc-timeline-dates, .pcc-timeline-stations { font-weight: 500; color: var(--color-text-secondary); }
+  .pcc-timeline-note { margin: 0; font-size: 0.9375rem; color: var(--color-text-secondary); line-height: 1.55; }
+
+  /* Tips */
+  .pcc-tips-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  @media (min-width: 700px) {
+    .pcc-tips-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  .pcc-tip-card {
+    padding: 1.25rem 1.5rem;
+    background: #f8fafc;
+    border-radius: 0.875rem;
+  }
+
+  .pcc-tip-number {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 0.8125rem;
+    font-weight: 800;
+    color: var(--color-accent);
+    margin-bottom: 0.35rem;
+  }
+
+  .pcc-tip-title { margin: 0 0 0.35rem; font-size: 1rem; }
+  .pcc-tip-text { margin: 0; font-size: 0.9375rem; color: var(--color-text-secondary); line-height: 1.55; }
+
+  /* CTA */
+  .pcc-cta-wrap { padding: 4rem 0 0; }
+  .pcc-cta {
+    background: linear-gradient(135deg, var(--color-accent) 0%, #d0651a 100%);
+    color: #fff;
+    border-radius: 1rem;
+    padding: 2rem 2.5rem;
+  }
+  .pcc-cta h2 { color: #fff; font-size: 1.375rem; margin: 0 0 0.75rem; }
+  .pcc-cta p { color: rgba(255, 255, 255, 0.85); margin: 0 0 1.25rem; }
+  .pcc-cta-btn {
+    display: inline-flex;
+    padding: 0.65rem 1.25rem;
+    background: #fff;
+    color: var(--color-accent);
+    border-radius: 0.5rem;
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  /* Guides par enseigne */
+  .pcc-guide-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+
+  @media (min-width: 700px) {
+    .pcc-guide-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (min-width: 1024px) {
+    .pcc-guide-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+
+  .pcc-guide-card {
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    border: 1px solid var(--color-border);
+    border-radius: 0.875rem;
+    overflow: hidden;
+    text-decoration: none;
+    color: var(--color-text);
+    transition: box-shadow 0.15s ease, transform 0.15s ease;
+  }
+
+  .pcc-guide-card:hover {
+    box-shadow: 0 12px 24px -12px rgba(15, 45, 63, 0.25);
+    transform: translateY(-3px);
+  }
+
+  .pcc-guide-image {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+  }
+
+  .pcc-guide-body {
+    padding: 1.1rem 1.25rem 1.35rem;
+  }
+
+  .pcc-guide-title {
+    font-size: 1rem;
+    line-height: 1.35;
+    margin: 0 0 0.4rem;
+    color: var(--color-primary);
+  }
+
+  .pcc-guide-excerpt {
+    margin: 0;
+    font-size: 0.8438rem;
+    color: var(--color-text-secondary);
+    line-height: 1.55;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .pcc-footnote {
+    font-size: 0.8125rem;
+    font-style: italic;
+    color: var(--color-text-secondary);
+    padding: 3rem 0 3.5rem;
+    max-width: min(65ch, 100%);
+  }
+
+  /* Filet de sécurité : un mot isolé plus large que sa carte (ex. « complémentaires »
+     dans une carte enseigne à 2 colonnes sur un petit écran) ne doit jamais pousser
+     la boîte hors de son conteneur. */
+  .pcc-intro p,
+  .pcc-brand-detail,
+  .pcc-timeline-heading,
+  .pcc-timeline-note,
+  .pcc-guide-excerpt {
+    overflow-wrap: anywhere;
+  }
+
+  /* Rythme vertical resserré en mobile : le padding desktop (4rem par
+     section) empile beaucoup trop de vide sur petit écran. */
+  @media (max-width: 640px) {
+    .pcc-hero { padding-top: 2rem; }
+    .pcc-hero-inner { padding-bottom: 1.75rem; }
+    .pcc-widget-wrap { transform: translateY(1.25rem); }
+    .pcc-intro { padding-top: 1.75rem; }
+    .pcc-section { padding-top: 2.5rem; }
+    .pcc-cta-wrap { padding-top: 2.5rem; }
+    .pcc-cta { padding: 1.5rem 1.25rem; }
+    .pcc-footnote { padding: 2rem 0 2.5rem; }
+  }
+</style>

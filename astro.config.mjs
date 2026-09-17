@@ -144,10 +144,12 @@ export default defineConfig({
     '/blog/total-carburant-prix-2026/': '/blog/',
     '/blog/shell-carburant-prix-2026/': '/blog/',
     // Article obsolète (opération du 3-4 juillet passée) : contenu repris et
-    // tenu à jour dans la page calendrier, qui concentre déjà l'essentiel du
-    // trafic sur "carburant prix coûtant".
-    '/blog/leclerc-carburant-prix-coutant-juillet-2026/':
-      '/blog/prix-coutant-carburant-calendrier-leclerc-intermarche-carrefour/',
+    // tenu à jour dans la page pilier prix coûtant, qui concentre déjà
+    // l'essentiel du trafic sur "carburant prix coûtant".
+    '/blog/leclerc-carburant-prix-coutant-juillet-2026/': '/prix-coutant-carburant/',
+    // Ancien article promu en page pilier à la racine du site (2026-09-17).
+    '/blog/prix-coutant-carburant-calendrier-leclerc-intermarche-carrefour/':
+      '/prix-coutant-carburant/',
   },
   compressHTML: true,
   prefetch: {

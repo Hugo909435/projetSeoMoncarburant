@@ -12,7 +12,7 @@ tags: ["intermarché", "prix coûtant", "carburant", "grande surface", "bon plan
 featuredImage: "../../assets/articles/intermarche-carburant-prix-coutant-2026.webp"
 imageAlt: "Station-service Intermarché avec panneau des prix carburant"
 readingTime: 4
-relatedArticles: ["carrefour-carburant-prix-2026", "prix-carburant-2026", "carburant-moins-cher-leclerc-intermarche-carrefour-2026", "prix-coutant-carburant-calendrier-leclerc-intermarche-carrefour"]
+relatedArticles: ["carrefour-carburant-prix-2026", "prix-carburant-2026", "carburant-moins-cher-leclerc-intermarche-carrefour-2026"]
 ctaTitle: "Trouvez la station Intermarché la moins chère près de chez vous"
 ctaDescription: "Notre comparateur référence les 1 168 stations Intermarché en France avec les prix mis à jour quotidiennement."
 faq:

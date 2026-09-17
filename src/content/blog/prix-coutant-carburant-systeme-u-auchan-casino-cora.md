@@ -12,7 +12,7 @@ tags: ["prix coûtant", "système u", "auchan", "casino", "cora", "carburant", "
 featuredImage: "../../assets/articles/prix-coutant-carburant-systeme-u-auchan-casino-cora.webp"
 imageAlt: "Gros plan sur plusieurs pistolets de distributeurs de carburant côte à côte à une pompe"
 readingTime: 5
-relatedArticles: ["prix-coutant-carburant-calendrier-leclerc-intermarche-carrefour", "intermarche-carburant-prix-coutant-2026", "reduire-facture-carburant"]
+relatedArticles: ["intermarche-carburant-prix-coutant-2026", "reduire-facture-carburant"]
 ctaTitle: "Comparez les prix carburant de toutes les enseignes"
 ctaDescription: "Notre comparateur référence les prix de plus de 11 000 stations-service en France, mis à jour quotidiennement via les données officielles."
 faq:
@@ -37,7 +37,7 @@ On m'a posé la question plusieurs fois depuis l'article sur le calendrier Lecle
 
 Système U n'est pas un cas à part : c'est une coopérative de commerçants indépendants, exactement comme Leclerc, et l'enseigne fait régulièrement du prix coûtant elle aussi. La dernière opération en date a été annoncée les **dimanche 2 et lundi 3 août 2026**, dans près de 700 stations du réseau, pour le chassé-croisé estival.
 
-Côté prix affichés hors opération, Système U reste l'une des enseignes les moins chères de France : le Gazole y tourne autour de 1,843 €/L, juste derrière Leclerc et devant Auchan comme Intermarché. Pour le détail des conditions et le suivi des prochaines dates, notre [calendrier des opérations prix coûtant](/blog/prix-coutant-carburant-calendrier-leclerc-intermarche-carrefour/) reste la référence à jour.
+Côté prix affichés hors opération, Système U reste l'une des enseignes les moins chères de France : le Gazole y tourne autour de 1,843 €/L, juste derrière Leclerc et devant Auchan comme Intermarché. Pour le détail des conditions et le suivi des prochaines dates, notre [calendrier des opérations prix coûtant](/prix-coutant-carburant/) reste la référence à jour.
 
 ---
 
@@ -87,4 +87,4 @@ Dans tous les cas, le réflexe le plus fiable reste le même : vérifier le prix
 
 ---
 
-*Article publié le 31 juillet 2026. Les prix moyens cités proviennent des relevés officiels de juin 2026 et peuvent évoluer. Pour le calendrier détaillé de Leclerc, Intermarché et Carrefour, direction notre [article dédié](/blog/prix-coutant-carburant-calendrier-leclerc-intermarche-carrefour/).*
+*Article publié le 31 juillet 2026. Les prix moyens cités proviennent des relevés officiels de juin 2026 et peuvent évoluer. Pour le calendrier détaillé de Leclerc, Intermarché et Carrefour, direction notre [page dédiée](/prix-coutant-carburant/).*

@@ -12,7 +12,7 @@ tags: ["prix coûtant", "leclerc", "intermarché", "carrefour", "économies", "b
 featuredImage: "../../assets/articles/prix-coutant-carburant-vaut-il-le-coup.webp"
 imageAlt: "Station-service de grande surface avec pompes en libre-service et voitures en train de faire le plein"
 readingTime: 7
-relatedArticles: ["prix-coutant-carburant-calendrier-leclerc-intermarche-carrefour", "carburant-moins-cher-leclerc-intermarche-carrefour-2026", "prix-coutant-carburant-systeme-u-auchan-casino-cora", "reduire-facture-carburant"]
+relatedArticles: ["carburant-moins-cher-leclerc-intermarche-carrefour-2026", "prix-coutant-carburant-systeme-u-auchan-casino-cora", "reduire-facture-carburant"]
 ctaTitle: "Trouvez la station la moins chère sans attendre une opération"
 ctaDescription: "Notre comparateur référence les prix de plus de 11 000 stations-service en France, mis à jour quotidiennement via les données officielles."
 faq:
@@ -121,6 +121,6 @@ Sur un plein de 55 litres, l'écart avec TotalEnergies ne représente donc plus 
 
 L'opération prix coûtant est un vrai avantage, mais un avantage modeste, de l'ordre de 3 à 5 euros par plein une fois isolé de l'effet "je suis déjà en grande surface". Le détour et l'attente qu'elle génère parfois peuvent facilement dépasser ce gain. Une source d'économie plus discrète, disponible toute l'année sans SMS ni calendrier à suivre, reste le choix de l'enseigne, mais elle ne vaut plus grand-chose face à TotalEnergies aujourd'hui : elle reste en revanche déterminante face à Esso, BP et surtout Shell.
 
-Pour repérer la station la moins chère près de chez vous, opération en cours ou non, direction notre [comparateur de prix](/prix-carburants/). Et pour connaître les prochaines fenêtres prix coûtant chez Leclerc, Intermarché, Carrefour et Système U, notre [calendrier détaillé](/blog/prix-coutant-carburant-calendrier-leclerc-intermarche-carrefour/) reste à jour.
+Pour repérer la station la moins chère près de chez vous, opération en cours ou non, direction notre [comparateur de prix](/prix-carburants/). Et pour connaître les prochaines fenêtres prix coûtant chez Leclerc, Intermarché, Carrefour et Système U, notre [calendrier détaillé](/prix-coutant-carburant/) reste à jour.
 
 *Article publié le 3 août 2026. Prix Gazole d'après les données officielles du 3 août 2026 (donnees.roulez-eco.fr). Ces prix évoluent quotidiennement, consultez notre comparateur pour les tarifs du jour.*
