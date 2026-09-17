@@ -8,6 +8,7 @@ import FuelSearch from '../components/FuelSearch.astro';
 import HeroMap from '../components/HeroMap.astro';
 import AlertePrixCoutant from '../components/AlertePrixCoutant.astro';
 import AdUnit from '../components/AdUnit.astro';
+import { etatPrixCoutant } from '../utils/prix-coutant';
 import statsNational from '../data/fuel/stats-national.json';
 import statsByDepartment from '../data/fuel/stats-by-department.json';
 import fuelMeta from '../data/fuel/meta.json';
@@ -60,6 +61,9 @@ const lastUpdate = lastUpdateDate
 const POPULAR_DEPT_NUMS = ['75', '13', '69', '33', '31', '59', '44', '06'];
 const depts = departmentsData as Record<string, { name: string; slug: string }>;
 const deptStats = statsByDepartment as Record<string, Record<string, number | null>>;
+
+const { prixCoutant: prixCoutantOperations, prochaineFenetre } = etatPrixCoutant();
+const prixCoutantEnCours = prixCoutantOperations.length > 0;
 
 const popularDepts = POPULAR_DEPT_NUMS.map(num => ({
   num,
@@ -211,6 +215,34 @@ const webAppSchema = {
           <a href="/prix-carburants/" class="dept-all-link">Voir tous les départements →</a>
         </div>
 
+      </div>
+    </div>
+  </section>
+
+  <!-- Prix coûtant : page la plus consultée du site, section permanente (contrairement à
+       AlertePrixCoutant qui n'apparaît que le jour d'une opération en cours). -->
+  <section class="section-pcc" aria-label="Carburant à prix coûtant">
+    <div class="container pcc-home-inner">
+      <div class="pcc-home-text">
+        <p class="pcc-home-eyebrow">Leclerc · Intermarché · Carrefour · Système U</p>
+        <h2 class="pcc-home-title">Carburant à prix coûtant : le calendrier 2026</h2>
+        <p class="pcc-home-desc">
+          Le statut du week-end en cours, les conditions par enseigne et toutes les dates 2026, déjà
+          passées ou probables, sur une page mise à jour plusieurs fois par jour.
+        </p>
+        <a href="/prix-coutant-carburant/" class="pcc-home-cta">Voir le calendrier complet →</a>
+      </div>
+      <div class="pcc-home-status">
+        <span class:list={['pcc-home-badge', { 'pcc-home-badge-on': prixCoutantEnCours }]}>
+          {prixCoutantEnCours ? 'Oui, ce week-end' : 'Aucune annoncée'}
+        </span>
+        <p class="pcc-home-status-text">
+          {prixCoutantEnCours
+            ? 'Une opération est en cours ce week-end.'
+            : prochaineFenetre
+              ? `Prochaine fenêtre probable : ${prochaineFenetre.label}.`
+              : "Pas d'opération annoncée pour le moment."}
+        </p>
       </div>
     </div>
   </section>
@@ -460,6 +492,103 @@ const webAppSchema = {
     width: 1px;
     height: 2.5rem;
     background: rgba(255 255 255 / 0.15);
+  }
+
+  /* ── Prix coûtant (page la plus consultée) ── */
+  .section-pcc {
+    background: radial-gradient(120% 160% at 15% 0%, #163a52 0%, var(--color-primary) 55%, #081c28 100%);
+    color: #fff;
+    padding: 2.5rem 0;
+  }
+
+  .pcc-home-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .pcc-home-text {
+    flex: 1;
+    min-width: 260px;
+  }
+
+  .pcc-home-eyebrow {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #f5a35c;
+    margin: 0 0 0.5rem;
+  }
+
+  .pcc-home-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.375rem, 3vw, 1.75rem);
+    font-weight: 800;
+    color: #fff;
+    margin: 0 0 0.5rem;
+  }
+
+  .pcc-home-desc {
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.78);
+    max-width: 60ch;
+    margin: 0 0 1rem;
+  }
+
+  .pcc-home-cta {
+    display: inline-flex;
+    padding: 0.6rem 1.1rem;
+    background: var(--color-accent);
+    color: #fff;
+    border-radius: 0.5rem;
+    font-weight: 700;
+    font-size: 0.9375rem;
+    text-decoration: none;
+    transition: background 0.15s ease;
+  }
+
+  .pcc-home-cta:hover {
+    background: #d0651a;
+  }
+
+  .pcc-home-status {
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+    max-width: 16rem;
+    padding: 1.25rem 1.5rem;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 0.875rem;
+  }
+
+  .pcc-home-badge {
+    display: inline-flex;
+    padding: 0.25rem 0.7rem;
+    border-radius: 999px;
+    background: #475569;
+    color: #fff;
+    font-size: 0.6875rem;
+    font-weight: 800;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+  }
+
+  .pcc-home-badge-on {
+    background: #16a34a;
+  }
+
+  .pcc-home-status-text {
+    margin: 0;
+    font-size: 0.875rem;
+    color: rgba(255, 255, 255, 0.85);
+    line-height: 1.5;
   }
 
   /* ── Intro éditoriale ── */

@@ -32,6 +32,7 @@ function isActive(href: string): boolean {
 }
 
 const isPrixActive = pathname.startsWith('/prix-carburants/') || pathname.startsWith('/prix-');
+const isPrixCoutantActive = pathname.startsWith('/prix-coutant-carburant/');
 ---
 
 <header class="site-header" role="banner">
@@ -172,6 +173,16 @@ const isPrixActive = pathname.startsWith('/prix-carburants/') || pathname.starts
             </a>
           </li>
         ))}
+
+        <li class="nav-cta-item">
+          <a
+            href="/prix-coutant-carburant/"
+            class:list={['nav-cta', { active: isPrixCoutantActive }]}
+            aria-current={isPrixCoutantActive ? 'page' : undefined}
+          >
+            Prix coûtant
+          </a>
+        </li>
       </ul>
     </nav>
 
@@ -269,6 +280,35 @@ const isPrixActive = pathname.startsWith('/prix-carburants/') || pathname.starts
   .nav-link.active {
     color: var(--color-accent);
     font-weight: 600;
+  }
+
+  /* CTA distinct : c'est la page qui ramène le plus de trafic, elle mérite
+     un bouton visible plutôt qu'un lien texte de plus dans la nav. */
+  .nav-cta-item {
+    margin-left: 0.25rem;
+  }
+
+  .nav-cta {
+    display: block;
+    padding: 0.4375rem 0.875rem;
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: #fff;
+    background: var(--color-accent);
+    border-radius: 999px;
+    white-space: nowrap;
+    text-decoration: none;
+    transition: background 0.15s ease, transform 0.15s ease;
+  }
+
+  .nav-cta:hover {
+    background: #d0651a;
+    color: #fff;
+    transform: translateY(-1px);
+  }
+
+  .nav-cta.active {
+    background: var(--color-primary);
   }
 
   /* Menu déroulant "Prix carburants" */
@@ -632,6 +672,15 @@ const isPrixActive = pathname.startsWith('/prix-carburants/') || pathname.starts
       align-items: stretch;
       gap: 0;
       padding: 0 1rem;
+    }
+
+    .nav-cta-item {
+      margin: 0.5rem 0 0.25rem;
+    }
+
+    .nav-cta {
+      text-align: center;
+      padding: 0.625rem 0.75rem;
     }
 
     .nav-link {
