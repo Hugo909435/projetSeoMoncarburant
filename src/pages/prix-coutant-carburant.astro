@@ -146,6 +146,7 @@ const enseignesSchema = {
 
   <section class="pcc-section pcc-intro container">
     <div class="pcc-text-ad-row">
+      <AdUnit class="pcc-text-ad" fixedSize />
       <p class="pcc-text-ad-copy">
         Leclerc, Intermarché, Carrefour et Système U organisent chacun, plusieurs fois par an, des opérations
         d'essence et de carburant à prix coûtant : le litre est vendu sans marge, au prix d'achat par l'enseigne.
@@ -157,7 +158,6 @@ const enseignesSchema = {
         (carte de fidélité, montant d'achat minimum), et le calendrier complet des opérations 2026, déjà passées
         ou probables.
       </p>
-      <AdUnit class="pcc-text-ad" />
     </div>
   </section>
 
@@ -181,6 +181,7 @@ const enseignesSchema = {
       ))}
     </div>
     <div class="pcc-text-ad-row">
+      <AdUnit class="pcc-text-ad" fixedSize />
       <p class="pcc-text-ad-copy">
         Le mécanisme est le même partout : l'enseigne renonce temporairement à sa marge habituelle sur le
         carburant (déjà faible, 1 à 3 centimes par litre en temps normal) pour attirer du monde en magasin.
@@ -191,13 +192,13 @@ const enseignesSchema = {
         sont plus fréquemment couplées à une carte Pass ou à un montant minimum de courses, ce qui les rend un
         peu moins automatiques mais potentiellement cumulables avec le programme de fidélité.
       </p>
-      <AdUnit class="pcc-text-ad" />
     </div>
   </section>
 
   <section class="pcc-section container" aria-labelledby="pcc-calendrier-title">
     <h2 id="pcc-calendrier-title" class="pcc-section-title">Le calendrier 2026</h2>
     <div class="pcc-text-ad-row">
+      <AdUnit class="pcc-text-ad" fixedSize />
       <p class="pcc-text-ad-copy">
         Sans qu'aucune date ne soit jamais garantie à l'avance, ces opérations reviennent presque chaque année
         aux mêmes moments : avant les grands départs d'été (fin juin, début juillet), à la rentrée scolaire (fin
@@ -209,7 +210,6 @@ const enseignesSchema = {
         général communiquées que quelques jours à l'avance, par SMS, notification d'application ou affichage en
         station.
       </p>
-      <AdUnit class="pcc-text-ad" />
     </div>
     <ol class="pcc-timeline">
       {timeline.map((t) => (
@@ -343,14 +343,14 @@ const enseignesSchema = {
     padding-top: 2.75rem;
   }
 
-  /* Bloc réutilisable : texte à gauche, petite pub à droite. Utilisé pour
-     l'intro et pour les paragraphes d'explication sous "Comparez les 4
-     enseignes" et "Le calendrier 2026". */
+  /* Bloc réutilisable : texte à gauche, petite pub à taille fixe (AdUnit
+     fixedSize, 300x250) qui flotte à droite, le texte s'enroule autour comme
+     dans un article de presse. Une ligne en flex forcerait toute la rangée à
+     la hauteur de la pub même quand le texte est plus court, laissant un
+     grand vide dessous ; le float évite ce problème. */
   .pcc-text-ad-row {
-    display: flex;
-    align-items: flex-start;
-    gap: 2rem;
     margin-top: 1.5rem;
+    overflow: hidden; /* contient le float */
   }
 
   .pcc-intro .pcc-text-ad-row {
@@ -358,8 +358,6 @@ const enseignesSchema = {
   }
 
   .pcc-text-ad-copy {
-    flex: 1;
-    min-width: 0;
     max-width: min(68ch, 100%);
     font-size: 0.9375rem;
     line-height: 1.7;
@@ -369,18 +367,12 @@ const enseignesSchema = {
   }
 
   :global(.pcc-text-ad) {
-    flex-shrink: 0;
-    width: 300px;
-    max-width: 300px;
-    max-height: 300px;
-    overflow: hidden;
-    margin: 0 !important;
-    padding: 0 !important;
+    float: right;
+    margin: 0 0 1rem 2rem !important;
   }
 
   @media (max-width: 860px) {
-    .pcc-text-ad-row { flex-direction: column; }
-    :global(.pcc-text-ad) { width: 100%; margin: 0 auto !important; }
+    :global(.pcc-text-ad) { float: none; margin: 0 auto 1rem !important; }
   }
 
   .pcc-section-title {

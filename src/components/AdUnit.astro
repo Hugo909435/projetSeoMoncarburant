@@ -9,20 +9,33 @@ const DEFAULT_SLOT = '9482478582';
 interface Props {
   slot?: string;
   class?: string;
+  /** true : unité à taille fixe (300x250), pour un emplacement compact (ex.
+   *  à côté d'un paragraphe). Google respecte alors la taille imposée au lieu
+   *  de redimensionner l'emplacement lui-même via "auto" / full-width-responsive,
+   *  qui écrase toute contrainte CSS (max-height) avec un style inline !important. */
+  fixedSize?: boolean;
 }
 
-const { slot = DEFAULT_SLOT, class: className } = Astro.props;
+const { slot = DEFAULT_SLOT, class: className, fixedSize = false } = Astro.props;
 ---
 
-<div class:list={['ad-slot', className]} data-ads-consent-slot>
+<div class:list={['ad-slot', { 'ad-slot-fixed': fixedSize }, className]} data-ads-consent-slot>
   <span class="ad-slot__label">Publicité</span>
-  <ins
-    class="adsbygoogle"
-    style="display:block"
-    data-ad-client={ADS_CLIENT}
-    data-ad-slot={slot}
-    data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
+  {fixedSize ? (
+    <ins
+      class="adsbygoogle"
+      style="display:inline-block;width:300px;height:250px"
+      data-ad-client={ADS_CLIENT}
+      data-ad-slot={slot}></ins>
+  ) : (
+    <ins
+      class="adsbygoogle"
+      style="display:block"
+      data-ad-client={ADS_CLIENT}
+      data-ad-slot={slot}
+      data-ad-format="auto"
+      data-full-width-responsive="true"></ins>
+  )}
 </div>
 <script is:inline>(window.adsbygoogle = window.adsbygoogle || []).push({});</script>
 
@@ -34,6 +47,12 @@ const { slot = DEFAULT_SLOT, class: className } = Astro.props;
     padding: 0 1.5rem;
     text-align: center;
     overflow: hidden;
+  }
+  .ad-slot-fixed {
+    max-width: 300px;
+    min-height: 250px;
+    margin: 0;
+    padding: 0;
   }
   .ad-slot__label {
     display: block;
