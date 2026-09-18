@@ -1,16 +1,16 @@
-# Graph Report - projetSeoMoncarburant  (2026-09-16)
+# Graph Report - projetSeoMoncarburant  (2026-09-18)
 
 ## Corpus Check
-- 615 files · ~1,453,914 words
+- 616 files · ~1,456,415 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 1781 nodes · 1951 edges · 273 communities (146 shown, 127 thin omitted)
+- 1808 nodes · 1895 edges · 287 communities (157 shown, 130 thin omitted)
 - Extraction: 97% EXTRACTED · 2% INFERRED · 0% AMBIGUOUS · INFERRED: 45 edges (avg confidence: 0.82)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `93bd8778`
+- Built from commit: `79f3770c`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -214,6 +214,7 @@
 - [[_COMMUNITY_Community 197|Community 197]]
 - [[_COMMUNITY_Community 198|Community 198]]
 - [[_COMMUNITY_Community 199|Community 199]]
+- [[_COMMUNITY_Community 200|Community 200]]
 - [[_COMMUNITY_Community 201|Community 201]]
 - [[_COMMUNITY_Community 202|Community 202]]
 - [[_COMMUNITY_Community 203|Community 203]]
@@ -258,7 +259,6 @@
 - [[_COMMUNITY_Community 242|Community 242]]
 - [[_COMMUNITY_Community 243|Community 243]]
 - [[_COMMUNITY_Community 244|Community 244]]
-- [[_COMMUNITY_Community 246|Community 246]]
 - [[_COMMUNITY_Community 247|Community 247]]
 - [[_COMMUNITY_Community 248|Community 248]]
 - [[_COMMUNITY_Community 249|Community 249]]
@@ -286,18 +286,29 @@
 - [[_COMMUNITY_Community 271|Community 271]]
 - [[_COMMUNITY_Community 272|Community 272]]
 - [[_COMMUNITY_Community 273|Community 273]]
+- [[_COMMUNITY_Community 274|Community 274]]
+- [[_COMMUNITY_Community 275|Community 275]]
+- [[_COMMUNITY_Community 276|Community 276]]
+- [[_COMMUNITY_Community 277|Community 277]]
+- [[_COMMUNITY_Community 278|Community 278]]
+- [[_COMMUNITY_Community 279|Community 279]]
+- [[_COMMUNITY_Community 280|Community 280]]
+- [[_COMMUNITY_Community 281|Community 281]]
+- [[_COMMUNITY_Community 282|Community 282]]
+- [[_COMMUNITY_Community 283|Community 283]]
+- [[_COMMUNITY_Community 284|Community 284]]
 
 ## God Nodes (most connected - your core abstractions)
-1. `../../layouts/BaseLayout.astro` - 29 edges
+1. `../../layouts/BaseLayout.astro` - 27 edges
 2. `scripts` - 19 edges
-3. `../../data/fuel/meta.json` - 17 edges
-4. `../../data/fuel/stats-national.json` - 16 edges
-5. `../../components/PriceHistoryChart.astro` - 15 edges
-6. `../../../data/departments.json` - 15 edges
-7. `main()` - 14 edges
-8. `../../components/AdUnit.astro` - 13 edges
-9. `../components/Header.astro` - 13 edges
-10. `../components/HeroMap.astro` - 13 edges
+3. `../../data/fuel/meta.json` - 16 edges
+4. `../../data/fuel/stats-national.json` - 15 edges
+5. `main()` - 14 edges
+6. `../../../data/departments.json` - 13 edges
+7. `SEO Audit` - 13 edges
+8. `SEO Audit` - 13 edges
+9. `Audit GEO (Generative Engine Optimization) — mon-carburant.com` - 13 edges
+10. `Déploiement des pages station` - 12 edges
 
 ## Surprising Connections (you probably didn't know these)
 - `mon-carburant.com Brand Logo (Colored)` --semantically_similar_to--> `mon-carburant.com Favicon Icon`  [INFERRED] [semantically similar]
@@ -314,27 +325,27 @@
 ## Import Cycles
 - None detected.
 
-## Communities (273 total, 127 thin omitted)
+## Communities (287 total, 130 thin omitted)
 
 ### Community 0 - "Article Layout Components"
-Cohesion: 0.29
-Nodes (5): ../../../components/Pagination.astro, ../../../data/fuel/city-names.json, FUEL_KEYS, breadcrumb, jsonLd
+Cohesion: 0.25
+Nodes (6): plan, publishedStations, rolloutMeta, WaveEntry, WavesFile, WaveSummary
 
 ### Community 1 - "Leaflet Map Core"
 Cohesion: 0.07
-Nodes (10): a(), Ae(), c(), ei(), ii(), O(), r(), Re() (+2 more)
+Nodes (12): a(), Ae(), bi(), ei(), ii(), O(), Pi(), Re() (+4 more)
 
 ### Community 2 - "Fuel Search Interface"
-Cohesion: 0.18
-Nodes (12): ../../../utils/escape-html, ../../../utils/station-waves, ../components/FullStationsMap.astro, ../components/HeroMap.astro, ../../../data/departments.json, ../../data/fuel/meta.json, ../../../../data/fuel/stats-by-department.json, ../../data/fuel/stats-national.json (+4 more)
+Cohesion: 0.20
+Nodes (8): ../components/AlertePrixCoutant.astro, ../components/ArticleCard.astro, ../components/FuelSearch.astro, ../components/HeroMap.astro, ../components/Newsletter.astro, ../data/fuel/meta.json, ../data/fuel/stats-by-department.json, ../data/fuel/stats-national.json
 
 ### Community 3 - "City Identity & Fuel Config"
-Cohesion: 0.18
-Nodes (13): [], breadcrumb, FUELS, geoStations, haversineKm(), highways, jsonLdBreadcrumb, knownCodes (+5 more)
+Cohesion: 0.16
+Nodes (14): ../../../data/fuel/stats-autoroute.json, [], breadcrumb, FUELS, geoStations, haversineKm(), highways, jsonLdBreadcrumb (+6 more)
 
 ### Community 4 - "Project Dependencies"
-Cohesion: 0.05
-Nodes (39): dependencies, adm-zip, astro, astro-seo, @astrojs/mdx, @astrojs/rss, @astrojs/sitemap, fast-xml-parser (+31 more)
+Cohesion: 0.17
+Nodes (6): ../../components/ArticleCard.astro, dateFormatted, string, displayed, personSchema, breadcrumb
 
 ### Community 5 - "Fuel Data Pipeline"
 Cohesion: 0.08
@@ -345,8 +356,8 @@ Cohesion: 0.18
 Nodes (10): deps, __dirname, download(), failures, hasPage, OUT, ROOT, sleep() (+2 more)
 
 ### Community 7 - "Department & Local Content"
-Cohesion: 0.28
-Nodes (6): buildDeptIntro(), DeptIntroParams, DeptStats, deptVariant(), diffPct(), StationSnippet
+Cohesion: 0.04
+Nodes (41): dependencies, adm-zip, astro, astro-seo, @astrojs/mdx, @astrojs/rss, @astrojs/sitemap, fast-xml-parser (+33 more)
 
 ### Community 8 - "Fuel Price Blog Articles"
 Cohesion: 0.62
@@ -357,8 +368,8 @@ Cohesion: 0.14
 Nodes (16): Aix-en-Provence City Coat of Arms, Ajaccio City Coat of Arms, Albi City Coat of Arms, Angoulème City Coat of Arms, Annecy City Coat of Arms, Arras City Coat of Arms, Asnières-sur-Seine City Coat of Arms, Auxerre City Coat of Arms (+8 more)
 
 ### Community 10 - "Leaflet Map Rendering"
-Cohesion: 0.29
-Nodes (7): _(), F(), Ie(), Le(), p(), s(), $t()
+Cohesion: 0.16
+Nodes (14): _(), De(), F(), Ie(), k(), Le(), me(), Oe() (+6 more)
 
 ### Community 11 - "Leaflet Map Interactions"
 Cohesion: 0.22
@@ -373,28 +384,28 @@ Cohesion: 0.21
 Nodes (11): DEPARTMENTS, __dirname, download(), fail, fileLooksValid(), FORCE, manifest, processGroup() (+3 more)
 
 ### Community 14 - "Cookie Consent UI"
-Cohesion: 0.17
-Nodes (9): ../../../data/local-content, ../../utils/dept-intro, ../../../components/LocalIdentity.astro, breadcrumb, FUELS, introSentences, jsonLdBreadcrumb, neighborDepts (+1 more)
+Cohesion: 0.28
+Nodes (6): buildDeptIntro(), DeptIntroParams, DeptStats, deptVariant(), diffPct(), StationSnippet
 
 ### Community 15 - "Fuel Economy Calculators"
-Cohesion: 0.28
-Nodes (6): calculate(), fmt(), calculate(), fmt(), jsonLd, tools
+Cohesion: 0.05
+Nodes (42): Audit Framework, Audit Report Structure, Canonicalization for Multilingual Sites, Common Issues by Site Type, Content/Blog Sites, Content Depth, Content Optimization, Content Quality Across Locales (+34 more)
 
 ### Community 16 - "Contact Form Handler"
-Cohesion: 0.38
-Nodes (4): is_rate_limited(), respond(), throttle_key(), wants_json()
+Cohesion: 0.05
+Nodes (42): Audit Framework, Audit Report Structure, Canonicalization for Multilingual Sites, Common Issues by Site Type, Content/Blog Sites, Content Depth, Content Optimization, Content Quality Across Locales (+34 more)
 
 ### Community 17 - "Leaflet Geometry Utils"
 Cohesion: 0.47
 Nodes (6): be(), m(), ve(), xe(), ye(), z()
 
 ### Community 18 - "Contact Page UI"
-Cohesion: 0.22
-Nodes (8): Avril-mai 2026 : la réponse sociale et une accalmie relative, Ce qu'il faut retenir, Fin août 2026 : le conflit s'installe dans la durée, Juillet 2026 : la rechute, portée par le gazole, L'impact chiffré sur votre budget, Mars 2026 : le choc du détroit d'Ormuz, Mi-août 2026 : le gazole décroche, une pénurie régionale s'ajoute, Septembre 2026 : le plafond gazole cède, l'essence prend le relais
+Cohesion: 0.08
+Nodes (24): 1. Un véhicule flex-fuel d'origine, 2. L'installation d'un boîtier E85 homologué, Aides régionales : jusqu'à 500 € de prise en charge, Ce qu'il faut retenir, E85 et entretien : ce qui change, E85 et environnement : un bilan nuancé, L'E85 est clairement rentable si :, L'E85 mérite réflexion si : (+16 more)
 
 ### Community 19 - "TypeScript Configuration"
-Cohesion: 0.33
-Nodes (5): compilerOptions, baseUrl, paths, extends, @/*
+Cohesion: 0.08
+Nodes (23): 10. Limites connues, 1. En une minute, 2. Pourquoi par vagues, 3. Le calendrier, 4. Ce qui se passe automatiquement, 5. Comment c'est construit, 6 bis. Garde-fous qualité, 6. Changer la cadence (+15 more)
 
 ### Community 20 - "Community 20"
 Cohesion: 0.40
@@ -421,88 +432,92 @@ Cohesion: 1.00
 Nodes (3): Lens city flag, Lille city flag, Maubeuge city flag
 
 ### Community 28 - "Community 28"
-Cohesion: 0.36
-Nodes (8): addDays(), aujourdhui(), etatPrixCoutant(), Fenetre, Operation, Signal, toDate(), toIso()
-
-### Community 140 - "Community 140"
-Cohesion: 0.05
-Nodes (42): Audit Framework, Audit Report Structure, Canonicalization for Multilingual Sites, Common Issues by Site Type, Content/Blog Sites, Content Depth, Content Optimization, Content Quality Across Locales (+34 more)
-
-### Community 141 - "Community 141"
-Cohesion: 0.05
-Nodes (42): Audit Framework, Audit Report Structure, Canonicalization for Multilingual Sites, Common Issues by Site Type, Content/Blog Sites, Content Depth, Content Optimization, Content Quality Across Locales (+34 more)
-
-### Community 142 - "Community 142"
 Cohesion: 0.29
-Nodes (7): Auto-Translated Content (2025 Stance), Content Quality Across Locales, Crawl Budget, Helpful Content System Impact, Locale-Specific Signals, Partial Translation, Thin Locale Pages
+Nodes (10): addDays(), aujourdhui(), etatPrixCoutant(), Fenetre, Operation, Signal, TimelineEntry, timelinePrixCoutant() (+2 more)
 
-### Community 143 - "Community 143"
-Cohesion: 0.29
-Nodes (7): Auto-Translated Content (2025 Stance), Content Quality Across Locales, Crawl Budget, Helpful Content System Impact, Locale-Specific Signals, Partial Translation, Thin Locale Pages
-
-### Community 144 - "Community 144"
-Cohesion: 0.08
-Nodes (24): 1. Un véhicule flex-fuel d'origine, 2. L'installation d'un boîtier E85 homologué, Aides régionales : jusqu'à 500 € de prise en charge, Ce qu'il faut retenir, E85 et entretien : ce qui change, E85 et environnement : un bilan nuancé, L'E85 est clairement rentable si :, L'E85 mérite réflexion si : (+16 more)
-
-### Community 145 - "Community 145"
+### Community 29 - "Community 29"
 Cohesion: 0.09
 Nodes (22): 1. Pression des pneus : le geste le plus rentable, 2. Huile moteur : la bonne viscosité fait la différence, 3. Filtre à air : quand le moteur étouffe, 4. Bougies d'allumage (moteurs essence), 5. Climatisation : gérer son usage intelligemment, 6. Ce qui ralentit votre voiture sans que vous le sachiez, 7. Planning d'entretien simplifié, Bons réflexes pour réduire l'impact (+14 more)
 
-### Community 146 - "Community 146"
+### Community 140 - "Community 140"
+Cohesion: 0.09
+Nodes (21): 1. Le E85 rend toute la démarche inutile, 2. Le paiement, 3. Le carburant que vous cherchez n'existe pas là-bas, Allemagne : uniquement le gazole, et uniquement avant midi, Andorre : le plus gros gain, la plus grosse contrainte, Belgique : l'essence oui, le gazole non, Espagne : le meilleur choix pour les vacanciers du sud, Essence (E10 côté français, Super 95 côté étranger) (+13 more)
+
+### Community 141 - "Community 141"
 Cohesion: 0.10
 Nodes (20): 1. Faire le plein avant l'autoroute, 2. Repérer les stations à la sortie des péages, 3. Viser les aires "low cost" sur autoroute, 4. Adapter sa vitesse pour étirer l'autonomie, 5. Ne pas attendre le voyant de réserve, Ce que les pouvoirs publics tentent de faire, Cinq réflexes pour ne plus payer le prix fort, Des coûts d'exploitation plus élevés (+12 more)
 
-### Community 147 - "Community 147"
+### Community 142 - "Community 142"
 Cohesion: 0.10
 Nodes (20): 1. Les courts trajets : l'ennemi silencieux de la consommation, 2. La charge et l'aérodynamisme : ce que vous trimballez sans le savoir, 3. Les effets saisonniers : hiver et été n'ont pas le même coût, 4. Choisir son carburant : SP95, SP98, E10, E85, 5. Choisir la bonne station au bon moment, 6. Mesurer sa progression : ce qui se mesure s'améliore, Combien peut-on cumuler avec ces 6 leviers ?, Comparer avant de partir, pas en panne (+12 more)
 
-### Community 148 - "Community 148"
+### Community 143 - "Community 143"
 Cohesion: 0.10
 Nodes (19): Alléger le véhicule, Anticiper le trafic et le relief, Avant de prendre le volant : la préparation compte, Combien peut-on vraiment économiser ?, Démarrer sans chauffer le moteur, mais en douceur, Démonter galerie de toit et coffre de toit hors usage, Limiter la climatisation… mais pas n'importe comment, Maintenir une vitesse stable (+11 more)
 
-### Community 149 - "Community 149"
+### Community 144 - "Community 144"
 Cohesion: 0.10
 Nodes (19): Calendrier et dates clés, Ce que 50 € représentent en chiffres, Comment demander l'aide ? La démarche pas à pas, Comment demander l'indemnité carburant 2026 ?, Foire aux questions, L'indemnité carburant 2026 est-elle cumulable avec l'indemnité kilométrique ?, La condition de distance : trajet ou kilométrage annuel ?, Le critère du revenu fiscal de référence (RFR) (+11 more)
 
-### Community 150 - "Community 150"
-Cohesion: 0.25
-Nodes (8): Academic-Specific AI Tells, AI Writing Detection, Contents, Filler Words and Empty Intensifiers, How to Self-Check, Overused Adjectives, Overused Transitions and Connectors, Overused Verbs
-
-### Community 151 - "Community 151"
-Cohesion: 0.25
-Nodes (8): Academic-Specific AI Tells, AI Writing Detection, Contents, Filler Words and Empty Intensifiers, How to Self-Check, Overused Adjectives, Overused Transitions and Connectors, Overused Verbs
-
-### Community 152 - "Community 152"
+### Community 145 - "Community 145"
 Cohesion: 0.12
 Nodes (16): 1. Aérez avant de climatiser, 2. Réglez à 22-23 °C, pas à 16 °C, 3. Utilisez le mode recyclage d'air (au bon moment), 4. Garez-vous à l'ombre (ça change tout), 5. Coupez la clim 2-3 minutes avant d'arriver, 6. Entretenez votre circuit de clim, 7 astuces pour climatiser sans exploser votre budget carburant, 7. Préférez la clim automatique si vous avez le choix (+8 more)
 
-### Community 153 - "Community 153"
+### Community 146 - "Community 146"
 Cohesion: 0.12
 Nodes (16): Au-delà du carburant : sécurité, usure, durée de vie, Combien économisez-vous vraiment chaque année ?, Comment vérifier et ajuster la pression de vos pneus, Conclusion, Faut-il ajuster selon la charge ou la saison ?, La résistance au roulement, expliquée simplement, Le bon moment : pneus à froid, jamais à chaud, Le chiffre clé : combien de carburant en plus avec des pneus sous-gonflés ? (+8 more)
 
-### Community 154 - "Community 154"
+### Community 147 - "Community 147"
 Cohesion: 0.12
 Nodes (16): Comment payer moins cher le carburant ?, Comment réduire la facture quand les prix flambent : 5 leviers concrets, Foire aux questions, La fiscalité : TICPE, TVA et taxe carbone, La géopolitique et le cours du Brent, La transition énergétique et la convergence diesel/essence, Le prix du diesel va-t-il continuer à augmenter ?, Les prévisions pour 2027 sont-elles à la hausse ou à la baisse ? (+8 more)
 
-### Community 155 - "Community 155"
+### Community 148 - "Community 148"
 Cohesion: 0.12
 Nodes (15): Acheter des pièces de sécurité au prix le plus bas sans vérifier la certification, Changer une pièce mais oublier sa paire, Coût du contrôle technique et comment éviter la contre-visite, Ignorer les petits bruits inhabituels, Ignorer un voyant moteur, La périodicité : la règle reste inchangée, Le carnet d'entretien : votre référence absolue, Le contrôle technique en 2026 : ce qui change vraiment (+7 more)
+
+### Community 149 - "Community 149"
+Cohesion: 0.12
+Nodes (15): Assurance : l'angle mort souvent oublié, Carburant vs électricité au 100 km, Ce qu'il faut retenir, Ce qui change en hiver, Entretien et fiabilité comparés, Faut-il anticiper le passage à l'électrique, La prime à la conversion, un dispositif qui a disparu, La question que tout le monde se pose avant d'acheter (+7 more)
+
+### Community 150 - "Community 150"
+Cohesion: 0.16
+Nodes (7): articleLastmods, siteLastmod, weakUrls, estElement(), etiqueterCellules(), rehypeResponsiveTables(), isWeakStation()
+
+### Community 151 - "Community 151"
+Cohesion: 0.14
+Nodes (12): ../../components/AdUnit.astro, ../../data/fuel/config, breadcrumb, jsonLd, breadcrumb, dateFormatter, faq, history (+4 more)
+
+### Community 152 - "Community 152"
+Cohesion: 0.14
+Nodes (13): 10. Top 5 changements à plus fort impact, 11. Recommandations schema, 12. Reformulation de contenu, 1. GEO Readiness Score : 78/100, 2. Répartition par plateforme, 3. Accès des crawlers IA (robots.txt), 4. Statut llms.txt, 5. Analyse des signaux de marque (+5 more)
+
+### Community 153 - "Community 153"
+Cohesion: 0.18
+Nodes (11): ../../../../components/BrandCell.astro, ../../../components/BrandLogo.astro, src, ../../../../components/StationMiniMap.astro, initMap(), loadCss(), loadScript(), ../../../data/fuel/city-names.json (+3 more)
+
+### Community 154 - "Community 154"
+Cohesion: 0.14
+Nodes (13): 1. Calage du moteur au point mort haut, 2. Accès à la courroie, 3. Remplacement du kit complet, 4. Montage et calage de la nouvelle courroie, 5. Vérification et remise en route, Ce qu'il faut retenir, Combien coûte le remplacement préventif ?, Intervalles indicatifs par motorisation (modèles courants 2010-2024) (+5 more)
+
+### Community 155 - "Community 155"
+Cohesion: 0.28
+Nodes (4): ../../../data/departments.json, ../../data/fuel/meta.json, ../../../../data/fuel/stats-by-department.json, ../../data/fuel/stats-national.json
 
 ### Community 156 - "Community 156"
 Cohesion: 0.13
 Nodes (14): Combien pouvez-vous économiser au total ?, Comment réduire sa facture de carburant rapidement ?, De combien peut-on baisser sa consommation de carburant ?, Existe-t-il des aides pour le carburant en 2026 ?, Foire aux questions, Grande distribution, autoroutes, zones touristiques : les écarts à connaître, Le choix du carburant influe-t-il sur le budget ?, Les outils pour comparer les prix en temps réel (+6 more)
 
 ### Community 157 - "Community 157"
-Cohesion: 0.38
+Cohesion: 0.32
 Nodes (6): BRAND_LOGO_ALIASES, BRAND_LOGO_EXTS, Dimensions, getBrandLogoDimensions(), pngDimensions(), svgDimensions()
 
 ### Community 158 - "Community 158"
-Cohesion: 0.14
-Nodes (13): 1. Calage du moteur au point mort haut, 2. Accès à la courroie, 3. Remplacement du kit complet, 4. Montage et calage de la nouvelle courroie, 5. Vérification et remise en route, Ce qu'il faut retenir, Combien coûte le remplacement préventif ?, Intervalles indicatifs par motorisation (modèles courants 2010-2024) (+5 more)
-
-### Community 159 - "Community 159"
 Cohesion: 0.15
 Nodes (12): 1. La coupure d'urgence, 2. La détection de fuite en cuve, 3. La mise à la terre anti-statique, 4. La récupération des vapeurs (VRS), 5 idées reçues sur les pompes à essence, Comment marche le système de coupure automatique ?, Le parcours du carburant en 6 étapes, Les 4 systèmes de sécurité d'une pompe à essence (+4 more)
+
+### Community 159 - "Community 159"
+Cohesion: 0.17
+Nodes (11): 1. Pourquoi les pages ne s'indexent pas, 2. Vente de liens d'articles : es-tu sur la bonne voie ?, 3. Détails techniques relevés, Audit SEO mon-carburant.com (2026-07-02), Ce qui est HORS DE CAUSE (vérifié), Constat d'indexation (recherche site:), Les vraies causes, Points faibles et risques (+3 more)
 
 ### Community 160 - "Community 160"
 Cohesion: 0.17
@@ -513,132 +528,136 @@ Cohesion: 0.18
 Nodes (10): Ajouter un article, Ajouter un article pilier, Ajouter un auteur, Commandes principales, Déploiement sur Hostinger, Mon Carburant, Pages légales — Placeholders à compléter, Personnalisation de la marque (+2 more)
 
 ### Community 162 - "Community 162"
-Cohesion: 0.20
-Nodes (9): Alterner entre SP95 et SP98 selon les prix, Cas de figure courants où le mélange survient, Ce qu'il faut retenir, Dépannage : votre véhicule requiert du SP98 mais seul le SP95 est disponible, Et le SP95-E10 dans l'équation ?, Faire le plein de SP98 sur un fond de SP95, Le cas des moteurs haute performance exigeant du SP98, Pourquoi le mélange SP95/SP98 est sans risque (+1 more)
+Cohesion: 0.18
+Nodes (8): ./AuthorBox.astro, ../../components/Breadcrumb.astro, breadcrumbSchema, ./FAQ.astro, ./Newsletter.astro, encodedTitle, encodedUrl, tocHeadings
 
 ### Community 163 - "Community 163"
-Cohesion: 0.40
-Nodes (4): Ce qu'il faut retenir en pratique, Faut-il s'inquiéter pour son moteur ou pour sa santé, Le manganèse, un vieux compagnon de l'essence sans plomb, Un arrêté publié au Journal officiel le 26 août
+Cohesion: 0.20
+Nodes (8): ../../../components/LocalIdentity.astro, ../../../data/local-content, breadcrumb, hasCityBlason, introSentences, jsonLdBreadcrumb, ../../../utils/city-identity, ../../../utils/city-intro
 
 ### Community 164 - "Community 164"
 Cohesion: 0.08
 Nodes (22): C, data, __dirname, eur(), FUEL_LABEL, fuelArg, IN, maxGain (+14 more)
 
 ### Community 165 - "Community 165"
-Cohesion: 0.22
-Nodes (8): 1. Faire le plein avant d'entrer sur l'autoroute, 2. Identifier les stations les moins chères sur votre itinéraire, 3. Partir aux bons créneaux pour éviter les bouchons, 4. Rouler à 110 km/h plutôt qu'à 130 km/h, 5. Utiliser le régulateur de vitesse, 6. Gérer intelligemment la climatisation, 7. Réduire la résistance aérodynamique du chargement, 8. Choisir le bon carburant
+Cohesion: 0.18
+Nodes (10): Ce qu'il faut retenir, Ce que ça représente concrètement, Comment repérer la bonne station sans y perdre son temps, Hypermarché, station de marque, indépendant : trois modèles, trois prix, L'autoroute : le cas extrême, La concurrence locale, un facteur sous-estimé, La fiscalité ne bouge pas, la marge oui, Les hypermarchés vendent le carburant à perte ou presque (+2 more)
 
 ### Community 166 - "Community 166"
-Cohesion: 0.22
-Nodes (8): Comment vérifier la compatibilité de votre voiture en 10 secondes, La règle générale, Les alternatives disponibles à la pompe, Les risques d'un usage régulier dans un véhicule incompatible, Qu'est-ce que le SP95-E10 exactement ?, Que faire si votre voiture n'est pas compatible SP95-E10 ?, Quelles voitures sont compatibles avec le SP95-E10 ?, Tableau de compatibilité par marque (millésimes clés)
+Cohesion: 0.18
+Nodes (10): Ce qu'il faut retenir, Ce que ce calcul ne dit pas, Ce que l'on compare, exactement, Le coût que personne ne compte : l'abonnement, Le kWh que vous payez n'est pas celui qui entre dans la batterie, Le seuil à retenir : 0,61 €/kWh, Le tableau qui répond à la question, Le trouble-fête : l'E85 à 0,865 €/L (+2 more)
 
 ### Community 167 - "Community 167"
-Cohesion: 0.22
-Nodes (8): Conseils pratiques pour économiser sur l'essence, Différence de prix SP95/SP98 en 2026 : combien ça coûte vraiment ?, Le cas du SP95-E10 : une troisième option souvent négligée, Les 5 idées reçues sur le SP95 et le SP98, Qu'est-ce que l'indice d'octane ?, Quelle essence pour votre voiture ?, SP95 et SP98 : comparatif complet, Voitures qui doivent utiliser le SP98
+Cohesion: 0.18
+Nodes (7): breadcrumb, FUELS, introSentences, jsonLdBreadcrumb, neighborDepts, string, ../../utils/dept-intro
 
 ### Community 168 - "Community 168"
-Cohesion: 0.25
-Nodes (7): Ce qu'il faut retenir, Ce que les chiffres disent vraiment, Comment fonctionne le Stop & Start, Faut-il désactiver son Stop & Start ?, Les coûts que les constructeurs ne mettent pas en avant, Quand le Stop & Start est vraiment efficace, Quand le Stop & Start ne sert presque à rien
+Cohesion: 0.20
+Nodes (9): Brief : Assurance auto électrique vs thermique, quelle différence de prix, Concurrence identifiée, Intégration affiliation (nouveau, spécifique à ce cluster), Liens internes obligatoires, Mots-clés, Métadonnées, Points de vigilance, Rappel règles CLAUDE.md (+1 more)
 
 ### Community 169 - "Community 169"
-Cohesion: 0.11
-Nodes (19): ../../components/PriceHistoryChart.astro, dateFormatter, history, lines, padding, values, FUEL_COLORS, FuelConfig (+11 more)
+Cohesion: 0.33
+Nodes (5): FUEL_COLORS, FUEL_KEYS, FuelConfig, FuelSlug, FuelStatKey
 
 ### Community 170 - "Community 170"
-Cohesion: 0.29
-Nodes (6): Carrefour vs les autres grandes surfaces, Comment trouver la station Carrefour la moins chère, La carte Pass Carrefour : un levier pour économiser sur le carburant, Les prix carburant Carrefour en France, Opérations carburant à prix coûtant ou remisé chez Carrefour, Prix moyens constatés en juin 2026
+Cohesion: 0.20
+Nodes (9): Brief : Entretien voiture électrique, le coût réel, Concurrence identifiée, Intégration affiliation (nouveau, spécifique à ce cluster), Liens internes obligatoires, Mots-clés, Métadonnées, Points de vigilance, Rappel règles CLAUDE.md (+1 more)
 
 ### Community 171 - "Community 171"
-Cohesion: 0.29
-Nodes (6): Comment trouver la station Intermarché la moins chère près de chez vous, Comparatif des prix moyens en juin 2026, Intermarché vs les autres grandes surfaces, La carte fidélité Intermarché et le carburant, Les opérations carburant à prix coûtant Intermarché, Pourquoi le carburant Intermarché est moins cher
+Cohesion: 0.20
+Nodes (9): Ce qu'il faut retenir, Ce que ça change sur le budget total, Ce qui disparaît avec l'électrique, Ce qui reste, et parfois coûte un peu plus, Comparatif chiffré du coût d'entretien annuel, Le coût caché : la batterie, Le frein régénératif change la donne, Trouver un entretien moins cher (+1 more)
 
 ### Community 172 - "Community 172"
-Cohesion: 0.29
-Nodes (6): Ce qui pourrait faire bouger les prix, L'effet saisonnier de l'été, La fiscalité fixe, premier amplificateur de prix, Le gazole : une hausse structurelle en plus, Quelques leviers pour alléger la facture, Un Brent ancré haut depuis mars 2026
+Cohesion: 0.20
+Nodes (9): Alterner entre SP95 et SP98 selon les prix, Cas de figure courants où le mélange survient, Ce qu'il faut retenir, Dépannage : votre véhicule requiert du SP98 mais seul le SP95 est disponible, Et le SP95-E10 dans l'équation ?, Faire le plein de SP98 sur un fond de SP95, Le cas des moteurs haute performance exigeant du SP98, Pourquoi le mélange SP95/SP98 est sans risque (+1 more)
 
 ### Community 173 - "Community 173"
-Cohesion: 0.29
-Nodes (6): Consignes pour Claude — projet mon-carburant.com, graphify, ❌ Jamais de pub AdSense (`<AdUnit />`) à l'intérieur d'un tableau, ❌ JAMAIS de tirets longs, ❌ Limites de caractères dans le frontmatter, Règles de rédaction (NON NÉGOCIABLES)
+Cohesion: 0.20
+Nodes (9): 1. Rabattez-vous dès les premiers signes, 2. Gilet jaune, sortie côté droit, 3. Tout le monde derrière la glissière, Ce qu'il faut retenir, Combien ça coûte : les tarifs 2026 du dépannage, Comment ne jamais en arriver là, Que faire, dans l'ordre, Qui appeler : la borne orange, pas votre garagiste (+1 more)
 
 ### Community 174 - "Community 174"
-Cohesion: 0.33
-Nodes (5): Ce qu'il faut retenir, La checklist avant de partir, Le nouveau réflexe : les rappels constructeur, Les papiers à ne pas oublier, Les points qui font le plus souvent échouer un contrôle
+Cohesion: 0.22
+Nodes (8): Brief : Faut-il une application pour trouver l'essence la moins chère ?, Changement de stratégie éditoriale (important), Liens internes obligatoires, Mots-clés, Métadonnées, Points clés à couvrir, Rappel règles CLAUDE.md, Structure (H2/H3), option 1
 
 ### Community 175 - "Community 175"
-Cohesion: 0.33
-Nodes (5): Ce que l'État peut, et ne peut pas, faire sur le prix à la pompe, L'accalmie de juin n'a pas tenu : où en sont les prix, L'ampleur du choc en 2026, Le déclencheur : le blocage du détroit d'Ormuz, Pourquoi un blocage si lointain fait monter votre plein
+Cohesion: 0.22
+Nodes (8): Brief : PILLAR, Voiture électrique ou thermique, quel budget carburant/énergie réel en 2026, Concurrence identifiée, Liens internes obligatoires (sortants, vers CHAQUE spoke), Mots-clés, Métadonnées, Points clés à couvrir (chiffres de session, à revérifier à date de rédaction), Rappel règles CLAUDE.md, Structure (H2/H3)
 
 ### Community 176 - "Community 176"
-Cohesion: 0.08
-Nodes (23): 10. Limites connues, 1. En une minute, 2. Pourquoi par vagues, 3. Le calendrier, 4. Ce qui se passe automatiquement, 5. Comment c'est construit, 6 bis. Garde-fous qualité, 6. Changer la cadence (+15 more)
+Cohesion: 0.22
+Nodes (8): Brief : Bonus écologique 2026, montants et conditions, Concurrence identifiée, Liens internes obligatoires, Mots-clés, Métadonnées, Points de vigilance, Rappel règles CLAUDE.md, Structure (H2/H3)
 
 ### Community 177 - "Community 177"
-Cohesion: 0.29
-Nodes (6): Ce qu'il faut retenir, Ce qu'on lit en ligne, et pourquoi il faut s'en méfier, Le vrai mécanisme : l'effet détergent sur un moteur encrassé, Pourquoi l'Excellium a disparu des pompes depuis avril 2026, Qu'est-ce que le gasoil Excellium, concrètement, Qui doit être prudent, et qui ne risque rien
+Cohesion: 0.22
+Nodes (8): Angle éditorial important, Brief : Prime à la conversion en 2026, ce qui reste vraiment disponible, Liens internes obligatoires, Mots-clés, Métadonnées, Points de vigilance, Rappel règles CLAUDE.md, Structure (H2/H3)
 
 ### Community 178 - "Community 178"
 Cohesion: 0.14
 Nodes (21): addDays(), buildStationPath(), DATA_DIR, DEPT_DIR, DETAIL_DIR, __dirname, DRY_RUN, loadJson() (+13 more)
 
 ### Community 191 - "Community 191"
-Cohesion: 0.18
-Nodes (7): articleLastmods, siteLastmod, weakUrls, ../../data/fuel/config, estElement(), etiqueterCellules(), rehypeResponsiveTables()
+Cohesion: 0.17
+Nodes (6): ../components/Footer.astro, ../components/Header.astro, ../components/SEO.astro, ../../layouts/BaseLayout.astro, webAppSchema, ../styles/global.css
 
 ### Community 192 - "Community 192"
-Cohesion: 0.09
-Nodes (21): 1. Le E85 rend toute la démarche inutile, 2. Le paiement, 3. Le carburant que vous cherchez n'existe pas là-bas, Allemagne : uniquement le gazole, et uniquement avant midi, Andorre : le plus gros gain, la plus grosse contrainte, Belgique : l'essence oui, le gazole non, Espagne : le meilleur choix pour les vacanciers du sud, Essence (E10 côté français, Super 95 côté étranger) (+13 more)
+Cohesion: 0.22
+Nodes (8): Brief : ZFE et Crit'Air 2026, quelles voitures essence et diesel sont concernées, Concurrence identifiée, Liens internes obligatoires, Mots-clés, Métadonnées, Points de vigilance, Rappel règles CLAUDE.md, Structure (H2/H3)
 
 ### Community 193 - "Community 193"
-Cohesion: 0.18
-Nodes (10): ../../../../utils/station-hours, ../../../../utils/station-intro, DayHours, decodeHoraires(), horairesToSchema(), isAlwaysOpen(), JOURS, SCHEMA_DAYS (+2 more)
+Cohesion: 0.32
+Nodes (7): buildCityIdentity(), CityDept, CityIdentityParams, DEPT_ARTICLE, deptInPhrase(), deptOfPhrase(), LocalFact
 
 ### Community 194 - "Community 194"
-Cohesion: 0.14
-Nodes (13): 10. Top 5 changements à plus fort impact, 11. Recommandations schema, 12. Reformulation de contenu, 1. GEO Readiness Score : 78/100, 2. Répartition par plateforme, 3. Accès des crawlers IA (robots.txt), 4. Statut llms.txt, 5. Analyse des signaux de marque (+5 more)
+Cohesion: 0.22
+Nodes (8): 1. Renforcer le pillar existant "reduire-facture-carburant", 2. Nouveau pillar : "Voiture électrique ou thermique : quel budget carburant/énergie réel en 2026", Cluster A, Coût à l'usage, Cluster B, Aides et fiscalité, Cluster C, Réglementation et transition, Cluster D, Assurance et entretien (axe monétisation affiliation), Plan de diversification, mon-carburant.com, Statut d'exécution
 
 ### Community 195 - "Community 195"
-Cohesion: 0.05
-Nodes (34): ../styles/global.css, ../../components/AdUnit.astro, ../components/ArticleCard.astro, dateFormatted, string, ../../components/ArticleLayout.astro, ./AuthorBox.astro, ../../components/Breadcrumb.astro (+26 more)
+Cohesion: 0.18
+Nodes (12): ../utils/prix-coutant, ../components/AdUnit.astro, ./AuthorBox.astro, ../components/BrandLogo.astro, ../components/Breadcrumb.astro, ../components/FAQ.astro, ./PriceHistoryChart.astro, ../components/ProchaineOperation.astro (+4 more)
 
 ### Community 196 - "Community 196"
-Cohesion: 0.17
-Nodes (11): 1. Pourquoi les pages ne s'indexent pas, 2. Vente de liens d'articles : es-tu sur la bonne voie ?, 3. Détails techniques relevés, Audit SEO mon-carburant.com (2026-07-02), Ce qui est HORS DE CAUSE (vérifié), Constat d'indexation (recherche site:), Les vraies causes, Points faibles et risques (+3 more)
+Cohesion: 0.22
+Nodes (8): Cannibalisation, Cluster D, Assurance et entretien (ajouté le 07/09/2026), Cluster Scorecard : voiture électrique ou essence budget carburant, Content Gaps, Détail "minimum 3 liens entrants", Prochaines étapes, Résumé, Vérification des quality gates (au niveau du plan, avant rédaction)
 
 ### Community 197 - "Community 197"
 Cohesion: 0.11
 Nodes (27): args, backtest(), backtestIndex, brandNames, BRANDS_FILE, commitBefore(), commitDate(), DEPT_DIR (+19 more)
 
 ### Community 198 - "Community 198"
-Cohesion: 0.18
-Nodes (10): Ce qu'il faut retenir, Ce que ça représente concrètement, Comment repérer la bonne station sans y perdre son temps, Hypermarché, station de marque, indépendant : trois modèles, trois prix, L'autoroute : le cas extrême, La concurrence locale, un facteur sous-estimé, La fiscalité ne bouge pas, la marge oui, Les hypermarchés vendent le carburant à perte ou presque (+2 more)
+Cohesion: 0.28
+Nodes (6): calculate(), fmt(), calculate(), fmt(), jsonLd, tools
 
 ### Community 199 - "Community 199"
-Cohesion: 0.18
-Nodes (10): Ce qu'il faut retenir, Ce que ce calcul ne dit pas, Ce que l'on compare, exactement, Le coût que personne ne compte : l'abonnement, Le kWh que vous payez n'est pas celui qui entre dans la batterie, Le seuil à retenir : 0,61 €/kWh, Le tableau qui répond à la question, Le trouble-fête : l'E85 à 0,865 €/L (+2 more)
+Cohesion: 0.22
+Nodes (7): ../../components/PriceHistoryChart.astro, dateFormatter, history, lines, padding, values, ../../data/fuel/price-history.json
+
+### Community 200 - "Community 200"
+Cohesion: 0.33
+Nodes (4): authors, blog, collections, piliers
 
 ### Community 201 - "Community 201"
-Cohesion: 0.20
-Nodes (9): 1. Rabattez-vous dès les premiers signes, 2. Gilet jaune, sortie côté droit, 3. Tout le monde derrière la glissière, Ce qu'il faut retenir, Combien ça coûte : les tarifs 2026 du dépannage, Comment ne jamais en arriver là, Que faire, dans l'ordre, Qui appeler : la borne orange, pas votre garagiste (+1 more)
+Cohesion: 0.22
+Nodes (8): Automatique ou manuel : qui gère le mieux ce bouton, Ce qu'il faut retenir, Combien ça économise vraiment (et pourquoi ce n'est pas 10 %), Le pictogramme : que représente vraiment cette flèche courbée, Le vrai lien avec la consommation de carburant, Les bons moments pour l'utiliser, Les moments à éviter, Quand l'activer, quand l'éviter
 
 ### Community 202 - "Community 202"
-Cohesion: 0.11
-Nodes (13): ../components/Header.astro, allDepts, brands, dropdownCols, highways, navLinks, ../../../../data/fuel/brands.json, brandFiles (+5 more)
+Cohesion: 0.14
+Nodes (9): allDepts, brands, dropdownCols, highways, isPrixCoutantActive, navLinks, ../data/departments.json, ../data/fuel/autoroutes.json (+1 more)
 
 ### Community 203 - "Community 203"
-Cohesion: 0.33
-Nodes (7): De(), k(), me(), Oe(), Se(), te(), ze()
+Cohesion: 0.22
+Nodes (8): 1. Faire le plein avant d'entrer sur l'autoroute, 2. Identifier les stations les moins chères sur votre itinéraire, 3. Partir aux bons créneaux pour éviter les bouchons, 4. Rouler à 110 km/h plutôt qu'à 130 km/h, 5. Utiliser le régulateur de vitesse, 6. Gérer intelligemment la climatisation, 7. Réduire la résistance aérodynamique du chargement, 8. Choisir le bon carburant
 
 ### Community 204 - "Community 204"
 Cohesion: 0.22
-Nodes (8): Automatique ou manuel : qui gère le mieux ce bouton, Ce qu'il faut retenir, Combien ça économise vraiment (et pourquoi ce n'est pas 10 %), Le pictogramme : que représente vraiment cette flèche courbée, Le vrai lien avec la consommation de carburant, Les bons moments pour l'utiliser, Les moments à éviter, Quand l'activer, quand l'éviter
+Nodes (8): Comment vérifier la compatibilité de votre voiture en 10 secondes, La règle générale, Les alternatives disponibles à la pompe, Les risques d'un usage régulier dans un véhicule incompatible, Qu'est-ce que le SP95-E10 exactement ?, Que faire si votre voiture n'est pas compatible SP95-E10 ?, Quelles voitures sont compatibles avec le SP95-E10 ?, Tableau de compatibilité par marque (millésimes clés)
 
 ### Community 205 - "Community 205"
 Cohesion: 0.16
 Nodes (13): aVille(), buildStationFaq(), buildStationIntro(), deVille(), fmt(), FUEL_LABEL, GMS, stationDisplayName() (+5 more)
 
 ### Community 206 - "Community 206"
-Cohesion: 0.25
-Nodes (7): 1. Convention de nommage, 2. Recherche à faire avant de rédiger, 3. Plan type, 4. Frontmatter, 5. Maillage interne à mettre à jour, 6. Vérifications obligatoires avant commit, Article mensuel : carburant à prix coûtant
+Cohesion: 0.22
+Nodes (8): Avril-mai 2026 : la réponse sociale et une accalmie relative, Ce qu'il faut retenir, Fin août 2026 : le conflit s'installe dans la durée, Juillet 2026 : la rechute, portée par le gazole, L'impact chiffré sur votre budget, Mars 2026 : le choc du détroit d'Ormuz, Mi-août 2026 : le gazole décroche, une pénurie régionale s'ajoute, Septembre 2026 : le plafond gazole cède, l'essence prend le relais
 
 ### Community 207 - "Community 207"
 Cohesion: 0.25
@@ -649,52 +668,52 @@ Cohesion: 0.25
 Nodes (7): Ce qu'il faut retenir, Ce que "prix coûtant" veut dire concrètement, Le calcul isolé : ce que rapporte l'opération elle-même, Le coût caché : détour et file d'attente, Le vrai réflexe : la station, pas la date, Pourquoi ça semble si peu cher : deux comparaisons, deux résultats, Quand se déplacer, quand ne pas se déplacer
 
 ### Community 209 - "Community 209"
-Cohesion: 0.25
-Nodes (7): Ce qu'il faut retenir, Ce qui fait varier l'autonomie réelle, Combien de kilomètres il reste, concrètement, Comment fonctionne le voyant de réserve, L'ordinateur de bord est plus fiable que le voyant seul, Les risques d'une vraie panne sèche, Que faire quand le voyant s'allume
+Cohesion: 0.22
+Nodes (8): Ce qu'il faut retenir à la rentrée, Ce que dit le communiqué de TotalEnergies, Gazole à 1,99 €/L dans 129 stations autoroute les 29 et 30 août (offre terminée), Le programme Avantage Carburant, une exception à part, Mise à jour du 16 septembre 2026 : l'écart continue de se creuser, l'essence accélère à son tour, Mise à jour du 31 août 2026 : le plafond maintenu, mais sous conditions, Pourquoi les prix remontent depuis la mi-juillet, Une communication qui tombe (bien) à point nommé
 
 ### Community 210 - "Community 210"
-Cohesion: 0.29
-Nodes (7): Content Negotiation / IP Redirects, Default Language, Framework Locale Modes, Search Console Geotargeting, Strategies Compared, Trailing Slash Consistency, URL Structure
+Cohesion: 0.22
+Nodes (8): Conseils pratiques pour économiser sur l'essence, Différence de prix SP95/SP98 en 2026 : combien ça coûte vraiment ?, Le cas du SP95-E10 : une troisième option souvent négligée, Les 5 idées reçues sur le SP95 et le SP98, Qu'est-ce que l'indice d'octane ?, Quelle essence pour votre voiture ?, SP95 et SP98 : comparatif complet, Voitures qui doivent utiliser le SP98
 
 ### Community 211 - "Community 211"
-Cohesion: 0.29
-Nodes (7): Google vs Bing, Hreflang, Hreflang at Scale (20+ locales), Language & Region Codes, Placement Methods, Reciprocal Requirement, x-default
+Cohesion: 0.25
+Nodes (8): Academic-Specific AI Tells, AI Writing Detection, Contents, Filler Words and Empty Intensifiers, How to Self-Check, Overused Adjectives, Overused Transitions and Connectors, Overused Verbs
 
 ### Community 212 - "Community 212"
-Cohesion: 0.29
-Nodes (7): Content Negotiation / IP Redirects, Default Language, Framework Locale Modes, Search Console Geotargeting, Strategies Compared, Trailing Slash Consistency, URL Structure
+Cohesion: 0.25
+Nodes (7): 1. Convention de nommage, 2. Recherche à faire avant de rédiger, 3. Plan type, 4. Frontmatter, 5. Maillage interne à mettre à jour, 6. Vérifications obligatoires avant commit, Article mensuel : carburant à prix coûtant
 
 ### Community 213 - "Community 213"
-Cohesion: 0.29
-Nodes (7): Google vs Bing, Hreflang, Hreflang at Scale (20+ locales), Language & Region Codes, Placement Methods, Reciprocal Requirement, x-default
+Cohesion: 0.25
+Nodes (8): Academic-Specific AI Tells, AI Writing Detection, Contents, Filler Words and Empty Intensifiers, How to Self-Check, Overused Adjectives, Overused Transitions and Connectors, Overused Verbs
 
 ### Community 214 - "Community 214"
 Cohesion: 0.29
 Nodes (6): Combien on économise vraiment : la nuance qui compte, Comment ne pas rater la prochaine opération, La prochaine fenêtre à surveiller, Leclerc, Intermarché, Carrefour, Système U : la rentrée s'est passée d'opération, Où en sont les prix à la pompe, TotalEnergies : un plafond désormais sans date de fin, mais conditionné
 
 ### Community 215 - "Community 215"
-Cohesion: 0.29
-Nodes (6): Ce qu'il faut retenir avant de signer, Et si la vraie réponse était ailleurs ?, La revente, un pari plus risqué côté diesel, Le prix à l'achat, un écart qui se resserre, Le vrai critère : votre kilométrage annuel, Les zones à faibles émissions changent la donne
+Cohesion: 0.25
+Nodes (7): Brief : Quel jour faire le plein pour payer moins cher ?, Liens internes obligatoires, Mots-clés, Métadonnées, Points clés à couvrir, Rappel règles CLAUDE.md, Structure (H2/H3)
 
 ### Community 216 - "Community 216"
-Cohesion: 0.29
-Nodes (6): Ce que l'État a fait : remplacer le fleuve par la route, Ce que vous pouvez faire, concrètement, Combien de temps ça va durer, Et les prix, dans tout ça ?, Le carburant alsacien arrive par le Rhin, et le Rhin est à sec, Où ça coince exactement
+Cohesion: 0.25
+Nodes (7): Action requise, Brief : Coût au 100 km, électrique vs essence vs diesel en 2026, Liens internes à ajouter, Mise à jour du contenu, Mots-clés, Métadonnées (à revoir sur l'article existant), Rappel règles CLAUDE.md
 
 ### Community 217 - "Community 217"
 Cohesion: 0.29
 Nodes (6): Auchan : discret, mais dans la course, Cora : une marque en voie de disparition, Géant Casino : un réseau qui a beaucoup changé, Le bon réflexe : suivre le prix plutôt qu'un calendrier, Où se situent ces enseignes en prix moyen, Système U : le quatrième nom du trio de tête
 
 ### Community 218 - "Community 218"
-Cohesion: 0.29
-Nodes (6): Ce qu'on ne sait pas encore, Ce que Maud Bregeon a annoncé, En attendant, comment limiter la facture, Et le chèque énergie ?, Pourquoi cette annonce maintenant, Quelles aides sont concernées
+Cohesion: 0.25
+Nodes (7): Brief : Recharge à domicile vs plein d'essence, combien ça coûte vraiment, Liens internes obligatoires, Mots-clés, Métadonnées, Points clés à couvrir, Rappel règles CLAUDE.md, Structure (H2/H3)
 
 ### Community 219 - "Community 219"
-Cohesion: 0.29
-Nodes (6): Les symptômes qui doivent alerter, Nettoyer ou remplacer : comment choisir, Pour aller plus loin, Pourquoi elle s'encrasse, Un entretien qui se prévient, À quoi sert la vanne EGR
+Cohesion: 0.25
+Nodes (7): Brief : Autonomie voiture électrique en hiver, ce qui change pour le budget, Liens internes obligatoires, Mots-clés, Métadonnées, Points clés à différencier du spoke voisin, Rappel règles CLAUDE.md, Structure (H2/H3)
 
 ### Community 220 - "Community 220"
-Cohesion: 0.33
-Nodes (5): Critique (tout de suite), Haute priorité (sous 2 semaines), Moyenne priorité (sous 1 mois), Plan d'action SEO mon-carburant.com (2026-07-02), Vente de liens : feuille de route réaliste
+Cohesion: 0.25
+Nodes (7): Brief : Faut-il passer à l'électrique avant l'interdiction du thermique ?, Liens internes obligatoires, Mots-clés, Métadonnées, Points clés à couvrir, Rappel règles CLAUDE.md, Structure (H2/H3)
 
 ### Community 221 - "Community 221"
 Cohesion: 0.40
@@ -705,212 +724,236 @@ Cohesion: 0.29
 Nodes (7): buildCityIntro(), cheapestFor(), CityIntroParams, CityStation, cityVariant(), countWith(), diffPct()
 
 ### Community 223 - "Community 223"
-Cohesion: 0.29
-Nodes (6): Ce que ça change concrètement, Faut-il attendre une baisse ?, La parenthèse sous 2 € s'est refermée le 14 août, Mise à jour du 10 septembre 2026 : la hausse a continué, Pourquoi le gazole et pas l'essence, Six semaines de relevés, un renversement complet
+Cohesion: 0.25
+Nodes (7): Ce qu'il faut retenir, Ce que ça change sur le budget total, Comment réduire sa prime, Comparatif chiffré : ce que ça coûte vraiment, Les facteurs qui font vraiment varier le prix, Pourquoi l'assurance électrique n'a pas le même tarif, Un poste de budget souvent oublié dans les comparatifs
 
 ### Community 224 - "Community 224"
-Cohesion: 0.33
-Nodes (5): Ce que la pompe fait réellement avec votre carte, Le vrai risque : un découvert temporaire, Pour aller plus loin, Pourquoi 120 à 150 € et pas un autre montant ?, Que se passe-t-il une fois le plein terminé ?
-
-### Community 225 - "Community 225"
-Cohesion: 0.33
-Nodes (5): Comment ne pas les rater, Les opérations prix coûtant déjà passées en 2026, Les périodes habituelles, Un principe commun, des conditions différentes, Y a-t-il une opération prix coûtant ce week-end ?
-
-### Community 226 - "Community 226"
-Cohesion: 0.22
-Nodes (8): Ce qu'il faut retenir à la rentrée, Ce que dit le communiqué de TotalEnergies, Gazole à 1,99 €/L dans 129 stations autoroute les 29 et 30 août (offre terminée), Le programme Avantage Carburant, une exception à part, Mise à jour du 16 septembre 2026 : l'écart continue de se creuser, l'essence accélère à son tour, Mise à jour du 31 août 2026 : le plafond maintenu, mais sous conditions, Pourquoi les prix remontent depuis la mi-juillet, Une communication qui tombe (bien) à point nommé
-
-### Community 227 - "Community 227"
 Cohesion: 0.25
 Nodes (7): Ce que dit la loi, en trois lignes, Ce que ça coûte vraiment, carburant compris, Depuis 2024, le M+S ne suffit plus, L'amende de 135 euros existe, mais n'est pas appliquée, L'erreur la plus fréquente : ce n'est pas le département, c'est la commune, Les 34 départements, et le prix du gazole dans chacun, À faire avant le 1er novembre
 
+### Community 225 - "Community 225"
+Cohesion: 0.25
+Nodes (7): Ce qu'il faut retenir, Ce que les chiffres disent vraiment, Comment fonctionne le Stop & Start, Faut-il désactiver son Stop & Start ?, Les coûts que les constructeurs ne mettent pas en avant, Quand le Stop & Start est vraiment efficace, Quand le Stop & Start ne sert presque à rien
+
+### Community 226 - "Community 226"
+Cohesion: 0.25
+Nodes (7): Ce qu'il faut retenir, Ce qui fait varier l'autonomie réelle, Combien de kilomètres il reste, concrètement, Comment fonctionne le voyant de réserve, L'ordinateur de bord est plus fiable que le voyant seul, Les risques d'une vraie panne sèche, Que faire quand le voyant s'allume
+
+### Community 227 - "Community 227"
+Cohesion: 0.25
+Nodes (7): ../../../../data/fuel/brands.json, brandFiles, brands, breadcrumb, jsonLdBreadcrumb, number, totalStations
+
 ### Community 228 - "Community 228"
-Cohesion: 0.40
-Nodes (5): Concluding Phrases to Avoid, Opening Phrases to Avoid, Phrases That Signal AI Writing, Structural Patterns to Avoid, Transitional Phrases to Avoid
+Cohesion: 0.29
+Nodes (7): Auto-Translated Content (2025 Stance), Content Quality Across Locales, Crawl Budget, Helpful Content System Impact, Locale-Specific Signals, Partial Translation, Thin Locale Pages
 
 ### Community 229 - "Community 229"
-Cohesion: 0.40
-Nodes (5): Canonical Overrides Hreflang, Canonicalization & i18n, Near-Duplicate Regional Variants, Pagination Across Locales, Self-Referencing Canonicals
+Cohesion: 0.29
+Nodes (7): Content Negotiation / IP Redirects, Default Language, Framework Locale Modes, Search Console Geotargeting, Strategies Compared, Trailing Slash Consistency, URL Structure
 
 ### Community 230 - "Community 230"
-Cohesion: 0.40
-Nodes (5): International Sitemaps, Next.js Caveat, Size Limits, Structure, Submission
+Cohesion: 0.29
+Nodes (7): Google vs Bing, Hreflang, Hreflang at Scale (20+ locales), Language & Region Codes, Placement Methods, Reciprocal Requirement, x-default
 
 ### Community 231 - "Community 231"
-Cohesion: 0.40
-Nodes (5): Concluding Phrases to Avoid, Opening Phrases to Avoid, Phrases That Signal AI Writing, Structural Patterns to Avoid, Transitional Phrases to Avoid
+Cohesion: 0.29
+Nodes (6): Consignes pour Claude — projet mon-carburant.com, graphify, ❌ Jamais de pub AdSense (`<AdUnit />`) à l'intérieur d'un tableau, ❌ JAMAIS de tirets longs, ❌ Limites de caractères dans le frontmatter, Règles de rédaction (NON NÉGOCIABLES)
 
 ### Community 232 - "Community 232"
-Cohesion: 0.40
-Nodes (5): Canonical Overrides Hreflang, Canonicalization & i18n, Near-Duplicate Regional Variants, Pagination Across Locales, Self-Referencing Canonicals
+Cohesion: 0.29
+Nodes (7): Auto-Translated Content (2025 Stance), Content Quality Across Locales, Crawl Budget, Helpful Content System Impact, Locale-Specific Signals, Partial Translation, Thin Locale Pages
 
 ### Community 233 - "Community 233"
-Cohesion: 0.40
-Nodes (5): International Sitemaps, Next.js Caveat, Size Limits, Structure, Submission
+Cohesion: 0.29
+Nodes (7): Content Negotiation / IP Redirects, Default Language, Framework Locale Modes, Search Console Geotargeting, Strategies Compared, Trailing Slash Consistency, URL Structure
 
 ### Community 234 - "Community 234"
-Cohesion: 0.40
-Nodes (4): Ce que ça change, concrètement, Ce qui s'est passé le week-end du 8 juillet, Le lien avec les tensions internationales, Pourquoi le gazole encaisse plus fort
+Cohesion: 0.29
+Nodes (7): Google vs Bing, Hreflang, Hreflang at Scale (20+ locales), Language & Region Codes, Placement Methods, Reciprocal Requirement, x-default
 
 ### Community 235 - "Community 235"
-Cohesion: 0.40
-Nodes (4): Ce qui change concrètement, Comment faire la demande si ce n'est pas encore fait, Pourquoi cette rallonge, et pourquoi maintenant, Un délai de plus, pas une solution miracle
+Cohesion: 0.38
+Nodes (4): is_rate_limited(), respond(), throttle_key(), wants_json()
 
 ### Community 236 - "Community 236"
-Cohesion: 0.40
-Nodes (4): Ce qu'il faut retenir, La checklist avant de charger les valises, Pourquoi une voiture chargée consomme différemment, Sur la route : les réflexes qui limitent la consommation
+Cohesion: 0.29
+Nodes (6): Carrefour vs les autres grandes surfaces, Comment trouver la station Carrefour la moins chère, La carte Pass Carrefour : un levier pour économiser sur le carburant, Les prix carburant Carrefour en France, Opérations carburant à prix coûtant ou remisé chez Carrefour, Prix moyens constatés en juin 2026
+
+### Community 237 - "Community 237"
+Cohesion: 0.29
+Nodes (6): Ce qu'il faut retenir avant de signer, Et si la vraie réponse était ailleurs ?, La revente, un pari plus risqué côté diesel, Le prix à l'achat, un écart qui se resserre, Le vrai critère : votre kilométrage annuel, Les zones à faibles émissions changent la donne
 
 ### Community 238 - "Community 238"
-Cohesion: 0.50
-Nodes (4): Em Dashes: The Primary AI Tell, Guidelines, What To Do Instead, Why Em Dashes Signal AI Writing
+Cohesion: 0.29
+Nodes (6): Ce qu'il faut retenir, Ce qu'on lit en ligne, et pourquoi il faut s'en méfier, Le vrai mécanisme : l'effet détergent sur un moteur encrassé, Pourquoi l'Excellium a disparu des pompes depuis avril 2026, Qu'est-ce que le gasoil Excellium, concrètement, Qui doit être prudent, et qui ne risque rien
+
+### Community 239 - "Community 239"
+Cohesion: 0.29
+Nodes (6): Ce que ça change concrètement, Faut-il attendre une baisse ?, La parenthèse sous 2 € s'est refermée le 14 août, Mise à jour du 10 septembre 2026 : la hausse a continué, Pourquoi le gazole et pas l'essence, Six semaines de relevés, un renversement complet
 
 ### Community 240 - "Community 240"
-Cohesion: 0.50
-Nodes (4): Em Dashes: The Primary AI Tell, Guidelines, What To Do Instead, Why Em Dashes Signal AI Writing
+Cohesion: 0.29
+Nodes (6): Comment trouver la station Intermarché la moins chère près de chez vous, Comparatif des prix moyens en juin 2026, Intermarché vs les autres grandes surfaces, La carte fidélité Intermarché et le carburant, Les opérations carburant à prix coûtant Intermarché, Pourquoi le carburant Intermarché est moins cher
 
 ### Community 241 - "Community 241"
 Cohesion: 0.50
 Nodes (3): Comment choisir concrètement, Le vrai écart n'est plus entre supermarchés, Un écart tombé à 2 millimes sur le Gazole
 
 ### Community 242 - "Community 242"
-Cohesion: 0.50
-Nodes (3): Combien ça coûte réellement, Comment éviter l'erreur la prochaine fois, Pourquoi il ne faut surtout pas démarrer
+Cohesion: 0.29
+Nodes (6): Autoroute vs ville : un levier bien plus fort que le jour de la semaine, Ce qu'il faut retenir, L'écart réel en centimes par litre, La checklist pour vraiment payer moins cher, Le mythe du "bon jour" : ce qui est vrai et ce qui est exagéré, Pourquoi les prix remontent avant le week-end
 
 ### Community 243 - "Community 243"
-Cohesion: 0.33
-Nodes (5): Ce qu'il faut retenir pour limiter la casse, Le mauvais réflexe : faire chauffer le moteur à l'arrêt, Le vrai coupable : le moteur froid, pas le chauffage, Les autres facteurs qui s'additionnent, Raclette contre dégivrage automatique
-
-### Community 246 - "Community 246"
-Cohesion: 0.15
-Nodes (9): ../../../utils/brand-logo, ../../../utils/format-maj, ../../../../components/BrandCell.astro, ../../../components/BrandLogo.astro, src, ../../../components/StationLink.astro, url, ../../../data/fuel/stats-autoroute.json (+1 more)
+Cohesion: 0.29
+Nodes (6): Ce que l'État a fait : remplacer le fleuve par la route, Ce que vous pouvez faire, concrètement, Combien de temps ça va durer, Et les prix, dans tout ça ?, Le carburant alsacien arrive par le Rhin, et le Rhin est à sec, Où ça coince exactement
 
 ### Community 247 - "Community 247"
-Cohesion: 0.12
-Nodes (15): Assurance : l'angle mort souvent oublié, Carburant vs électricité au 100 km, Ce qu'il faut retenir, Ce qui change en hiver, Entretien et fiabilité comparés, Faut-il anticiper le passage à l'électrique, La prime à la conversion, un dispositif qui a disparu, La question que tout le monde se pose avant d'acheter (+7 more)
+Cohesion: 0.29
+Nodes (6): Ce qui pourrait faire bouger les prix, L'effet saisonnier de l'été, La fiscalité fixe, premier amplificateur de prix, Le gazole : une hausse structurelle en plus, Quelques leviers pour alléger la facture, Un Brent ancré haut depuis mars 2026
 
 ### Community 248 - "Community 248"
 Cohesion: 0.25
 Nodes (8): cityDir, deps, __dirname, download(), files, OUT, ROOT, sleep()
 
-### Community 249 - "Community 249"
-Cohesion: 0.12
-Nodes (10): ../utils/prix-coutant, ../components/AlertePrixCoutant.astro, ../components/FuelSearch.astro, ../../../data/fuel/autoroutes.json, plan, rolloutMeta, stationUrl(), WaveEntry (+2 more)
-
 ### Community 250 - "Community 250"
-Cohesion: 0.20
-Nodes (9): Brief : Assurance auto électrique vs thermique, quelle différence de prix, Concurrence identifiée, Intégration affiliation (nouveau, spécifique à ce cluster), Liens internes obligatoires, Mots-clés, Métadonnées, Points de vigilance, Rappel règles CLAUDE.md (+1 more)
+Cohesion: 0.29
+Nodes (6): Ce qu'on ne sait pas encore, Ce que Maud Bregeon a annoncé, En attendant, comment limiter la facture, Et le chèque énergie ?, Pourquoi cette annonce maintenant, Quelles aides sont concernées
 
 ### Community 251 - "Community 251"
-Cohesion: 0.11
-Nodes (17): ../../../utils/city-identity, ../../../utils/city-intro, deptContent, LocalContent, LocalFact, regionContent, breadcrumb, hasCityBlason (+9 more)
+Cohesion: 0.40
+Nodes (4): deptContent, LocalContent, LocalFact, regionContent
 
 ### Community 252 - "Community 252"
-Cohesion: 0.60
-Nodes (4): initMap(), loadCss(), loadScript(), mapEl
+Cohesion: 0.20
+Nodes (8): ../components/FullStationsMap.astro, ../../../components/StationLink.astro, url, ../../../data/fuel/autoroutes.json, ../data/station-brands.json, ../../../utils/brand-logo, ../../../utils/escape-html, ../../../utils/station-waves
 
 ### Community 253 - "Community 253"
-Cohesion: 0.40
-Nodes (4): Ce qu'a dit Patrick Pouyanné sur France Inter, Ce qu'il faut retenir, Des prix à la pompe toujours sous tension, La menace liée à la taxe sur les superprofits
+Cohesion: 0.29
+Nodes (6): Les symptômes qui doivent alerter, Nettoyer ou remplacer : comment choisir, Pour aller plus loin, Pourquoi elle s'encrasse, Un entretien qui se prévient, À quoi sert la vanne EGR
 
 ### Community 254 - "Community 254"
-Cohesion: 0.40
-Nodes (4): Ce qu'il faut retenir, L'essence prend le relais du gazole, Le gazole franchit le seuil du plafond TotalEnergies, Pourquoi la mécanique saisonnière ne joue plus
+Cohesion: 0.29
+Nodes (3): DayHours, JOURS, SCHEMA_DAYS
 
 ### Community 255 - "Community 255"
-Cohesion: 0.20
-Nodes (9): Brief : Entretien voiture électrique, le coût réel, Concurrence identifiée, Intégration affiliation (nouveau, spécifique à ce cluster), Liens internes obligatoires, Mots-clés, Métadonnées, Points de vigilance, Rappel règles CLAUDE.md (+1 more)
+Cohesion: 0.33
+Nodes (5): Critique (tout de suite), Haute priorité (sous 2 semaines), Moyenne priorité (sous 1 mois), Plan d'action SEO mon-carburant.com (2026-07-02), Vente de liens : feuille de route réaliste
 
 ### Community 256 - "Community 256"
-Cohesion: 0.20
-Nodes (9): Ce qu'il faut retenir, Ce que ça change sur le budget total, Ce qui disparaît avec l'électrique, Ce qui reste, et parfois coûte un peu plus, Comparatif chiffré du coût d'entretien annuel, Le coût caché : la batterie, Le frein régénératif change la donne, Trouver un entretien moins cher (+1 more)
+Cohesion: 0.33
+Nodes (5): Ce qu'il faut retenir pour limiter la casse, Le mauvais réflexe : faire chauffer le moteur à l'arrêt, Le vrai coupable : le moteur froid, pas le chauffage, Les autres facteurs qui s'additionnent, Raclette contre dégivrage automatique
 
 ### Community 257 - "Community 257"
-Cohesion: 0.50
-Nodes (4): bi(), Pi(), Ti(), u()
+Cohesion: 0.33
+Nodes (5): Ce qu'il faut retenir, La checklist avant de partir, Le nouveau réflexe : les rappels constructeur, Les papiers à ne pas oublier, Les points qui font le plus souvent échouer un contrôle
 
 ### Community 258 - "Community 258"
-Cohesion: 0.22
-Nodes (8): Brief : Faut-il une application pour trouver l'essence la moins chère ?, Changement de stratégie éditoriale (important), Liens internes obligatoires, Mots-clés, Métadonnées, Points clés à couvrir, Rappel règles CLAUDE.md, Structure (H2/H3), option 1
-
-### Community 259 - "Community 259"
-Cohesion: 0.22
-Nodes (8): Brief : PILLAR, Voiture électrique ou thermique, quel budget carburant/énergie réel en 2026, Concurrence identifiée, Liens internes obligatoires (sortants, vers CHAQUE spoke), Mots-clés, Métadonnées, Points clés à couvrir (chiffres de session, à revérifier à date de rédaction), Rappel règles CLAUDE.md, Structure (H2/H3)
-
-### Community 260 - "Community 260"
-Cohesion: 0.22
-Nodes (8): Brief : Bonus écologique 2026, montants et conditions, Concurrence identifiée, Liens internes obligatoires, Mots-clés, Métadonnées, Points de vigilance, Rappel règles CLAUDE.md, Structure (H2/H3)
-
-### Community 261 - "Community 261"
-Cohesion: 0.22
-Nodes (8): Angle éditorial important, Brief : Prime à la conversion en 2026, ce qui reste vraiment disponible, Liens internes obligatoires, Mots-clés, Métadonnées, Points de vigilance, Rappel règles CLAUDE.md, Structure (H2/H3)
-
-### Community 262 - "Community 262"
-Cohesion: 0.22
-Nodes (8): Brief : ZFE et Crit'Air 2026, quelles voitures essence et diesel sont concernées, Concurrence identifiée, Liens internes obligatoires, Mots-clés, Métadonnées, Points de vigilance, Rappel règles CLAUDE.md, Structure (H2/H3)
-
-### Community 263 - "Community 263"
-Cohesion: 0.22
-Nodes (8): 1. Renforcer le pillar existant "reduire-facture-carburant", 2. Nouveau pillar : "Voiture électrique ou thermique : quel budget carburant/énergie réel en 2026", Cluster A, Coût à l'usage, Cluster B, Aides et fiscalité, Cluster C, Réglementation et transition, Cluster D, Assurance et entretien (axe monétisation affiliation), Plan de diversification, mon-carburant.com, Statut d'exécution
-
-### Community 264 - "Community 264"
-Cohesion: 0.22
-Nodes (8): Cannibalisation, Cluster D, Assurance et entretien (ajouté le 07/09/2026), Cluster Scorecard : voiture électrique ou essence budget carburant, Content Gaps, Détail "minimum 3 liens entrants", Prochaines étapes, Résumé, Vérification des quality gates (au niveau du plan, avant rédaction)
-
-### Community 265 - "Community 265"
-Cohesion: 0.25
-Nodes (7): Brief : Quel jour faire le plein pour payer moins cher ?, Liens internes obligatoires, Mots-clés, Métadonnées, Points clés à couvrir, Rappel règles CLAUDE.md, Structure (H2/H3)
-
-### Community 266 - "Community 266"
-Cohesion: 0.25
-Nodes (7): Action requise, Brief : Coût au 100 km, électrique vs essence vs diesel en 2026, Liens internes à ajouter, Mise à jour du contenu, Mots-clés, Métadonnées (à revoir sur l'article existant), Rappel règles CLAUDE.md
-
-### Community 267 - "Community 267"
-Cohesion: 0.25
-Nodes (7): Brief : Recharge à domicile vs plein d'essence, combien ça coûte vraiment, Liens internes obligatoires, Mots-clés, Métadonnées, Points clés à couvrir, Rappel règles CLAUDE.md, Structure (H2/H3)
-
-### Community 268 - "Community 268"
-Cohesion: 0.25
-Nodes (7): Brief : Autonomie voiture électrique en hiver, ce qui change pour le budget, Liens internes obligatoires, Mots-clés, Métadonnées, Points clés à différencier du spoke voisin, Rappel règles CLAUDE.md, Structure (H2/H3)
-
-### Community 269 - "Community 269"
-Cohesion: 0.25
-Nodes (7): Brief : Faut-il passer à l'électrique avant l'interdiction du thermique ?, Liens internes obligatoires, Mots-clés, Métadonnées, Points clés à couvrir, Rappel règles CLAUDE.md, Structure (H2/H3)
-
-### Community 270 - "Community 270"
-Cohesion: 0.25
-Nodes (7): Ce qu'il faut retenir, Ce que ça change sur le budget total, Comment réduire sa prime, Comparatif chiffré : ce que ça coûte vraiment, Les facteurs qui font vraiment varier le prix, Pourquoi l'assurance électrique n'a pas le même tarif, Un poste de budget souvent oublié dans les comparatifs
-
-### Community 271 - "Community 271"
-Cohesion: 0.29
-Nodes (6): Autoroute vs ville : un levier bien plus fort que le jour de la semaine, Ce qu'il faut retenir, L'écart réel en centimes par litre, La checklist pour vraiment payer moins cher, Le mythe du "bon jour" : ce qui est vrai et ce qui est exagéré, Pourquoi les prix remontent avant le week-end
-
-### Community 272 - "Community 272"
 Cohesion: 0.33
 Nodes (5): Ce qu'a dit Michel-Édouard Leclerc sur LCI, Ce qu'il faut retenir, Où en sont les prix aujourd'hui, Pourquoi une telle incertitude, Un garde-fou fiscal, mais pas de garantie
 
+### Community 259 - "Community 259"
+Cohesion: 0.33
+Nodes (5): Ce que la pompe fait réellement avec votre carte, Le vrai risque : un découvert temporaire, Pour aller plus loin, Pourquoi 120 à 150 € et pas un autre montant ?, Que se passe-t-il une fois le plein terminé ?
+
+### Community 260 - "Community 260"
+Cohesion: 0.33
+Nodes (5): Ce que l'État peut, et ne peut pas, faire sur le prix à la pompe, L'accalmie de juin n'a pas tenu : où en sont les prix, L'ampleur du choc en 2026, Le déclencheur : le blocage du détroit d'Ormuz, Pourquoi un blocage si lointain fait monter votre plein
+
+### Community 261 - "Community 261"
+Cohesion: 0.40
+Nodes (4): errorMsg, showError(), successMsg, validateForm()
+
+### Community 262 - "Community 262"
+Cohesion: 0.33
+Nodes (5): compilerOptions, baseUrl, paths, extends, @/*
+
+### Community 263 - "Community 263"
+Cohesion: 0.40
+Nodes (5): Concluding Phrases to Avoid, Opening Phrases to Avoid, Phrases That Signal AI Writing, Structural Patterns to Avoid, Transitional Phrases to Avoid
+
+### Community 264 - "Community 264"
+Cohesion: 0.40
+Nodes (5): Canonical Overrides Hreflang, Canonicalization & i18n, Near-Duplicate Regional Variants, Pagination Across Locales, Self-Referencing Canonicals
+
+### Community 265 - "Community 265"
+Cohesion: 0.40
+Nodes (5): International Sitemaps, Next.js Caveat, Size Limits, Structure, Submission
+
+### Community 266 - "Community 266"
+Cohesion: 0.40
+Nodes (5): Concluding Phrases to Avoid, Opening Phrases to Avoid, Phrases That Signal AI Writing, Structural Patterns to Avoid, Transitional Phrases to Avoid
+
+### Community 267 - "Community 267"
+Cohesion: 0.40
+Nodes (5): Canonical Overrides Hreflang, Canonicalization & i18n, Near-Duplicate Regional Variants, Pagination Across Locales, Self-Referencing Canonicals
+
+### Community 268 - "Community 268"
+Cohesion: 0.40
+Nodes (5): International Sitemaps, Next.js Caveat, Size Limits, Structure, Submission
+
+### Community 269 - "Community 269"
+Cohesion: 0.60
+Nodes (4): initMap(), loadCss(), loadScript(), mapEl
+
+### Community 270 - "Community 270"
+Cohesion: 0.40
+Nodes (4): Ce qu'il faut retenir en pratique, Faut-il s'inquiéter pour son moteur ou pour sa santé, Le manganèse, un vieux compagnon de l'essence sans plomb, Un arrêté publié au Journal officiel le 26 août
+
+### Community 271 - "Community 271"
+Cohesion: 0.40
+Nodes (4): Ce que ça change, concrètement, Ce qui s'est passé le week-end du 8 juillet, Le lien avec les tensions internationales, Pourquoi le gazole encaisse plus fort
+
+### Community 272 - "Community 272"
+Cohesion: 0.40
+Nodes (4): Ce qu'il faut retenir, L'essence prend le relais du gazole, Le gazole franchit le seuil du plafond TotalEnergies, Pourquoi la mécanique saisonnière ne joue plus
+
 ### Community 273 - "Community 273"
-Cohesion: 0.83
-Nodes (4): ../../../../components/StationMiniMap.astro, initMap(), loadCss(), loadScript()
+Cohesion: 0.40
+Nodes (4): Ce qui change concrètement, Comment faire la demande si ce n'est pas encore fait, Pourquoi cette rallonge, et pourquoi maintenant, Un délai de plus, pas une solution miracle
+
+### Community 274 - "Community 274"
+Cohesion: 0.18
+Nodes (6): ../../components/ArticleLayout.astro, authorEntry, related, ../../components/PillarLayout.astro, authorEntry, satellites
+
+### Community 276 - "Community 276"
+Cohesion: 0.40
+Nodes (4): Ce qu'il faut retenir, La checklist avant de charger les valises, Pourquoi une voiture chargée consomme différemment, Sur la route : les réflexes qui limitent la consommation
+
+### Community 277 - "Community 277"
+Cohesion: 0.40
+Nodes (4): Ce qu'a dit Patrick Pouyanné sur France Inter, Ce qu'il faut retenir, Des prix à la pompe toujours sous tension, La menace liée à la taxe sur les superprofits
+
+### Community 279 - "Community 279"
+Cohesion: 0.50
+Nodes (4): Em Dashes: The Primary AI Tell, Guidelines, What To Do Instead, Why Em Dashes Signal AI Writing
+
+### Community 281 - "Community 281"
+Cohesion: 0.50
+Nodes (4): Em Dashes: The Primary AI Tell, Guidelines, What To Do Instead, Why Em Dashes Signal AI Writing
+
+### Community 283 - "Community 283"
+Cohesion: 0.50
+Nodes (3): Combien ça coûte réellement, Comment éviter l'erreur la prochaine fois, Pourquoi il ne faut surtout pas démarrer
 
 ## Knowledge Gaps
-- **1153 isolated node(s):** `siteLastmod`, `weakUrls`, `articleLastmods`, `name`, `type` (+1148 more)
+- **1181 isolated node(s):** `siteLastmod`, `weakUrls`, `articleLastmods`, `name`, `type` (+1176 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **127 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **130 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `../../layouts/BaseLayout.astro` connect `Community 195` to `Article Layout Components`, `Community 193`, `Fuel Search Interface`, `City Identity & Fuel Config`, `Community 169`, `Community 202`, `Cookie Consent UI`, `Community 246`, `Community 251`?**
-  _High betweenness centrality (0.015) - this node is a cross-community bridge._
+- **Why does `../../layouts/BaseLayout.astro` connect `Community 191` to `Community 162`, `City Identity & Fuel Config`, `Project Dependencies`, `Community 261`, `Community 227`, `Department & Local Content`, `Community 167`, `Community 163`, `Community 278`, `Community 151`, `Community 153`, `Community 155`, `Community 252`?**
+  _High betweenness centrality (0.013) - this node is a cross-community bridge._
 - **What connects `siteLastmod`, `weakUrls`, `articleLastmods` to the rest of the system?**
-  _1153 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _1181 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Leaflet Map Core` be split into smaller, more focused modules?**
-  _Cohesion score 0.06951871657754011 - nodes in this community are weakly interconnected._
-- **Should `Project Dependencies` be split into smaller, more focused modules?**
-  _Cohesion score 0.046511627906976744 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.06825396825396825 - nodes in this community are weakly interconnected._
 - **Should `Fuel Data Pipeline` be split into smaller, more focused modules?**
   _Cohesion score 0.08232118758434548 - nodes in this community are weakly interconnected._
+- **Should `Department & Local Content` be split into smaller, more focused modules?**
+  _Cohesion score 0.044444444444444446 - nodes in this community are weakly interconnected._
 - **Should `French City Emblems` be split into smaller, more focused modules?**
   _Cohesion score 0.14166666666666666 - nodes in this community are weakly interconnected._
-- **Should `Community 140` be split into smaller, more focused modules?**
+- **Should `Fuel Economy Calculators` be split into smaller, more focused modules?**
   _Cohesion score 0.047619047619047616 - nodes in this community are weakly interconnected._
