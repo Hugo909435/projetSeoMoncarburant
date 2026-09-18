@@ -36,37 +36,47 @@ const formatRange = (start: string, end: string) =>
 
 const updatedLabel = dateFormatter.format(updatedAt ?? publishedAt);
 
+const brandsEyebrow = ['E.Leclerc', 'Intermarché', 'Carrefour', 'Système U'];
+
 const enseignes = [
   {
     slug: 'leclerc',
     name: 'E.Leclerc',
     carte: 'non',
+    carteStatut: 'Sans carte',
     carteLabel: 'Aucune carte requise',
     montant: 'non',
+    montantStatut: 'Sans minimum',
     montantLabel: 'Aucun minimum d’achat',
   },
   {
     slug: 'intermarche',
     name: 'Intermarché',
     carte: 'partielle',
+    carteStatut: 'Carte partielle',
     carteLabel: 'Non pour le prix coûtant, Intermarché+ pour les remises complémentaires',
     montant: 'partielle',
+    montantStatut: 'Minimum partiel',
     montantLabel: 'Parfois, selon l’opération',
   },
   {
     slug: 'carrefour',
     name: 'Carrefour',
     carte: 'oui',
+    carteStatut: 'Carte requise',
     carteLabel: 'Souvent liée à la carte Pass',
     montant: 'oui',
+    montantStatut: 'Minimum requis',
     montantLabel: 'Souvent, seuil d’achats en magasin',
   },
   {
     slug: 'super-u',
     name: 'Système U',
     carte: 'non',
+    carteStatut: 'Sans carte',
     carteLabel: 'Aucune carte requise',
     montant: 'non',
+    montantStatut: 'Sans minimum',
     montantLabel: 'Aucun minimum d’achat',
   },
 ];
@@ -133,7 +143,14 @@ const enseignesSchema = {
 
   <section class="pcc-hero">
     <div class="pcc-hero-inner container">
-      <p class="pcc-eyebrow">Leclerc · Intermarché · Carrefour · Système U</p>
+      <p class="pcc-eyebrow">
+        {brandsEyebrow.map((b, i) => (
+          <>
+            {i > 0 && <span class="pcc-eyebrow-sep" aria-hidden="true">·</span>}
+            <span>{b}</span>
+          </>
+        ))}
+      </p>
       <h1 class="pcc-title">Carburant à prix coûtant</h1>
       <p class="pcc-subtitle">
         Le statut du week-end en cours, le comparatif des quatre enseignes et le calendrier des opérations, à jour en continu.
@@ -146,7 +163,6 @@ const enseignesSchema = {
 
   <section class="pcc-section pcc-intro container">
     <div class="pcc-text-ad-row">
-      <AdUnit class="pcc-text-ad" fixedSize />
       <p class="pcc-text-ad-copy">
         Leclerc, Intermarché, Carrefour et Système U organisent chacun, plusieurs fois par an, des opérations
         d'essence et de carburant à prix coûtant : le litre est vendu sans marge, au prix d'achat par l'enseigne.
@@ -158,6 +174,7 @@ const enseignesSchema = {
         (carte de fidélité, montant d'achat minimum), et le calendrier complet des opérations 2026, déjà passées
         ou probables.
       </p>
+      <AdUnit class="pcc-text-ad" fixedSize />
     </div>
   </section>
 
@@ -166,22 +183,29 @@ const enseignesSchema = {
     <div class="pcc-brand-grid">
       {enseignes.map((e) => (
         <a href={`/prix-carburants/enseigne/${e.slug}/`} class="pcc-brand-card">
-          <span class="pcc-brand-logo"><BrandLogo slug={e.slug} name={e.name} /></span>
-          <span class="pcc-brand-name">{e.name}</span>
-          <span class="pcc-brand-row">
-            <span class:list={['pcc-pill', `pcc-pill-${e.carte}`]}>{e.carte === 'non' ? 'Sans carte' : e.carte === 'oui' ? 'Carte requise' : 'Carte partielle'}</span>
+          <span class="pcc-brand-head">
+            <span class="pcc-brand-logo"><BrandLogo slug={e.slug} name={e.name} /></span>
+            <span class="pcc-brand-name">{e.name}</span>
           </span>
-          <span class="pcc-brand-detail">{e.carteLabel}</span>
-          <span class="pcc-brand-row">
-            <span class:list={['pcc-pill', `pcc-pill-${e.montant}`]}>{e.montant === 'non' ? 'Sans minimum' : e.montant === 'oui' ? 'Minimum requis' : 'Minimum partiel'}</span>
+          <span class="pcc-brand-crit">
+            <span class="pcc-brand-crit-head">
+              <span class="pcc-brand-crit-label">Carte de fidélité</span>
+              <span class:list={['pcc-pill', `pcc-pill-${e.carte}`]}>{e.carteStatut}</span>
+            </span>
+            <span class="pcc-brand-detail">{e.carteLabel}</span>
           </span>
-          <span class="pcc-brand-detail">{e.montantLabel}</span>
+          <span class="pcc-brand-crit">
+            <span class="pcc-brand-crit-head">
+              <span class="pcc-brand-crit-label">Montant minimum</span>
+              <span class:list={['pcc-pill', `pcc-pill-${e.montant}`]}>{e.montantStatut}</span>
+            </span>
+            <span class="pcc-brand-detail">{e.montantLabel}</span>
+          </span>
           <span class="pcc-brand-cta">Voir les stations →</span>
         </a>
       ))}
     </div>
     <div class="pcc-text-ad-row">
-      <AdUnit class="pcc-text-ad" fixedSize />
       <p class="pcc-text-ad-copy">
         Le mécanisme est le même partout : l'enseigne renonce temporairement à sa marge habituelle sur le
         carburant (déjà faible, 1 à 3 centimes par litre en temps normal) pour attirer du monde en magasin.
@@ -192,13 +216,13 @@ const enseignesSchema = {
         sont plus fréquemment couplées à une carte Pass ou à un montant minimum de courses, ce qui les rend un
         peu moins automatiques mais potentiellement cumulables avec le programme de fidélité.
       </p>
+      <AdUnit class="pcc-text-ad" fixedSize />
     </div>
   </section>
 
   <section class="pcc-section container" aria-labelledby="pcc-calendrier-title">
     <h2 id="pcc-calendrier-title" class="pcc-section-title">Le calendrier 2026</h2>
     <div class="pcc-text-ad-row">
-      <AdUnit class="pcc-text-ad" fixedSize />
       <p class="pcc-text-ad-copy">
         Sans qu'aucune date ne soit jamais garantie à l'avance, ces opérations reviennent presque chaque année
         aux mêmes moments : avant les grands départs d'été (fin juin, début juillet), à la rentrée scolaire (fin
@@ -210,17 +234,21 @@ const enseignesSchema = {
         général communiquées que quelques jours à l'avance, par SMS, notification d'application ou affichage en
         station.
       </p>
+      <AdUnit class="pcc-text-ad" fixedSize />
     </div>
     <ol class="pcc-timeline">
       {timeline.map((t) => (
         <li class:list={['pcc-timeline-item', `pcc-timeline-${t.kind}`]}>
           <span class="pcc-timeline-dot" aria-hidden="true"></span>
-          <div class="pcc-timeline-body">
-            <span class="pcc-timeline-badge">{t.kind === 'passee' ? 'Passée' : 'À venir (probable)'}</span>
-            <p class="pcc-timeline-heading">
-              {t.brandName ?? t.label} <span class="pcc-timeline-dates">{formatRange(t.start, t.end)}</span>
-              {t.stations ? <span class="pcc-timeline-stations"> · {t.stations} stations</span> : null}
-            </p>
+          <div class="pcc-timeline-card">
+            <div class="pcc-timeline-main">
+              <span class="pcc-timeline-badge">{t.kind === 'passee' ? 'Passée' : 'À venir (probable)'}</span>
+              <p class="pcc-timeline-heading">{t.brandName ?? t.label}</p>
+              <p class="pcc-timeline-dates">
+                {formatRange(t.start, t.end)}
+                {t.stations ? <span class="pcc-timeline-stations">{t.stations} stations</span> : null}
+              </p>
+            </div>
             <p class="pcc-timeline-note">{t.note}</p>
           </div>
         </li>
@@ -241,11 +269,13 @@ const enseignesSchema = {
     </div>
   </section>
 
-  <section class="pcc-section container">
-    {faq && faq.length > 0 && <FAQ items={faq} />}
-  </section>
+  {faq && faq.length > 0 && (
+    <section class="pcc-section pcc-faq container">
+      <FAQ items={faq} />
+    </section>
+  )}
 
-  <section class="pcc-cta-wrap container">
+  <section class="pcc-section pcc-cta-wrap container">
     <div class="pcc-cta">
       <h2>{entry.data.ctaTitle ?? 'Trouvez la station la moins chère près de chez vous'}</h2>
       {entry.data.ctaDescription && <p>{entry.data.ctaDescription}</p>}
@@ -278,15 +308,19 @@ const enseignesSchema = {
     </section>
   )}
 
-  <p class="pcc-footnote container">
-    Dernière vérification le {updatedLabel}. Le statut du week-end en cours est recalculé plusieurs fois par jour à partir des annonces des enseignes ; les périodes et conditions décrites sont celles habituellement constatées et peuvent varier d'une année et d'un magasin à l'autre.
-  </p>
+  <div class="pcc-section pcc-footnote-wrap container">
+    <p class="pcc-footnote">
+      Dernière vérification le {updatedLabel}. Le statut du week-end en cours est recalculé plusieurs fois par jour à partir des annonces des enseignes ; les périodes et conditions décrites sont celles habituellement constatées et peuvent varier d'une année et d'un magasin à l'autre.
+    </p>
+  </div>
 </BaseLayout>
 
 <style>
   /* .container est défini globalement (src/styles/global.css) avec des
-     gouttières responsives (1rem mobile, 1.5rem tablette, 2rem desktop) :
-     ne pas le redéfinir ici pour rester cohérent avec le reste du site. */
+     gouttières responsives (1rem mobile, 1.5rem tablette, 2rem desktop).
+     Attention : toujours utiliser padding-block / padding-top ici, jamais la
+     notation raccourcie `padding: X 0 0`, qui remettrait padding-inline à 0 et
+     collerait tout le contenu aux bords de l'écran en mobile. */
 
   .pcc-topbar {
     padding-top: 1.5rem;
@@ -295,112 +329,137 @@ const enseignesSchema = {
   /* Hero : bande sombre pleine largeur, tranche nette avec le reste du site */
   .pcc-hero {
     background: radial-gradient(120% 160% at 15% 0%, #163a52 0%, var(--color-primary) 55%, #081c28 100%);
-    padding: 2.5rem 0 0;
+    padding-block: 3rem 0.25rem;
     margin-top: 1rem;
   }
 
   .pcc-hero-inner {
-    padding-bottom: 2.5rem;
+    padding-bottom: 1rem;
   }
 
   .pcc-eyebrow {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.35rem 0.5rem;
     font-family: var(--font-display);
-    font-size: 0.75rem;
+    font-size: clamp(0.625rem, 2.8vw, 0.75rem);
     font-weight: 700;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.07em;
     text-transform: uppercase;
     color: #f5a35c;
     margin: 0 0 0.75rem;
   }
 
+  .pcc-eyebrow-sep {
+    color: rgba(245, 163, 92, 0.5);
+  }
+
   .pcc-title {
-    font-size: clamp(2.25rem, 5vw, 3.25rem);
+    font-size: clamp(2rem, 6vw, 3.25rem);
     line-height: 1.05;
     color: #fff;
     margin: 0 0 1rem;
     max-width: min(20ch, 100%);
+    text-wrap: balance;
   }
 
   .pcc-subtitle {
-    font-size: 1.0625rem;
+    font-size: clamp(1rem, 2.4vw, 1.0625rem);
     line-height: 1.6;
-    color: rgba(255, 255, 255, 0.78);
-    max-width: min(46ch, 100%);
+    color: rgba(255, 255, 255, 0.82);
+    max-width: min(52ch, 100%);
     margin: 0;
   }
 
-  /* Le widget déborde sur la bande sombre : effet "ticket" flottant */
+  /* Le widget déborde sur la bande sombre : effet "ticket" flottant. Le
+     décalage (translateY) est repris dans le padding-top de .pcc-intro pour
+     que l'espace sous la carte reste correct. */
   .pcc-widget-wrap {
-    transform: translateY(2.25rem);
+    transform: translateY(2rem);
     filter: drop-shadow(0 20px 35px rgba(8, 20, 30, 0.35));
   }
 
+  .pcc-widget-wrap :global(.pco) {
+    margin: 0;
+  }
+
   .pcc-section {
-    padding: 4rem 0 0;
+    padding-top: 4rem;
   }
 
   .pcc-intro {
-    padding-top: 2.75rem;
+    padding-top: 5.75rem;
   }
 
-  /* Bloc réutilisable : texte à gauche, petite pub à taille fixe (AdUnit
-     fixedSize, 300x250) qui flotte à droite, le texte s'enroule autour comme
-     dans un article de presse. Une ligne en flex forcerait toute la rangée à
-     la hauteur de la pub même quand le texte est plus court, laissant un
-     grand vide dessous ; le float évite ce problème. */
+  /* Bloc texte + pub compacte (AdUnit fixedSize, 300x250). Deux colonnes à
+     partir de 900px, le texte d'abord en mobile : une pub de 250px de haut
+     posée avant le premier paragraphe repousse tout le contenu sous la ligne
+     de flottaison. */
   .pcc-text-ad-row {
+    display: grid;
+    gap: 1.5rem;
+    align-items: start;
     margin-top: 1.5rem;
-    overflow: hidden; /* contient le float */
+    justify-items: center;
   }
 
   .pcc-intro .pcc-text-ad-row {
     margin-top: 0;
   }
 
+  @media (min-width: 900px) {
+    .pcc-text-ad-row {
+      grid-template-columns: minmax(0, 1fr) 300px;
+      gap: 2.5rem;
+      justify-items: stretch;
+    }
+  }
+
   .pcc-text-ad-copy {
+    justify-self: stretch;
     max-width: min(68ch, 100%);
     font-size: 0.9375rem;
     line-height: 1.7;
     color: var(--color-text-secondary);
     margin: 0;
-    overflow-wrap: anywhere;
   }
 
   :global(.pcc-text-ad) {
-    float: right;
-    margin: 0 0 1rem 2rem !important;
-  }
-
-  @media (max-width: 860px) {
-    :global(.pcc-text-ad) { float: none; margin: 0 auto 1rem !important; }
+    margin: 0 !important;
   }
 
   .pcc-section-title {
-    font-size: 1.625rem;
+    font-size: clamp(1.375rem, 3.6vw, 1.625rem);
     margin: 0 0 1.5rem;
   }
 
-  /* Enseignes */
+  /* Enseignes : chaque carte est un sous-grille de 4 rangées (identité,
+     critère carte, critère montant, lien) pour que les pastilles et les
+     libellés restent alignés d'une carte à l'autre, quelle que soit la
+     longueur du texte. Sans support de subgrid, la carte reste une grille
+     autonome : simplement moins bien alignée. */
   .pcc-brand-grid {
     display: grid;
     grid-template-columns: 1fr;
     gap: 1rem;
   }
 
-  @media (min-width: 480px) {
+  @media (min-width: 560px) {
     .pcc-brand-grid { grid-template-columns: repeat(2, 1fr); }
   }
 
-  @media (min-width: 860px) {
+  @media (min-width: 1000px) {
     .pcc-brand-grid { grid-template-columns: repeat(4, 1fr); }
   }
 
   .pcc-brand-card {
-    display: flex;
-    flex-direction: column;
-    gap: 0.4rem;
+    display: grid;
+    grid-row: span 4;
+    grid-template-rows: subgrid;
+    row-gap: 0;
     min-width: 0;
-    padding: 1.25rem 1.25rem 1.5rem;
+    padding: 1.25rem;
     background: #fff;
     border: 1px solid var(--color-border);
     border-radius: 0.875rem;
@@ -409,16 +468,83 @@ const enseignesSchema = {
     transition: border-color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
   }
 
-  .pcc-brand-card:hover {
-    border-color: var(--color-accent);
-    transform: translateY(-3px);
-    box-shadow: 0 12px 24px -12px rgba(15, 45, 63, 0.25);
+  @media (hover: hover) {
+    .pcc-brand-card:hover {
+      border-color: var(--color-accent);
+      transform: translateY(-3px);
+      box-shadow: 0 12px 24px -12px rgba(15, 45, 63, 0.25);
+    }
   }
 
-  .pcc-brand-logo { margin-bottom: 0.25rem; }
-  .pcc-brand-name { font-family: var(--font-display); font-weight: 700; color: var(--color-primary); }
+  .pcc-brand-card:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
 
-  .pcc-brand-row { margin-top: 0.25rem; }
+  .pcc-brand-head {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    padding-bottom: 0.875rem;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .pcc-brand-logo {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    width: 2.25rem;
+    height: 2.25rem;
+  }
+
+  .pcc-brand-logo :global(.brand-logo-img) {
+    max-width: 100%;
+    max-height: 100%;
+    height: auto;
+    width: auto;
+  }
+
+  .pcc-brand-name {
+    font-family: var(--font-display);
+    font-size: 1.0625rem;
+    font-weight: 700;
+    color: var(--color-primary);
+    line-height: 1.2;
+    min-width: 0;
+  }
+
+  .pcc-brand-crit {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    padding: 0.875rem 0;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .pcc-brand-crit-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.4rem 0.5rem;
+  }
+
+  @media (min-width: 1000px) {
+    .pcc-brand-crit-head {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.35rem;
+    }
+  }
+
+  .pcc-brand-crit-label {
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--color-text-secondary);
+  }
+
   .pcc-pill {
     display: inline-flex;
     padding: 0.2rem 0.6rem;
@@ -427,26 +553,36 @@ const enseignesSchema = {
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.02em;
+    white-space: nowrap;
   }
   .pcc-pill-non { background: #dcfce7; color: #15803d; }
   .pcc-pill-partielle { background: #fef3c7; color: #92400e; }
   .pcc-pill-oui { background: #fee2e2; color: #b91c1c; }
 
-  .pcc-brand-detail { font-size: 0.8125rem; color: var(--color-text-secondary); line-height: 1.45; }
+  .pcc-brand-detail {
+    font-size: 0.8125rem;
+    color: var(--color-text-secondary);
+    line-height: 1.45;
+  }
 
   .pcc-brand-cta {
-    margin-top: auto;
-    padding-top: 0.75rem;
+    align-self: end;
+    padding-top: 0.875rem;
     font-size: 0.8125rem;
     font-weight: 700;
     color: var(--color-accent);
   }
 
-  /* Timeline */
+  /* Timeline : chaque opération est une carte posée sur un rail vertical. À
+     partir de 880px la carte passe sur deux colonnes (identité / contexte)
+     pour occuper la largeur disponible au lieu de laisser la moitié droite
+     vide. */
   .pcc-timeline {
     list-style: none;
     margin: 0;
     padding: 0;
+    display: grid;
+    gap: 0.75rem;
     position: relative;
   }
 
@@ -454,28 +590,26 @@ const enseignesSchema = {
     content: '';
     position: absolute;
     left: 5px;
-    top: 0.5rem;
-    bottom: 0.5rem;
+    top: 1.25rem;
+    bottom: 1.25rem;
     width: 2px;
     background: var(--color-border);
   }
 
   .pcc-timeline-item {
     position: relative;
-    padding-left: 2rem;
-    padding-bottom: 1.75rem;
+    padding-left: 1.75rem;
   }
-
-  .pcc-timeline-item:last-child { padding-bottom: 0; }
 
   .pcc-timeline-dot {
     position: absolute;
     left: 0;
-    top: 0.3rem;
+    top: 1.1rem;
     width: 12px;
     height: 12px;
     border-radius: 50%;
     background: #94a3b8;
+    box-shadow: 0 0 0 4px #fff;
   }
 
   .pcc-timeline-passee .pcc-timeline-dot { background: #16a34a; }
@@ -484,19 +618,80 @@ const enseignesSchema = {
     border: 2px solid var(--color-accent);
   }
 
+  .pcc-timeline-card {
+    display: grid;
+    gap: 0.5rem;
+    padding: 0.875rem 1.125rem;
+    background: #fff;
+    border: 1px solid var(--color-border);
+    border-radius: 0.75rem;
+  }
+
+  .pcc-timeline-a-venir .pcc-timeline-card {
+    background: #fffdf9;
+    border-style: dashed;
+  }
+
+  @media (min-width: 880px) {
+    .pcc-timeline-card {
+      grid-template-columns: minmax(0, 19rem) minmax(0, 1fr);
+      gap: 0.5rem 2rem;
+      align-items: start;
+    }
+  }
+
+  .pcc-timeline-main {
+    display: grid;
+    gap: 0.15rem;
+    min-width: 0;
+  }
+
   .pcc-timeline-badge {
-    display: inline-block;
     font-size: 0.6875rem;
     font-weight: 800;
     text-transform: uppercase;
     letter-spacing: 0.04em;
     color: var(--color-text-secondary);
-    margin-bottom: 0.25rem;
   }
 
-  .pcc-timeline-heading { margin: 0 0 0.2rem; font-weight: 700; color: var(--color-primary); }
-  .pcc-timeline-dates, .pcc-timeline-stations { font-weight: 500; color: var(--color-text-secondary); }
-  .pcc-timeline-note { margin: 0; font-size: 0.9375rem; color: var(--color-text-secondary); line-height: 1.55; }
+  .pcc-timeline-passee .pcc-timeline-badge { color: #15803d; }
+  .pcc-timeline-a-venir .pcc-timeline-badge { color: var(--color-accent); }
+
+  .pcc-timeline-heading {
+    margin: 0;
+    font-family: var(--font-display);
+    font-weight: 700;
+    color: var(--color-primary);
+    line-height: 1.25;
+  }
+
+  .pcc-timeline-dates {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.15rem 0.4rem;
+    margin: 0;
+    font-size: 0.875rem;
+    color: var(--color-text-secondary);
+  }
+
+  .pcc-timeline-stations::before {
+    content: '·';
+    margin-right: 0.4rem;
+  }
+
+  .pcc-timeline-note {
+    margin: 0;
+    font-size: 0.9375rem;
+    color: var(--color-text-secondary);
+    line-height: 1.55;
+  }
+
+  @media (min-width: 880px) {
+    .pcc-timeline-note {
+      align-self: center;
+    }
+  }
 
   /* Tips */
   .pcc-tips-grid {
@@ -505,13 +700,18 @@ const enseignesSchema = {
     gap: 1rem;
   }
 
-  @media (min-width: 700px) {
+  @media (min-width: 620px) {
     .pcc-tips-grid { grid-template-columns: repeat(2, 1fr); }
   }
 
+  @media (min-width: 1100px) {
+    .pcc-tips-grid { grid-template-columns: repeat(4, 1fr); }
+  }
+
   .pcc-tip-card {
-    padding: 1.25rem 1.5rem;
+    padding: 1.25rem 1.375rem 1.375rem;
     background: #f8fafc;
+    border: 1px solid #eef2f7;
     border-radius: 0.875rem;
   }
 
@@ -524,27 +724,39 @@ const enseignesSchema = {
     margin-bottom: 0.35rem;
   }
 
-  .pcc-tip-title { margin: 0 0 0.35rem; font-size: 1rem; }
+  .pcc-tip-title { margin: 0 0 0.35rem; font-size: 1rem; line-height: 1.3; }
   .pcc-tip-text { margin: 0; font-size: 0.9375rem; color: var(--color-text-secondary); line-height: 1.55; }
 
+  /* FAQ : le composant apporte déjà sa propre marge et son filet de
+     séparation, on ne double pas le padding de section. */
+  .pcc-faq {
+    padding-top: 1.5rem;
+  }
+
   /* CTA */
-  .pcc-cta-wrap { padding: 4rem 0 0; }
   .pcc-cta {
     background: linear-gradient(135deg, var(--color-accent) 0%, #d0651a 100%);
     color: #fff;
     border-radius: 1rem;
     padding: 2rem 2.5rem;
   }
-  .pcc-cta h2 { color: #fff; font-size: 1.375rem; margin: 0 0 0.75rem; }
-  .pcc-cta p { color: rgba(255, 255, 255, 0.85); margin: 0 0 1.25rem; }
+  .pcc-cta h2 { color: #fff; font-size: clamp(1.1875rem, 3.2vw, 1.375rem); margin: 0 0 0.75rem; }
+  .pcc-cta p { color: rgba(255, 255, 255, 0.9); margin: 0 0 1.25rem; max-width: 62ch; }
   .pcc-cta-btn {
     display: inline-flex;
-    padding: 0.65rem 1.25rem;
+    padding: 0.7rem 1.35rem;
     background: #fff;
     color: var(--color-accent);
     border-radius: 0.5rem;
     font-weight: 700;
     text-decoration: none;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  @media (hover: hover) {
+    .pcc-cta-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px -10px rgba(0, 0, 0, 0.45);
+    }
   }
 
   /* Guides par enseigne */
@@ -554,11 +766,11 @@ const enseignesSchema = {
     gap: 1.25rem;
   }
 
-  @media (min-width: 700px) {
+  @media (min-width: 620px) {
     .pcc-guide-grid { grid-template-columns: repeat(2, 1fr); }
   }
 
-  @media (min-width: 1024px) {
+  @media (min-width: 1000px) {
     .pcc-guide-grid { grid-template-columns: repeat(3, 1fr); }
   }
 
@@ -574,15 +786,19 @@ const enseignesSchema = {
     transition: box-shadow 0.15s ease, transform 0.15s ease;
   }
 
-  .pcc-guide-card:hover {
-    box-shadow: 0 12px 24px -12px rgba(15, 45, 63, 0.25);
-    transform: translateY(-3px);
+  @media (hover: hover) {
+    .pcc-guide-card:hover {
+      box-shadow: 0 12px 24px -12px rgba(15, 45, 63, 0.25);
+      transform: translateY(-3px);
+    }
   }
 
   .pcc-guide-image {
     width: 100%;
+    height: auto;
     aspect-ratio: 16 / 9;
     object-fit: cover;
+    background: #f1f5f9;
   }
 
   .pcc-guide-body {
@@ -607,21 +823,28 @@ const enseignesSchema = {
     overflow: hidden;
   }
 
+  .pcc-footnote-wrap {
+    padding-block: 3rem 3.5rem;
+  }
+
   .pcc-footnote {
+    margin: 0;
     font-size: 0.8125rem;
     font-style: italic;
     color: var(--color-text-secondary);
-    padding: 3rem 0 3.5rem;
-    max-width: min(65ch, 100%);
+    line-height: 1.6;
+    max-width: min(70ch, 100%);
   }
 
   /* Filet de sécurité : un mot isolé plus large que sa carte (ex. « complémentaires »
      dans une carte enseigne à 2 colonnes sur un petit écran) ne doit jamais pousser
      la boîte hors de son conteneur. */
-  .pcc-intro p,
+  .pcc-text-ad-copy,
+  .pcc-brand-name,
   .pcc-brand-detail,
   .pcc-timeline-heading,
   .pcc-timeline-note,
+  .pcc-guide-title,
   .pcc-guide-excerpt {
     overflow-wrap: anywhere;
   }
@@ -629,13 +852,26 @@ const enseignesSchema = {
   /* Rythme vertical resserré en mobile : le padding desktop (4rem par
      section) empile beaucoup trop de vide sur petit écran. */
   @media (max-width: 640px) {
-    .pcc-hero { padding-top: 2rem; }
-    .pcc-hero-inner { padding-bottom: 1.75rem; }
-    .pcc-widget-wrap { transform: translateY(1.25rem); }
-    .pcc-intro { padding-top: 1.75rem; }
+    .pcc-hero { padding-block: 2rem 0.25rem; }
+    .pcc-hero-inner { padding-bottom: 0.75rem; }
+    .pcc-widget-wrap { transform: translateY(1.75rem); }
+    .pcc-intro { padding-top: 4rem; }
     .pcc-section { padding-top: 2.5rem; }
-    .pcc-cta-wrap { padding-top: 2.5rem; }
+    .pcc-faq { padding-top: 1rem; }
     .pcc-cta { padding: 1.5rem 1.25rem; }
-    .pcc-footnote { padding: 2rem 0 2.5rem; }
+    .pcc-footnote-wrap { padding-block: 2rem 2.5rem; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .pcc-brand-card,
+    .pcc-guide-card,
+    .pcc-cta-btn {
+      transition: none;
+    }
+    .pcc-brand-card:hover,
+    .pcc-guide-card:hover,
+    .pcc-cta-btn:hover {
+      transform: none;
+    }
   }
 </style>
