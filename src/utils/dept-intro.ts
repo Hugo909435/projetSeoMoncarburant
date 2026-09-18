@@ -72,9 +72,9 @@ export function buildDeptIntro(p: DeptIntroParams): string[] {
   function sNetwork(): string {
     const forms = [
       `Le ${deptName} (${deptNum}) compte ${stationCount} stations-service référencées dans notre comparateur, réparties sur l'ensemble du territoire en région ${deptRegion}.`,
-      `Avec ${stationCount} stations référencées, le ${deptName} offre un réseau étendu pour comparer les prix du carburant en ${deptRegion}.`,
-      `Notre comparateur recense ${stationCount} stations dans le département du ${deptName} (${deptNum}), en région ${deptRegion}.`,
-      `Le réseau du ${deptName} (${deptNum}) comprend ${stationCount} stations dans notre base, couvrant les principales communes de ${deptRegion}.`,
+      `Avec ${stationCount} stations-service référencées, le ${deptName} offre un réseau étendu pour comparer les prix du carburant en ${deptRegion}.`,
+      `Notre comparateur recense ${stationCount} stations essence dans le département du ${deptName} (${deptNum}), en région ${deptRegion}.`,
+      `Le réseau du ${deptName} (${deptNum}) comprend ${stationCount} stations-service dans notre base, couvrant les principales communes de ${deptRegion}.`,
     ];
     return forms[v % forms.length];
   }
@@ -106,7 +106,7 @@ export function buildDeptIntro(p: DeptIntroParams): string[] {
     if (s95?.min != null) {
       return `Le Sans-Plomb 95 est disponible à partir de ${fmt(s95.min)} €/L, avec une moyenne de ${fmt(sp95Avg)} €/L.`;
     }
-    return `Le Sans-Plomb 95 est proposé en moyenne à ${fmt(sp95Avg)} €/L.`;
+    return `Pour trouver de l'essence à proximité dans le ${deptName}, le Sans-Plomb 95 est proposé en moyenne à ${fmt(sp95Avg)} €/L.`;
   }
 
   function sCheapest(): string | null {

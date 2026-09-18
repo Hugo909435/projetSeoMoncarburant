@@ -77,9 +77,9 @@ export function buildCityIntro(p: CityIntroParams): string[] {
     const deptStr = deptLabel ? `, en ${deptLabel}` : '';
     const forms = [
       `À ${cityName}, ${stationCount} stations-service proposent leurs tarifs en temps réel${deptStr}.`,
-      `Notre comparateur recense ${stationCount} stations à ${cityName}${deptStr}.`,
-      `${stationCount} stations sont référencées à ${cityName}${deptStr} dans notre base.`,
-      `La ville de ${cityName}${deptStr} compte ${stationCount} stations dans notre comparateur.`,
+      `Notre comparateur recense ${stationCount} stations essence à ${cityName}${deptStr}.`,
+      `${stationCount} stations-service sont référencées à ${cityName}${deptStr} dans notre base.`,
+      `La ville de ${cityName}${deptStr} compte ${stationCount} stations-service dans notre comparateur.`,
     ];
     return forms[v % forms.length];
   }
@@ -132,7 +132,7 @@ export function buildCityIntro(p: CityIntroParams): string[] {
       if (cheapSp95 && cheapSp95.price < sp95Avg) {
         return `Le SP95 est disponible à partir de ${fmt(cheapSp95.price)} €/L, avec une moyenne de ${fmt(sp95Avg)} €/L en ville.`;
       }
-      return `Le Sans-Plomb 95 est proposé en moyenne à ${fmt(sp95Avg)} €/L.`;
+      return `Pour trouver de l'essence à proximité, le Sans-Plomb 95 est proposé en moyenne à ${fmt(sp95Avg)} €/L à ${cityName}.`;
     }
     // GPL fallback
     if (gplAvg != null && gplCount >= 2) {
