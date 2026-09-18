@@ -428,20 +428,14 @@ const enseignesSchema = {
     margin: 0 !important;
   }
 
-  /* Sur ordinateur, la colonne pub (300px) a la hauteur pour un format plus
-     grand qu'un simple 300x250 : on passe en 300x600 (half page) à partir de
-     900px, l'espace vertical à côté du paragraphe étant sinon sous-exploité.
-     Le mobile garde le 300x250 (fixedSize) inchangé. */
-  @media (min-width: 900px) {
-    :global(.pcc-text-ad.ad-slot-fixed) {
-      min-height: 600px;
-    }
-
-    :global(.pcc-text-ad ins.adsbygoogle) {
-      width: 300px !important;
-      height: 600px !important;
-    }
-  }
+  /* Pas d'agrandissement de la colonne pub sur ordinateur. Un emplacement
+     réservé en 300x600 laissait un trou de ~350px : AdSense reste libre de
+     servir une création plus petite (300x250) dans un slot 300x600, et la
+     hauteur réservée en trop restait vide, sous la pub comme sous le
+     paragraphe voisin puisque la ligne est une grille. Le 300x250 de
+     fixedSize est toujours rempli exactement : aucun blanc, aucun décalage
+     de mise en page. Pour un vrai half page, il faudrait créer dans AdSense
+     un bloc dédié de taille fixe 300x600 et passer son slot ici. */
 
   .pcc-section-title {
     font-size: clamp(1.375rem, 3.6vw, 1.625rem);
