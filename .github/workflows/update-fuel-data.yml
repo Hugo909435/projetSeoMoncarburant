@@ -5,7 +5,9 @@ on:
     # Toutes les heures : le flux gouvernemental interrogé (/opendata/instantane) est
     # mis à jour en continu au fil des déclarations de prix des stations, donc ce
     # cadencement capte plus de changements intra-journée qu'un passage toutes les 3h.
-    - cron: '0 * * * *'
+    # Minute 17 plutôt que 0 : GitHub retarde ou saute les schedules programmés pile
+    # à l'heure (pic de charge mondial), donc décaler réduit les runs manqués/tardifs.
+    - cron: '17 * * * *'
   workflow_dispatch:
     inputs:
       force_rebuild:
