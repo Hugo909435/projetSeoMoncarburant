@@ -222,20 +222,17 @@ const enseignesSchema = {
 
   <section class="pcc-section container" aria-labelledby="pcc-calendrier-title">
     <h2 id="pcc-calendrier-title" class="pcc-section-title">Le calendrier 2026</h2>
-    <div class="pcc-text-ad-row">
-      <p class="pcc-text-ad-copy">
-        Sans qu'aucune date ne soit jamais garantie à l'avance, ces opérations reviennent presque chaque année
-        aux mêmes moments : avant les grands départs d'été (fin juin, début juillet), à la rentrée scolaire (fin
-        août, début septembre), aux vacances de la Toussaint (fin octobre) et en fin d'année (mi-décembre). La
-        vague de l'été 2026 s'est déroulée en deux temps : Leclerc et Intermarché début juillet, Système U début
-        août, puis TotalEnergies fin août avec une opération limitée à 129 stations. La rentrée, qui concentre
-        habituellement le plus grand nombre d'opérations de l'année, a fait exception cette fois : aucune des
-        quatre enseignes n'a communiqué de date entre fin août et début septembre. Les dates précises ne sont en
-        général communiquées que quelques jours à l'avance, par SMS, notification d'application ou affichage en
-        station.
-      </p>
-      <AdUnit class="pcc-text-ad" fixedSize />
-    </div>
+    <p class="pcc-text-ad-copy">
+      Sans qu'aucune date ne soit jamais garantie à l'avance, ces opérations reviennent presque chaque année
+      aux mêmes moments : avant les grands départs d'été (fin juin, début juillet), à la rentrée scolaire (fin
+      août, début septembre), aux vacances de la Toussaint (fin octobre) et en fin d'année (mi-décembre). La
+      vague de l'été 2026 s'est déroulée en deux temps : Leclerc et Intermarché début juillet, Système U début
+      août, puis TotalEnergies fin août avec une opération limitée à 129 stations. La rentrée, qui concentre
+      habituellement le plus grand nombre d'opérations de l'année, a fait exception cette fois : aucune des
+      quatre enseignes n'a communiqué de date entre fin août et début septembre. Les dates précises ne sont en
+      général communiquées que quelques jours à l'avance, par SMS, notification d'application ou affichage en
+      station.
+    </p>
     <ol class="pcc-timeline">
       {timeline.map((t) => (
         <li class:list={['pcc-timeline-item', `pcc-timeline-${t.kind}`]}>
@@ -255,6 +252,8 @@ const enseignesSchema = {
       ))}
     </ol>
   </section>
+
+  <AdUnit />
 
   <section class="pcc-section container" aria-labelledby="pcc-tips-title">
     <h2 id="pcc-tips-title" class="pcc-section-title">Comment ne pas rater la prochaine</h2>
@@ -427,6 +426,21 @@ const enseignesSchema = {
 
   :global(.pcc-text-ad) {
     margin: 0 !important;
+  }
+
+  /* Sur ordinateur, la colonne pub (300px) a la hauteur pour un format plus
+     grand qu'un simple 300x250 : on passe en 300x600 (half page) à partir de
+     900px, l'espace vertical à côté du paragraphe étant sinon sous-exploité.
+     Le mobile garde le 300x250 (fixedSize) inchangé. */
+  @media (min-width: 900px) {
+    :global(.pcc-text-ad.ad-slot-fixed) {
+      min-height: 600px;
+    }
+
+    :global(.pcc-text-ad ins.adsbygoogle) {
+      width: 300px !important;
+      height: 600px !important;
+    }
   }
 
   .pcc-section-title {
