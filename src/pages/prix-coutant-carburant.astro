@@ -170,13 +170,48 @@ const enseignesSchema = {
         fenêtres durent en général 24 à 48 heures, sont annoncées seulement 2 à 3 jours à l'avance, et reviennent
         aux mêmes moments chaque année : avant les grands départs d'été, à la rentrée scolaire, aux vacances de la
         Toussaint et en fin d'année. Cette page centralise trois informations mises à jour en continu : le statut
-        de l'opération carburant à prix coûtant ce week-end, les conditions d'accès propres à chaque enseigne
-        (carte de fidélité, montant d'achat minimum), et le calendrier complet des opérations 2026, déjà passées
-        ou probables.
+        de l'opération carburant à prix coûtant ce week-end, le calendrier complet des opérations 2026 (déjà
+        passées ou probables), et les conditions d'accès propres à chaque enseigne (carte de fidélité, montant
+        d'achat minimum).
       </p>
       <AdUnit class="pcc-text-ad" fixedSize />
     </div>
   </section>
+
+  <section class="pcc-section container" aria-labelledby="pcc-calendrier-title">
+    <h2 id="pcc-calendrier-title" class="pcc-section-title">Le calendrier 2026</h2>
+    <p class="pcc-text-ad-copy">
+      Sans qu'aucune date ne soit jamais garantie à l'avance, ces opérations reviennent presque chaque année
+      aux mêmes moments : avant les grands départs d'été (fin juin, début juillet), à la rentrée scolaire (fin
+      août, début septembre), aux vacances de la Toussaint (fin octobre) et en fin d'année (mi-décembre). La
+      vague de l'été 2026 s'est déroulée en deux temps : Leclerc et Intermarché début juillet, Système U début
+      août, puis TotalEnergies fin août avec une opération limitée à 129 stations. La rentrée, qui concentre
+      habituellement le plus grand nombre d'opérations de l'année, a fait exception cette fois : aucune des
+      quatre enseignes n'a communiqué de date entre fin août et début septembre. Les dates précises ne sont en
+      général communiquées que quelques jours à l'avance, par SMS, notification d'application ou affichage en
+      station.
+    </p>
+    <ol class="pcc-timeline">
+      {timeline.map((t) => (
+        <li class:list={['pcc-timeline-item', `pcc-timeline-${t.kind}`]}>
+          <span class="pcc-timeline-dot" aria-hidden="true"></span>
+          <div class="pcc-timeline-card">
+            <div class="pcc-timeline-main">
+              <span class="pcc-timeline-badge">{t.kind === 'passee' ? 'Passée' : 'À venir (probable)'}</span>
+              <p class="pcc-timeline-heading">{t.brandName ?? t.label}</p>
+              <p class="pcc-timeline-dates">
+                {formatRange(t.start, t.end)}
+                {t.stations ? <span class="pcc-timeline-stations">{t.stations} stations</span> : null}
+              </p>
+            </div>
+            <p class="pcc-timeline-note">{t.note}</p>
+          </div>
+        </li>
+      ))}
+    </ol>
+  </section>
+
+  <AdUnit />
 
   <section class="pcc-section container" aria-labelledby="pcc-enseignes-title">
     <h2 id="pcc-enseignes-title" class="pcc-section-title">Comparez les 4 enseignes</h2>
@@ -219,41 +254,6 @@ const enseignesSchema = {
       <AdUnit class="pcc-text-ad" fixedSize />
     </div>
   </section>
-
-  <section class="pcc-section container" aria-labelledby="pcc-calendrier-title">
-    <h2 id="pcc-calendrier-title" class="pcc-section-title">Le calendrier 2026</h2>
-    <p class="pcc-text-ad-copy">
-      Sans qu'aucune date ne soit jamais garantie à l'avance, ces opérations reviennent presque chaque année
-      aux mêmes moments : avant les grands départs d'été (fin juin, début juillet), à la rentrée scolaire (fin
-      août, début septembre), aux vacances de la Toussaint (fin octobre) et en fin d'année (mi-décembre). La
-      vague de l'été 2026 s'est déroulée en deux temps : Leclerc et Intermarché début juillet, Système U début
-      août, puis TotalEnergies fin août avec une opération limitée à 129 stations. La rentrée, qui concentre
-      habituellement le plus grand nombre d'opérations de l'année, a fait exception cette fois : aucune des
-      quatre enseignes n'a communiqué de date entre fin août et début septembre. Les dates précises ne sont en
-      général communiquées que quelques jours à l'avance, par SMS, notification d'application ou affichage en
-      station.
-    </p>
-    <ol class="pcc-timeline">
-      {timeline.map((t) => (
-        <li class:list={['pcc-timeline-item', `pcc-timeline-${t.kind}`]}>
-          <span class="pcc-timeline-dot" aria-hidden="true"></span>
-          <div class="pcc-timeline-card">
-            <div class="pcc-timeline-main">
-              <span class="pcc-timeline-badge">{t.kind === 'passee' ? 'Passée' : 'À venir (probable)'}</span>
-              <p class="pcc-timeline-heading">{t.brandName ?? t.label}</p>
-              <p class="pcc-timeline-dates">
-                {formatRange(t.start, t.end)}
-                {t.stations ? <span class="pcc-timeline-stations">{t.stations} stations</span> : null}
-              </p>
-            </div>
-            <p class="pcc-timeline-note">{t.note}</p>
-          </div>
-        </li>
-      ))}
-    </ol>
-  </section>
-
-  <AdUnit />
 
   <section class="pcc-section container" aria-labelledby="pcc-tips-title">
     <h2 id="pcc-tips-title" class="pcc-section-title">Comment ne pas rater la prochaine</h2>
