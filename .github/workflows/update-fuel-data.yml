@@ -1,40 +1,45 @@
-name: Mise à jour quotidienne des prix carburant
+name: Mise à jour des prix carburant (horaire)
 
 on:
-  schedule:
-    # Toutes les heures : le flux gouvernemental interrogé (/opendata/instantane) est
-    # mis à jour en continu au fil des déclarations de prix des stations, donc ce
-    # cadencement capte plus de changements intra-journée qu'un passage toutes les 3h.
-    # Minute 17 plutôt que 0 : GitHub retarde ou saute les schedules programmés pile
-    # à l'heure (pic de charge mondial), donc décaler réduit les runs manqués/tardifs.
-    - cron: '17 * * * *'
+  # Déclencheur principal : un cron externe appelle l'API workflow_dispatch
+  # toutes les heures. Il est hébergé sur Google Apps Script, voir le code et
+  # sa procédure d'installation dans scripts/google-apps-script/declencheur-github.gs
+  #
+  # Le trigger "schedule" de GitHub ne tient PAS la cadence horaire sur ce dépôt.
+  # Relevé sur l'API Actions en septembre 2026 : seulement 4 à 6 runs "schedule"
+  # créés par jour, alors que le cron en demandait 24, et déjà le même plafond
+  # quand le cron était à 3 h. Les heures manquantes n'apparaissent nulle part,
+  # ni annulées ni en échec : GitHub n'a jamais créé l'événement. C'est le
+  # comportement documenté du trigger schedule ("peut être retardé ou abandonné
+  # en période de forte charge"), et aucun réglage de minute n'y change quoi que
+  # ce soit. Un appel API workflow_dispatch, lui, est toujours honoré.
   workflow_dispatch:
-    inputs:
-      force_rebuild:
-        description: 'Forcer un rebuild même sans changement de données'
-        required: false
-        default: 'false'
-        type: boolean
+
+  # Variante d'appel externe pour les outils qui postent sur /dispatches.
+  repository_dispatch:
+    types: [update-fuel]
+
+  # Filet de sécurité si le cron externe tombe : les quelques passages par jour
+  # que GitHub veut bien créer valent mieux que rien. Minute 17 plutôt que 0,
+  # GitHub retardant encore davantage les schedules programmés pile à l'heure.
+  schedule:
+    - cron: '17 * * * *'
 
 permissions:
   contents: write
 
-# Empêche deux déploiements Hostinger simultanés (avec le workflow de
-# déploiement continu déclenché sur push) : les runs se mettent en file
-# plutôt que de se chevaucher sur le même dossier public_html.
+# Ce workflow ne fait plus de mirror FTP complet (voir rebuild-site.yml), il ne
+# partage donc plus le verrou "hostinger-deploy". C'était indispensable : tant
+# que la récupération des prix, qui dure 3 minutes, attendait derrière un
+# déploiement complet de 20 minutes, aucune cadence horaire n'était atteignable.
 concurrency:
-  group: hostinger-deploy
+  group: fetch-fuel-data
   cancel-in-progress: false
 
 jobs:
   fetch-and-update:
     runs-on: ubuntu-latest
-    timeout-minutes: 45
-    concurrency:
-      group: fetch-fuel-data
-      cancel-in-progress: false
-    outputs:
-      changed: ${{ steps.check-changes.outputs.changed }}
+    timeout-minutes: 30
 
     steps:
       - name: Checkout du dépôt
@@ -43,8 +48,7 @@ jobs:
           # Le détecteur de prix coûtant compare les prix du jour à ceux d'il y
           # a 20h, en lisant l'état précédent directement dans l'historique des
           # commits de données. Un checkout superficiel le priverait de sa
-          # référence. 60 commits couvrent largement la fenêtre, le workflow
-          # tournant au plus 8 fois par jour.
+          # référence. 60 commits couvrent la fenêtre même à cadence horaire.
           fetch-depth: 60
 
       - name: Configuration de Node.js
@@ -87,24 +91,81 @@ jobs:
           git diff --quiet src/data/fuel/ public/data/ && echo "changed=false" >> $GITHUB_OUTPUT || echo "changed=true" >> $GITHUB_OUTPUT
 
       - name: Commit et push si données modifiées
-        if: steps.check-changes.outputs.changed == 'true' || inputs.force_rebuild == 'true'
+        if: steps.check-changes.outputs.changed == 'true'
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           git add src/data/fuel/ public/data/stations-light.json last-update.txt
           git commit -m "chore: mise à jour prix carburant $(date +'%Y-%m-%d %H:%M')"
+          # Le résultat de la boucle est testé explicitement : sans ce drapeau,
+          # cinq échecs de push consécutifs laissaient malgré tout l'étape en
+          # succès (le dernier "sleep" renvoyait 0) et le run se terminait en
+          # vert sans qu'aucune donnée n'ait été poussée.
+          pushed=false
           for i in 1 2 3 4 5; do
-            git pull --rebase origin main && git push && break
+            if git pull --rebase origin main && git push; then
+              pushed=true
+              break
+            fi
             echo "Push refusé (tentative $i), nouvelle synchronisation..."
             sleep $((RANDOM % 10 + 1))
           done
+          if [ "$pushed" != "true" ]; then
+            echo "❌ Impossible de pousser les nouvelles données après 5 tentatives."
+            exit 1
+          fi
+
+      - name: Installation de lftp
+        if: steps.check-changes.outputs.changed == 'true'
+        run: sudo apt-get install -y --no-install-recommends lftp
+
+      - name: Envoi des prix frais vers Hostinger
+        if: steps.check-changes.outputs.changed == 'true'
+        timeout-minutes: 10
+        env:
+          FTP_USER: ${{ secrets.FTP_USER }}
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+          FTP_HOST: ${{ secrets.FTP_HOST }}
+        run: |
+          # Un seul fichier envoyé, pas un mirror : la carte, la recherche et le
+          # comparateur lisent /data/stations-light.json côté navigateur, donc
+          # cet unique transfert de 2,8 Mo suffit à rafraîchir les prix affichés
+          # sans reconstruire le site. Une connexion FTP par heure au lieu d'un
+          # mirror complet, ce qui reste très en dessous du seuil de throttling
+          # Hostinger décrit dans deploy-hostinger.yml.
+          #
+          # Envoi sous un nom temporaire puis renommage : un transfert interrompu
+          # à mi-parcours laisserait sinon un JSON tronqué en ligne, et la carte
+          # comme la recherche cesseraient de fonctionner jusqu'au passage
+          # suivant. Le renommage côté serveur est instantané.
+          max_attempts=3
+          for attempt in $(seq 1 "$max_attempts"); do
+            echo "::group::Envoi des prix, tentative $attempt/$max_attempts"
+            if lftp -u "$FTP_USER","$FTP_PASSWORD" -p 21 \
+                 -e "set ftp:ssl-allow no; \
+                     set ftp:passive-mode true; \
+                     set net:timeout 30; \
+                     set net:max-retries 1; \
+                     set net:persist-retries 0; \
+                     put public/data/stations-light.json -o data/stations-light.json.tmp; \
+                     mv data/stations-light.json.tmp data/stations-light.json; \
+                     quit" \
+                "$FTP_HOST"; then
+              echo "::endgroup::"
+              echo "✅ Prix mis en ligne à la tentative $attempt."
+              exit 0
+            fi
+            echo "::endgroup::"
+            echo "Tentative $attempt échouée."
+            if [ "$attempt" -lt "$max_attempts" ]; then
+              backoff=$((30 * attempt))
+              echo "Pause de ${backoff}s avant nouvelle tentative..."
+              sleep "$backoff"
+            fi
+          done
+          echo "❌ Envoi des prix impossible après $max_attempts tentatives."
+          exit 1
 
       - name: Aucun changement détecté
-        if: steps.check-changes.outputs.changed == 'false' && inputs.force_rebuild != 'true'
+        if: steps.check-changes.outputs.changed == 'false'
         run: echo "✅ Les données n'ont pas changé depuis la dernière mise à jour."
-
-  deploy:
-    needs: fetch-and-update
-    if: needs.fetch-and-update.outputs.changed == 'true' || inputs.force_rebuild == 'true'
-    uses: ./.github/workflows/deploy-hostinger.yml
-    secrets: inherit

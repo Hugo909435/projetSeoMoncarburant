@@ -1,0 +1,36 @@
+name: Reconstruction complète du site
+
+on:
+  # Reconstruction des pages statiques (ville, département, station, articles),
+  # dont les prix sont figés au build. Cadence de 3 h, identique à ce que le
+  # site recevait réellement jusqu'ici, et volontairement pas horaire : le
+  # mirror FTP dure 16 à 19 min et Hostinger bloque temporairement les
+  # connexions répétées (voir le détail dans deploy-hostinger.yml). Les prix
+  # vus par la carte, la recherche et le comparateur, eux, sont rafraîchis
+  # toutes les heures par update-fuel-data.yml sans passer par un build.
+  schedule:
+    - cron: '25 */3 * * *'
+
+  # Comme pour update-fuel-data.yml, le cron ci-dessus n'est qu'un filet : le
+  # trigger schedule de GitHub abandonne la majorité des déclenchements. Pour
+  # une cadence réellement tenue, cette entrée est appelée toutes les 3 h via
+  # l'API workflow_dispatch par le cron externe hébergé sur Google Apps Script,
+  # voir scripts/google-apps-script/declencheur-github.gs
+  workflow_dispatch:
+
+  repository_dispatch:
+    types: [rebuild-site]
+
+permissions:
+  contents: read
+
+# Verrou partagé avec le déploiement continu sur push : deux mirrors
+# simultanés sur le même public_html se marcheraient dessus.
+concurrency:
+  group: hostinger-deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    uses: ./.github/workflows/deploy-hostinger.yml
+    secrets: inherit
