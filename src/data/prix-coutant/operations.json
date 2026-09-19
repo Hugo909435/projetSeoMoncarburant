@@ -1,6 +1,6 @@
 {
-  "_comment": "Source unique des opérations carburant à prix coûtant. Ce fichier alimente le composant ProchaineOperation.astro et, à terme, les articles mensuels. Ne jamais recopier une date à la main dans un article : l'ajouter ici. Les enseignes annoncent leurs opérations 2 à 3 jours à l'avance seulement, ce fichier est donc à mettre à jour en début de semaine. Champs : start/end au format AAAA-MM-JJ (dates incluses), type 'prix-coutant' ou 'plafonnement', status 'confirmee' (annoncée officiellement par l'enseigne) ou 'terminee'. Ne jamais saisir une opération non annoncée : les fenêtres seulement probables vont dans fenetresProbables.",
-  "_updatedAt": "2026-09-17",
+  "_comment": "Source unique des opérations carburant à prix coûtant. Ce fichier alimente le composant ProchaineOperation.astro et, à terme, les articles mensuels. Ne jamais recopier une date à la main dans un article : l'ajouter ici. Les enseignes annoncent leurs opérations 2 à 3 jours à l'avance seulement, ce fichier est donc à mettre à jour en début de semaine. Champs : start/end au format AAAA-MM-JJ (dates incluses), type 'prix-coutant' ou 'plafonnement', status 'confirmee' (annoncée officiellement par l'enseigne) ou 'terminee'. Ne jamais saisir une opération non annoncée : les fenêtres seulement probables vont dans fenetresProbables. Les opérations d'un seul magasin vont dans operationsLocales, jamais dans operations : 'operations' est raisonné au niveau enseigne et déclenche le bandeau national, qui annoncerait à toute la France une offre valable dans une seule station.",
+  "_updatedAt": "2026-09-19",
   "operations": [
     {
       "id": "leclerc-2026-07-03",
@@ -77,6 +77,27 @@
       "source": "Annonce TotalEnergies",
       "sourceUrl": "",
       "sourceArticle": "totalenergies-plafonne-a-nouveau-carburant-2026"
+    }
+  ],
+  "_commentLocales": "Opérations limitées à un seul point de vente (anniversaire de magasin, ouverture...). Elles ne sont jamais reprises par AlertePrixCoutant ni comptées comme opération nationale : elles n'apparaissent que dans un encadré distinct de /prix-coutant-carburant/.",
+  "operationsLocales": [
+    {
+      "id": "leclerc-talence-2026-09-22",
+      "brand": "leclerc",
+      "brandName": "E.Leclerc",
+      "type": "prix-coutant",
+      "status": "confirmee",
+      "start": "2026-09-22",
+      "end": "2026-10-04",
+      "stationId": "33402001",
+      "ville": "Talence",
+      "cp": "33400",
+      "adresse": "rue Pacaris",
+      "fuels": "Tous carburants",
+      "note": "Opération d'anniversaire du magasin, limitée à cette station. Le prospectus définit le prix coûtant comme prix d'achat + TVA + transport, sans carte ni montant d'achat minimum.",
+      "source": "Catalogue anniversaire du magasin, dates confirmées sur la fiche e.leclerc.fr du centre",
+      "sourceUrl": "https://www.e.leclerc/mag/e-leclerc-talence",
+      "sourceArticle": "leclerc-talence-prix-coutant-anniversaire-2026"
     }
   ],
   "fenetresProbables": [

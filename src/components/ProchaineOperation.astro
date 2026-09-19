@@ -12,13 +12,14 @@
  * annoncée ; les décrochages seulement mesurés dans l'open data sont rendus
  * plus bas, dans un bloc distinct qui ne les présente pas comme confirmés.
  */
-import { etatPrixCoutant, toDate, PARIS_TZ, type Operation } from '../utils/prix-coutant';
+import { etatPrixCoutant, toDate, PARIS_TZ, type Operation, type OperationLocale } from '../utils/prix-coutant';
 import BrandLogo from './BrandLogo.astro';
 
 const {
   weekendStart,
   weekendEnd,
   prixCoutant,
+  locales,
   plafonnements,
   prochaineFenetre,
   signaux,
@@ -61,7 +62,7 @@ const fmtJourSansMois = new Intl.DateTimeFormat('fr-FR', {
   day: 'numeric',
 });
 
-function periode(op: Operation): string {
+function periode(op: Operation | OperationLocale): string {
   const debut = toDate(op.start);
   const fin = toDate(op.end);
   if (op.start === op.end) return `le ${fmtJourAnnee.format(debut)}`;
@@ -125,6 +126,20 @@ const fmtHeure = new Intl.DateTimeFormat('fr-FR', {
         via leur application ou par affichage en magasin. Cette page est mise à jour
         plusieurs fois par jour : si une annonce tombe d'ici vendredi, elle apparaîtra ici.
       </p>
+      {locales.map((op) => (
+        <p class="pco-locale">
+          <span class="pco-locale-label">Une exception, dans un seul magasin</span>
+          <span>
+            Le centre <strong>{op.brandName} de {op.ville}</strong> ({op.adresse}, {op.cp})
+            vend à prix coûtant {periode(op)}, à l'occasion de l'anniversaire du magasin.
+            {' '}{op.fuels}, sans carte ni montant d'achat minimum. C'est une opération
+            de magasin et non une opération de l'enseigne : elle ne concerne aucune
+            autre station du réseau.
+            {' '}<a href={`/blog/${op.sourceArticle}/`}>Lire notre article sur cette opération →</a>
+          </span>
+        </p>
+      ))}
+
       {prochaineFenetre && (
         <p class="pco-fenetre">
           <span class="pco-fenetre-label">Prochaine fenêtre probable</span>
@@ -245,6 +260,32 @@ const fmtHeure = new Intl.DateTimeFormat('fr-FR', {
 
   .pco-empty p { margin: 0 0 0.75rem; font-size: 0.9375rem; line-height: 1.6; }
   .pco-empty p:last-child { margin-bottom: 0; }
+  /* Exception locale : signalée en vert comme une opération réelle, mais dans
+     le bloc "aucune opération" et avec sa propre étiquette, pour qu'on ne
+     puisse pas la lire comme une opération d'enseigne. */
+  .pco-locale {
+    display: grid;
+    gap: 0.2rem;
+    margin: 0 0 0.75rem;
+    padding: 0.75rem 0.9rem;
+    background: #f0fdf4;
+    border: 1px solid #bbf7d0;
+    border-left: 4px solid #16a34a;
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+  }
+  .pco-locale-label {
+    font-size: 0.6875rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: #15803d;
+  }
+  .pco-locale a {
+    font-weight: 700;
+    white-space: nowrap;
+  }
+
   .pco-fenetre {
     display: grid;
     gap: 0.2rem;

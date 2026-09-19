@@ -39,6 +39,33 @@ export interface Operation {
   hasStationList?: boolean;
 }
 
+/**
+ * Opération limitée à un seul point de vente (anniversaire de magasin,
+ * ouverture...). Volontairement typée à part de `Operation` : ces deux objets
+ * ne doivent jamais transiter par le même tableau. Une opération d'un magasin
+ * affichée au niveau enseigne annoncerait à toute la France une offre valable
+ * dans une station sur 577.
+ */
+export interface OperationLocale {
+  id: string;
+  brand: string;
+  brandName: string;
+  type: string;
+  status: string;
+  start: string;
+  end: string;
+  /** Identifiant de la station dans l'open data (src/data/fuel/). */
+  stationId: string;
+  ville: string;
+  cp: string;
+  adresse: string;
+  fuels: string;
+  note: string;
+  source: string;
+  sourceUrl: string;
+  sourceArticle: string;
+}
+
 export interface Signal {
   brand: string;
   brandName: string;
@@ -102,10 +129,22 @@ export function etatPrixCoutant() {
   const surLeWeekend = (op: Operation) => op.start <= weekendEnd && op.end >= weekendStart;
   const active = operations.filter(surLeWeekend);
 
+  // Opérations d'un seul magasin. Elles durent souvent bien plus longtemps
+  // qu'un week-end (13 jours pour un anniversaire de centre), donc la fenêtre
+  // du week-end ne convient pas : on retient celles qui ne sont pas terminées
+  // et qui commencent dans la semaine ou ont déjà commencé.
+  const horizonLocal = addDays(today, 7);
+  const locales = (operationsData.operationsLocales ?? []) as OperationLocale[];
+
   return {
     today,
     weekendStart,
     weekendEnd,
+
+    /** Opérations locales en cours ou imminentes. Servies uniquement à
+     *  /prix-coutant-carburant/, jamais au bandeau site. */
+    locales: locales.filter((op) => op.end >= today && op.start <= horizonLocal),
+
     prixCoutant: active.filter((op) => op.type === 'prix-coutant'),
     plafonnements: active.filter((op) => op.type === 'plafonnement'),
     prochaineFenetre: fenetres.find((f) => f.to >= today),
