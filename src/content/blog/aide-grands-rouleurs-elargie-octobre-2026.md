@@ -9,73 +9,67 @@ author: "hugo-beignon"
 category: "carburants"
 tags: ["actualite", "indemnite-carburant", "aide-gouvernementale", "grands-rouleurs", "2026", "septembre-2026"]
 featuredImage: "../../assets/articles/aide-grands-rouleurs-elargie-octobre-2026.webp"
-imageAlt: "Main tenant un pistolet de pompe à essence pendant le plein d'un véhicule"
+imageAlt: "Station-service Esso de l'aire du Guiers sur l'A43, de nuit, avec un automobiliste en train de faire le plein"
 readingTime: 5
 relatedArticles: ["indemnite-carburant-2026", "reconduction-aides-carburant-budget-2027", "indemnite-carburant-delai-rallonge-2026"]
 ctaTitle: "Trouvez la station la moins chère près de chez vous"
 ctaDescription: "Notre comparateur référence les prix de plus de 11 000 stations-service en France, mis à jour quotidiennement via les données officielles."
 faq:
   - question: "Quelle est la nouvelle aide carburant annoncée le 22 septembre 2026 ?"
-    answer: "Le gouvernement prolonge l'aide aux travailleurs grands rouleurs pour octobre, novembre et décembre 2026. Il s'agit d'un nouveau versement forfaitaire de 100 €, présenté comme l'équivalent de 40 centimes par litre sur deux mois de consommation moyenne, contre 20 centimes par litre pour la première aide."
+    answer: "C'est la suite de l'aide aux travailleurs grands rouleurs. Un nouveau versement de 100 € couvre octobre, novembre et décembre 2026. Le gouvernement le présente comme l'équivalent de 40 centimes par litre sur deux mois de consommation moyenne, soit deux fois plus que la première aide."
   - question: "Qui a droit à la nouvelle aide carburant ?"
-    answer: "Le dispositif est élargi à 5,5 millions de Français, contre 3 millions auparavant. Les plafonds de revenus sont relevés : environ 2 050 € nets par mois pour une personne seule et 6 100 € nets par mois pour un couple avec enfant. Les conditions de distance restent les mêmes : plus de 15 km entre domicile et travail, ou plus de 8 000 km par an à titre professionnel, avec un véhicule thermique ou hybride non rechargeable."
+    answer: "Environ 5,5 millions de personnes, contre 3 millions jusqu'ici, grâce à des plafonds de revenus relevés : autour de 2 050 € nets par mois pour une personne seule et 6 100 € pour un couple avec enfant. Il faut toujours rouler en essence, diesel ou hybride non rechargeable, et faire plus de 15 km entre domicile et travail ou plus de 8 000 km par an pour le travail."
   - question: "Faut-il refaire une demande pour toucher les 100 € d'octobre ?"
-    answer: "Non si vous avez déjà perçu la première aide de 100 € : les quelque 1,2 million de bénéficiaires recevront le nouveau versement automatiquement, sans démarche. Les nouveaux éligibles devront vérifier leur situation et faire leur demande sur une plateforme en ligne qui ouvrira en octobre sur impots.gouv.fr."
+    answer: "Pas si vous avez déjà touché la première aide : les quelque 1,2 million de bénéficiaires seront payés automatiquement. Les nouveaux éligibles, eux, passeront par une plateforme en ligne qui doit ouvrir en octobre sur impots.gouv.fr."
   - question: "Je n'ai pas encore demandé la première aide, est-il trop tard ?"
-    answer: "Non, le guichet de la première aide reste ouvert jusqu'au 30 septembre 2026 sur impots.gouv.fr. Si vous êtes éligible aux conditions actuelles, déposer votre demande avant cette date vous permet aussi de bénéficier ensuite du versement automatique d'octobre."
+    answer: "Non, le guichet reste ouvert jusqu'au 30 septembre 2026 sur impots.gouv.fr. Si vous remplissez déjà les conditions actuelles, faites-le avant cette date : vous toucherez les 100 € de la première aide, puis le versement d'octobre sans rien avoir à refaire."
   - question: "Quelles autres mesures accompagnent cette nouvelle aide ?"
-    answer: "Le plafond de la prime carburant versée par l'employeur passe de 600 à 1 000 € par an, un bonus de 80 € vise environ 25 000 infirmières libérales rurales parcourant plus de 100 km par jour, les aides à l'agriculture, au BTP et à la pêche sont prolongées jusqu'à fin 2026, et le chèque énergie sera versé dès janvier. L'ensemble représente 450 millions d'euros."
+    answer: "La prime carburant versée par l'employeur peut monter à 1 000 € par an sans impôt (contre 600 €), les infirmières libérales rurales touchent un bonus de 80 €, les aides à l'agriculture, au BTP et à la pêche sont prolongées jusqu'à fin 2026, et le chèque énergie arrivera dès janvier. Le tout coûte 450 millions d'euros."
 draft: false
 ---
 
-Oui, une nouvelle aide est bien disponible pour les automobilistes. Face à un gazole à **2,41 €/L** en moyenne, le gouvernement a présenté à Bercy, ce mardi **22 septembre 2026**, un plan de **450 millions d'euros**. Mesure phare : l'aide aux travailleurs « grands rouleurs » est **prolongée jusqu'à fin 2026** et **élargie à 5,5 millions de Français**, contre 3 millions jusqu'ici.
+Oui, il y a bien une nouvelle aide. Et elle tombe au bon moment : le gazole est à **2,41 € le litre** en moyenne, soit environ 80 centimes de plus qu'en décembre dernier. Ce mardi **22 septembre 2026**, à Bercy, le gouvernement a sorti un plan de **450 millions d'euros**. Au cœur du dispositif, l'aide aux « grands rouleurs » continue jusqu'à la fin de l'année, et beaucoup plus de monde va pouvoir la toucher : **5,5 millions de Français**, contre 3 millions jusqu'ici.
 
-## Ce qui change : 100 € pour octobre, novembre et décembre
+<p class="text-sm text-slate-500 italic">Photo : Sebleouf, <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.fr" target="_blank" rel="noopener">CC BY-SA 4.0</a>, via <a href="https://commons.wikimedia.org/wiki/File:Aire_du_Guiers_(A43)_-_Station_Esso_de_nuit_(janv_2026).jpg" target="_blank" rel="noopener">Wikimedia Commons</a>. Station Esso de l'aire du Guiers (A43), janvier 2026, image recadrée.</p>
 
-La première aide de 100 € couvrait la période d'avril à septembre 2026 (nous en détaillions les règles dans notre [article de référence sur l'indemnité carburant 2026](/blog/indemnite-carburant-2026/)). Le nouveau versement, toujours de **100 €**, couvre cette fois **trois mois seulement** : octobre, novembre et décembre.
+## 100 € de plus pour finir l'année
 
-Pour **Maud Bregeon**, porte-parole du gouvernement et ministre déléguée à l'Énergie, cette aide « représentera l'équivalent de 40 centimes par litre de carburant pour deux mois en moyenne ». C'est deux fois plus que la première version, calibrée à environ 20 centimes par litre. La présentation s'est faite aux côtés de **Roland Lescure**, ministre de l'Économie.
+La première aide de 100 € couvrait avril à septembre (tout est expliqué dans notre [article sur l'indemnité carburant 2026](/blog/indemnite-carburant-2026/)). Le nouveau chèque est du même montant, mais il ne couvre que trois mois : octobre, novembre et décembre. Autrement dit, l'aide est deux fois plus généreuse par mois.
 
-## Qui peut en bénéficier
+Maud Bregeon, porte-parole du gouvernement et ministre déléguée à l'Énergie, a fait le calcul devant la presse : ces 100 € représentent « l'équivalent de 40 centimes par litre de carburant pour deux mois en moyenne ». La première version tournait plutôt autour de 20 centimes.
 
-Le principal changement tient aux plafonds de revenus, nettement relevés. Jusqu'ici, il fallait un revenu fiscal de référence inférieur ou égal à 16 880 € par part. Les nouveaux seuils annoncés sont d'environ :
+Prenons un cas concret. Vous habitez à 30 km de votre boulot et votre voiture consomme 6 L aux 100 km. Sur trois mois, ça fait environ 230 litres. Avec la hausse depuis décembre, ces pleins vous coûtent à peu près 180 € de plus qu'il y a un an. Les 100 € en couvrent donc un peu plus de la moitié. Ça ne règle pas tout, mais ça aide.
 
-- **2 050 € nets par mois** pour une personne seule ;
-- **6 100 € nets par mois** pour un couple avec enfant.
+## Qui peut la toucher
 
-Les autres conditions ne bougent pas :
+Le vrai changement, ce sont les plafonds de revenus. Jusqu'à présent, il fallait un revenu fiscal de référence de 16 880 € maximum par part, ce qui excluait beaucoup de salariés modestes mais pas pauvres. Les nouveaux seuils annoncés tournent autour de **2 050 € nets par mois** pour une personne seule et **6 100 € nets par mois** pour un couple avec enfant. Ça fait 2,5 millions de personnes en plus.
 
-- utiliser un véhicule **essence, diesel ou hybride non rechargeable** ;
-- faire **plus de 15 km** entre domicile et travail (soit 30 km aller-retour), **ou** parcourir **plus de 8 000 km par an** dans un cadre professionnel ;
-- pour les aides à domicile, le seuil est fixé à 30 km par jour.
+Pour le reste, rien ne bouge. Il faut rouler avec une voiture essence, diesel ou hybride non rechargeable (les électriques et les hybrides rechargeables restent exclus), et faire au moins 15 km entre chez soi et le travail, soit 30 km aller-retour. Ceux qui roulent beaucoup pour leur métier peuvent aussi passer par l'autre critère : plus de 8 000 km par an à titre professionnel. Pour les aides à domicile, le seuil est fixé à 30 km par jour.
 
-Résultat : **2,5 millions de personnes supplémentaires** deviennent éligibles.
+## Comment la demander
 
-## Comment toucher l'aide
+Ça dépend de votre situation.
 
-Tout dépend de votre situation :
+Si vous avez déjà touché les 100 € de la première aide, vous n'avez rien à faire. Le versement sera automatique pour les quelque **1,2 million de personnes** déjà payées. C'est une bonne nouvelle, parce que la première fois, à peine une personne éligible sur deux avait fait la démarche.
 
-- **Vous avez déjà perçu la première aide** : vous n'avez rien à faire. Les quelque **1,2 million de bénéficiaires** recevront le versement **automatiquement**.
-- **Vous êtes éligible mais n'avez pas encore fait la demande** : le guichet de la première aide reste ouvert **jusqu'au 30 septembre 2026** sur impots.gouv.fr (nous expliquions pourquoi il avait été prolongé dans notre [article sur le délai rallongé](/blog/indemnite-carburant-delai-rallonge-2026/)). Il reste donc une petite semaine pour en profiter.
-- **Vous devenez éligible grâce aux nouveaux plafonds** : une plateforme en ligne ouvrira **en octobre** sur impots.gouv.fr pour vérifier votre éligibilité et faire la demande. Il faudra, comme pour la première aide, votre numéro fiscal et l'immatriculation du véhicule.
+Si vous étiez éligible mais n'avez jamais fait la demande, dépêchez-vous : le guichet de la première aide ferme le **30 septembre 2026** sur impots.gouv.fr (il avait déjà été prolongé cet été, on en parlait dans notre [article sur le délai rallongé](/blog/indemnite-carburant-delai-rallonge-2026/)). Il vous reste une semaine, et en passant maintenant, vous serez ensuite payé automatiquement pour octobre.
 
-Point de vigilance : seule la moitié environ des éligibles avait demandé la première aide. Le versement automatique vise justement à corriger ce faible taux de recours.
+Enfin, si vous ne remplissiez pas les conditions jusqu'ici mais que les nouveaux plafonds vous font entrer dans les clous, il faudra attendre octobre. Une plateforme en ligne doit ouvrir sur impots.gouv.fr pour vérifier votre éligibilité et déposer la demande. Gardez sous la main votre numéro fiscal et la carte grise du véhicule.
 
-## Les autres mesures du plan
+## Ce qu'il y a d'autre dans le plan
 
-L'aide grands rouleurs n'est pas la seule annonce du jour :
+Les grands rouleurs ne sont pas les seuls concernés. Si votre employeur vous verse une prime carburant, elle peut maintenant aller jusqu'à **1 000 € par an** sans être imposée, contre 600 € avant. Ça vaut le coup d'en parler aux RH.
 
-- **Prime carburant employeur** : le plafond d'exonération passe exceptionnellement de **600 à 1 000 €** par an et par salarié.
-- **Infirmières libérales rurales** : un bonus de **80 €** pour environ 25 000 professionnelles parcourant plus de 100 km par jour, en complément des 100 €, avec des reports de cotisations Urssaf sans pénalité.
-- **Agriculture, BTP et pêche** : les aides sectorielles sont prolongées jusqu'à fin 2026, avec des prêts à taux zéro pour les pêcheurs à partir du 1er octobre.
-- **Chèque énergie** : confirmé dans le budget 2027, comme annoncé fin août (voir notre [article sur la reconduction des aides](/blog/reconduction-aides-carburant-budget-2027/)), et versé dès **janvier** au lieu d'avril à 4,5 millions de foyers.
+Les infirmières libérales qui exercent à la campagne et font plus de 100 km par jour (environ 25 000 personnes) auront droit à un bonus de **80 €** en plus des 100 €, et pourront décaler leurs cotisations Urssaf sans pénalité. Côté pros, les aides à l'agriculture, au BTP et à la pêche sont prolongées jusqu'à fin 2026, et les pêcheurs pourront emprunter à taux zéro dès le 1er octobre.
 
-En revanche, le gouvernement écarte toujours une baisse générale des taxes et un blocage des prix à la pompe.
+Le chèque énergie, lui, est confirmé dans le budget 2027, comme la ministre l'avait laissé entendre fin août (voir notre [article sur la reconduction des aides](/blog/reconduction-aides-carburant-budget-2027/)). Petite nouveauté : il sera envoyé dès janvier, et non plus en avril, à 4,5 millions de foyers.
 
-## En attendant le versement
+Par contre, pas de baisse de taxes à la pompe ni de blocage des prix. Le gouvernement reste sur des aides ciblées.
 
-100 € sur trois mois, c'est utile, mais cela ne compense qu'une partie de la hausse : le gazole a pris environ 80 centimes par litre depuis décembre 2025. Le réflexe le plus rentable reste de comparer les prix avant chaque plein grâce à notre [comparateur en temps réel](/prix-carburants/), qui référence plus de 11 000 stations. Pour des économies durables, notre guide [réduire sa facture de carburant](/piliers/reduire-facture-carburant/) rassemble les leviers chiffrés.
+## En attendant le virement
 
-Cet article sera mis à jour dès la publication du décret et l'ouverture de la nouvelle plateforme de demande.
+La façon la plus simple de gratter quelques euros à chaque plein reste de comparer avant de s'arrêter. Entre deux stations de la même ville, l'écart peut facilement dépasser 10 centimes par litre. Notre [comparateur en temps réel](/prix-carburants/) suit plus de 11 000 stations, et notre guide pour [réduire sa facture de carburant](/piliers/reduire-facture-carburant/) rassemble les autres astuces qui marchent vraiment.
+
+On mettra cet article à jour dès que le décret sera publié et que la nouvelle plateforme ouvrira.
 
 Sources : [France 24](https://www.france24.com/fr/france/20260922-carburants-face-%C3%A0-l-inqui%C3%A9tude-des-fran%C3%A7ais-l-aide-aux-grands-rouleurs-prolong%C3%A9e-et-%C3%A9largie), [Europe 1](https://europe1.fr/societe/en-direct-carburants-les-aides-aux-gros-rouleurs-elargies-a-55-millions-de-francais-1095299), [Tout sur mes finances](https://www.toutsurmesfinances.com/actualites/a/aide-carburant-25-millions-de-francais-eligibles-en-plus-100-euros-verses-automatiquement-a-12-million-de-beneficiaires) et [L'Automobiliste](https://lautomobiliste.fr/22/09/2026/carburant-gouvernement-aides-ciblees/).
