@@ -13,14 +13,14 @@ imageAlt: "Station-service Esso de l'aire du Guiers sur l'A43, de nuit, avec un 
 readingTime: 5
 relatedArticles: ["indemnite-carburant-2026", "reconduction-aides-carburant-budget-2027", "indemnite-carburant-delai-rallonge-2026"]
 ctaTitle: "Trouvez la station la moins chère près de chez vous"
-ctaDescription: "Notre comparateur référence les prix de plus de 11 000 stations-service en France, mis à jour quotidiennement via les données officielles."
+ctaDescription: "Notre comparateur référence les prix de près de 10 000 stations-service en France, mis à jour quotidiennement via les données officielles."
 faq:
   - question: "Quelle est la nouvelle aide carburant annoncée le 22 septembre 2026 ?"
-    answer: "C'est la suite de l'aide aux travailleurs grands rouleurs. Un nouveau versement de 100 € couvre octobre, novembre et décembre 2026. Le gouvernement le présente comme l'équivalent de 40 centimes par litre sur deux mois de consommation moyenne, soit deux fois plus que la première aide."
+    answer: "C'est la suite de l'aide aux travailleurs grands rouleurs. Un nouveau versement de 100 € couvre octobre, novembre et décembre 2026. Le gouvernement le présente comme l'équivalent de 40 centimes par litre de carburant, soit deux fois plus que la première aide (20 centimes)."
   - question: "Qui a droit à la nouvelle aide carburant ?"
-    answer: "Environ 5,5 millions de personnes, contre 3 millions jusqu'ici, grâce à des plafonds de revenus relevés : autour de 2 050 € nets par mois pour une personne seule et 6 100 € pour un couple avec enfant. Il faut toujours rouler en essence, diesel ou hybride non rechargeable, et faire plus de 15 km entre domicile et travail ou plus de 8 000 km par an pour le travail."
+    answer: "Environ 5,5 millions de personnes, contre 3 millions jusqu'ici, grâce à des plafonds de revenus relevés : 2 035 € nets par mois pour une personne seule et jusqu'à 6 000 € nets par mois pour un couple avec deux enfants. Ces seuils seront traduits en revenu fiscal de référence dans le décret, pas encore publié. Il faut toujours rouler en essence, diesel ou hybride non rechargeable, et faire plus de 15 km entre domicile et travail ou plus de 8 000 km par an pour le travail."
   - question: "Faut-il refaire une demande pour toucher les 100 € d'octobre ?"
-    answer: "Pas si vous avez déjà touché la première aide : les quelque 1,2 million de bénéficiaires seront payés automatiquement. Les nouveaux éligibles, eux, passeront par une plateforme en ligne qui doit ouvrir en octobre sur impots.gouv.fr."
+    answer: "Pas si vous avez déjà touché la première aide : les quelque 1,2 million de bénéficiaires seront payés automatiquement. Les nouveaux éligibles, eux, passeront par une plateforme en ligne que le gouvernement prévoit d'ouvrir début octobre sur impots.gouv.fr (date exacte pas encore fixée)."
   - question: "Je n'ai pas encore demandé la première aide, est-il trop tard ?"
     answer: "Non, le guichet reste ouvert jusqu'au 30 septembre 2026 sur impots.gouv.fr. Si vous remplissez déjà les conditions actuelles, faites-le avant cette date : vous toucherez les 100 € de la première aide, puis le versement d'octobre sans rien avoir à refaire."
   - question: "Quelles autres mesures accompagnent cette nouvelle aide ?"
@@ -36,13 +36,15 @@ Oui, il y a bien une nouvelle aide. Et elle tombe au bon moment : le gazole est 
 
 La première aide de 100 € couvrait avril à septembre (tout est expliqué dans notre [article sur l'indemnité carburant 2026](/blog/indemnite-carburant-2026/)). Le nouveau chèque est du même montant, mais il ne couvre que trois mois : octobre, novembre et décembre. Autrement dit, l'aide est deux fois plus généreuse par mois.
 
-Maud Bregeon, porte-parole du gouvernement et ministre déléguée à l'Énergie, a fait le calcul devant la presse : ces 100 € représentent « l'équivalent de 40 centimes par litre de carburant pour deux mois en moyenne ». La première version tournait plutôt autour de 20 centimes.
+Maud Bregeon, porte-parole du gouvernement et ministre déléguée à l'Énergie, a fait le calcul devant la presse : ces 100 € représentent l'équivalent de **40 centimes par litre** de carburant. La première version tournait autour de 20 centimes.
 
 Prenons un cas concret. Vous habitez à 30 km de votre boulot et votre voiture consomme 6 L aux 100 km. Sur trois mois, ça fait environ 230 litres. Avec la hausse depuis décembre, ces pleins vous coûtent à peu près 180 € de plus qu'il y a un an. Les 100 € en couvrent donc un peu plus de la moitié. Ça ne règle pas tout, mais ça aide.
 
 ## Qui peut la toucher
 
-Le vrai changement, ce sont les plafonds de revenus. Jusqu'à présent, il fallait un revenu fiscal de référence de 16 880 € maximum par part, ce qui excluait beaucoup de salariés modestes mais pas pauvres. Les nouveaux seuils annoncés tournent autour de **2 050 € nets par mois** pour une personne seule et **6 100 € nets par mois** pour un couple avec enfant. Ça fait 2,5 millions de personnes en plus.
+Le vrai changement, ce sont les plafonds de revenus. Jusqu'à présent, il fallait un revenu fiscal de référence de 16 880 € maximum par part, ce qui excluait beaucoup de salariés modestes mais pas pauvres. Les nouveaux seuils annoncés sont de **2 035 € nets par mois** pour une personne seule (contre environ 1 500 € avec l'ancienne règle) et jusqu'à **6 000 € nets par mois** pour un couple avec deux enfants. Ça fait 2,5 millions de personnes en plus.
+
+Précision importante : ces montants sont ceux annoncés par le gouvernement le 22 septembre. Le décret qui les traduira en revenu fiscal de référence n'est pas encore paru. Pour savoir si vous êtes concerné, le plus sûr sera le simulateur d'impots.gouv.fr dès son ouverture.
 
 Pour le reste, rien ne bouge. Il faut rouler avec une voiture essence, diesel ou hybride non rechargeable (les électriques et les hybrides rechargeables restent exclus), et faire au moins 15 km entre chez soi et le travail, soit 30 km aller-retour. Ceux qui roulent beaucoup pour leur métier peuvent aussi passer par l'autre critère : plus de 8 000 km par an à titre professionnel. Pour les aides à domicile, le seuil est fixé à 30 km par jour.
 
@@ -54,7 +56,7 @@ Si vous avez déjà touché les 100 € de la première aide, vous n'avez rien �
 
 Si vous étiez éligible mais n'avez jamais fait la demande, dépêchez-vous : le guichet de la première aide ferme le **30 septembre 2026** sur impots.gouv.fr (il avait déjà été prolongé cet été, on en parlait dans notre [article sur le délai rallongé](/blog/indemnite-carburant-delai-rallonge-2026/)). Il vous reste une semaine, et en passant maintenant, vous serez ensuite payé automatiquement pour octobre.
 
-Enfin, si vous ne remplissiez pas les conditions jusqu'ici mais que les nouveaux plafonds vous font entrer dans les clous, il faudra attendre octobre. Une plateforme en ligne doit ouvrir sur impots.gouv.fr pour vérifier votre éligibilité et déposer la demande. Gardez sous la main votre numéro fiscal et la carte grise du véhicule.
+Enfin, si vous ne remplissiez pas les conditions jusqu'ici mais que les nouveaux plafonds vous font entrer dans les clous, il faudra attendre un peu. Le gouvernement prévoit d'ouvrir début octobre une plateforme sur impots.gouv.fr (la date exacte n'est pas encore annoncée) pour vérifier votre éligibilité et déposer la demande. Gardez sous la main votre numéro fiscal et la carte grise du véhicule.
 
 ## Ce qu'il y a d'autre dans le plan
 
@@ -68,8 +70,8 @@ Par contre, pas de baisse de taxes à la pompe ni de blocage des prix. Le gouver
 
 ## En attendant le virement
 
-La façon la plus simple de gratter quelques euros à chaque plein reste de comparer avant de s'arrêter. Entre deux stations de la même ville, l'écart peut facilement dépasser 10 centimes par litre. Notre [comparateur en temps réel](/prix-carburants/) suit plus de 11 000 stations, et notre guide pour [réduire sa facture de carburant](/piliers/reduire-facture-carburant/) rassemble les autres astuces qui marchent vraiment.
+La façon la plus simple de gratter quelques euros à chaque plein reste de comparer avant de s'arrêter. D'après nos relevés du 22 septembre 2026, dans 9 villes sur 10 parmi celles que nous suivons (au moins quatre stations), l'écart de prix du gazole entre la station la moins chère et la plus chère dépasse 10 centimes par litre, et il est d'environ 20 centimes dans une ville sur deux. Notre [comparateur en temps réel](/prix-carburants/) suit près de 10 000 stations, et notre guide pour [réduire sa facture de carburant](/piliers/reduire-facture-carburant/) rassemble les autres astuces qui marchent vraiment.
 
 On mettra cet article à jour dès que le décret sera publié et que la nouvelle plateforme ouvrira.
 
-Sources : [France 24](https://www.france24.com/fr/france/20260922-carburants-face-%C3%A0-l-inqui%C3%A9tude-des-fran%C3%A7ais-l-aide-aux-grands-rouleurs-prolong%C3%A9e-et-%C3%A9largie), [Europe 1](https://europe1.fr/societe/en-direct-carburants-les-aides-aux-gros-rouleurs-elargies-a-55-millions-de-francais-1095299), [Tout sur mes finances](https://www.toutsurmesfinances.com/actualites/a/aide-carburant-25-millions-de-francais-eligibles-en-plus-100-euros-verses-automatiquement-a-12-million-de-beneficiaires) et [L'Automobiliste](https://lautomobiliste.fr/22/09/2026/carburant-gouvernement-aides-ciblees/).
+Sources : [France 24](https://www.france24.com/fr/france/20260922-carburants-face-%C3%A0-l-inqui%C3%A9tude-des-fran%C3%A7ais-l-aide-aux-grands-rouleurs-prolong%C3%A9e-et-%C3%A9largie), [Europe 1](https://europe1.fr/societe/en-direct-carburants-les-aides-aux-gros-rouleurs-elargies-a-55-millions-de-francais-1095299), [Tout sur mes finances](https://www.toutsurmesfinances.com/actualites/a/aide-carburant-25-millions-de-francais-eligibles-en-plus-100-euros-verses-automatiquement-a-12-million-de-beneficiaires), [LégiFiscal](https://www.legifiscal.fr/actualites-fiscales/4646-nouveau-plan-aide-face-hausse-carburant.html), [Stéphane Larue](https://stephanelarue.com/aide-grands-rouleurs-5-5-millions-d-eligibles-le-plafond-passe-a-2-035-euros-par-mois/) et [L'Automobiliste](https://lautomobiliste.fr/22/09/2026/carburant-gouvernement-aides-ciblees/). Écarts de prix entre stations : données officielles [prix-carburants.gouv.fr](https://donnees.roulez-eco.fr/opendata/instantane) du 22 septembre 2026.
