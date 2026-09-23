@@ -24,7 +24,7 @@ faq:
   - question: "Je n'ai pas encore demandé la première aide, est-il trop tard ?"
     answer: "Non, le formulaire de la première aide reste ouvert jusqu'au 30 septembre 2026 sur impots.gouv.fr, pour les personnes qui remplissent les conditions actuelles (revenu fiscal de référence 2024 inférieur ou égal à 16 880 € par part). Le gouvernement n'a pas précisé si une demande déposée d'ici là donnera droit au versement automatique d'octobre."
   - question: "Quelles autres mesures accompagnent cette nouvelle aide ?"
-    answer: "Le plafond d'exonération de la prime carburant versée par l'employeur passe de 600 à 1 000 € par an, un bonus de 80 € est prévu pour environ 25 000 infirmières libérales rurales, les aides à l'agriculture, au BTP et à la pêche sont prolongées jusqu'à fin 2026, et le chèque énergie sera versé dès janvier. Le gouvernement chiffre l'ensemble à 450 millions d'euros."
+    answer: "Le plafond d'exonération de la prime carburant versée par l'employeur passe de 600 à 1 000 € par an, un bonus de 80 € est prévu pour les infirmières libérales exerçant en zone rurale, les aides à l'agriculture, au BTP et à la pêche sont prolongées jusqu'à fin 2026, et le chèque énergie est maintenu dans le budget 2027. Le gouvernement chiffre l'ensemble à 450 millions d'euros."
 draft: false
 ---
 
@@ -67,9 +67,9 @@ Les autres conditions annoncées ne changent pas : rouler avec un véhicule esse
 ## Les autres mesures du plan
 
 - **Prime carburant employeur** : le plafond d'exonération (impôt et cotisations) passe de **600 à 1 000 € par an** et par salarié. Cette prime reste facultative : c'est à l'employeur de décider de la verser.
-- **Infirmières libérales rurales** : un bonus de **80 €** pour environ 25 000 professionnelles parcourant plus de 100 km par jour, en plus de l'aide de 100 €, avec des reports de cotisations Urssaf sans pénalité.
-- **Agriculture, BTP et pêche** : les aides sectorielles sont prolongées jusqu'au 31 décembre 2026, avec des prêts à taux zéro pour les pêcheurs à partir du 1er octobre.
-- **Chèque énergie** : maintenu dans le budget 2027 et versé dès **janvier** au lieu d'avril, à 4,5 millions de foyers (voir notre [article sur la reconduction des aides](/blog/reconduction-aides-carburant-budget-2027/)).
+- **Infirmières libérales rurales** : un bonus de **80 €** pour les infirmières libérales exerçant en zone rurale.
+- **Agriculture, BTP et pêche** : les aides sectorielles sont prolongées jusqu'à fin 2026.
+- **Chèque énergie** : maintenu dans le budget 2027 (voir notre [article sur la reconduction des aides](/blog/reconduction-aides-carburant-budget-2027/)).
 
 Le plan ne contient ni baisse des taxes sur les carburants, ni blocage des prix à la pompe.
 
