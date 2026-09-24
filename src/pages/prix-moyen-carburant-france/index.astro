@@ -19,12 +19,47 @@ const FUELS: { key: FuelStatKey; label: string }[] = [
 const history = priceHistory as { date: string; prices: Partial<Record<FuelStatKey, number>> }[];
 const recentHistory = history.slice(-30).slice().reverse();
 
+const dateFormatter = new Intl.DateTimeFormat('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
+
 const lastUpdateDate = fuelMeta.lastUpdate ? new Date(fuelMeta.lastUpdate) : new Date();
 const monthLabel = new Intl.DateTimeFormat('fr-FR', { month: 'long', year: 'numeric', timeZone: 'Europe/Paris' }).format(lastUpdateDate);
 const lastUpdateLabel = `${new Intl.DateTimeFormat('fr-FR', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'Europe/Paris' }).format(lastUpdateDate)} à ${new Intl.DateTimeFormat('fr-FR', { hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Paris' }).format(lastUpdateDate)}`;
 
-const title = `Prix moyen carburant en France : ${monthLabel}`;
-const description = `Prix moyen officiel du gazole, SP95, SP95-E10, SP98, E85 et GPL en France en ${monthLabel}. Données actualisées quotidiennement (ministère de l'Économie).`;
+// Moyenne mensuelle (mois en cours et mois précédent) à partir des relevés quotidiens
+const monthKey = new Intl.DateTimeFormat('en-CA', { year: 'numeric', month: '2-digit', timeZone: 'Europe/Paris' }).format(lastUpdateDate);
+const [monthYear, monthNum] = monthKey.split('-').map(Number);
+const prevMonthKey = monthNum === 1 ? `${monthYear - 1}-12` : `${monthYear}-${String(monthNum - 1).padStart(2, '0')}`;
+const prevMonthLabel = new Intl.DateTimeFormat('fr-FR', { month: 'long', year: 'numeric', timeZone: 'UTC' }).format(new Date(`${prevMonthKey}-15T12:00:00Z`));
+
+function monthlyAverage(key: FuelStatKey, month: string) {
+  const values = history.filter((h) => h.date.startsWith(month) && h.prices[key] != null).map((h) => h.prices[key]!);
+  if (values.length === 0) return null;
+  return values.reduce((sum, v) => sum + v, 0) / values.length;
+}
+
+const monthDays = history.filter((h) => h.date.startsWith(monthKey));
+const monthFirstDay = monthDays.length
+  ? new Intl.DateTimeFormat('fr-FR', { day: 'numeric', month: 'long', timeZone: 'UTC' }).format(new Date(monthDays[0].date)).replace(/^1 /, '1er ')
+  : null;
+const monthLastDay = monthDays.length ? dateFormatter.format(new Date(monthDays[monthDays.length - 1].date)) : null;
+const monthlyRows = FUELS.map(({ key, label }) => ({
+  key,
+  label,
+  current: monthlyAverage(key, monthKey),
+  previous: monthlyAverage(key, prevMonthKey),
+}));
+
+const fr3 = (v: number) => v.toFixed(3).replace('.', ',');
+const gazoleMonth = monthlyAverage('Gazole', monthKey) ?? statsNational.Gazole ?? null;
+const e10Month = monthlyAverage('E10', monthKey) ?? statsNational.E10 ?? null;
+const sp98Month = monthlyAverage('SP98', monthKey) ?? statsNational.SP98 ?? null;
+
+const title = gazoleMonth != null
+  ? `Prix moyen gazole ${monthLabel} : ${fr3(gazoleMonth)} €/L en France`
+  : `Prix moyen carburant en France : ${monthLabel}`;
+const description = gazoleMonth != null && e10Month != null && sp98Month != null
+  ? `Prix moyen du gazole en France en ${monthLabel} : ${fr3(gazoleMonth)} €/L. SP95-E10 à ${fr3(e10Month)} €/L, SP98 à ${fr3(sp98Month)} €/L. Moyenne du mois et historique quotidien.`
+  : `Prix moyen officiel du gazole, SP95, SP95-E10, SP98, E85 et GPL en France en ${monthLabel}. Données actualisées quotidiennement (ministère de l'Économie).`;
 
 function trend(key: FuelStatKey) {
   const withValue = history.filter((h) => h.prices[key] != null);
@@ -33,8 +68,6 @@ function trend(key: FuelStatKey) {
   const last = withValue[withValue.length - 1].prices[key]!;
   return { diff: last - first, pct: ((last - first) / first) * 100 };
 }
-
-const dateFormatter = new Intl.DateTimeFormat('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
 
 const breadcrumb = [
   { name: 'Accueil', url: '/' },
@@ -53,6 +86,10 @@ const jsonLdBreadcrumb = {
 };
 
 const faq = [
+  ...(gazoleMonth != null && monthFirstDay ? [{
+    q: `Quel est le prix moyen du gazole en France en ${monthLabel} ?`,
+    a: `En ${monthLabel}, le gazole coûte en moyenne ${fr3(gazoleMonth)} €/L en France (moyenne des relevés quotidiens du ${monthFirstDay} au ${monthLastDay}). Sur la même période, le SP95-E10 est à ${e10Month != null ? fr3(e10Month) : 'n/d'} €/L et le SP98 à ${sp98Month != null ? fr3(sp98Month) : 'n/d'} €/L.`,
+  }] : []),
   {
     q: `Quel est le prix moyen du gazole en France aujourd'hui ?`,
     a: `Au ${lastUpdateLabel}, le prix moyen national du gazole est de ${statsNational.Gazole?.toFixed(3)} €/L, selon le relevé quotidien du ministère de l'Économie sur les stations-service de France métropolitaine et des DOM.`,
@@ -117,6 +154,43 @@ const jsonLdFaq = {
     </section>
 
     <div class="container page-body">
+
+      <!-- Moyenne du mois -->
+      {monthFirstDay && (
+        <section class="section-block">
+          <h2>Prix moyen du gazole et de l'essence en {monthLabel}</h2>
+          <p class="pm-month-intro">
+            Moyenne des relevés quotidiens du {monthFirstDay} au {monthLastDay}, comparée à {prevMonthLabel}.
+          </p>
+          <div class="table-wrapper">
+            <table class="pm-table">
+              <thead>
+                <tr>
+                  <th>Carburant</th>
+                  <th>Moyenne {monthLabel}</th>
+                  <th>Moyenne {prevMonthLabel}</th>
+                  <th>Écart</th>
+                </tr>
+              </thead>
+              <tbody>
+                {monthlyRows.map(({ label, current, previous }) => {
+                  const diff = current != null && previous != null ? current - previous : null;
+                  return (
+                    <tr>
+                      <td class="pm-table-date">{label}</td>
+                      <td><strong>{current != null ? `${fr3(current)} €/L` : '-'}</strong></td>
+                      <td>{previous != null ? `${fr3(previous)} €/L` : '-'}</td>
+                      <td class={diff == null ? '' : diff > 0 ? 'pm-up' : diff < 0 ? 'pm-down' : ''}>
+                        {diff != null ? `${diff > 0 ? '+' : ''}${fr3(diff)} €/L` : '-'}
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        </section>
+      )}
 
       <!-- Prix du jour -->
       <section class="section-block">
@@ -244,6 +318,9 @@ const jsonLdFaq = {
   .pm-table td { padding:0.55rem 0.75rem; border-bottom:1px solid #f1f5f9; white-space:nowrap; }
   .pm-table tr:hover td { background:#f8fafc; }
   .pm-table-date { font-weight:600; color:var(--color-primary); }
+  .pm-table td.pm-up { color:#c2410c; }
+  .pm-table td.pm-down { color:#166534; }
+  .pm-month-intro { font-size:0.875rem; color:var(--color-text-muted); margin:0 0 0.75rem; }
 
   .seo-text p { color:#374151; line-height:1.7; margin-bottom:0.75rem; }
   .seo-text a { color:var(--color-accent); }
