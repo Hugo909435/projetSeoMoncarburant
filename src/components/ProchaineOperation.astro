@@ -135,6 +135,12 @@ const fmtHeure = new Intl.DateTimeFormat('fr-FR', {
             {' '}{op.fuels}, sans carte ni montant d'achat minimum. C'est une opération
             de magasin et non une opération de l'enseigne : elle ne concerne aucune
             autre station du réseau.
+            {op.catalogueUrl && (
+              <>
+                {' '}L'offre figure dans le{' '}
+                <a href={op.catalogueUrl} target="_blank" rel="noopener noreferrer nofollow">catalogue anniversaire du magasin</a>.
+              </>
+            )}
             {' '}<a href={`/blog/${op.sourceArticle}/`}>Lire notre article sur cette opération →</a>
           </span>
         </p>

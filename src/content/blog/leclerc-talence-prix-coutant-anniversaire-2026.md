@@ -40,7 +40,7 @@ Une opération à prix coûtant dure en général 48 heures. Celle du centre E.L
 
 ## Ce qu'annonce le prospectus
 
-Le centre commercial E.Leclerc de Talence (rue Pacaris, 33400) fête son anniversaire du **mardi 22 septembre au dimanche 4 octobre 2026**. Son catalogue consacre sa dernière page au carburant, avec une mention sans ambiguïté : « carburant à prix coûtant », sur l'intégralité de la période.
+Le centre commercial E.Leclerc de Talence (rue Pacaris, 33400) fête son anniversaire du **mardi 22 septembre au dimanche 4 octobre 2026**. Son [catalogue d'anniversaire](https://www.calameo.com/read/00774087309c1a7333876), consultable en ligne, consacre sa dernière page au carburant, avec une mention sans ambiguïté : « carburant à prix coûtant », sur l'intégralité de la période.
 
 L'astérisque précise la définition retenue : **prix d'achat + TVA + transport**. Ce n'est pas une formule marketing, c'est le plancher légal. L'interdiction de la revente à perte oblige un distributeur à intégrer ces trois composantes dans son prix de vente minimum : « prix coûtant » désigne donc exactement ce seuil, celui où le magasin ne gagne plus rien sans pour autant vendre à perte.
 

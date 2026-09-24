@@ -64,6 +64,8 @@ export interface OperationLocale {
   source: string;
   sourceUrl: string;
   sourceArticle: string;
+  /** Catalogue ou prospectus du magasin en ligne, quand il annonce l'opération. */
+  catalogueUrl?: string;
 }
 
 export interface Signal {
