@@ -1,5 +1,6 @@
 ---
-// Bloc d'inscription newsletter - UI uniquement, pas de backend
+// Bloc d'inscription newsletter. Les inscriptions sont seulement collectées
+// (public/newsletter-handler.php), aucune newsletter n'est envoyée pour l'instant.
 interface Props {
   compact?: boolean;
 }
@@ -36,12 +37,65 @@ const { compact = false } = Astro.props;
         Je m'abonne
       </button>
     </div>
+    <div class="newsletter-hp" aria-hidden="true">
+      <input type="text" name="website" tabindex="-1" autocomplete="off" />
+    </div>
+    <p class="newsletter-status" role="status" aria-live="polite"></p>
     <p class="newsletter-legal">
       Aucun spam. Désabonnement en un clic. Données protégées conformément à notre
       <a href="/politique-confidentialite/">politique de confidentialité</a>.
     </p>
   </form>
 </section>
+
+<script>
+  document.querySelectorAll<HTMLFormElement>('.newsletter-form').forEach((form) => {
+    const status = form.querySelector<HTMLElement>('.newsletter-status')!;
+    const button = form.querySelector<HTMLButtonElement>('.newsletter-btn')!;
+    const input = form.querySelector<HTMLInputElement>('input[name="email"]')!;
+
+    const show = (message: string, ok: boolean) => {
+      status.textContent = message;
+      status.classList.toggle('is-success', ok);
+      status.classList.toggle('is-error', !ok);
+    };
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+
+      if (!input.checkValidity()) {
+        show('Merci de saisir une adresse email valide.', false);
+        input.focus();
+        return;
+      }
+
+      const data = new FormData(form);
+      data.set('source', location.pathname);
+      button.disabled = true;
+
+      try {
+        const res = await fetch('/newsletter-handler.php', {
+          method: 'POST',
+          body: data,
+          headers: { Accept: 'application/json' },
+        });
+        const json = await res.json().catch(() => ({}));
+
+        if (res.ok && json.success) {
+          show(json.message || 'Merci, votre inscription est bien enregistrée.', true);
+          form.reset();
+          (window as any).gtag?.('event', 'newsletter_signup', { page_path: location.pathname });
+        } else {
+          show(json.message || 'Inscription impossible pour le moment.', false);
+        }
+      } catch {
+        show('Inscription impossible pour le moment.', false);
+      } finally {
+        button.disabled = false;
+      }
+    });
+  });
+</script>
 
 <style>
   .newsletter {
@@ -147,6 +201,29 @@ const { compact = false } = Astro.props;
   .newsletter-legal a {
     color: #94a3b8;
     text-decoration: underline;
+  }
+
+  .newsletter-hp {
+    position: absolute;
+    left: -9999px;
+  }
+
+  .newsletter-status {
+    font-size: 0.875rem;
+    font-weight: 600;
+    margin: 0.75rem 0 0;
+  }
+
+  .newsletter-status:empty {
+    display: none;
+  }
+
+  .newsletter-status.is-success {
+    color: #86efac;
+  }
+
+  .newsletter-status.is-error {
+    color: #fca5a5;
   }
 
   .sr-only {
