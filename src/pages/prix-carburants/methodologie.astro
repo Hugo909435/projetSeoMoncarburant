@@ -1,9 +1,13 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import meta from '../../data/fuel/meta.json';
+import LastUpdateLive from '../../components/LastUpdateLive.astro';
 
+// Même format que celui produit par LastUpdateLive côté navigateur, sinon le
+// libellé changerait de forme sous les yeux du visiteur au moment où le script
+// prend la main.
 const lastUpdate = meta.lastUpdate
-  ? new Date(meta.lastUpdate).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit' })
+  ? `${new Date(meta.lastUpdate).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'Europe/Paris' })} à ${new Date(meta.lastUpdate).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Paris' })}`
   : 'Non disponible';
 
 const title = 'Méthodologie du comparateur de carburant - Mon Carburant';
@@ -21,7 +25,7 @@ const description = 'Comment fonctionne notre comparateur de prix carburant ? So
     <h1>Méthodologie du comparateur de carburant</h1>
 
     <div class="meta-update">
-      Dernière mise à jour des données : <strong>{lastUpdate}</strong> ·
+      Dernière mise à jour des données : <strong><LastUpdateLive iso={meta.lastUpdate} label={lastUpdate} /></strong> ·
       {meta.totalStations.toLocaleString('fr-FR')} stations référencées
     </div>
 

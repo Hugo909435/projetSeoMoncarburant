@@ -95,7 +95,7 @@ jobs:
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          git add src/data/fuel/ public/data/stations-light.json last-update.txt
+          git add src/data/fuel/ public/data/stations-light.json public/data/meta.json last-update.txt
           git commit -m "chore: mise à jour prix carburant $(date +'%Y-%m-%d %H:%M')"
           # Le résultat de la boucle est testé explicitement : sans ce drapeau,
           # cinq échecs de push consécutifs laissaient malgré tout l'étape en
@@ -127,12 +127,20 @@ jobs:
           FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
           FTP_HOST: ${{ secrets.FTP_HOST }}
         run: |
-          # Un seul fichier envoyé, pas un mirror : la carte, la recherche et le
+          # Deux fichiers envoyés, pas un mirror : la carte, la recherche et le
           # comparateur lisent /data/stations-light.json côté navigateur, donc
-          # cet unique transfert de 2,8 Mo suffit à rafraîchir les prix affichés
-          # sans reconstruire le site. Une connexion FTP par heure au lieu d'un
-          # mirror complet, ce qui reste très en dessous du seuil de throttling
-          # Hostinger décrit dans deploy-hostinger.yml.
+          # ce transfert de 2,8 Mo suffit à rafraîchir les prix affichés sans
+          # reconstruire le site. meta.json, quelques octets, porte l'heure de
+          # ce relevé et permet au bandeau "Dernière mise à jour" de coller aux
+          # prix réellement servis plutôt qu'à la date du dernier build. Une
+          # connexion FTP par heure au lieu d'un mirror complet, ce qui reste
+          # très en dessous du seuil de throttling Hostinger décrit dans
+          # deploy-hostinger.yml.
+          #
+          # stations-light.json part en premier : si le second transfert
+          # échoue, la page annonce une heure trop ancienne, ce qui est sans
+          # gravité. Dans l'autre sens, elle annoncerait des prix frais qui ne
+          # sont pas encore en ligne.
           #
           # Envoi sous un nom temporaire puis renommage : un transfert interrompu
           # à mi-parcours laisserait sinon un JSON tronqué en ligne, et la carte
@@ -149,6 +157,8 @@ jobs:
                      set net:persist-retries 0; \
                      put public/data/stations-light.json -o data/stations-light.json.tmp; \
                      mv data/stations-light.json.tmp data/stations-light.json; \
+                     put public/data/meta.json -o data/meta.json.tmp; \
+                     mv data/meta.json.tmp data/meta.json; \
                      quit" \
                 "$FTP_HOST"; then
               echo "::endgroup::"

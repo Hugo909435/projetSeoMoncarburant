@@ -1,0 +1,64 @@
+---
+// Horodatage de fraîcheur qui se réaligne sur les données réellement servies.
+//
+// Le HTML est rendu au build, soit toutes les 3 h, alors que les prix lus par
+// la carte et la recherche sont renvoyés toutes les heures via
+// /data/stations-light.json. Un texte figé au build annoncerait donc des
+// données plus vieilles que celles affichées à côté de lui. Le script relit
+// /data/meta.json, écrit au même moment que les prix, et corrige le texte.
+//
+// La valeur du build reste rendue côté serveur : c'est ce que voient les
+// robots et les visiteurs sans JavaScript, et c'est le repli si le fetch
+// échoue. Elle n'est jamais fausse, seulement moins fraîche.
+interface Props {
+  /** Date ISO issue du build, utilisée pour l'attribut datetime et comme repli. */
+  iso: string;
+  /** Texte déjà formaté au build, affiché avant que le script ne prenne la main. */
+  label: string;
+}
+
+const { iso, label } = Astro.props;
+---
+
+<time datetime={iso} data-maj-live>{label}</time>
+
+<script>
+  (async () => {
+    const cibles = document.querySelectorAll('[data-maj-live]');
+    if (cibles.length === 0) return;
+
+    try {
+      const resp = await fetch('/data/meta.json');
+      if (!resp.ok) return;
+
+      const meta = await resp.json();
+      if (!meta || !meta.lastUpdate) return;
+
+      const date = new Date(meta.lastUpdate);
+      if (Number.isNaN(date.getTime())) return;
+
+      // Europe/Paris explicite : l'horodatage est en UTC, et sans fuseau forcé
+      // un visiteur en déplacement verrait une heure décalée par rapport à
+      // celle des stations françaises affichées sur la page.
+      const jour = new Intl.DateTimeFormat('fr-FR', {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric',
+        timeZone: 'Europe/Paris',
+      }).format(date);
+      const heure = new Intl.DateTimeFormat('fr-FR', {
+        hour: '2-digit',
+        minute: '2-digit',
+        timeZone: 'Europe/Paris',
+      }).format(date);
+
+      for (const cible of cibles) {
+        cible.textContent = `${jour} à ${heure}`;
+        cible.setAttribute('datetime', meta.lastUpdate);
+      }
+    } catch {
+      // Réseau coupé ou fichier absent : la date du build reste affichée,
+      // ce qui est exactement le comportement voulu.
+    }
+  })();
+</script>

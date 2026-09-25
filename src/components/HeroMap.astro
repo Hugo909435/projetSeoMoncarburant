@@ -5,6 +5,7 @@ import fuelMeta from '../data/fuel/meta.json';
 import stationBrands from '../data/station-brands.json';
 import { resolveBrandLogo } from '../utils/brand-logo';
 import { publishedStations } from '../utils/station-waves';
+import LastUpdateLive from './LastUpdateLive.astro';
 
 const nationalGazole = (statsNational as Record<string, number>)['Gazole'] ?? 0;
 const depts = departmentsData as Record<string, { name: string; slug: string }>;
@@ -57,7 +58,7 @@ for (const slug of brandSlugs) {
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
           </svg>
-          Prix actualisés chaque jour &middot; Dernière mise à jour : <time datetime={fuelMeta.lastUpdate}>{lastUpdateLabel}</time>
+          Prix actualisés chaque heure &middot; Dernière mise à jour : <LastUpdateLive iso={fuelMeta.lastUpdate} label={lastUpdateLabel} />
         </p>
       )}
 

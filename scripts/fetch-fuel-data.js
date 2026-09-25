@@ -884,6 +884,20 @@ async function main() {
     source: SOURCE_URL,
   };
   writeFileSync(resolve(DATA_DIR, 'meta.json'), JSON.stringify(meta, null, 2));
+
+  // Copie publique, servie au navigateur et envoyée sur Hostinger à chaque
+  // passage horaire, en même temps que stations-light.json. Le bandeau de
+  // fraîcheur de la page d'accueil surplombe une carte qui charge ses prix
+  // depuis ce stations-light.json, donc toutes les heures, alors que le texte
+  // rendu au build ne change que toutes les 3 h. Sans ce fichier, la page
+  // annoncerait des données plus anciennes que celles qu'elle affiche.
+  // Réduit au strict nécessaire : ce qui est publié ici part chez tous les
+  // visiteurs, la source et l'heure de génération interne n'ont rien à y faire.
+  writeFileSync(
+    resolve(PUBLIC_DATA_DIR, 'meta.json'),
+    JSON.stringify({ lastUpdate: meta.lastUpdate, totalStations: meta.totalStations }),
+  );
+
   writeFileSync(resolve(ROOT, 'last-update.txt'), meta.lastUpdate);
 
   console.log(`\n✅ Terminé ! ${stations.length} stations, ${depCount} depts, ${cityCount} villes`);
