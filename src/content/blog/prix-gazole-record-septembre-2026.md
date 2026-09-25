@@ -2,7 +2,7 @@
 title: "Gazole : après le record à 2,41 €/L, une pause qui risque d'être brève"
 metaTitle: "Gazole : record à 2,41 €/L, une pause sans doute brève"
 metaDescription: "Le gazole a atteint 2,415 €/L le 20 septembre avant de reculer légèrement. Mais le Brent est reparti au-dessus de 105 dollars : la détente reste fragile."
-slug: "gazole-record-pause-brent-remonte-septembre-2026"
+slug: "prix-gazole-record-septembre-2026"
 excerpt: "Record à 2,415 €/L le 20 septembre, puis 1,6 centime de baisse en cinq jours. Le Brent vient pourtant de repartir à la hausse après l'échec des discussions entre Washington et Téhéran."
 publishedAt: 2026-09-25
 updatedAt: 2026-09-25
