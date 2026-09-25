@@ -9,8 +9,8 @@ updatedAt: 2026-09-25
 author: "hugo-beignon"
 category: "carburants"
 tags: ["gazole", "prix carburant", "record", "brent", "moyen-orient", "totalenergies", "septembre 2026"]
-featuredImage: "../../assets/articles/pourquoi-prix-carburant-flambe-2026-ormuz.webp"
-imageAlt: "Pétrolier traversant le détroit d'Ormuz, voie maritime stratégique entre l'Iran et Oman pour le pétrole mondial"
+featuredImage: "../../assets/articles/prix-gazole-record-septembre-2026.webp"
+imageAlt: "Station-service TotalEnergies Access de l'aire des Vérités à Lapalisse, dans l'Allier, avec ses pompes sous l'auvent"
 readingTime: 5
 relatedArticles: ["essence-hausse-gazole-depasse-plafond-septembre-2026", "aide-grands-rouleurs-elargie-octobre-2026", "hausse-prix-carburant-2026-chronologie-complete"]
 ctaTitle: "Trouvez la station la moins chère près de chez vous"
@@ -30,6 +30,8 @@ draft: false
 ---
 
 Le gazole a battu un nouveau record ce mois-ci : **2,415 €/L en moyenne nationale le 20 septembre 2026**. Depuis, il recule un peu, jusqu'à 2,399 €/L ce vendredi 25 septembre. Les automobilistes auraient tort de s'y fier : la veille, le prix du baril est reparti nettement à la hausse après l'échec des discussions entre Washington et Téhéran.
+
+<p class="text-sm text-slate-500 italic">Photo : Tabl-trai, <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.fr" target="_blank" rel="noopener">CC BY-SA 4.0</a>, via <a href="https://commons.wikimedia.org/wiki/File:Station-service_TotalEnergies_Access_(VL)_de_l%27aire_des_V%C3%A9rit%C3%A9s_(Lapalisse)_2024-10-12.JPG" target="_blank" rel="noopener">Wikimedia Commons</a>. Station TotalEnergies Access de l'aire des Vérités (Lapalisse), octobre 2024, image redimensionnée.</p>
 
 ## Un record à 2,415 €/L le 20 septembre
 
