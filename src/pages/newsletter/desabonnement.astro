@@ -1,0 +1,181 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Se désabonner de la newsletter - Mon Carburant"
+  description="Désabonnez-vous de la newsletter Mon Carburant en un clic : votre adresse email est supprimée de notre liste."
+  canonical="https://mon-carburant.com/newsletter/desabonnement/"
+  noIndex
+  hideAds
+>
+  <div class="container unsub">
+    <h1>Se désabonner de la newsletter</h1>
+    <p class="unsub-intro">
+      Saisissez l'adresse email avec laquelle vous vous êtes inscrit : elle sera supprimée de notre liste
+      et vous ne recevrez plus nos emails.
+    </p>
+
+    <form class="unsub-form" novalidate>
+      <label for="unsub-email">Votre adresse email</label>
+      <div class="unsub-fields">
+        <input
+          type="email"
+          id="unsub-email"
+          name="email"
+          placeholder="votre@email.fr"
+          required
+          autocomplete="email"
+        />
+        <button type="submit">Me désabonner</button>
+      </div>
+      <input type="hidden" name="action" value="unsubscribe" />
+      <div class="unsub-hp" aria-hidden="true">
+        <input type="text" name="website" tabindex="-1" autocomplete="off" />
+      </div>
+      <p class="unsub-status" role="status" aria-live="polite"></p>
+    </form>
+
+    <p class="unsub-help">
+      Un souci ? Écrivez-nous à <a href="mailto:contact@mon-carburant.com">contact@mon-carburant.com</a>
+      et nous supprimerons votre adresse à la main.
+    </p>
+  </div>
+</BaseLayout>
+
+<script>
+  const form = document.querySelector<HTMLFormElement>('.unsub-form')!;
+  const status = form.querySelector<HTMLElement>('.unsub-status')!;
+  const button = form.querySelector<HTMLButtonElement>('button')!;
+  const input = form.querySelector<HTMLInputElement>('input[name="email"]')!;
+
+  // Préremplissage via ?email=... (utile pour un futur lien dans les emails).
+  const preset = new URLSearchParams(location.search).get('email');
+  if (preset) input.value = preset;
+
+  const show = (message: string, ok: boolean) => {
+    status.textContent = message;
+    status.classList.toggle('is-success', ok);
+    status.classList.toggle('is-error', !ok);
+  };
+
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault();
+
+    if (!input.checkValidity()) {
+      show('Merci de saisir une adresse email valide.', false);
+      input.focus();
+      return;
+    }
+
+    button.disabled = true;
+    try {
+      const res = await fetch('/newsletter-handler.php', {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { Accept: 'application/json' },
+      });
+      const json = await res.json().catch(() => ({}));
+      if (res.ok && json.success) {
+        show(json.message || 'C\'est fait : cette adresse ne recevra plus nos emails.', true);
+        form.reset();
+      } else {
+        show(json.message || 'Désinscription impossible pour le moment.', false);
+      }
+    } catch {
+      show('Désinscription impossible pour le moment.', false);
+    } finally {
+      button.disabled = false;
+    }
+  });
+</script>
+
+<style>
+  .unsub {
+    max-width: 560px;
+    padding-top: 3rem;
+    padding-bottom: 4rem;
+  }
+
+  .unsub h1 {
+    font-family: var(--font-display);
+    font-size: 1.75rem;
+    font-weight: 800;
+    margin: 0 0 1rem;
+  }
+
+  .unsub-intro,
+  .unsub-help {
+    line-height: 1.6;
+    color: #475569;
+  }
+
+  .unsub-form {
+    margin: 1.5rem 0;
+  }
+
+  .unsub-form label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+
+  .unsub-fields {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .unsub-fields input {
+    flex: 1;
+    min-width: 0;
+    padding: 0.75rem 1rem;
+    border: 2px solid #cbd5e1;
+    border-radius: 0.5rem;
+    font-size: 0.9375rem;
+  }
+
+  .unsub-fields input:focus {
+    outline: none;
+    border-color: var(--color-accent);
+  }
+
+  .unsub-fields button {
+    flex-shrink: 0;
+    padding: 0.75rem 1.5rem;
+    background: var(--color-primary);
+    color: #fff;
+    border: none;
+    border-radius: 0.5rem;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .unsub-fields button:disabled {
+    opacity: 0.6;
+    cursor: wait;
+  }
+
+  .unsub-hp {
+    position: absolute;
+    left: -9999px;
+  }
+
+  .unsub-status {
+    font-weight: 600;
+    margin: 0.75rem 0 0;
+  }
+
+  .unsub-status:empty {
+    display: none;
+  }
+
+  .unsub-status.is-success {
+    color: #15803d;
+  }
+
+  .unsub-status.is-error {
+    color: #b91c1c;
+  }
+</style>

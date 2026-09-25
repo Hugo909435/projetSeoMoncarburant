@@ -73,6 +73,56 @@ function already_subscribed(string $csv, string $email): bool
     return false;
 }
 
+function unsubscribe(string $csv, string $email): bool
+{
+    $handle = @fopen($csv, 'r+');
+    if ($handle === false) {
+        return false;
+    }
+
+    flock($handle, LOCK_EX);
+    $kept = [];
+    $removed = false;
+
+    while (($row = fgetcsv($handle)) !== false) {
+        if (isset($row[1]) && strtolower($row[1]) === $email) {
+            $removed = true;
+            continue;
+        }
+        $kept[] = $row;
+    }
+
+    if ($removed) {
+        ftruncate($handle, 0);
+        rewind($handle);
+        foreach ($kept as $row) {
+            fputcsv($handle, $row);
+        }
+        fflush($handle);
+    }
+
+    flock($handle, LOCK_UN);
+    fclose($handle);
+    return $removed;
+}
+
+function notify(string $subject, string $body): bool
+{
+    $headers = [
+        'From: Mon Carburant <' . NEWSLETTER_FROM . '>',
+        'Content-Type: text/plain; charset=UTF-8',
+        'MIME-Version: 1.0',
+    ];
+
+    return @mail(
+        NEWSLETTER_TO,
+        '=?UTF-8?B?' . base64_encode($subject) . '?=',
+        $body,
+        implode("\r\n", $headers),
+        '-f ' . NEWSLETTER_FROM
+    );
+}
+
 if (($_SERVER['REQUEST_METHOD'] ?? '') !== 'POST') {
     respond(false, 405, ['message' => 'Method not allowed']);
 }
@@ -95,6 +145,21 @@ if (is_rate_limited()) {
 
 $date = date('c');
 $dir = data_dir();
+
+if (field('action') === 'unsubscribe') {
+    $removed = $dir !== null && unsubscribe($dir . DIRECTORY_SEPARATOR . 'inscriptions.csv', $email);
+
+    if ($removed) {
+        notify(
+            '[Mon Carburant] Désinscription newsletter',
+            "Désinscription newsletter.\n\nEmail : {$email}\nDate : {$date}\n"
+        );
+    }
+
+    // Même réponse que l'adresse soit inscrite ou non : ne révèle pas qui est inscrit.
+    respond(true, 200, ['message' => 'C\'est fait : cette adresse ne recevra plus nos emails.']);
+}
+
 $stored = false;
 $duplicate = false;
 
@@ -123,19 +188,7 @@ if (!$duplicate) {
     $body = "Nouvelle inscription newsletter.\n\nEmail : {$email}\nPage : {$source}\nDate : {$date}\n"
         . 'Stockage CSV : ' . ($stored ? 'ok' : 'ECHEC (garder ce mail)') . "\n";
 
-    $headers = [
-        'From: Mon Carburant <' . NEWSLETTER_FROM . '>',
-        'Content-Type: text/plain; charset=UTF-8',
-        'MIME-Version: 1.0',
-    ];
-
-    $mailed = @mail(
-        NEWSLETTER_TO,
-        '=?UTF-8?B?' . base64_encode('[Mon Carburant] Inscription newsletter') . '?=',
-        $body,
-        implode("\r\n", $headers),
-        '-f ' . NEWSLETTER_FROM
-    );
+    $mailed = notify('[Mon Carburant] Inscription newsletter', $body);
 
     if (!$stored && !$mailed) {
         respond(false, 500, ['message' => 'Inscription impossible pour le moment.']);
