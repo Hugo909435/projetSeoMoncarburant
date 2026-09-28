@@ -78,6 +78,13 @@ jobs:
         # d'historique ou un flux incomplet ne doit pas faire échouer le build.
         run: node scripts/detect-prix-coutant.js || echo "Détection ignorée."
 
+      - name: Relevé des ruptures de carburant
+        # Constitue l'historique des pénuries (part des stations en rupture,
+        # par département et par carburant) depuis l'API v2 du ministère, le
+        # flux XML ne publiant plus les ruptures. Non bloquant : une API
+        # indisponible ne doit pas empêcher la mise à jour des prix.
+        run: node scripts/fetch-ruptures.js || echo "Relevé des ruptures ignoré."
+
       - name: Planification des vagues de pages station
         # Affecte les stations nouvellement apparues dans l'open data à une
         # vague future, et bascule à l'état publié les vagues dont la date est
