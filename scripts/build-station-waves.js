@@ -71,14 +71,14 @@ const INTERVAL_DAYS = 14;
  * Taille des vagues, par paliers. Chaque entrée s'applique à partir de la vague
  * indiquée et jusqu'au palier suivant.
  *
- * Montée en charge progressive. Les six premières vagues restent à 100 pages,
+ * Montée en charge progressive. Les cinq premières vagues restent à 100 pages,
  * le temps de vérifier en Search Console que Google indexe correctement le
  * gabarit. Une fois cette preuve faite, il n'y a plus de raison de rester à ce
  * rythme : ce qui reste à démontrer n'est plus la qualité du modèle de page
  * mais la capacité du site à absorber du volume, et cela se teste en montant.
  *
  * À 100 pages du début à la fin, le parc complet demanderait 99 vagues, soit
- * près de quatre ans. Avec ces paliers, 24 vagues suffisent.
+ * près de quatre ans. Avec ces paliers, 22 vagues suffisent.
  *
  * IMPORTANT : modifier ce tableau n'a aucun effet sur les stations déjà
  * planifiées, l'affectation étant idempotente par construction. Pour appliquer
@@ -86,10 +86,10 @@ const INTERVAL_DAYS = 14;
  * publiées et redistribue uniquement les suivantes.
  */
 const WAVE_PLAN = [
-  { fromWave: 1, size: 100 },  // vagues 1 à 6, prudence initiale
-  { fromWave: 7, size: 250 },  // vagues 7 à 12
-  { fromWave: 13, size: 500 }, // vagues 13 à 18
-  { fromWave: 19, size: 800 }, // vagues 19 et suivantes
+  { fromWave: 1, size: 100 },  // vagues 1 à 5, prudence initiale
+  { fromWave: 6, size: 250 },  // vagues 6 à 9 (avancé le 28/09/2026 : 90 % des 400 premières fiches déjà en impressions)
+  { fromWave: 10, size: 500 }, // vagues 10 à 14
+  { fromWave: 15, size: 800 }, // vagues 15 et suivantes
 ];
 
 /**

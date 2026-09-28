@@ -3,9 +3,10 @@
 Note de référence pour la mise en ligne progressive des fiches station-service
 de mon-carburant.com.
 
-Dernière mise à jour du document : 5 août 2026.
-Cadence en vigueur : montée en charge 100 puis 250, 500 et 800 (24 vagues).
-État : vague 1 en ligne depuis le 4 août 2026.
+Dernière mise à jour du document : 28 septembre 2026.
+Cadence en vigueur : montée en charge 100 puis 250, 500 et 800 (22 vagues),
+paliers avancés le 28/09/2026.
+État : vagues 1 à 4 en ligne (400 fiches).
 
 ---
 
@@ -18,11 +19,11 @@ texte court, FAQ, données structurées).
 
 Ces pages ne sont **pas** publiées d'un coup. Elles sortent par vagues, une
 **toutes les deux semaines**. La taille des vagues monte progressivement :
-**100 pages** pendant les trois premiers mois, puis 250, 500 et 800 une fois
-l'indexation vérifiée. **24 vagues au total.**
+**100 pages** pendant les deux premiers mois, puis 250, 500 et 800 une fois
+l'indexation vérifiée. **22 vagues au total.**
 
-La vague 1 est en ligne depuis le **4 août 2026**, la vague 2 sort le
-**18 août 2026**, et la dernière le **22 juin 2027**.
+La vague 1 est en ligne depuis le **4 août 2026**, et la dernière sort le
+**25 mai 2027**.
 
 Le mécanisme est automatique. Le site est déjà reconstruit tous les jours pour
 rafraîchir les prix : le jour où une vague arrive à échéance, ce rebuild
@@ -66,31 +67,45 @@ depuis le 4 août 2026.**
 | 3 | 01/09/2026 | 100 | 300 | 3 % |
 | 4 | 15/09/2026 | 100 | 400 | 4 % |
 | 5 | 29/09/2026 | 100 | 500 | 5 % |
-| 6 | 13/10/2026 | 100 | 600 | 6 % |
-| 7 | 27/10/2026 | 250 | 850 | 9 % |
-| 8 | 10/11/2026 | 250 | 1 100 | 11 % |
-| 9 | 24/11/2026 | 250 | 1 350 | 14 % |
-| 10 | 08/12/2026 | 250 | 1 600 | 16 % |
-| 11 | 22/12/2026 | 250 | 1 850 | 19 % |
-| 12 | 05/01/2027 | 250 | 2 100 | 21 % |
-| 13 | 19/01/2027 | 500 | 2 600 | 27 % |
-| 14 | 02/02/2027 | 500 | 3 100 | 32 % |
-| 15 | 16/02/2027 | 500 | 3 600 | 37 % |
-| 16 | 02/03/2027 | 500 | 4 100 | 42 % |
-| 17 | 16/03/2027 | 500 | 4 600 | 47 % |
-| 18 | 30/03/2027 | 500 | 5 100 | 52 % |
-| 19 | 13/04/2027 | 800 | 5 900 | 60 % |
-| 20 | 27/04/2027 | 800 | 6 700 | 68 % |
-| 21 | 11/05/2027 | 800 | 7 500 | 77 % |
-| 22 | 25/05/2027 | 800 | 8 300 | 85 % |
-| 23 | 08/06/2027 | 800 | 9 100 | 93 % |
-| 24 | 22/06/2027 | 703 | 9 803 | 100 % |
+| 6 | 13/10/2026 | 250 | 750 | 8 % |
+| 7 | 27/10/2026 | 250 | 1 000 | 10 % |
+| 8 | 10/11/2026 | 250 | 1 250 | 13 % |
+| 9 | 24/11/2026 | 250 | 1 500 | 15 % |
+| 10 | 08/12/2026 | 500 | 2 000 | 20 % |
+| 11 | 22/12/2026 | 500 | 2 500 | 25 % |
+| 12 | 05/01/2027 | 500 | 3 000 | 31 % |
+| 13 | 19/01/2027 | 500 | 3 500 | 36 % |
+| 14 | 02/02/2027 | 500 | 4 000 | 41 % |
+| 15 | 16/02/2027 | 800 | 4 800 | 49 % |
+| 16 | 02/03/2027 | 800 | 5 600 | 57 % |
+| 17 | 16/03/2027 | 800 | 6 400 | 65 % |
+| 18 | 30/03/2027 | 800 | 7 200 | 73 % |
+| 19 | 13/04/2027 | 800 | 8 000 | 82 % |
+| 20 | 27/04/2027 | 800 | 8 800 | 90 % |
+| 21 | 11/05/2027 | 800 | 9 600 | 98 % |
+| 22 | 25/05/2027 | 204 | 9 804 | 100 % |
 
-**Fin du déploiement : 22/06/2027, soit 10 mois et demi.**
+**Fin du déploiement : 25/05/2027, soit 10 mois.**
 
-Les six premières vagues restent volontairement à 100 pages. C'est la phase où
+Les cinq premières vagues restent volontairement à 100 pages. C'est la phase où
 l'on ne sait pas encore comment Google accueille le gabarit, et où une erreur se
-paie cher. À partir de la vague 7 (27/10/2026), la cadence monte.
+paie cher. À partir de la vague 6 (13/10/2026), la cadence monte.
+
+### Paliers avancés le 28/09/2026
+
+Le plan initial prévoyait 250 à partir de la vague 7, 500 à partir de la 13 et
+800 à partir de la 19, pour une fin au 22/06/2027. Les chiffres Search Console
+relevés le 28/09/2026 ont justifié d'avancer tous les paliers :
+
+- 361 des 400 fiches publiées (90 %) avaient déjà au moins une impression, donc
+  au moins 90 % d'indexation, contre un seuil de freinage fixé à 70 %.
+- Par vague : 99, 97, 87 et 78 fiches sur 100 avec impressions ; la vague 4
+  atteignait 78 % en 13 jours.
+- Environ 10 000 impressions et 50 à 80 clics par semaine sur les fiches,
+  position moyenne 14.
+
+Nouveaux paliers : 250 dès la vague 6, 500 dès la 10, 800 dès la 15. Appliqué
+par `npm run waves:replan` (400 stations figées, vagues 1 à 4).
 
 Pour réafficher ce calendrier à tout moment :
 
@@ -98,18 +113,15 @@ Pour réafficher ce calendrier à tout moment :
 npm run waves:plan
 ```
 
-### Le point de décision du 15/09/2026
+### Le prochain point de décision
 
 L'accélération est **inscrite dans le plan**, elle se déclenchera donc toute
-seule. La vérification après la vague 4 n'est plus un feu vert à donner mais un
-frein à actionner si besoin :
+seule. La vérification est un frein à actionner si besoin :
 
-- **Vague 4 le 15/09/2026**, 400 pages en ligne.
-- **Premier lot à 250 le 27/10/2026.** Six semaines de marge pour regarder les
-  chiffres et réagir.
-- Si moins de 70 % des 400 pages sont indexées à cette date, ou si une alerte
-  qualité remonte, **freiner** : voir le point 6 pour repousser les paliers, ou
-  le point 9 pour geler complètement.
+- **Premier lot à 250 le 13/10/2026.**
+- Si moins de 70 % des pages d'un lot sont indexées deux semaines après sa
+  sortie, ou si une alerte qualité remonte, **freiner** : voir le point 6 pour
+  repousser les paliers, ou le point 9 pour geler complètement.
 
 ## 4. Ce qui se passe automatiquement
 
@@ -208,10 +220,10 @@ Tout se règle dans `scripts/build-station-waves.js`, en haut du fichier.
 const INTERVAL_DAYS = 14;
 
 const WAVE_PLAN = [
-  { fromWave: 1, size: 100 },  // vagues 1 à 6, prudence initiale
-  { fromWave: 7, size: 250 },  // vagues 7 à 12
-  { fromWave: 13, size: 500 }, // vagues 13 à 18
-  { fromWave: 19, size: 800 }, // vagues 19 et suivantes
+  { fromWave: 1, size: 100 },  // vagues 1 à 5, prudence initiale
+  { fromWave: 6, size: 250 },  // vagues 6 à 9
+  { fromWave: 10, size: 500 }, // vagues 10 à 14
+  { fromWave: 15, size: 800 }, // vagues 15 et suivantes
 ];
 ```
 
@@ -364,9 +376,9 @@ cadence constante. Trois rendez-vous à ne pas manquer :
 
 | Date | Vagues sorties | Pages | À vérifier |
 |---|---|---|---|
-| 15/09/2026 | 1 à 4 | 400 | Taux d'indexation. En dessous de 70 %, freiner avant le 27/10/2026. |
-| 24/11/2026 | 1 à 9 | 1 350 | Le passage à 250 a-t-il tenu ? Freiner avant le 19/01/2027 si non. |
-| 30/03/2027 | 1 à 18 | 5 100 | Dernier point avant les vagues à 800. |
+| 15/09/2026 | 1 à 4 | 400 | Fait le 28/09/2026 : 90 % des fiches en impressions, paliers avancés. |
+| 10/11/2026 | 1 à 7 | 1 000 | Le passage à 250 a-t-il tenu ? Freiner avant le 08/12/2026 si non. |
+| 02/02/2027 | 1 à 14 | 4 000 | Dernier point avant les vagues à 800. |
 
 Entre ces rendez-vous, un coup d'œil mensuel à la courbe d'indexation suffit.
 
