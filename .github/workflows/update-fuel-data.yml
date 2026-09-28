@@ -27,6 +27,8 @@ on:
 
 permissions:
   contents: write
+  # Ouverture d'une issue quand une pénurie est détectée (detect-penurie.js).
+  issues: write
 
 # Ce workflow ne fait plus de mirror FTP complet (voir rebuild-site.yml), il ne
 # partage donc plus le verrou "hostinger-deploy". C'était indispensable : tant
@@ -85,6 +87,11 @@ jobs:
         # indisponible ne doit pas empêcher la mise à jour des prix.
         run: node scripts/fetch-ruptures.js || echo "Relevé des ruptures ignoré."
 
+      - name: Détection des pénuries
+        # Compare le relevé aux seuils calés sur l'historique 2026 et écrit
+        # penurie-alerte.md si un nouvel épisode commence. Non bloquant.
+        run: node scripts/detect-penurie.js || echo "Détection des pénuries ignorée."
+
       - name: Planification des vagues de pages station
         # Affecte les stations nouvellement apparues dans l'open data à une
         # vague future, et bascule à l'état publié les vagues dont la date est
@@ -121,6 +128,17 @@ jobs:
             echo "❌ Impossible de pousser les nouvelles données après 5 tentatives."
             exit 1
           fi
+
+      - name: Alerte pénurie
+        # Placée après le push : l'état d'alerte est alors enregistré, ce qui
+        # évite de rouvrir la même issue au passage suivant. GitHub notifie par
+        # mail le propriétaire du dépôt à chaque nouvelle issue.
+        if: hashFiles('penurie-alerte.md') != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          titre="Pénurie carburant détectée le $(TZ=Europe/Paris date +'%d/%m/%Y à %H:%M')"
+          gh issue create --title "$titre" --body-file penurie-alerte.md || echo "Création de l'issue impossible."
 
       - name: Installation de lftp
         if: steps.check-changes.outputs.changed == 'true'
