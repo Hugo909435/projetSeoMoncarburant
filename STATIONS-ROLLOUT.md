@@ -311,6 +311,13 @@ Ces fiches affichent en outre un encart avertissant le visiteur que la donnée
 est incomplète ou ancienne, avec le motif exact.
 
 Pour durcir ou assouplir, modifier `MIN_FUELS` et `STALE_DAYS` dans ce fichier.
+
+Depuis le 28/09/2026, le prix d'un carburant déclaré en rupture n'est plus
+affiché (voir `scripts/fetch-fuel-data.js`). Une rupture de moins de
+`RUPTURE_DAYS` (30 jours) compte donc comme une information déclarée : sans
+cela, une station à sec sur tous ses carburants n'avait plus ni prix ni date et
+sa fiche passait en noindex pendant la pénurie. Mesuré le 28/09/2026 : 46 fiches
+publiées auraient basculé.
 Le seuil `MIN_FUELS` était à 2 jusqu'au 14/09/2026 : le flux officiel retire
 souvent un carburant d'une station d'un relevé à l'autre, et les fiches à un
 seul prix frais basculaient en noindex puis revenaient (exclusion Google).

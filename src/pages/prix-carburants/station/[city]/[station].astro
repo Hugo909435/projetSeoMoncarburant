@@ -243,7 +243,16 @@ const {
   canonicalPath,
 } = Astro.props;
 
-const s = station as StationLike & { lat: number; lng: number; villeSlug: string };
+const s = station as StationLike & { lat: number; lng: number; villeSlug: string; ruptures?: Record<string, string> };
+
+// Ruptures au moment du build (scripts/fetch-fuel-data.js) : heure de Paris
+// telle que déclarée, « 2026-09-28T11:29 ». Le bandeau en direct plus bas
+// prend le relais entre deux rebuilds.
+const fmtRupture = (when: string) => {
+  const [d, t] = when.split('T');
+  const [, m, j] = d.split('-');
+  return `${j}/${m} à ${t}`;
+};
 const services: string[] = detail.services ?? [];
 const horaires: (string | null)[] | null = detail.horaires ?? null;
 const automate: boolean = !!detail.automate;
@@ -466,14 +475,16 @@ function priceDiff(price: number | null | undefined, fuelKey: string) {
         <div class="fuel-stats-grid">
           {FUEL_KEYS.map((fuel) => {
             const price = s.prices[fuel] ?? null;
+            const rupture = price == null ? s.ruptures?.[fuel] ?? null : null;
             const diff = priceDiff(price, fuel);
             return (
-              <div class={`fuel-stat-card${price == null ? ' is-empty' : ''}`} style={`--fuel-color: ${FUEL_COLORS[fuel]}`}>
+              <div class={`fuel-stat-card${price == null && !rupture ? ' is-empty' : ''}${rupture ? ' is-rupture' : ''}`} style={`--fuel-color: ${FUEL_COLORS[fuel]}`}>
                 <div class="fsc-label">{fuel === 'GPLc' ? 'GPL' : fuel}</div>
                 <div class="fsc-price">
-                  {price != null ? price.toFixed(3) : 'n.c.'}
+                  {price != null ? price.toFixed(3) : rupture ? 'Rupture' : 'n.c.'}
                   {price != null && <span class="fsc-unit">€/L</span>}
                 </div>
+                {rupture && <div class="fsc-rupture">signalée le {fmtRupture(rupture)}</div>}
                 {diff != null && (
                   <div class={`fsc-diff ${diff < -2 ? 'badge-green' : diff > 2 ? 'badge-orange' : 'badge-neutral'}`}>
                     {diff > 0 ? '+' : ''}{diff.toFixed(1)}% France
@@ -485,8 +496,9 @@ function priceDiff(price: number | null | undefined, fuelKey: string) {
         </div>
         <p class="price-note">
           Dernière déclaration de la station : <strong>{formatMaj(s.maj)}</strong>.
-          Les carburants notés « n.c. » ne sont pas distribués ici ou sont en rupture.
+          Les carburants notés « n.c. » ne sont pas distribués ici ou ne sont pas déclarés par la station.
         </p>
+        <p class="live-ruptures" data-station-id={s.id} role="status" hidden></p>
         {isWeak && (
           <p class="stale-warning">
             Les informations de prix de cette station sont incomplètes ou anciennes
@@ -690,6 +702,44 @@ function priceDiff(price: number | null | undefined, fuelKey: string) {
   </div>
 </BaseLayout>
 
+<script>
+  // Situation des ruptures en direct, pour cette seule station : la page est
+  // figée entre deux rebuilds (jusqu'à 3 h), une rupture peut apparaître ou
+  // être levée entre-temps. Source : API officielle du ministère, dont les
+  // horodatages sont en heure de Paris malgré le suffixe +00:00 (affichés tels
+  // quels). En cas d'échec, rien ne s'affiche : la page garde ses données
+  // datées du build.
+  const el = document.querySelector<HTMLElement>('.live-ruptures');
+  const id = el?.dataset.stationId;
+  if (el && id && /^\d+$/.test(id)) {
+    const fuels: Record<string, string> = { gazole: 'Gazole', e10: 'E10', sp95: 'SP95', sp98: 'SP98', e85: 'E85', gplc: 'GPL' };
+    const select = ['id', ...Object.keys(fuels).flatMap((k) => [`${k}_prix`, `${k}_rupture_debut`, `${k}_rupture_type`])].join(',');
+    const url =
+      'https://data.economie.gouv.fr/api/explore/v2.1/catalog/datasets/prix-des-carburants-en-france-flux-instantane-v2/records' +
+      `?select=${encodeURIComponent(select)}&where=${encodeURIComponent(`id=${id}`)}&limit=1`;
+    fetch(url, { signal: AbortSignal.timeout(10_000) })
+      .then((res) => (res.ok ? res.json() : Promise.reject(new Error(`HTTP ${res.status}`))))
+      .then((data) => {
+        const rec = data?.results?.[0];
+        if (!rec) return;
+        const now = new Intl.DateTimeFormat('fr-FR', { hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Paris' }).format(new Date());
+        const list = Object.entries(fuels)
+          .filter(([k]) => rec[`${k}_rupture_debut`] && rec[`${k}_rupture_type`] !== 'definitive' && rec[`${k}_prix`] == null)
+          .map(([k, label]) => {
+            const [d, t] = String(rec[`${k}_rupture_debut`]).slice(0, 16).split('T');
+            const [, m, j] = d.split('-');
+            return `${label} (depuis le ${j}/${m} à ${t})`;
+          });
+        el.textContent = list.length
+          ? `En direct à ${now}, d'après les déclarations officielles : rupture signalée pour ${list.join(', ')}.`
+          : `En direct à ${now}, d'après les déclarations officielles : aucune rupture signalée par la station.`;
+        el.classList.toggle('has-rupture', list.length > 0);
+        el.hidden = false;
+      })
+      .catch(() => {});
+  }
+</script>
+
 <style>
   .breadcrumb-nav { font-size: 0.875rem; color: var(--color-text-muted); }
   .breadcrumb-nav a { color: var(--color-primary); text-decoration: none; }
@@ -714,6 +764,10 @@ function priceDiff(price: number | null | undefined, fuelKey: string) {
   @media (min-width: 768px) { .fuel-stats-grid { grid-template-columns: repeat(6, 1fr); } }
   .fuel-stat-card { background: #fff; border: 2px solid #e5e7eb; border-top: 3px solid var(--fuel-color); border-radius: 0.5rem; padding: 1rem; }
   .fuel-stat-card.is-empty { opacity: 0.5; }
+  .fuel-stat-card.is-rupture .fsc-price { color: #b91c1c; font-size: 1.05rem; }
+  .fsc-rupture { font-size: 0.75rem; color: #b91c1c; margin-top: 0.25rem; }
+  .live-ruptures { font-size: 0.875rem; color: #166534; background: #f0fdf4; border-left: 4px solid #166534; border-radius: 0.375rem; padding: 0.5rem 0.75rem; margin: 0.75rem 0 0; }
+  .live-ruptures.has-rupture { color: #b91c1c; background: #fef2f2; border-left-color: #b91c1c; }
   .fsc-label { font-size: 0.75rem; color: var(--color-text-muted); font-weight: 700; margin-bottom: 0.25rem; }
   .fsc-price { font-size: 1.25rem; font-weight: 800; color: var(--fuel-color); display: flex; align-items: baseline; gap: 0.2rem; }
   .fsc-unit { font-size: 0.7rem; font-weight: 500; color: var(--color-text-muted); }

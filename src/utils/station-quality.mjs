@@ -31,20 +31,55 @@ export const STALE_DAYS = 90;
 export const MIN_FUELS = 1;
 
 /**
+ * Une rupture déclarée depuis moins de ce délai compte comme une information.
+ *
+ * Depuis le 28/09/2026, le prix d'un carburant en rupture n'est plus affiché
+ * (scripts/fetch-fuel-data.js). Une station à sec sur tous ses carburants n'a
+ * donc plus aucun prix ni date de déclaration : sans cette règle, sa fiche
+ * basculait en noindex pendant la pénurie puis revenait, le va-et-vient que
+ * MIN_FUELS cherche justement à éviter. Or la fiche est utile à ce moment-là,
+ * puisqu'elle affiche la rupture.
+ */
+export const RUPTURE_DAYS = 30;
+
+/** Ruptures récentes : { carburant: horodatage }. Heure de Paris, précision suffisante ici. */
+function recentRuptures(station, now) {
+  const out = {};
+  for (const [fuel, when] of Object.entries(station?.ruptures ?? {})) {
+    const t = Date.parse(`${when}:00Z`);
+    if (Number.isFinite(t) && (now - t) / 86400000 <= RUPTURE_DAYS) out[fuel] = t;
+  }
+  return out;
+}
+
+/** Nombre de carburants renseignés : prix déclaré ou rupture récente. */
+function informedFuels(station, now) {
+  const fuels = new Set(Object.entries(station?.prices ?? {}).filter(([, v]) => v != null).map(([k]) => k));
+  for (const fuel of Object.keys(recentRuptures(station, now))) fuels.add(fuel);
+  return fuels.size;
+}
+
+/** Dernière déclaration connue : prix, ou à défaut rupture récente. */
+function lastDeclaration(station, now) {
+  const declared = station?.maj ? new Date(station.maj).getTime() : NaN;
+  const ruptures = Object.values(recentRuptures(station, now));
+  const candidates = [declared, ...ruptures].filter(Number.isFinite);
+  return candidates.length ? Math.max(...candidates) : NaN;
+}
+
+/**
  * Vrai si la fiche est trop pauvre pour être proposée à l'indexation.
  *
  * @param {{ prices?: Record<string, number>, adresse?: string|null, maj?: string|null }} station
  * @param {number} [now] horodatage de référence, injectable pour les tests
  */
 export function isWeakStation(station, now = Date.now()) {
-  const fuels = Object.values(station?.prices ?? {}).filter((v) => v != null);
-  if (fuels.length < MIN_FUELS) return true;
+  if (informedFuels(station, now) < MIN_FUELS) return true;
 
   const adresse = (station?.adresse ?? '').trim();
   if (adresse.length < 5) return true;
 
-  if (!station?.maj) return true;
-  const declared = new Date(station.maj).getTime();
+  const declared = lastDeclaration(station, now);
   if (Number.isNaN(declared)) return true;
   if ((now - declared) / 86400000 > STALE_DAYS) return true;
 
@@ -53,14 +88,13 @@ export function isWeakStation(station, now = Date.now()) {
 
 /** Raison lisible du noindex, pour le diagnostic. */
 export function weaknessReason(station, now = Date.now()) {
-  const fuels = Object.values(station?.prices ?? {}).filter((v) => v != null);
-  if (fuels.length < MIN_FUELS) {
+  if (informedFuels(station, now) < MIN_FUELS) {
     return MIN_FUELS === 1 ? 'aucun carburant coté' : `moins de ${MIN_FUELS} carburants cotés`;
   }
   if ((station?.adresse ?? '').trim().length < 5) return 'adresse inexploitable';
-  if (!station?.maj) return 'aucune date de déclaration';
-  const days = (now - new Date(station.maj).getTime()) / 86400000;
-  if (Number.isNaN(days)) return 'date de déclaration illisible';
+  const declared = lastDeclaration(station, now);
+  if (Number.isNaN(declared)) return station?.maj ? 'date de déclaration illisible' : 'aucune date de déclaration';
+  const days = (now - declared) / 86400000;
   if (days > STALE_DAYS) return `déclaration vieille de ${Math.round(days)} jours`;
   return null;
 }

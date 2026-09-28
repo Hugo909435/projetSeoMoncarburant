@@ -47,7 +47,6 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, '..');
 const OUT_FILE = resolve(ROOT, 'src/data/fuel/ruptures.json');
 const HISTORY_FILE = resolve(ROOT, 'src/data/fuel/ruptures-history.json');
-const LIGHT_FILE = resolve(ROOT, 'public/data/stations-light.json');
 
 const FUELS = [
   { key: 'gazole', label: 'Gazole' },
@@ -62,7 +61,7 @@ const SOURCE_URL =
     'id',
     'code_departement',
     'departement',
-    ...FUELS.flatMap(({ key }) => [`${key}_prix`, `${key}_maj`, `${key}_rupture_debut`, `${key}_rupture_type`]),
+    ...FUELS.flatMap(({ key }) => [`${key}_maj`, `${key}_rupture_debut`, `${key}_rupture_type`]),
   ].join(',');
 
 /** Au-delà, une rupture ouverte est considérée comme non déclarée terminée. */
@@ -181,65 +180,10 @@ function readJson(file, fallback) {
   }
 }
 
-/**
- * Report des ruptures dans public/data/stations-light.json, lu par la carte et
- * le comparateur.
- *
- * Le flux XML qui alimente ce fichier ne publie plus les ruptures : un
- * carburant en rupture y garde parfois son dernier prix. Le 28/09/2026, 259
- * prix étaient ainsi affichés pour des carburants que la station déclarait en
- * rupture. On retire ce prix et on ajoute la date de la rupture, pour que la
- * carte puisse écrire « rupture signalée le… » au lieu d'un prix périmé.
- *
- * Règle, volontairement stricte : l'API doit déclarer une rupture non
- * définitive ET ne donner aucun prix pour ce carburant. Les deux sources sont
- * la même base du ministère, l'API étant lue quelques minutes après le XML,
- * donc au moins aussi fraîche.
- *
- * `ruptures` porte l'heure de Paris telle que déclarée (« 2026-09-28T11:29 »),
- * sans conversion : la carte l'affiche telle quelle.
- */
-function applyToLight(records) {
-  if (!existsSync(LIGHT_FILE)) return;
-  const light = JSON.parse(readFileSync(LIGHT_FILE, 'utf8'));
-  if (!Array.isArray(light)) return;
-
-  const byId = new Map();
-  for (const s of records) {
-    const r = {};
-    for (const { key, label } of FUELS) {
-      const type = s[`${key}_rupture_type`];
-      const debut = s[`${key}_rupture_debut`];
-      if (!debut || type === 'definitive' || s[`${key}_prix`] != null) continue;
-      r[label] = String(debut).slice(0, 16);
-    }
-    if (Object.keys(r).length) byId.set(String(s.id), r);
-  }
-
-  let removed = 0;
-  let flagged = 0;
-  for (const station of light) {
-    delete station.ruptures;
-    const r = byId.get(String(station.id));
-    if (!r) continue;
-    station.ruptures = r;
-    flagged++;
-    for (const label of Object.keys(r)) {
-      if (station.prices?.[label] != null) {
-        delete station.prices[label];
-        removed++;
-      }
-    }
-  }
-  writeFileSync(LIGHT_FILE, JSON.stringify(light));
-  console.log(`🗺️  stations-light.json : ${flagged} station(s) avec rupture, ${removed} prix périmé(s) retiré(s).`);
-}
-
 async function main() {
   const now = Date.now();
   const records = await fetchRecords();
   const { national, departements } = summarize(records, now);
-  applyToLight(records);
 
   if (national.stations < 1000) {
     throw new Error(`seulement ${national.stations} stations actives, relevé ignoré`);

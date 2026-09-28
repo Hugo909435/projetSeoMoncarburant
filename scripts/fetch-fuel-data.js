@@ -252,6 +252,59 @@ async function downloadZip() {
   return Buffer.from(buf);
 }
 
+/**
+ * Ruptures de carburant, lues dans l'API v2 du ministère.
+ *
+ * Le flux XML ci-dessus ne publie plus aucune balise <rupture> (vérifié le
+ * 28/09/2026) : un carburant en rupture y garde parfois son dernier prix, qui
+ * se retrouvait alors sur les fiches station, les tableaux ville et
+ * département et la carte (281 prix dans ce cas le 28/09/2026). L'API, même
+ * base du ministère, expose les ruptures ; elle est lue juste après le XML,
+ * donc au moins aussi fraîche.
+ *
+ * Règle stricte : rupture non définitive ET aucun prix dans l'API pour ce
+ * carburant. Le prix XML est alors écarté, et la date de rupture conservée
+ * (heure de Paris telle que déclarée, « 2026-09-28T11:29 ») pour l'afficher.
+ * Les horodatages de l'API sont en heure de Paris malgré leur suffixe +00:00 :
+ * on garde donc la chaîne, sans conversion.
+ *
+ * En cas d'échec, renvoie null : les prix XML sont conservés tels quels,
+ * comme avant, et meta.json le signale (ruptures: "indisponible").
+ */
+const RUPTURES_URL =
+  'https://data.economie.gouv.fr/api/explore/v2.1/catalog/datasets/prix-des-carburants-en-france-flux-instantane-v2/exports/json';
+const API_FUEL_KEYS = { gazole: 'Gazole', sp95: 'SP95', sp98: 'SP98', e10: 'E10', e85: 'E85', gplc: 'GPLc' };
+
+async function fetchApiRuptures() {
+  const select = ['id', ...Object.keys(API_FUEL_KEYS).flatMap((k) => [`${k}_prix`, `${k}_rupture_debut`, `${k}_rupture_type`])];
+  const url = `${RUPTURES_URL}?select=${encodeURIComponent(select.join(','))}`;
+  for (let attempt = 1; attempt <= 3; attempt++) {
+    try {
+      const resp = await fetch(url, { signal: AbortSignal.timeout(60000) });
+      if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+      const records = await resp.json();
+      if (!Array.isArray(records) || records.length < 1000) throw new Error('réponse inattendue');
+      const byId = new Map();
+      for (const rec of records) {
+        const found = {};
+        for (const [key, label] of Object.entries(API_FUEL_KEYS)) {
+          const debut = rec[`${key}_rupture_debut`];
+          if (!debut || rec[`${key}_rupture_type`] === 'definitive' || rec[`${key}_prix`] != null) continue;
+          found[label] = String(debut).slice(0, 16);
+        }
+        if (Object.keys(found).length) byId.set(String(rec.id), found);
+      }
+      console.log(`⛽ Ruptures (API) : ${byId.size} stations concernées`);
+      return byId;
+    } catch (err) {
+      console.warn(`⚠️  Ruptures (API), tentative ${attempt}/3 : ${err.message}`);
+      if (attempt < 3) await new Promise((res) => setTimeout(res, 5000 * attempt));
+    }
+  }
+  console.warn('⚠️  Ruptures indisponibles : prix du flux XML conservés sans filtrage.');
+  return null;
+}
+
 function parseXml(buffer) {
   const zip = new AdmZip(buffer);
   const entries = zip.getEntries();
@@ -356,7 +409,7 @@ function normalizePrice(valeur) {
   return v > 10 ? Math.round(v) / 1000 : Math.round(v * 1000) / 1000;
 }
 
-function processStations(rawStations, departments, brandMap) {
+function processStations(rawStations, departments, brandMap, apiRuptures) {
   const stations = [];
 
   for (const pdv of rawStations) {
@@ -392,6 +445,9 @@ function processStations(rawStations, departments, brandMap) {
         }
       }
     }
+
+    const apiRupture = apiRuptures?.get(String(pdv['@_id'])) ?? null;
+    if (apiRupture) for (const fuel of Object.keys(apiRupture)) ruptures.add(fuel);
 
     if (Array.isArray(pdv.prix)) {
       for (const p of pdv.prix) {
@@ -450,6 +506,7 @@ function processStations(rawStations, departments, brandMap) {
       prices,
       priceUpdates,
       maj,
+      ruptures: apiRupture,
     };
 
     stations.push(station);
@@ -522,6 +579,7 @@ function stationToLight(s) {
     enseigneSlug: s.enseigneSlug ?? null,
     prices: s.prices,
     maj: s.maj ?? null,
+    ...(s.ruptures ? { ruptures: s.ruptures } : {}),
   };
 }
 
@@ -571,7 +629,8 @@ async function main() {
     console.log('ℹ️  Pas de mapping enseigne (lance npm run fetch-brands pour l\'activer)');
   }
 
-  const stations = processStations(rawStations, departments, brandMap);
+  const apiRuptures = await fetchApiRuptures();
+  const stations = processStations(rawStations, departments, brandMap, apiRuptures);
   console.log(`✅ ${stations.length} stations valides après traitement`);
 
   ensureDirs();
@@ -882,6 +941,7 @@ async function main() {
     totalStations: stations.length,
     generatedAt: new Date().toISOString(),
     source: SOURCE_URL,
+    ruptures: apiRuptures ? 'ok' : 'indisponible',
   };
   writeFileSync(resolve(DATA_DIR, 'meta.json'), JSON.stringify(meta, null, 2));
 
