@@ -86,7 +86,7 @@ Deux précédents existent, en **2018 et en 2023**. Dans les deux cas, la situat
 
 **1. Ne pas se ruer sur les pompes.** C'est le conseil le moins spectaculaire et de très loin le plus efficace. Le système absorbe sans problème une consommation normale. Il craque quand chacun vient remplir un réservoir déjà à moitié plein « au cas où ». La ruée est précisément ce qui transforme une tension d'approvisionnement en pénurie réelle, et elle se déclenche presque toujours après les premières photos de files d'attente.
 
-**2. Vérifier avant de rouler, pas après.** Les stations déclarent leurs prix et leurs ruptures sur les données officielles. Cinq secondes de vérification évitent de brûler un demi-litre à faire le tour de trois stations vides. Notre comparateur s'appuie sur ces données pour les 11 000 stations françaises.
+**2. Vérifier avant de rouler, pas après.** Les stations déclarent leurs prix et leurs ruptures sur les données officielles. Cinq secondes de vérification évitent de brûler un demi-litre à faire le tour de trois stations vides. Notre comparateur s'appuie sur ces données pour les 11 000 stations françaises, et notre [suivi de la pénurie de carburant](/penurie-carburant/) indique chaque jour la part des stations en rupture dans chaque département.
 
 **3. Élargir le rayon de 20 ou 30 km.** L'ouest du Grand Est est très peu touché. Si vous êtes dans le Haut-Rhin, un plein fait à l'occasion d'un déplacement vers l'intérieur des terres règle souvent le problème sans détour spécifique.
 

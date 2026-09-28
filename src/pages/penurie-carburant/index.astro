@@ -1,0 +1,426 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import AdUnit from '../../components/AdUnit.astro';
+import ruptures from '../../data/fuel/ruptures.json';
+import rupturesHistory from '../../data/fuel/ruptures-history.json';
+import rupturesAlertes from '../../data/fuel/ruptures-alertes.json';
+import departments from '../../data/departments.json';
+
+/*
+ * Page de suivi des pénuries de carburant.
+ *
+ * Données : scripts/fetch-ruptures.js (relevé horaire de l'API v2 du
+ * ministère), scripts/backfill-ruptures.js (historique reconstitué depuis le
+ * 01/01/2026) et scripts/detect-penurie.js (niveau national et départements en
+ * alerte). La page est régénérée à chaque rebuild du site.
+ */
+
+type Dept = { nom: string | null; stations: number; enRupture: number; recentes: number; parCarburant: Record<string, number>; part: number };
+type HistoryPoint = { date: string; stations: number; part: number; partRecentes: number; departements: Record<string, number> };
+
+const deps = departments as Record<string, { name: string; slug: string }>;
+const national = ruptures.national;
+const deptEntries = Object.entries(ruptures.departements as Record<string, Dept>).filter(([code]) => deps[code]);
+const history = rupturesHistory as HistoryPoint[];
+const alertes = rupturesAlertes as { national: { niveau: string; depuis: string; moyenne: number }; departements: Record<string, { depuis: string; pic: number }> };
+
+const LEVELS: Record<string, { label: string; tone: string; text: string }> = {
+  calme: { label: 'Situation normale', tone: 'good', text: 'Les ruptures restent ponctuelles, au niveau habituel.' },
+  tensions: { label: 'Tensions', tone: 'warning', text: "Les ruptures sont plus fréquentes qu'en temps normal, sans pénurie généralisée." },
+  penurie: { label: 'Pénurie', tone: 'serious', text: 'Une part importante des stations manque d\'au moins un carburant.' },
+  forte: { label: 'Forte pénurie', tone: 'critical', text: 'Une station sur six ou plus manque d\'au moins un carburant.' },
+};
+const level = LEVELS[alertes.national.niveau] ?? LEVELS.calme;
+
+const tz = 'Europe/Paris';
+const releve = new Date(ruptures.releveLe);
+const releveLabel = `${new Intl.DateTimeFormat('fr-FR', { day: 'numeric', month: 'long', year: 'numeric', timeZone: tz }).format(releve)} à ${new Intl.DateTimeFormat('fr-FR', { hour: '2-digit', minute: '2-digit', timeZone: tz }).format(releve)}`;
+const dayLabel = new Intl.DateTimeFormat('fr-FR', { day: 'numeric', month: 'long', timeZone: tz }).format(releve);
+const shortDate = (iso: string) => new Intl.DateTimeFormat('fr-FR', { day: 'numeric', month: 'short', timeZone: 'UTC' }).format(new Date(`${iso}T12:00:00Z`));
+const fr1 = (n: number) => n.toLocaleString('fr-FR', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+const frInt = (n: number) => n.toLocaleString('fr-FR');
+
+const FUEL_LABELS: Record<string, string> = { Gazole: 'Gazole', E10: 'SP95-E10', SP95: 'SP95', SP98: 'SP98' };
+const fuelRows = Object.entries(national.parCarburant)
+  .map(([key, n]) => ({ key, label: FUEL_LABELS[key] ?? key, n, part: (n / national.stations) * 100 }))
+  .sort((a, b) => b.n - a.n);
+const mostHit = fuelRows[0];
+
+// Départements : les plus touchés (au moins 20 stations suivies, pour écarter
+// les parts élevées obtenues sur trois stations) et liste complète.
+const deptRows = deptEntries.map(([code, d]) => ({
+  code,
+  name: deps[code].name,
+  slug: deps[code].slug,
+  stations: d.stations,
+  enRupture: d.enRupture,
+  part: d.part,
+}));
+const topDepts = deptRows.filter((d) => d.stations >= 20).sort((a, b) => b.part - a.part).slice(0, 15);
+const allDepts = [...deptRows].sort((a, b) => (a.code < b.code ? -1 : 1));
+const deptTone = (part: number) => (part >= 30 ? 'critical' : part >= 15 ? 'serious' : part >= 5 ? 'warning' : 'good');
+const deptToneLabel = (part: number) => (part >= 30 ? 'Très touché' : part >= 15 ? 'Touché' : part >= 5 ? 'Tensions' : 'Normal');
+// Compté sur le relevé en cours, avec les mêmes planchers que detect-penurie.js
+// (30 %, 12 stations touchées), sans exiger deux jours consécutifs.
+const hotDepts = deptRows.filter((d) => d.part >= 30 && d.enRupture >= 12).length;
+
+// Évolution sur 120 jours
+const chartPoints = history.slice(-120);
+const W = 800;
+const H = 260;
+const PAD = { top: 16, right: 16, bottom: 32, left: 48 };
+const maxPart = Math.max(20, Math.ceil(Math.max(...chartPoints.map((p) => p.part)) / 5) * 5);
+const x = (i: number) => PAD.left + (i / Math.max(1, chartPoints.length - 1)) * (W - PAD.left - PAD.right);
+const y = (v: number) => PAD.top + (1 - v / maxPart) * (H - PAD.top - PAD.bottom);
+const linePath = chartPoints.map((p, i) => `${i ? 'L' : 'M'}${x(i).toFixed(1)},${y(p.part).toFixed(1)}`).join(' ');
+const yTicks = Array.from({ length: maxPart / 5 + 1 }, (_, i) => i * 5);
+const xTicks = chartPoints.filter((p) => p.date.endsWith('-01')).map((p) => ({ i: chartPoints.indexOf(p), label: shortDate(p.date) }));
+const chartData = JSON.stringify(chartPoints.map((p, i) => ({ x: +x(i).toFixed(1), y: +y(p.part).toFixed(1), d: shortDate(p.date), v: fr1(p.part) })));
+const periodPeak = chartPoints.reduce((a, p) => (p.part > a.part ? p : a), chartPoints[0]);
+const calmReference = history.filter((p) => p.date >= '2026-01-15' && p.date <= '2026-02-28');
+const calmAvg = calmReference.length ? calmReference.reduce((s, p) => s + p.part, 0) / calmReference.length : null;
+const recentTable = history.slice(-14).reverse();
+
+
+const title = `Pénurie carburant aujourd'hui : ${fr1(national.part)} % des stations`;
+// Limite de 160 caractères : on retire des départements tant que ça dépasse.
+const buildDescription = (n: number) =>
+  `${fr1(national.part)} % des stations en rupture au ${dayLabel}.` +
+  (n ? ` Les plus touchés : ${topDepts.slice(0, n).map((d) => d.name).join(', ')}.` : '') +
+  ' Suivi officiel par département et carburant.';
+let nDesc = 3;
+while (nDesc > 0 && buildDescription(nDesc).length > 160) nDesc--;
+const description = buildDescription(nDesc);
+
+const breadcrumb = [
+  { name: 'Accueil', url: '/' },
+  { name: 'Pénurie de carburant', url: '/penurie-carburant/' },
+];
+const jsonLdBreadcrumb = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: breadcrumb.map((item, i) => ({ '@type': 'ListItem', position: i + 1, name: item.name, item: `https://mon-carburant.com${item.url}` })),
+};
+
+const faq = [
+  {
+    q: "Y a-t-il une pénurie de carburant aujourd'hui en France ?",
+    a: `Au ${releveLabel}, ${frInt(national.enRupture)} stations-service sur ${frInt(national.stations)} suivies (${fr1(national.part)} %) déclarent une rupture sur au moins un carburant. Niveau national : ${level.label.toLowerCase()}. ${calmAvg != null ? `En période calme, comme en janvier et février 2026, cette part tourne autour de ${fr1(calmAvg)} %.` : ''}`,
+  },
+  {
+    q: 'Quels départements sont les plus touchés par la pénurie ?',
+    a: `Au dernier relevé, les départements où la part de stations en rupture est la plus élevée sont : ${topDepts.slice(0, 5).map((d) => `${d.name} (${fr1(d.part)} %)`).join(', ')}.`,
+  },
+  {
+    q: 'Quel carburant manque le plus ?',
+    a: `Le ${mostHit.label} est le carburant le plus souvent en rupture : ${frInt(mostHit.n)} stations le déclarent indisponible. ${fuelRows.slice(1).map((f) => `${f.label} : ${frInt(f.n)} stations`).join(', ')}.`,
+  },
+  {
+    q: "Comment savoir si une station a encore du carburant ?",
+    a: "Les gérants déclarent eux-mêmes leurs ruptures sur le site officiel prix-carburants.gouv.fr, et la déclaration peut avoir quelques heures de retard. En période de pénurie, mieux vaut viser une station qui a mis à jour ses prix récemment et prévoir une solution de repli à proximité.",
+  },
+  {
+    q: 'Comment sont calculés ces chiffres ?',
+    a: `Nous comptons les stations qui déclarent une rupture temporaire sur le gazole, le SP95-E10, le SP95 ou le SP98, commencée depuis moins de ${ruptures.criteres.ageMaxRuptureJours} jours. Les ruptures définitives (station qui a cessé de vendre un carburant) et les ruptures anciennes jamais déclarées terminées sont écartées. Le GPL et l'E85, souvent indisponibles de façon durable, ne sont pas pris en compte.`,
+  },
+];
+const jsonLdFaq = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faq.map((item) => ({ '@type': 'Question', name: item.q, acceptedAnswer: { '@type': 'Answer', text: item.a } })),
+};
+---
+
+<BaseLayout title={title} description={description} canonical="/penurie-carburant/" jsonLd={[jsonLdBreadcrumb, jsonLdFaq]}>
+  <div>
+    <div class="container" style="padding-top:1rem">
+      <nav aria-label="Fil d'ariane" class="breadcrumb-nav">
+        {breadcrumb.map((item, i) => (
+          <>
+            {i > 0 && <span aria-hidden="true"> › </span>}
+            {i < breadcrumb.length - 1 ? <a href={item.url}>{item.name}</a> : <span aria-current="page">{item.name}</span>}
+          </>
+        ))}
+      </nav>
+    </div>
+
+    <section class="pn-hero">
+      <div class="container">
+        <h1>Pénurie de carburant en France aujourd'hui</h1>
+        <p class="pn-subtitle">Part des stations-service en rupture, par département et par carburant</p>
+        <p class="pn-update">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Relevé du <time datetime={ruptures.releveLe}>{releveLabel}</time>
+        </p>
+      </div>
+    </section>
+
+    <div class="container page-body">
+
+      <section class="section-block">
+        <h2>La situation au {dayLabel}</h2>
+        <div class={`pn-level pn-tone-${level.tone}`}>
+          <span class="pn-level-icon" aria-hidden="true">{level.tone === 'good' ? '✓' : '!'}</span>
+          <div>
+            <strong>{level.label}</strong>
+            <p>{level.text}</p>
+          </div>
+        </div>
+        <div class="pn-stats">
+          <div class="pn-stat">
+            <span class="pn-stat-label">Stations en rupture</span>
+            <span class="pn-stat-value">{fr1(national.part)} %</span>
+            <span class="pn-stat-sub">{frInt(national.enRupture)} sur {frInt(national.stations)} stations suivies</span>
+          </div>
+          <div class="pn-stat">
+            <span class="pn-stat-label">Moyenne sur 5 jours</span>
+            <span class="pn-stat-value">{fr1(alertes.national.moyenne)} %</span>
+            <span class="pn-stat-sub">{calmAvg != null ? `Contre ${fr1(calmAvg)} % en période calme` : 'Tendance de fond'}</span>
+          </div>
+          <div class="pn-stat">
+            <span class="pn-stat-label">Carburant le plus touché</span>
+            <span class="pn-stat-value">{mostHit.label}</span>
+            <span class="pn-stat-sub">{frInt(mostHit.n)} stations en rupture</span>
+          </div>
+          <div class="pn-stat">
+            <span class="pn-stat-label">Départements très touchés</span>
+            <span class="pn-stat-value">{hotDepts}</span>
+            <span class="pn-stat-sub">30 % des stations ou plus en rupture</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="section-block">
+        <h2>Les départements les plus touchés</h2>
+        <p class="pn-intro">Départements comptant au moins 20 stations suivies, classés par part de stations en rupture sur au moins un carburant.</p>
+        <div class="table-wrapper">
+          <table class="pn-table">
+            <thead>
+              <tr><th>Département</th><th>Stations en rupture</th><th>Part</th><th>Situation</th></tr>
+            </thead>
+            <tbody>
+              {topDepts.map((d) => (
+                <tr>
+                  <td class="pn-table-name"><a href={`/prix-carburants/${d.slug}/`}>{d.name} ({d.code})</a></td>
+                  <td>{d.enRupture} / {d.stations}</td>
+                  <td><strong>{fr1(d.part)} %</strong></td>
+                  <td><span class={`pn-badge pn-tone-${deptTone(d.part)}`}>{deptToneLabel(d.part)}</span></td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="section-block">
+        <h2>Évolution de la part des stations en rupture</h2>
+        <p class="pn-intro">
+          Part des stations-service en rupture sur au moins un carburant, jour par jour, sur les {chartPoints.length} derniers jours.
+          Pic de la période : {fr1(periodPeak.part)} % le {shortDate(periodPeak.date)}.
+        </p>
+        <figure class="pn-chart" data-points={chartData}>
+          <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-label={`Évolution de la part des stations en rupture, de ${shortDate(chartPoints[0].date)} au ${shortDate(chartPoints.at(-1)!.date)}. Dernière valeur : ${fr1(chartPoints.at(-1)!.part)} %.`}>
+            {yTicks.map((t) => (
+              <g>
+                <line x1={PAD.left} x2={W - PAD.right} y1={y(t)} y2={y(t)} class="pn-grid" />
+                <text x={PAD.left - 8} y={y(t) + 4} class="pn-axis" text-anchor="end">{t} %</text>
+              </g>
+            ))}
+            {xTicks.map((t) => (
+              <text x={x(t.i)} y={H - 8} class="pn-axis" text-anchor="middle">{t.label}</text>
+            ))}
+            <path d={linePath} class="pn-line" />
+            <g class="pn-cursor" style="display:none">
+              <line class="pn-cursor-line" y1={PAD.top} y2={H - PAD.bottom} />
+              <circle class="pn-cursor-dot" r="5" />
+            </g>
+            <rect class="pn-hit" x={PAD.left} y={PAD.top} width={W - PAD.left - PAD.right} height={H - PAD.top - PAD.bottom} />
+          </svg>
+          <div class="pn-tooltip" role="status" aria-live="polite" hidden></div>
+        </figure>
+        <details class="pn-details">
+          <summary>Voir les 14 derniers jours en tableau</summary>
+          <div class="table-wrapper">
+            <table class="pn-table">
+              <thead><tr><th>Date</th><th>Stations suivies</th><th>Part en rupture</th></tr></thead>
+              <tbody>
+                {recentTable.map((p) => (
+                  <tr><td class="pn-table-name">{shortDate(p.date)}</td><td>{frInt(p.stations)}</td><td>{fr1(p.part)} %</td></tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </details>
+      </section>
+
+      <AdUnit />
+
+      <section class="section-block">
+        <h2>Carburants en rupture</h2>
+        <div class="table-wrapper">
+          <table class="pn-table">
+            <thead><tr><th>Carburant</th><th>Stations en rupture</th><th>Part des stations suivies</th></tr></thead>
+            <tbody>
+              {fuelRows.map((f) => (
+                <tr><td class="pn-table-name">{f.label}</td><td>{frInt(f.n)}</td><td>{fr1(f.part)} %</td></tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="section-block">
+        <h2>Tous les départements</h2>
+        <details class="pn-details">
+          <summary>Afficher les {allDepts.length} départements</summary>
+          <div class="table-wrapper">
+            <table class="pn-table">
+              <thead><tr><th>Département</th><th>Stations en rupture</th><th>Part</th></tr></thead>
+              <tbody>
+                {allDepts.map((d) => (
+                  <tr>
+                    <td class="pn-table-name"><a href={`/prix-carburants/${d.slug}/`}>{d.name} ({d.code})</a></td>
+                    <td>{d.enRupture} / {d.stations}</td>
+                    <td>{fr1(d.part)} %</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </details>
+      </section>
+
+      <section class="section-block seo-text">
+        <h2>Questions fréquentes</h2>
+        {faq.map((item) => (
+          <div class="pn-faq-item">
+            <h3>{item.q}</h3>
+            <p>{item.a}</p>
+          </div>
+        ))}
+      </section>
+
+      <section class="section-block seo-text">
+        <h2>Sources et méthode</h2>
+        <p>
+          Les ruptures sont déclarées par les gérants de stations et publiées par le ministère de l'Économie sur{' '}
+          <a href="https://data.economie.gouv.fr/explore/dataset/prix-des-carburants-en-france-flux-instantane-v2/" rel="noopener noreferrer" target="_blank">data.economie.gouv.fr</a>.
+          Le relevé est actualisé plusieurs fois par jour. L'historique antérieur au 28 septembre 2026 est reconstitué à partir du fichier
+          annuel officiel, qui conserve la date de début et de fin de chaque rupture.
+        </p>
+        <p>
+          Une station est suivie si elle a déclaré un prix dans les {ruptures.criteres.stationActiveJours} derniers jours ou une rupture récente :
+          une station à sec sur tous ses carburants ne déclare plus de prix, mais doit évidemment être comptée.
+          Ces chiffres dépendent des déclarations des gérants et peuvent avoir quelques heures de retard sur la réalité.
+        </p>
+        <p>
+          Pour comprendre la pénurie qui touche l'Alsace et la Lorraine, lisez notre article{' '}
+          <a href="/blog/penurie-carburant-est-rhin-aout-2026/">Pénurie de carburant dans l'Est : pourquoi, et que faire ?</a>
+          Pour suivre les prix, consultez le <a href="/prix-moyen-carburant-france/">prix moyen des carburants en France</a> ou
+          notre <a href="/prix-carburants/">comparateur de prix en temps réel</a>.
+        </p>
+      </section>
+
+    </div>
+  </div>
+</BaseLayout>
+
+<script>
+  document.querySelectorAll<HTMLElement>('.pn-chart').forEach((fig) => {
+    const points: { x: number; y: number; d: string; v: string }[] = JSON.parse(fig.dataset.points ?? '[]');
+    const svg = fig.querySelector('svg');
+    const hit = fig.querySelector<SVGRectElement>('.pn-hit');
+    const cursor = fig.querySelector<SVGGElement>('.pn-cursor');
+    const line = fig.querySelector<SVGLineElement>('.pn-cursor-line');
+    const dot = fig.querySelector<SVGCircleElement>('.pn-cursor-dot');
+    const tip = fig.querySelector<HTMLElement>('.pn-tooltip');
+    if (!svg || !hit || !cursor || !line || !dot || !tip || !points.length) return;
+
+    const show = (clientX: number) => {
+      const box = svg.getBoundingClientRect();
+      const vbX = ((clientX - box.left) / box.width) * svg.viewBox.baseVal.width;
+      let best = points[0];
+      for (const p of points) if (Math.abs(p.x - vbX) < Math.abs(best.x - vbX)) best = p;
+      cursor.style.display = '';
+      line.setAttribute('x1', String(best.x));
+      line.setAttribute('x2', String(best.x));
+      dot.setAttribute('cx', String(best.x));
+      dot.setAttribute('cy', String(best.y));
+      tip.hidden = false;
+      tip.textContent = `${best.d} : ${best.v} % des stations en rupture`;
+      const left = (best.x / svg.viewBox.baseVal.width) * box.width;
+      // Borné par la demi-largeur réelle de l'infobulle : sinon elle déborde
+      // de la figure et crée un défilement horizontal sur mobile.
+      const half = tip.offsetWidth / 2;
+      tip.style.left = `${Math.min(Math.max(left, half), box.width - half)}px`;
+    };
+    const hide = () => {
+      cursor.style.display = 'none';
+      tip.hidden = true;
+    };
+    hit.addEventListener('pointermove', (e) => show(e.clientX));
+    hit.addEventListener('pointerleave', hide);
+  });
+</script>
+
+<style>
+  .breadcrumb-nav { font-size:0.875rem; color:var(--color-text-muted); margin-bottom:0.5rem; }
+  .breadcrumb-nav a { color:var(--color-primary); text-decoration:none; }
+  .breadcrumb-nav a:hover { text-decoration:underline; }
+
+  .pn-hero { background:var(--color-primary); color:#fff; padding:2.5rem 0 2rem; }
+  .pn-hero h1 { font-size:clamp(1.5rem,3.5vw,2.25rem); font-weight:800; color:#fff; margin:0 0 0.5rem; }
+  .pn-subtitle { color:#94a3b8; margin:0 0 0.5rem; }
+  .pn-update { display:inline-flex; align-items:center; gap:0.4rem; font-size:0.8125rem; color:#cbd5e1; margin:0; }
+
+  .page-body { padding-top:2rem; padding-bottom:3rem; }
+  .section-block { margin-bottom:3rem; }
+  .section-block h2 { font-size:1.25rem; font-weight:700; color:var(--color-primary); margin:0 0 1.25rem; border-bottom:2px solid #e5e7eb; padding-bottom:0.5rem; }
+  .pn-intro { font-size:0.875rem; color:var(--color-text-muted); margin:0 0 0.75rem; }
+
+  .pn-tone-good { --tone:#166534; --tone-bg:#f0fdf4; }
+  .pn-tone-warning { --tone:#a16207; --tone-bg:#fefce8; }
+  .pn-tone-serious { --tone:#c2410c; --tone-bg:#fff7ed; }
+  .pn-tone-critical { --tone:#b91c1c; --tone-bg:#fef2f2; }
+
+  .pn-level { display:flex; gap:0.875rem; align-items:flex-start; background:var(--tone-bg); border-left:4px solid var(--tone); border-radius:0.5rem; padding:1rem 1.125rem; margin-bottom:1rem; }
+  .pn-level strong { color:var(--tone); font-size:1.0625rem; }
+  .pn-level p { margin:0.25rem 0 0; color:#374151; font-size:0.9375rem; }
+  .pn-level-icon { flex:none; width:1.75rem; height:1.75rem; border-radius:50%; background:var(--tone); color:#fff; font-weight:800; display:flex; align-items:center; justify-content:center; }
+
+  .pn-stats { display:grid; grid-template-columns:repeat(2,1fr); gap:0.875rem; }
+  @media(min-width:768px){ .pn-stats { grid-template-columns:repeat(4,1fr); } }
+  .pn-stat { background:#fff; border:2px solid #e5e7eb; border-radius:0.625rem; padding:1rem; }
+  .pn-stat-label { display:block; font-size:0.8125rem; font-weight:700; color:var(--color-text-muted); margin-bottom:0.375rem; }
+  .pn-stat-value { display:block; font-size:1.5rem; font-weight:800; color:var(--color-primary); }
+  .pn-stat-sub { display:block; font-size:0.75rem; color:var(--color-text-muted); margin-top:0.25rem; }
+
+  .table-wrapper { overflow-x:auto; }
+  .pn-table { width:100%; border-collapse:collapse; font-size:0.875rem; }
+  .pn-table th { background:#f1f5f9; color:var(--color-primary); padding:0.6rem 0.75rem; text-align:left; font-size:0.8rem; white-space:nowrap; }
+  .pn-table td { padding:0.55rem 0.75rem; border-bottom:1px solid #f1f5f9; white-space:nowrap; }
+  .pn-table tr:hover td { background:#f8fafc; }
+  .pn-table-name { font-weight:600; color:var(--color-primary); }
+  .pn-table-name a { color:var(--color-primary); text-decoration:none; }
+  .pn-table-name a:hover { text-decoration:underline; }
+  .pn-badge { display:inline-block; font-size:0.75rem; font-weight:700; color:var(--tone); background:var(--tone-bg); border:1px solid var(--tone); border-radius:999px; padding:0.1rem 0.55rem; }
+
+  .pn-chart { position:relative; margin:0 0 0.75rem; }
+  .pn-chart svg { width:100%; height:auto; display:block; }
+  .pn-grid { stroke:#e5e7eb; stroke-width:1; }
+  .pn-axis { fill:#6b7280; font-size:16px; }
+  .pn-line { fill:none; stroke:var(--color-primary); stroke-width:2; stroke-linejoin:round; stroke-linecap:round; }
+  .pn-cursor-line { stroke:#9ca3af; stroke-width:1; stroke-dasharray:3 3; }
+  .pn-cursor-dot { fill:var(--color-primary); stroke:#fff; stroke-width:2; }
+  .pn-hit { fill:transparent; cursor:crosshair; }
+  .pn-tooltip { position:absolute; top:0; transform:translateX(-50%); background:#111827; color:#fff; font-size:0.8125rem; padding:0.35rem 0.6rem; border-radius:0.375rem; pointer-events:none; white-space:nowrap; }
+
+  .pn-details { margin-top:0.5rem; }
+  .pn-details summary { cursor:pointer; font-weight:600; color:var(--color-primary); font-size:0.9375rem; padding:0.5rem 0; }
+
+  .seo-text p { color:#374151; line-height:1.7; margin-bottom:0.75rem; }
+  .seo-text a { color:var(--color-accent); }
+  .pn-faq-item { margin-bottom:1.5rem; }
+  .pn-faq-item h3 { font-size:1rem; font-weight:700; color:var(--color-primary); margin:0 0 0.5rem; }
+  .pn-faq-item p { color:#374151; line-height:1.7; margin:0; }
+</style>
