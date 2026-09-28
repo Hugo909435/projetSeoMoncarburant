@@ -20,8 +20,12 @@
  *  2. Ruptures récentes seulement (moins de MAX_RUPTURE_AGE_DAYS). Au
  *     28/09/2026, 330 ruptures temporaires ouvertes avaient plus de 180 jours :
  *     des gérants qui n'ont jamais déclaré la fin.
- *  3. Stations actives seulement (un prix déclaré depuis moins de
- *     ACTIVE_DAYS). Une station muette ne dit rien de son stock.
+ *  3. Stations actives seulement : un prix déclaré depuis moins de
+ *     ACTIVE_DAYS, OU une rupture récente. Le second critère est
+ *     indispensable : une station à sec sur tous ses carburants ne déclare
+ *     plus aucun prix, son champ *_maj est vide. Sans lui, le 28/09/2026,
+ *     847 des 1 594 stations en rupture étaient écartées comme inactives,
+ *     précisément les plus touchées.
  *
  * Gazole, SP95, E10 et SP98 uniquement : le GPLc et l'E85 sont en rupture
  * chronique dans une partie du parc, ils noieraient le signal.
@@ -97,8 +101,19 @@ function summarize(records, now) {
   for (const { label } of FUELS) national.parCarburant[label] = 0;
 
   for (const s of records) {
+    const ruptures = [];
+    for (const { key, label } of FUELS) {
+      if (s[`${key}_rupture_type`] !== 'temporaire') continue;
+      const debut = Date.parse(s[`${key}_rupture_debut`] ?? '');
+      if (!Number.isFinite(debut)) continue;
+      const age = (now - debut) / DAY_MS;
+      if (age < 0 || age > MAX_RUPTURE_AGE_DAYS) continue;
+      ruptures.push({ label, age });
+    }
+
     const majs = FUELS.map(({ key }) => Date.parse(s[`${key}_maj`] ?? '')).filter(Number.isFinite);
-    if (!majs.length || (now - Math.max(...majs)) / DAY_MS > ACTIVE_DAYS) continue;
+    const declarePrix = majs.length > 0 && (now - Math.max(...majs)) / DAY_MS <= ACTIVE_DAYS;
+    if (!declarePrix && !ruptures.length) continue;
 
     const code = s.code_departement ?? '??';
     const dept = (departements[code] ??= {
@@ -110,27 +125,17 @@ function summarize(records, now) {
     });
     national.stations++;
     dept.stations++;
+    if (!ruptures.length) continue;
 
-    let hit = false;
-    let recent = false;
-    for (const { key, label } of FUELS) {
-      if (s[`${key}_rupture_type`] !== 'temporaire') continue;
-      const debut = Date.parse(s[`${key}_rupture_debut`] ?? '');
-      if (!Number.isFinite(debut)) continue;
-      const age = (now - debut) / DAY_MS;
-      if (age < 0 || age > MAX_RUPTURE_AGE_DAYS) continue;
-      hit = true;
-      if (age <= RECENT_DAYS) recent = true;
-      national.parCarburant[label]++;
-      dept.parCarburant[label] = (dept.parCarburant[label] ?? 0) + 1;
-    }
-    if (hit) {
-      national.enRupture++;
-      dept.enRupture++;
-    }
-    if (recent) {
+    national.enRupture++;
+    dept.enRupture++;
+    if (ruptures.some((r) => r.age <= RECENT_DAYS)) {
       national.recentes++;
       dept.recentes++;
+    }
+    for (const { label } of ruptures) {
+      national.parCarburant[label]++;
+      dept.parCarburant[label] = (dept.parCarburant[label] ?? 0) + 1;
     }
   }
 
