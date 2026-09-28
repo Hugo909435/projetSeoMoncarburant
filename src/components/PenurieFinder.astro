@@ -1,0 +1,374 @@
+---
+/*
+ * Outil « Trouver du carburant » de /penurie-carburant/.
+ *
+ * Interroge EN DIRECT l'API officielle du ministère (data.economie.gouv.fr,
+ * CORS ouvert, quota de 50 000 appels par jour et par visiteur), pour ne pas
+ * afficher une rupture ou un prix vieux d'une heure pendant une pénurie.
+ *
+ * Règles d'affichage, fixées après analyse des ruptures 2026 (voir
+ * scripts/backfill-ruptures.js) :
+ *  - on n'écrit jamais « disponible » : on sait seulement qu'aucune rupture
+ *    n'est signalée et quand le dernier prix a été déclaré ;
+ *  - classement par fraîcheur (moins de 6 h, 24 h, 3 jours) puis prix ou distance ;
+ *  - prix de plus de 24 h : « à confirmer » ; plus de 3 jours : « information
+ *    ancienne », classée en fin de liste ;
+ *  - rupture signalée depuis plus de 7 jours : la station a pu être
+ *    réapprovisionnée sans le déclarer (3,7 % des ruptures 2026 durent plus
+ *    de 7 jours) ;
+ *  - prix et rupture à la fois : signalé comme contradictoire, sans trancher ;
+ *  - API indisponible : message d'erreur, jamais de repli silencieux sur des
+ *    données plus anciennes.
+ */
+import departments from '../data/departments.json';
+
+const deps = Object.entries(departments as Record<string, { name: string }>)
+  .map(([code, d]) => ({ code, name: d.name }))
+  .sort((a, b) => (a.code < b.code ? -1 : 1));
+---
+
+<section class="pf" id="trouver-carburant" aria-labelledby="pf-title">
+  <h2 id="pf-title">Trouver une station qui a du carburant</h2>
+  <p class="pf-lead">
+    Interrogation en direct des déclarations officielles des stations-service : prix déclarés et ruptures signalées.
+  </p>
+
+  <form class="pf-form" novalidate>
+    <label class="pf-field">
+      <span>Département</span>
+      <select name="dep" required>
+        <option value="">Choisir un département</option>
+        {deps.map((d) => <option value={d.code}>{d.code} - {d.name}</option>)}
+      </select>
+    </label>
+    <label class="pf-field">
+      <span>Carburant</span>
+      <select name="fuel">
+        <option value="gazole">Gazole</option>
+        <option value="e10">SP95-E10</option>
+        <option value="sp95">SP95</option>
+        <option value="sp98">SP98</option>
+      </select>
+    </label>
+    <div class="pf-actions">
+      <button type="submit" class="pf-btn">Chercher</button>
+      <button type="button" class="pf-btn pf-btn-alt" data-geo>Autour de moi (15 km)</button>
+    </div>
+  </form>
+
+  <p class="pf-status" role="status" aria-live="polite"></p>
+  <div class="pf-summary" hidden></div>
+  <div class="pf-results"></div>
+
+  <div class="pf-notice">
+    <strong>À lire avant de prendre la route</strong>
+    <p>
+      Ces informations sont déclarées par les gérants de stations au ministère de l'Économie et affichées telles quelles,
+      sans correction. « Aucune rupture signalée » ne garantit pas que la station a du carburant : une station peut être à
+      sec sans l'avoir encore déclaré. Fiez-vous à l'heure de la dernière déclaration, et prévoyez une solution de repli.
+    </p>
+  </div>
+</section>
+
+<script>
+  const API =
+    'https://data.economie.gouv.fr/api/explore/v2.1/catalog/datasets/prix-des-carburants-en-france-flux-instantane-v2/exports/json';
+  const FUEL_LABELS: Record<string, string> = { gazole: 'gazole', e10: 'SP95-E10', sp95: 'SP95', sp98: 'SP98' };
+  const HOUR = 3_600_000;
+  const DAY = 24 * HOUR;
+  const PAGE = 25;
+
+  /**
+   * Horodatages du ministère : heure de Paris, pas UTC.
+   *
+   * L'API v2 affiche « +00:00 », mais ses valeurs sont identiques caractère pour
+   * caractère à celles du flux XML, qui est en heure locale (vérifié le
+   * 28/09/2026 sur 8 762 stations). Lire le suffixe tel quel décale tout de
+   * 1 à 2 h selon la saison. On ignore donc le suffixe et on interprète la date
+   * comme une heure de Paris.
+   */
+  function parisTime(value: unknown): number {
+    const m = /^(\d{4})-(\d{2})-(\d{2})[T ](\d{2}):(\d{2}):(\d{2})/.exec(String(value ?? ''));
+    if (!m) return NaN;
+    const wall = Date.UTC(+m[1], +m[2] - 1, +m[3], +m[4], +m[5], +m[6]);
+    const offset = (t: number) => {
+      const p = Object.fromEntries(
+        new Intl.DateTimeFormat('en-US', { timeZone: 'Europe/Paris', hourCycle: 'h23', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' })
+          .formatToParts(t)
+          .map((x) => [x.type, x.value]),
+      );
+      return Date.UTC(+p.year, +p.month - 1, +p.day, +p.hour, +p.minute, +p.second) - t;
+    };
+    return wall - offset(wall - offset(wall));
+  }
+
+  type Row = Record<string, any>;
+  type Station = {
+    id: string;
+    adresse: string;
+    ville: string;
+    lat: number | null;
+    lng: number | null;
+    dep: string;
+    prix: number | null;
+    maj: number | null;
+    ruptureDebut: number | null;
+    ruptureType: string | null;
+    distance: number | null;
+  };
+
+  const root = document.getElementById('trouver-carburant')!;
+  const form = root.querySelector('form')!;
+  const status = root.querySelector<HTMLElement>('.pf-status')!;
+  const summary = root.querySelector<HTMLElement>('.pf-summary')!;
+  const results = root.querySelector<HTMLElement>('.pf-results')!;
+  const geoBtn = root.querySelector<HTMLButtonElement>('[data-geo]')!;
+
+  const esc = (s: unknown) =>
+    String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]!);
+
+  // Les adresses arrivent souvent en capitales : remise en casse simple,
+  // sans toucher à celles déjà correctement écrites.
+  const tidy = (s: string) =>
+    s && s === s.toUpperCase() ? s.toLowerCase().replace(/(^|[\s'-])(\p{L})/gu, (_, a, b) => a + b.toUpperCase()) : s ?? '';
+
+  const depOf = (cp: string) => {
+    const s = String(cp ?? '').padStart(5, '0');
+    if (s.startsWith('97')) return s.slice(0, 3);
+    if (s.startsWith('20')) return parseInt(s.slice(2), 10) < 200 ? '2A' : '2B';
+    return s.slice(0, 2);
+  };
+
+  const fmtTime = (t: number) =>
+    new Intl.DateTimeFormat('fr-FR', { day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Paris' }).format(t);
+  const ago = (t: number) => {
+    const h = (Date.now() - t) / HOUR;
+    if (h < 1) return `il y a ${Math.max(1, Math.round(h * 60))} min`;
+    if (h < 48) return `il y a ${Math.round(h)} h`;
+    return `il y a ${Math.round(h / 24)} jours`;
+  };
+  const km = (a: { lat: number; lng: number }, b: { lat: number; lng: number }) => {
+    const r = Math.PI / 180;
+    const x = Math.sin(((b.lat - a.lat) * r) / 2) ** 2 + Math.cos(a.lat * r) * Math.cos(b.lat * r) * Math.sin(((b.lng - a.lng) * r) / 2) ** 2;
+    return 6371 * 2 * Math.asin(Math.sqrt(x));
+  };
+
+  async function query(where: string, fuel: string): Promise<Row[]> {
+    const select = ['id', 'adresse', 'ville', 'cp', 'geom', `${fuel}_prix`, `${fuel}_maj`, `${fuel}_rupture_debut`, `${fuel}_rupture_type`].join(',');
+    const url = `${API}?select=${encodeURIComponent(select)}&where=${encodeURIComponent(where)}`;
+    const res = await fetch(url, { signal: AbortSignal.timeout(20_000) });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const data = await res.json();
+    if (!Array.isArray(data)) throw new Error('réponse inattendue');
+    return data;
+  }
+
+  const brandCache = new Map<string, Record<string, [string | null, string | null]>>();
+  async function brands(dep: string) {
+    if (!brandCache.has(dep)) {
+      try {
+        const res = await fetch(`/data/penurie/${dep}.json`);
+        brandCache.set(dep, res.ok ? await res.json() : {});
+      } catch {
+        brandCache.set(dep, {});
+      }
+    }
+    return brandCache.get(dep)!;
+  }
+
+  function toStation(r: Row, fuel: string, origin: { lat: number; lng: number } | null): Station {
+    const lat = r.geom?.lat ?? null;
+    const lng = r.geom?.lon ?? null;
+    const maj = parisTime(r[`${fuel}_maj`]);
+    const deb = parisTime(r[`${fuel}_rupture_debut`]);
+    return {
+      id: String(r.id),
+      adresse: tidy(r.adresse ?? ''),
+      ville: tidy(r.ville ?? ''),
+      lat,
+      lng,
+      dep: depOf(r.cp),
+      prix: typeof r[`${fuel}_prix`] === 'number' ? r[`${fuel}_prix`] : null,
+      maj: Number.isFinite(maj) ? maj : null,
+      ruptureDebut: Number.isFinite(deb) ? deb : null,
+      ruptureType: r[`${fuel}_rupture_type`] ?? null,
+      distance: origin && lat != null && lng != null ? km(origin, { lat, lng }) : null,
+    };
+  }
+
+  function card(s: Station, kind: 'ok' | 'rupture' | 'conflit', brand: [string | null, string | null] | undefined) {
+    const name = brand?.[0] ? `${esc(brand[0])}, ` : '';
+    const title = `${name}${esc(s.adresse)}`;
+    const place = `${esc(s.ville)}${s.distance != null ? ` · ${s.distance.toLocaleString('fr-FR', { maximumFractionDigits: 1 })} km` : ''}`;
+    let detail = '';
+    let tone = 'good';
+    if (kind === 'ok') {
+      const age = Date.now() - s.maj!;
+      tone = age <= DAY ? 'good' : age <= 3 * DAY ? 'warning' : 'serious';
+      const note = age <= DAY ? '' : age <= 3 * DAY ? ' · à confirmer' : ' · information ancienne';
+      detail = `<span class="pf-price">${s.prix!.toLocaleString('fr-FR', { minimumFractionDigits: 3 })} €/L</span>
+        <span class="pf-meta">Aucune rupture signalée · prix déclaré ${ago(s.maj!)}${note}</span>`;
+    } else if (kind === 'rupture') {
+      tone = 'critical';
+      const old = Date.now() - s.ruptureDebut! > 7 * DAY;
+      detail = `<span class="pf-meta"><strong>Rupture signalée</strong> le ${fmtTime(s.ruptureDebut!)}${
+        old ? ` (${ago(s.ruptureDebut!)} : la station a pu être réapprovisionnée sans le déclarer)` : ''
+      }</span>`;
+    } else {
+      tone = 'warning';
+      detail = `<span class="pf-meta"><strong>Informations contradictoires</strong> : un prix et une rupture sont déclarés en même temps. Renseignez-vous avant de vous déplacer.</span>`;
+    }
+    const links = [
+      brand?.[1] ? `<a href="${esc(brand[1])}">Fiche station</a>` : '',
+      s.lat != null && s.lng != null
+        ? `<a href="https://www.google.com/maps/dir/?api=1&destination=${s.lat},${s.lng}" target="_blank" rel="noopener noreferrer">Itinéraire</a>`
+        : '',
+    ]
+      .filter(Boolean)
+      .join('');
+    return `<li class="pf-card pf-tone-${tone}">
+      <div class="pf-card-main"><span class="pf-name">${title}</span><span class="pf-place">${place}</span>${detail}</div>
+      ${links ? `<div class="pf-links">${links}</div>` : ''}
+    </li>`;
+  }
+
+  function list(title: string, items: string[], id: string) {
+    if (!items.length) return '';
+    const first = items.slice(0, PAGE).join('');
+    const rest = items.slice(PAGE).join('');
+    return `<h3 class="pf-list-title">${title} (${items.length})</h3>
+      <ul class="pf-list" id="${id}">${first}</ul>
+      ${rest ? `<details class="pf-more"><summary>Afficher les ${items.length - PAGE} autres</summary><ul class="pf-list">${rest}</ul></details>` : ''}`;
+  }
+
+  async function run(where: string, fuel: string, label: string, origin: { lat: number; lng: number } | null) {
+    status.textContent = 'Interrogation des données officielles…';
+    summary.hidden = true;
+    results.innerHTML = '';
+    let rows: Row[];
+    try {
+      rows = await query(where, fuel);
+    } catch {
+      status.textContent =
+        "Les données officielles sont momentanément inaccessibles. Réessayez dans quelques minutes, ou consultez directement prix-carburants.gouv.fr. Nous n'affichons pas de données plus anciennes à la place.";
+      return;
+    }
+    const queriedAt = Date.now();
+    const stations = rows.map((r) => toStation(r, fuel, origin));
+    const depList = [...new Set(stations.map((s) => s.dep))];
+    const brandMaps = await Promise.all(depList.map(brands));
+    const brandOf = (s: Station) => brandMaps[depList.indexOf(s.dep)]?.[s.id];
+
+    const ok: Station[] = [];
+    const rupture: Station[] = [];
+    const conflit: Station[] = [];
+    let definitive = 0;
+    let inconnu = 0;
+    for (const s of stations) {
+      const hasRupture = s.ruptureDebut != null && s.ruptureType !== 'definitive';
+      if (s.ruptureType === 'definitive' && s.prix == null) definitive++;
+      else if (hasRupture && s.prix != null) conflit.push(s);
+      else if (hasRupture) rupture.push(s);
+      else if (s.prix != null && s.maj != null) ok.push(s);
+      else inconnu++;
+    }
+    const byDistance = (a: Station, b: Station) => (a.distance ?? 0) - (b.distance ?? 0);
+    const bucket = (s: Station) => {
+      const age = queriedAt - s.maj!;
+      // Fraîcheur d'abord : pendant une pénurie, une déclaration de moins de
+      // 6 h renseigne bien mieux qu'un prix plus bas déclaré la veille.
+      return age <= 6 * HOUR ? 0 : age <= DAY ? 1 : age <= 3 * DAY ? 2 : 3;
+    };
+    ok.sort((a, b) => bucket(a) - bucket(b) || (origin ? byDistance(a, b) : a.prix! - b.prix!));
+    rupture.sort((a, b) => (origin ? byDistance(a, b) : b.ruptureDebut! - a.ruptureDebut!));
+    conflit.sort(byDistance);
+
+    const fuelLabel = FUEL_LABELS[fuel];
+    status.textContent = `${label} · ${fuelLabel} · données officielles interrogées le ${fmtTime(queriedAt)}.`;
+    summary.hidden = false;
+    summary.innerHTML = `
+      <span><strong>${ok.length}</strong> sans rupture signalée</span>
+      <span><strong>${rupture.length}</strong> en rupture</span>
+      ${conflit.length ? `<span><strong>${conflit.length}</strong> contradictoires</span>` : ''}
+      <span><strong>${definitive}</strong> ne vendent pas de ${fuelLabel}</span>
+      ${inconnu ? `<span><strong>${inconnu}</strong> sans information</span>` : ''}`;
+
+    if (!stations.length) {
+      results.innerHTML = '<p class="pf-empty">Aucune station trouvée pour cette recherche.</p>';
+      return;
+    }
+    results.innerHTML =
+      list(`Aucune rupture de ${fuelLabel} signalée`, ok.map((s) => card(s, 'ok', brandOf(s))), 'pf-ok') +
+      list('Informations contradictoires', conflit.map((s) => card(s, 'conflit', brandOf(s))), 'pf-conflit') +
+      list(`Rupture de ${fuelLabel} signalée`, rupture.map((s) => card(s, 'rupture', brandOf(s))), 'pf-rupture');
+  }
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const dep = (form.elements.namedItem('dep') as HTMLSelectElement).value;
+    const fuel = (form.elements.namedItem('fuel') as HTMLSelectElement).value;
+    if (!dep) {
+      status.textContent = 'Choisissez un département, ou utilisez « Autour de moi ».';
+      return;
+    }
+    const depName = (form.elements.namedItem('dep') as HTMLSelectElement).selectedOptions[0].textContent ?? dep;
+    run(`code_departement="${dep}"`, fuel, depName, null);
+  });
+
+  geoBtn.addEventListener('click', () => {
+    const fuel = (form.elements.namedItem('fuel') as HTMLSelectElement).value;
+    if (!('geolocation' in navigator)) {
+      status.textContent = "Votre navigateur ne permet pas la géolocalisation. Choisissez un département.";
+      return;
+    }
+    status.textContent = 'Localisation en cours…';
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        const origin = { lat: pos.coords.latitude, lng: pos.coords.longitude };
+        run(
+          `within_distance(geom, geom'POINT(${origin.lng.toFixed(5)} ${origin.lat.toFixed(5)})', 15km)`,
+          fuel,
+          'Dans un rayon de 15 km',
+          origin,
+        );
+      },
+      () => {
+        status.textContent = "Localisation refusée ou impossible. Choisissez un département.";
+      },
+      { enableHighAccuracy: false, timeout: 15_000, maximumAge: 300_000 },
+    );
+  });
+</script>
+
+<style is:global>
+  .pf { background:#fff; border:2px solid #e5e7eb; border-radius:0.75rem; padding:1.25rem; margin-bottom:3rem; }
+  .pf > h2 { font-size:1.25rem; font-weight:700; color:var(--color-primary); margin:0 0 0.5rem; }
+  .pf-lead { font-size:0.9375rem; color:#374151; margin:0 0 1rem; }
+  .pf-form { display:grid; gap:0.75rem; }
+  @media(min-width:768px){ .pf-form { grid-template-columns:2fr 1fr auto; align-items:end; } }
+  .pf-field { display:flex; flex-direction:column; gap:0.3rem; font-size:0.8125rem; font-weight:700; color:var(--color-text-muted); }
+  .pf-field select { font-size:1rem; padding:0.6rem 0.7rem; border:2px solid #d1d5db; border-radius:0.5rem; background:#fff; color:#111827; min-height:44px; }
+  .pf-actions { display:flex; gap:0.5rem; flex-wrap:wrap; }
+  .pf-btn { min-height:44px; padding:0.6rem 1rem; border-radius:0.5rem; border:2px solid var(--color-primary); background:var(--color-primary); color:#fff; font-weight:700; font-size:0.9375rem; cursor:pointer; }
+  .pf-btn-alt { background:#fff; color:var(--color-primary); }
+  .pf-status { font-size:0.875rem; color:#374151; margin:0.875rem 0 0.5rem; min-height:1.25rem; }
+  .pf-summary { display:flex; flex-wrap:wrap; gap:0.5rem 1rem; font-size:0.875rem; color:#374151; padding:0.625rem 0.75rem; background:#f8fafc; border-radius:0.5rem; margin-bottom:0.75rem; }
+  .pf-list-title { font-size:1rem; font-weight:700; color:var(--color-primary); margin:1.25rem 0 0.5rem; }
+  .pf-list { list-style:none; margin:0; padding:0; display:grid; gap:0.5rem; }
+  .pf-card { display:flex; justify-content:space-between; gap:0.75rem; flex-wrap:wrap; border:1px solid #e5e7eb; border-left:4px solid var(--tone); border-radius:0.5rem; padding:0.625rem 0.75rem; }
+  .pf-tone-good { --tone:#166534; }
+  .pf-tone-warning { --tone:#a16207; }
+  .pf-tone-serious { --tone:#c2410c; }
+  .pf-tone-critical { --tone:#b91c1c; }
+  .pf-card-main { display:flex; flex-direction:column; gap:0.15rem; min-width:0; flex:1 1 14rem; }
+  .pf-name { font-weight:700; color:#111827; overflow-wrap:anywhere; }
+  .pf-place { font-size:0.8125rem; color:var(--color-text-muted); }
+  .pf-price { font-weight:800; color:#111827; }
+  .pf-meta { font-size:0.8125rem; color:#374151; }
+  .pf-links { display:flex; gap:0.75rem; align-items:center; font-size:0.875rem; }
+  .pf-links a { color:var(--color-accent); font-weight:600; }
+  .pf-more summary { cursor:pointer; font-weight:600; color:var(--color-primary); padding:0.5rem 0; font-size:0.9rem; }
+  .pf-empty { font-size:0.9375rem; color:#374151; }
+  .pf-notice { margin-top:1.25rem; background:#fefce8; border-left:4px solid #a16207; border-radius:0.5rem; padding:0.75rem 1rem; font-size:0.875rem; color:#374151; }
+  .pf-notice p { margin:0.25rem 0 0; line-height:1.6; }
+</style>

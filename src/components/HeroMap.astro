@@ -920,6 +920,7 @@ for (const slug of brandSlugs) {
     enseigne?: string;
     enseigneSlug?: string;
     prices?: Record<string, number>;
+    ruptures?: Record<string, string>;
   };
 
   const FUEL_LABELS: Record<string, string> = {
@@ -927,11 +928,27 @@ for (const slug of brandSlugs) {
     E10: 'E10', E85: 'E85', GPLc: 'GPL',
   };
 
+  // Ruptures reportées par scripts/fetch-ruptures.js : heure de Paris telle que
+  // déclarée (« 2026-09-28T11:29 »), affichée sans conversion.
+  function ruptureRows(s: { ruptures?: Record<string, string> }, labels: Record<string, string>): string {
+    if (!s.ruptures) return '';
+    return Object.entries(s.ruptures)
+      .filter(([k]) => labels[k])
+      .map(([k, when]) => {
+        const [d, t] = when.split('T');
+        const [y, m, j] = d.split('-');
+        const days = Math.floor((Date.now() - Date.parse(`${when}:00Z`)) / 86_400_000);
+        const old = days > 7 ? `, non levée depuis ${days} jours` : '';
+        return `<tr class="popup-rupture" style="color:#b91c1c"><td>${labels[k]}</td><td>Rupture signalée le ${j}/${m}/${y} à ${t}${old}</td></tr>`;
+      })
+      .join('');
+  }
+
   function buildPopup(s: Station): string {
     const rows = Object.entries(FUEL_LABELS)
       .filter(([k]) => s.prices?.[k] != null)
       .map(([k, lbl]) => `<tr><td>${lbl}</td><td>${(s.prices![k] as number).toFixed(3)} €/L</td></tr>`)
-      .join('');
+      .join('') + ruptureRows(s, FUEL_LABELS);
 
     const stationPath = s.id ? stationPages[s.id] : null;
     const dept = deptMap[s.dep];
@@ -1001,12 +1018,24 @@ for (const slug of brandSlugs) {
     const sorted = withPrice.slice().sort((a, b) => (a.s.prices![selectedFuel] as number) - (b.s.prices![selectedFuel] as number));
     const shown = sorted.slice(0, LIST_MAX);
 
+    // Stations qui déclarent une rupture de ce carburant depuis moins de 30
+    // jours (données reportées par scripts/fetch-ruptures.js) : listées après
+    // les prix, pour qu'elles ne disparaissent pas de la liste sans explication.
+    const inRupture = lastResults
+      .filter(r => r.s.prices?.[selectedFuel] == null && r.s.ruptures?.[selectedFuel] &&
+        Date.now() - Date.parse(`${r.s.ruptures[selectedFuel]}:00Z`) <= 30 * 86_400_000)
+      .sort((a, b) => (typeof a.dist === 'number' && typeof b.dist === 'number' ? a.dist - b.dist : 0))
+      .slice(0, LIST_MAX);
+
     if (listCountEl) {
       const label = FUEL_LABELS[selectedFuel] || selectedFuel;
       listCountEl.textContent = withPrice.length === 0
         ? `Aucune station avec un prix ${label} communiqué dans cette sélection.`
         : `${withPrice.length.toLocaleString('fr-FR')} station${withPrice.length > 1 ? 's' : ''} avec prix ${label}` +
           (withPrice.length > shown.length ? ` (${shown.length} affichées, triées du moins cher au plus cher)` : ' (triées du moins cher au plus cher)');
+      if (inRupture.length) {
+        listCountEl.textContent += ` · ${inRupture.length} en rupture de ${label} signalée`;
+      }
     }
 
     listEl.innerHTML = shown.map(({ s, dist }, i) => {
@@ -1030,6 +1059,29 @@ for (const slug of brandSlugs) {
           <span class="hm-item-price-wrap">
             <span class="hm-item-price">${intPart},${decPart}</span>
             <span class="hm-item-unit">€/L</span>
+          </span>
+        </button>
+      </li>`;
+    }).join('') + inRupture.map(({ s, dist }) => {
+      const [d, t] = s.ruptures![selectedFuel].split('T');
+      const [, m, j] = d.split('-');
+      const brandName = s.enseigne || 'Station';
+      const logoUrl = s.enseigneSlug ? brandLogos[s.enseigneSlug] : null;
+      const logo = logoUrl
+        ? `<img class="hm-item-logo" src="${logoUrl}" alt="${escapeHtml(brandName)}" loading="lazy" decoding="async" />`
+        : `<span class="hm-item-logo hm-item-logo-fallback">${escapeHtml(brandName.charAt(0).toUpperCase())}</span>`;
+      return `<li>
+        <button type="button" class="hm-list-item" data-lat="${s.lat}" data-lng="${s.lng}">
+          ${logo}
+          <span class="hm-item-main">
+            <span class="hm-item-brand">${escapeHtml(brandName)}</span>
+            <span class="hm-item-city">${escapeHtml(toDisplay(s.ville || ''))}</span>
+            <span class="hm-item-addr">${escapeHtml(s.adresse || '')}${s.cp ? ' &middot; ' + escapeHtml(s.cp) : ''}</span>
+            ${typeof dist === 'number' ? `<span class="hm-item-dist">${dist.toFixed(1)} km</span>` : ''}
+          </span>
+          <span class="hm-item-price-wrap">
+            <span class="hm-item-price" style="color:#b91c1c;font-size:0.9rem">Rupture</span>
+            <span class="hm-item-unit">signalée le ${j}/${m} à ${t}</span>
           </span>
         </button>
       </li>`;

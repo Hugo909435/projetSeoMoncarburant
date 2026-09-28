@@ -44,6 +44,30 @@ const ACTIVE_DAYS = 10;
 const SKIP_LAST_DAYS = 2;
 const DAY_MS = 86_400_000;
 
+/**
+ * Horodatages du ministère : heure de Paris, pas UTC.
+ *
+ * L'API v2 affiche « +00:00 », mais ses valeurs sont identiques caractère pour
+ * caractère à celles du flux XML, qui est en heure locale (vérifié le
+ * 28/09/2026 sur 8 762 stations). Lire le suffixe tel quel décale tout de
+ * 1 à 2 h selon la saison. On ignore donc le suffixe et on interprète la date
+ * comme une heure de Paris.
+ */
+function parisTime(value) {
+  const m = /^(\d{4})-(\d{2})-(\d{2})[T ](\d{2}):(\d{2}):(\d{2})/.exec(String(value ?? ''));
+  if (!m) return NaN;
+  const wall = Date.UTC(+m[1], +m[2] - 1, +m[3], +m[4], +m[5], +m[6]);
+  const offset = (t) => {
+    const p = Object.fromEntries(
+      new Intl.DateTimeFormat('en-US', { timeZone: 'Europe/Paris', hourCycle: 'h23', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' })
+        .formatToParts(t)
+        .map((x) => [x.type, x.value]),
+    );
+    return Date.UTC(+p.year, +p.month - 1, +p.day, +p.hour, +p.minute, +p.second) - t;
+  };
+  return wall - offset(wall - offset(wall));
+}
+
 const share = (n, total) => (total ? Math.round((n / total) * 1000) / 10 : 0);
 
 function getDepNum(cp) {
@@ -85,7 +109,7 @@ async function main() {
 
     const priceDays = new Set();
     for (const tag of block.matchAll(/<prix [^>]*>/g)) {
-      const t = Date.parse(attr(tag[0], 'maj'));
+      const t = parisTime(attr(tag[0], 'maj'));
       if (Number.isFinite(t)) priceDays.add(Math.floor((t - start) / DAY_MS));
     }
 
@@ -94,9 +118,9 @@ async function main() {
       if (attr(tag[0], 'type') !== 'temporaire') continue;
       const nom = attr(tag[0], 'nom');
       if (!FUELS.includes(nom)) continue;
-      const debut = Date.parse(attr(tag[0], 'debut'));
+      const debut = parisTime(attr(tag[0], 'debut'));
       if (!Number.isFinite(debut)) continue;
-      const fin = Date.parse(attr(tag[0], 'fin'));
+      const fin = parisTime(attr(tag[0], 'fin'));
       ruptures.push({ nom, debut, fin: Number.isFinite(fin) ? fin : Infinity });
     }
 

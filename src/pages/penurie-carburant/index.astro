@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import AdUnit from '../../components/AdUnit.astro';
+import PenurieFinder from '../../components/PenurieFinder.astro';
 import ruptures from '../../data/fuel/ruptures.json';
 import rupturesHistory from '../../data/fuel/ruptures-history.json';
 import rupturesAlertes from '../../data/fuel/ruptures-alertes.json';
@@ -82,7 +83,7 @@ const calmAvg = calmReference.length ? calmReference.reduce((s, p) => s + p.part
 const recentTable = history.slice(-14).reverse();
 
 
-const title = `Pénurie carburant aujourd'hui : ${fr1(national.part)} % des stations`;
+const title = "Pénurie carburant aujourd'hui : stations en rupture";
 // Limite de 160 caractères : on retire des départements tant que ça dépasse.
 const buildDescription = (n: number) =>
   `${fr1(national.part)} % des stations en rupture au ${dayLabel}.` +
@@ -117,7 +118,7 @@ const faq = [
   },
   {
     q: "Comment savoir si une station a encore du carburant ?",
-    a: "Les gérants déclarent eux-mêmes leurs ruptures sur le site officiel prix-carburants.gouv.fr, et la déclaration peut avoir quelques heures de retard. En période de pénurie, mieux vaut viser une station qui a mis à jour ses prix récemment et prévoir une solution de repli à proximité.",
+    a: "Utilisez l'outil en haut de cette page : il interroge en direct les déclarations officielles des stations et indique, pour le carburant choisi, celles qui signalent une rupture et celles qui n'en signalent pas, avec l'heure de leur dernière déclaration. Ce sont les gérants qui déclarent leurs ruptures, parfois avec retard : une station peut être à sec sans l'avoir encore signalé. Privilégiez une station dont le prix a été déclaré récemment et prévoyez une solution de repli.",
   },
   {
     q: 'Comment sont calculés ces chiffres ?',
@@ -147,7 +148,7 @@ const jsonLdFaq = {
     <section class="pn-hero">
       <div class="container">
         <h1>Pénurie de carburant en France aujourd'hui</h1>
-        <p class="pn-subtitle">Part des stations-service en rupture, par département et par carburant</p>
+        <p class="pn-subtitle">Stations en rupture et stations approvisionnées, d'après les déclarations officielles en direct</p>
         <p class="pn-update">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
           Relevé du <time datetime={ruptures.releveLe}>{releveLabel}</time>
@@ -156,6 +157,8 @@ const jsonLdFaq = {
     </section>
 
     <div class="container page-body">
+
+      <PenurieFinder />
 
       <section class="section-block">
         <h2>La situation au {dayLabel}</h2>

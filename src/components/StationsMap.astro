@@ -109,6 +109,22 @@ const nationalGazole = (statsNational as Record<string, number>)['Gazole'] ?? 0;
 <script>
   import { escapeHtml } from '../utils/escape-html';
 
+  // Ruptures reportées par scripts/fetch-ruptures.js : heure de Paris telle que
+  // déclarée (« 2026-09-28T11:29 »), affichée sans conversion.
+  function ruptureRows(s: { ruptures?: Record<string, string> }, labels: Record<string, string>): string {
+    if (!s.ruptures) return '';
+    return Object.entries(s.ruptures)
+      .filter(([k]) => labels[k])
+      .map(([k, when]) => {
+        const [d, t] = when.split('T');
+        const [y, m, j] = d.split('-');
+        const days = Math.floor((Date.now() - Date.parse(`${when}:00Z`)) / 86_400_000);
+        const old = days > 7 ? `, non levée depuis ${days} jours` : '';
+        return `<tr class="popup-rupture" style="color:#b91c1c"><td>${labels[k]}</td><td>Rupture signalée le ${j}/${m}/${y} à ${t}${old}</td></tr>`;
+      })
+      .join('');
+  }
+
   const mapEl = document.getElementById('stations-map');
 
   function loadCss(href: string) {
@@ -176,7 +192,7 @@ const nationalGazole = (statsNational as Record<string, number>)['Gazole'] ?? 0;
         const rows = Object.entries(fuelLabels)
           .filter(([k]) => s.prices?.[k] != null)
           .map(([k, lbl]) => `<tr><td>${lbl}</td><td>${s.prices[k].toFixed(3)} €/L</td></tr>`)
-          .join('');
+          .join('') + ruptureRows(s, fuelLabels);
         const popup =
           `<div class="fuel-popup"><h4>${escapeHtml(s.ville || '')}</h4>` +
           `<p class="addr">${escapeHtml(s.adresse || '')}${s.cp ? ' · ' + escapeHtml(s.cp) : ''}</p>` +
