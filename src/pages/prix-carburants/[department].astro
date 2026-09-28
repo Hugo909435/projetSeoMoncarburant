@@ -12,6 +12,7 @@ import StationLink from '../../components/StationLink.astro';
 import { stationUrl } from '../../utils/station-waves';
 import { formatMaj } from '../../utils/format-maj';
 import AdUnit from '../../components/AdUnit.astro';
+import ruptures from '../../data/fuel/ruptures.json';
 
 export async function getStaticPaths() {
   const deptFiles = import.meta.glob('../../data/fuel/stations-by-department/*.json', { eager: true });
@@ -44,6 +45,13 @@ export async function getStaticPaths() {
 const { deptData, dept, deptCities } = Astro.props;
 const { stats, stations, top10, count } = deptData;
 const localContent = deptContent[dept.num];
+
+// Encart pénurie : seulement si le département est réellement touché au
+// dernier relevé (scripts/fetch-ruptures.js), soit au moins 15 % des stations
+// suivies et 5 stations en rupture, pour ne pas alerter sur deux stations.
+const deptRupture = (ruptures.departements as Record<string, { stations: number; enRupture: number; part: number }>)[dept.num];
+const showPenurie = deptRupture != null && deptRupture.part >= 15 && deptRupture.enRupture >= 5;
+const penurieReleve = new Intl.DateTimeFormat('fr-FR', { day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Paris' }).format(new Date(ruptures.releveLe));
 const deps = departments as Record<string, { num: string; name: string; slug: string; region: string; regionSlug: string; neighbors: string[] }>;
 
 const FUELS = ['Gazole', 'SP95', 'SP98', 'E10', 'E85', 'GPLc'] as const;
@@ -180,6 +188,17 @@ const jsonLdGasStations = dept.num === '53'
     </section>
 
     <div class="container page-body">
+      {showPenurie && (
+        <aside class="dept-penurie" aria-label="Pénurie de carburant dans le département">
+          <p>
+            <strong>Pénurie en cours :</strong> {deptRupture.enRupture} stations sur {deptRupture.stations} du département signalent
+            une rupture sur au moins un carburant ({deptRupture.part.toLocaleString('fr-FR', { maximumFractionDigits: 1 })} %, relevé du {penurieReleve}).
+            Les prix ci-dessous peuvent concerner des stations en rupture sur un autre carburant.
+          </p>
+          <a href="/penurie-carburant/#trouver-carburant">Voir en direct les stations qui ont du carburant →</a>
+        </aside>
+      )}
+
       <!-- Identité locale -->
       {localContent && (
         <LocalIdentity
@@ -408,6 +427,9 @@ const jsonLdGasStations = dept.num === '53'
   .dept-subtitle { color: #94a3b8; margin: 0 0 0.5rem; }
   .update-info { font-size: 0.8125rem; color: #64748b; margin: 0; }
   .page-body { padding-top: 2rem; padding-bottom: 3rem; }
+  .dept-penurie { background: #fef2f2; border-left: 4px solid #b91c1c; border-radius: 0.5rem; padding: 0.875rem 1rem; margin-bottom: 2rem; color: #7f1d1d; font-size: 0.9375rem; }
+  .dept-penurie p { margin: 0 0 0.5rem; line-height: 1.6; }
+  .dept-penurie a { color: #b91c1c; font-weight: 700; }
   .section-block { margin-bottom: 3rem; }
   .section-block h2 { font-size: 1.25rem; font-weight: 700; color: var(--color-primary); margin: 0 0 1.25rem; border-bottom: 2px solid #e5e7eb; padding-bottom: 0.5rem; }
   .fuel-stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem; }

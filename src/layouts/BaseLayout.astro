@@ -5,6 +5,7 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import SEO from '../components/SEO.astro';
 import AdUnit from '../components/AdUnit.astro';
+import PenurieBanner from '../components/PenurieBanner.astro';
 
 const GA_ID = 'G-34QJT89RZV';
 const ADS_CLIENT = 'ca-pub-3886240842343078';
@@ -138,6 +139,7 @@ const {
   <body class={bodyClass}>
     <a href="#main-content" class="skip-link">Aller au contenu principal</a>
     <Header />
+    <PenurieBanner />
     <main id="main-content">
       <slot />
     </main>

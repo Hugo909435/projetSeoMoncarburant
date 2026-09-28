@@ -1,0 +1,43 @@
+---
+/*
+ * Bandeau d'alerte pénurie, affiché sous le menu sur tout le site.
+ *
+ * N'apparaît que si le niveau national calculé par scripts/detect-penurie.js
+ * est « pénurie » ou « forte pénurie » (moyenne sur 5 jours d'au moins 8 % des
+ * stations en rupture), et disparaît de lui-même au rebuild qui suit le retour
+ * au calme. Le chiffre affiché est celui du dernier relevé, daté, puisque le
+ * bandeau est figé entre deux rebuilds (3 h au plus).
+ */
+import rupturesAlertes from '../data/fuel/ruptures-alertes.json';
+import ruptures from '../data/fuel/ruptures.json';
+
+const niveau = (rupturesAlertes as { national?: { niveau?: string } }).national?.niveau;
+const label = niveau === 'forte' ? 'Forte pénurie de carburant' : niveau === 'penurie' ? 'Pénurie de carburant' : null;
+const onPenuriePage = Astro.url.pathname.startsWith('/penurie-carburant');
+const show = label != null && !onPenuriePage && ruptures?.national?.stations > 0;
+
+const part = show ? ruptures.national.part.toLocaleString('fr-FR', { minimumFractionDigits: 1, maximumFractionDigits: 1 }) : '';
+const releve = show
+  ? new Intl.DateTimeFormat('fr-FR', { day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Paris' }).format(new Date(ruptures.releveLe))
+  : '';
+---
+
+{show && (
+  <div class="penurie-banner" role="region" aria-label="Alerte pénurie de carburant">
+    <div class="container penurie-banner-inner">
+      <span class="penurie-banner-icon" aria-hidden="true">!</span>
+      <p>
+        <strong>{label} :</strong> {part} % des stations-service signalent une rupture (relevé du {releve}).
+        <a href="/penurie-carburant/#trouver-carburant">Trouver une station qui a du carburant →</a>
+      </p>
+    </div>
+  </div>
+)}
+
+<style>
+  .penurie-banner { background: #fef2f2; border-bottom: 1px solid #fecaca; color: #7f1d1d; }
+  .penurie-banner-inner { display: flex; gap: 0.625rem; align-items: flex-start; padding-top: 0.625rem; padding-bottom: 0.625rem; }
+  .penurie-banner-icon { flex: none; width: 1.375rem; height: 1.375rem; border-radius: 50%; background: #b91c1c; color: #fff; font-weight: 800; font-size: 0.8125rem; display: flex; align-items: center; justify-content: center; margin-top: 0.1rem; }
+  .penurie-banner p { margin: 0; font-size: 0.875rem; line-height: 1.5; }
+  .penurie-banner a { color: #b91c1c; font-weight: 700; text-decoration: underline; }
+</style>
