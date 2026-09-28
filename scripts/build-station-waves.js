@@ -71,7 +71,7 @@ const INTERVAL_DAYS = 14;
  * Taille des vagues, par paliers. Chaque entrée s'applique à partir de la vague
  * indiquée et jusqu'au palier suivant.
  *
- * Montée en charge progressive. Les cinq premières vagues restent à 100 pages,
+ * Montée en charge progressive. Les quatre premières vagues restent à 100 pages,
  * le temps de vérifier en Search Console que Google indexe correctement le
  * gabarit. Une fois cette preuve faite, il n'y a plus de raison de rester à ce
  * rythme : ce qui reste à démontrer n'est plus la qualité du modèle de page
@@ -86,8 +86,8 @@ const INTERVAL_DAYS = 14;
  * publiées et redistribue uniquement les suivantes.
  */
 const WAVE_PLAN = [
-  { fromWave: 1, size: 100 },  // vagues 1 à 5, prudence initiale
-  { fromWave: 6, size: 250 },  // vagues 6 à 9 (avancé le 28/09/2026 : 90 % des 400 premières fiches déjà en impressions)
+  { fromWave: 1, size: 100 },  // vagues 1 à 4, prudence initiale
+  { fromWave: 5, size: 250 },  // vagues 5 à 9 (avancé le 28/09/2026 : 90 % des 400 premières fiches déjà en impressions)
   { fromWave: 10, size: 500 }, // vagues 10 à 14
   { fromWave: 15, size: 800 }, // vagues 15 et suivantes
 ];
