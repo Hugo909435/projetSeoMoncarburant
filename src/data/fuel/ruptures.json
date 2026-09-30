@@ -1,5 +1,5 @@
 {
-  "releveLe": "2026-09-30T21:42:26.778Z",
+  "releveLe": "2026-09-30T22:42:25.664Z",
   "source": "data.economie.gouv.fr, prix-des-carburants-en-france-flux-instantane-v2",
   "criteres": {
     "carburants": [
@@ -14,17 +14,17 @@
     "stationActiveJours": 10
   },
   "national": {
-    "stations": 8860,
-    "enRupture": 1332,
-    "recentes": 1148,
+    "stations": 8859,
+    "enRupture": 1331,
+    "recentes": 1147,
     "parCarburant": {
-      "Gazole": 542,
-      "E10": 555,
+      "Gazole": 543,
+      "E10": 554,
       "SP95": 266,
-      "SP98": 1002
+      "SP98": 1001
     },
     "part": 15,
-    "partRecentes": 13
+    "partRecentes": 12.9
   },
   "departements": {
     "10": {
@@ -150,8 +150,8 @@
       "recentes": 6,
       "parCarburant": {
         "Gazole": 6,
-        "E10": 4,
         "SP98": 8,
+        "E10": 3,
         "SP95": 1
       },
       "part": 17.3
@@ -325,15 +325,15 @@
     "34": {
       "nom": "Hérault",
       "stations": 145,
-      "enRupture": 17,
-      "recentes": 11,
+      "enRupture": 16,
+      "recentes": 10,
       "parCarburant": {
         "E10": 4,
         "Gazole": 3,
-        "SP98": 12,
+        "SP98": 11,
         "SP95": 1
       },
-      "part": 11.7
+      "part": 11
     },
     "35": {
       "nom": "Ille-et-Vilaine",
@@ -459,7 +459,7 @@
       "recentes": 30,
       "parCarburant": {
         "SP98": 26,
-        "E10": 19,
+        "E10": 18,
         "SP95": 8,
         "Gazole": 16
       },
@@ -777,7 +777,7 @@
     },
     "69": {
       "nom": "Rhône",
-      "stations": 189,
+      "stations": 188,
       "enRupture": 18,
       "recentes": 16,
       "parCarburant": {
@@ -786,7 +786,7 @@
         "SP95": 6,
         "E10": 3
       },
-      "part": 9.5
+      "part": 9.6
     },
     "70": {
       "nom": "Haute-Saône",
@@ -807,10 +807,10 @@
       "enRupture": 12,
       "recentes": 11,
       "parCarburant": {
-        "Gazole": 6,
+        "Gazole": 7,
         "SP95": 4,
         "SP98": 9,
-        "E10": 2
+        "E10": 3
       },
       "part": 8.9
     },
