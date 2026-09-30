@@ -1,0 +1,146 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<!-- Politique de l'application mobile, distincte de celle du site. Son URL
+     est déclarée dans App Store Connect : le texte doit rester identique à
+     l'écran Confidentialité de l'app (lib/features/privacy/privacy_screen.dart). -->
+<BaseLayout
+  title="Confidentialité de l'application - Mon Carburant"
+  description="Politique de confidentialité de l'application Mon Carburant pour iPhone et Android : position, compte, favoris, rapports de plantage et vos droits."
+  canonical="https://mon-carburant.com/confidentialite/"
+  noIndex={false}
+>
+  <div class="page-content">
+    <div class="container prose-page">
+      <h1>Confidentialité de l'application</h1>
+      <p class="last-updated">Dernière mise à jour : septembre 2026</p>
+
+      <p>
+        Cette page concerne l'application mobile Mon Carburant. Pour le site
+        mon-carburant.com, voir la <a href="/politique-confidentialite/">politique de confidentialité du site</a>.
+      </p>
+      <p>
+        Mon Carburant ne vend, ne loue et ne partage aucune donnée personnelle.
+        L'application ne contient ni publicité, ni traceur publicitaire, ni outil
+        de mesure d'audience.
+      </p>
+
+      <h2>Votre position</h2>
+      <p>
+        Elle sert uniquement à classer les stations par distance et à centrer la
+        carte. Elle est utilisée sur votre appareil et n'est jamais enregistrée
+        sur nos serveurs. Vous pouvez refuser l'accès à la position : le reste de
+        l'app continue de fonctionner, la recherche par ville prend le relais.
+      </p>
+
+      <h2>Prix des carburants</h2>
+      <p>
+        Ils proviennent du flux open data officiel du gouvernement
+        (donnees.roulez-eco.fr, Licence Ouverte). L'app le télécharge en entier et
+        fait tous les calculs localement : aucune requête ne dit à qui que ce soit
+        quelle station vous consultez.
+      </p>
+
+      <h2>Cartes et itinéraires</h2>
+      <p>
+        L'affichage de la carte, la recherche d'adresse et le calcul d'un trajet
+        passent par des services OpenStreetMap. Ils reçoivent, le temps de la
+        requête, votre adresse IP ainsi que la zone affichée, le texte recherché ou
+        les points de départ et d'arrivée. Aucun identifiant de compte ne leur est
+        transmis.
+      </p>
+
+      <h2>Compte et favoris</h2>
+      <p>
+        À la première ouverture, un compte anonyme est créé automatiquement (un
+        identifiant aléatoire, sans nom ni e-mail) pour que vos favoris survivent à
+        un redémarrage. Si vous vous connectez avec Apple ou Google, vos favoris
+        sont rattachés à ce compte pour vous suivre d'un appareil à l'autre ; nous
+        conservons alors l'adresse e-mail fournie par le fournisseur (avec Apple,
+        ce peut être une adresse relais qui masque la vôtre). Vous déconnecter ramène
+        l'app à un compte anonyme.
+      </p>
+      <p>
+        Ces données sont hébergées chez Google Firebase (Firebase Authentication et
+        Cloud Firestore).
+      </p>
+
+      <h2>Rapports de plantage</h2>
+      <p>
+        Si l'app plante, un rapport technique est envoyé à Firebase Crashlytics
+        (Google) : modèle d'appareil, version du système, version de l'app et l'état
+        du code au moment de l'erreur. Ces rapports ne contiennent ni votre position,
+        ni vos favoris, ni votre identité, et servent uniquement à corriger les bugs.
+      </p>
+
+      <h2>Vos droits</h2>
+      <p>
+        Conformément au RGPD, vous disposez d'un droit d'accès, de rectification,
+        d'effacement et de portabilité de vos données. Vous pouvez à tout moment
+        vous déconnecter, révoquer l'accès à la position dans les réglages du
+        système, ou supprimer votre compte et ses favoris depuis l'écran Compte
+        (« Supprimer mon compte ») : la suppression est immédiate. Pour toute autre
+        demande, écrivez à <a href="mailto:contact@mon-carburant.com">contact@mon-carburant.com</a>.
+      </p>
+      <p>
+        Vous pouvez également introduire une réclamation auprès de la CNIL
+        (<a href="https://www.cnil.fr" target="_blank" rel="noopener noreferrer">www.cnil.fr</a>).
+      </p>
+
+      <h2>Responsable du traitement</h2>
+      <p>Mon Carburant, <a href="mailto:contact@mon-carburant.com">contact@mon-carburant.com</a></p>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .page-content {
+    padding: 3rem 0 5rem;
+  }
+
+  .prose-page {
+    max-width: 56rem;
+  }
+
+  .prose-page h1 {
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    color: var(--color-primary);
+    margin: 0 0 0.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid var(--color-border);
+  }
+
+  .last-updated {
+    font-size: 0.875rem;
+    color: var(--color-text-secondary);
+    margin: 0 0 2.5rem;
+  }
+
+  .prose-page h2 {
+    font-size: 1.25rem;
+    color: var(--color-primary);
+    margin: 2.5rem 0 0.75rem;
+  }
+
+  .prose-page p {
+    color: var(--color-text);
+    line-height: 1.75;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+  }
+
+  .prose-page a {
+    color: var(--color-accent);
+    text-decoration: underline;
+  }
+
+  .prose-page strong {
+    color: var(--color-primary);
+  }
+
+  .no-link {
+    font-style: italic;
+    color: var(--color-text-secondary);
+  }
+</style>
