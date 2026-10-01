@@ -9,8 +9,8 @@ updatedAt: 2026-10-01
 author: "hugo-beignon"
 category: "carburants"
 tags: ["gazole", "prix carburant", "prévision", "baisse", "brent", "ormuz", "octobre 2026"]
-featuredImage: "../../assets/articles/difference-prix-carburant-stations-meme-ville.webp"
-imageAlt: "Totem de prix affichant les tarifs SP95, SP98, Super et Gazole à l'entrée d'une station-service"
+featuredImage: "../../assets/articles/gazole-va-t-il-baisser-octobre-2026.webp"
+imageAlt: "Station TotalEnergies à Casablanca avec son totem de prix affichant le gasoil et le sans-plomb, en mai 2026"
 readingTime: 6
 relatedArticles: ["prix-gazole-record-septembre-2026", "aide-grands-rouleurs-elargie-octobre-2026", "meilleur-jour-faire-le-plein", "hausse-prix-carburant-2026-chronologie-complete"]
 ctaTitle: "Trouvez le gazole le moins cher près de chez vous"
@@ -37,7 +37,7 @@ draft: false
 
 C'est la question qu'on nous pose le plus en ce moment, sous toutes ses formes : le gasoil va-t-il baisser cette semaine, la semaine prochaine, avant la fin de l'année ? Personne ne peut répondre avec certitude, et méfiez-vous de ceux qui le prétendent. On peut en revanche regarder ce que disent les prix relevés chaque jour dans près de 10 000 stations, ce que fait le baril, et en tirer une fourchette raisonnable.
 
-<p class="text-sm text-slate-500 italic">Photo : Lionel Allorge, <a href="https://creativecommons.org/licenses/by-sa/3.0/deed.fr" target="_blank" rel="noopener">CC BY-SA 3.0</a>, via Wikimedia Commons.</p>
+<p class="text-sm text-slate-500 italic">Photo : Bertrand Soubeyrand, <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.fr" target="_blank" rel="noopener">CC BY-SA 4.0</a>, via <a href="https://commons.wikimedia.org/wiki/File:Station_Total_Energies_%C3%A0_casablanca_lors_du_blocage_du_d%C3%A9troit_d%27Ormuz_en_Iran-photo_Bertrand_SOUBEYRAND.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>. Station TotalEnergies à Casablanca (Maroc), le 10 mai 2026, pendant le blocage du détroit d'Ormuz. Prix affichés en dirhams, image redimensionnée.</p>
 
 ## Où en est le prix du gazole début octobre
 
