@@ -1,11 +1,11 @@
 ---
-title: "Pneus hiver et loi Montagne : les 34 départements concernés"
-metaTitle: "Loi Montagne 2026 : les 34 départements concernés"
-metaDescription: "Équipements hiver obligatoires du 1er novembre 2026 au 31 mars 2027 dans 34 départements. La liste, le marquage 3PMSF, et le coût réel en carburant."
+title: "Pneus hiver 2026 : dates de la loi Montagne et 34 départements"
+metaTitle: "Pneus hiver 2026 : dates loi Montagne et départements"
+metaDescription: "Pneus hiver obligatoires du 1er novembre 2026 au 31 mars 2027 dans 34 départements : la liste, le marquage 3PMSF, l'amende et le coût en carburant."
 slug: "pneus-hiver-loi-montagne-2026"
 excerpt: "Équipements hivernaux obligatoires du 1er novembre au 31 mars dans 34 départements. La liste complète, le marquage 3PMSF qui a remplacé le M+S, et le surcoût réel en carburant."
 publishedAt: 2026-09-10
-updatedAt: 2026-09-10
+updatedAt: 2026-10-01
 author: "hugo-beignon"
 category: "entretien"
 tags: ["loi montagne", "pneus hiver", "3PMSF", "équipements hivernaux", "chaînes neige", "hiver 2026", "réglementation"]
@@ -26,7 +26,7 @@ faq:
   - question: "Quelle est l'amende en cas de contrôle sans équipement ?"
     answer: "Le texte prévoit une amende forfaitaire de 135 euros, contravention de 4e classe, et l'immobilisation possible du véhicule jusqu'à mise en conformité. Dans les faits, la sanction n'a pas été appliquée lors des premiers hivers du dispositif, faute de décret d'application sur le volet répressif. Cela ne change rien au risque réel : sans équipement, un véhicule bloqué sur une route enneigée engage la responsabilité de son conducteur, et l'assurance peut discuter la prise en charge."
   - question: "Les pneus hiver font-ils consommer plus de carburant ?"
-    answer: "Oui, légèrement. Leur bande de roulement plus lamellisée augmente la résistance au roulement, ce qui se traduit par une surconsommation de l'ordre de 3 à 5 % hors conditions hivernales. Sur une voiture diesel qui consomme 6 L/100 km et parcourt 13 000 km par an, cela représente environ 13 litres sur les cinq mois d'obligation, soit près de 30 euros au prix du gazole du 9 septembre 2026. Un montant réel, mais sans commune mesure avec le coût d'un accident."
+    answer: "Oui, légèrement. Leur bande de roulement plus lamellisée augmente la résistance au roulement, ce qui se traduit par une surconsommation de l'ordre de 3 à 5 % hors conditions hivernales. Sur une voiture diesel qui consomme 6 L/100 km et parcourt 13 000 km par an, cela représente environ 13 litres sur les cinq mois d'obligation, soit environ 31 euros au prix moyen du gazole du 1er octobre 2026. Un montant réel, mais sans commune mesure avec le coût d'un accident."
   - question: "Chaînes, chaussettes ou pneus hiver : que choisir ?"
     answer: "Cela dépend de la fréquence. Pour deux ou trois séjours au ski par an, une paire de chaînes ou de chaussettes à neige dans le coffre coûte quelques dizaines d'euros et suffit à être en règle. Pour qui habite ou travaille dans une commune concernée, quatre pneus 3PMSF sont plus sûrs et évitent le montage en urgence sur le bas-côté. À l'usage, les pneus hiver ne coûtent pas quatre pneus de plus : ils usent d'autant moins vos pneus été qu'ils roulent à leur place cinq mois par an."
 draft: false
@@ -34,11 +34,11 @@ draft: false
 
 <div class="bg-slate-50 border-l-4 border-blue-600 p-6 my-8 rounded">
 
-**En bref :** Du **1er novembre 2026 au 31 mars 2027**, tout véhicule léger circulant dans une commune désignée de **34 départements** doit disposer soit de quatre pneus marqués **3PMSF**, soit de chaînes ou chaussettes à neige pour deux roues motrices. Le marquage M+S seul ne suffit plus depuis novembre 2024. Deux points que la plupart des articles oublient : l'obligation porte sur des **communes**, pas sur des départements entiers, et l'amende de 135 euros prévue par le texte **n'est toujours pas appliquée**. Côté budget, l'effet carburant existe mais reste modeste : environ **30 euros sur la saison** pour un diesel moyen.
+**En bref :** Du **1er novembre 2026 au 31 mars 2027**, tout véhicule léger circulant dans une commune désignée de **34 départements** doit disposer soit de quatre pneus marqués **3PMSF**, soit de chaînes ou chaussettes à neige pour deux roues motrices. Le marquage M+S seul ne suffit plus depuis novembre 2024. Deux points que la plupart des articles oublient : l'obligation porte sur des **communes**, pas sur des départements entiers, et l'amende de 135 euros prévue par le texte **n'est toujours pas appliquée**. Côté budget, l'effet carburant existe mais reste modeste : environ **31 euros sur la saison** pour un diesel moyen.
 
 </div>
 
-Chaque automne, la même question revient : faut-il équiper sa voiture, et où exactement. La réponse circule souvent sous forme d'une liste de départements, ce qui est à la fois vrai et trompeur. Voici ce que dit réellement le texte, ce qu'il vous en coûte, et ce que ça change pour votre plein.
+L'obligation démarre le **dimanche 1er novembre 2026**, en plein retour des vacances de la Toussaint : les familles qui redescendent d'un séjour en montagne ce week-end-là seront déjà concernées. Chaque automne, la même question revient : faut-il équiper sa voiture, et où exactement. La réponse circule souvent sous forme d'une liste de départements, ce qui est à la fois vrai et trompeur. Voici ce que dit réellement le texte, ce qu'il vous en coûte, et ce que ça change pour votre plein.
 
 ---
 
@@ -105,9 +105,9 @@ Le vrai calcul se fait en deux parties.
 - une voiture diesel à 6 L/100 km, 13 000 km par an, soit environ 780 litres ;
 - cinq mois d'obligation, soit environ 325 litres sur la période ;
 - 4 % de surconsommation, soit **13 litres** ;
-- au prix du gazole du 9 septembre 2026, **2,293 €/L** : environ **30 euros sur la saison**.
+- au prix moyen du gazole du 1er octobre 2026, **2,385 €/L** : environ **31 euros sur la saison**.
 
-Trente euros, ce n'est pas rien, mais c'est moins que l'écart que vous récupérez en choisissant correctement votre station sur un seul plein. Et c'est nettement moins que ce que coûtent une pression mal réglée ou une galerie de toit laissée sur le véhicule tout l'hiver, deux postes détaillés dans notre article sur la [pression des pneus et la consommation](/blog/pression-pneus-consommation/).
+Une trentaine d'euros, ce n'est pas rien, mais c'est moins que l'écart que vous récupérez en choisissant correctement votre station sur un seul plein. Et c'est nettement moins que ce que coûtent une pression mal réglée ou une galerie de toit laissée sur le véhicule tout l'hiver, deux postes détaillés dans notre article sur la [pression des pneus et la consommation](/blog/pression-pneus-consommation/).
 
 ---
 
@@ -127,51 +127,51 @@ Pour le reste de la préparation hivernale, batterie, essuie-glaces, liquide de 
 
 ## Les 34 départements, et le prix du gazole dans chacun
 
-Voici la liste officielle, classée du carburant le plus cher au moins cher d'après nos relevés du 9 septembre 2026. Cliquez sur un département pour voir le détail station par station.
+Voici la liste officielle, classée du carburant le plus cher au moins cher d'après nos relevés du 1er octobre 2026 (moyenne nationale : 2,385 €/L). Cliquez sur un département pour voir le détail station par station.
 
 | Département | Massif | Gazole | Écart national |
 |---|---|---|---|
-| [Bas-Rhin](/prix-carburants/bas-rhin-67/) | Vosges | 2,338 € | +4,5 c |
-| [Alpes-Maritimes](/prix-carburants/alpes-maritimes-06/) | Alpes | 2,327 € | +3,4 c |
-| [Savoie](/prix-carburants/savoie-73/) | Alpes | 2,322 € | +2,9 c |
-| [Haut-Rhin](/prix-carburants/haut-rhin-68/) | Vosges | 2,320 € | +2,7 c |
-| [Territoire de Belfort](/prix-carburants/territoire-de-belfort-90/) | Jura | 2,315 € | +2,2 c |
-| [Haute-Savoie](/prix-carburants/haute-savoie-74/) | Alpes | 2,314 € | +2,1 c |
-| [Doubs](/prix-carburants/doubs-25/) | Jura | 2,312 € | +1,9 c |
-| [Moselle](/prix-carburants/moselle-57/) | Vosges | 2,312 € | +1,9 c |
-| [Rhône](/prix-carburants/rhone-69/) | Massif central | 2,308 € | +1,5 c |
-| [Lozère](/prix-carburants/lozere-48/) | Massif central | 2,301 € | +0,8 c |
-| [Loire](/prix-carburants/loire-42/) | Massif central | 2,300 € | +0,7 c |
-| [Vosges](/prix-carburants/vosges-88/) | Vosges | 2,300 € | +0,7 c |
-| [Aude](/prix-carburants/aude-11/) | Pyrénées | 2,298 € | +0,5 c |
-| [Isère](/prix-carburants/isere-38/) | Alpes | 2,298 € | +0,5 c |
-| [Haute-Saône](/prix-carburants/haute-saone-70/) | Jura | 2,298 € | +0,5 c |
-| [Allier](/prix-carburants/allier-03/) | Massif central | 2,296 € | +0,3 c |
-| [Jura](/prix-carburants/jura-39/) | Jura | 2,296 € | +0,3 c |
-| [Hautes-Pyrénées](/prix-carburants/hautes-pyrenees-65/) | Pyrénées | 2,296 € | +0,3 c |
-| [Var](/prix-carburants/var-83/) | Alpes | 2,295 € | +0,2 c |
-| [Cantal](/prix-carburants/cantal-15/) | Massif central | 2,292 € | -0,1 c |
-| [Drôme](/prix-carburants/drome-26/) | Alpes | 2,292 € | -0,1 c |
-| [Vaucluse](/prix-carburants/vaucluse-84/) | Alpes | 2,291 € | -0,2 c |
-| [Haute-Loire](/prix-carburants/haute-loire-43/) | Massif central | 2,287 € | -0,6 c |
-| [Ariège](/prix-carburants/ariege-09/) | Pyrénées | 2,285 € | -0,8 c |
-| [Ain](/prix-carburants/ain-01/) | Alpes | 2,284 € | -0,9 c |
-| [Alpes-de-Haute-Provence](/prix-carburants/alpes-de-haute-provence-04/) | Alpes | 2,282 € | -1,1 c |
-| [Ardèche](/prix-carburants/ardeche-07/) | Massif central | 2,282 € | -1,1 c |
-| [Haute-Garonne](/prix-carburants/haute-garonne-31/) | Pyrénées | 2,281 € | -1,2 c |
-| [Hautes-Alpes](/prix-carburants/hautes-alpes-05/) | Alpes | 2,280 € | -1,3 c |
-| [Pyrénées-Orientales](/prix-carburants/pyrenees-orientales-66/) | Pyrénées | 2,278 € | -1,5 c |
-| [Pyrénées-Atlantiques](/prix-carburants/pyrenees-atlantiques-64/) | Pyrénées | 2,277 € | -1,6 c |
-| [Puy-de-Dôme](/prix-carburants/puy-de-dome-63/) | Massif central | 2,276 € | -1,7 c |
-| [Aveyron](/prix-carburants/aveyron-12/) | Massif central | 2,275 € | -1,8 c |
-| [Tarn](/prix-carburants/tarn-81/) | Massif central | 2,275 € | -1,8 c |
+| [Bas-Rhin](/prix-carburants/bas-rhin-67/) | Vosges | 2,478 € | +9,3 c |
+| [Haut-Rhin](/prix-carburants/haut-rhin-68/) | Vosges | 2,470 € | +8,5 c |
+| [Territoire de Belfort](/prix-carburants/territoire-de-belfort-90/) | Jura | 2,437 € | +5,2 c |
+| [Doubs](/prix-carburants/doubs-25/) | Jura | 2,434 € | +4,9 c |
+| [Jura](/prix-carburants/jura-39/) | Jura | 2,423 € | +3,8 c |
+| [Vosges](/prix-carburants/vosges-88/) | Vosges | 2,423 € | +3,8 c |
+| [Moselle](/prix-carburants/moselle-57/) | Vosges | 2,417 € | +3,2 c |
+| [Savoie](/prix-carburants/savoie-73/) | Alpes | 2,415 € | +3,0 c |
+| [Haute-Savoie](/prix-carburants/haute-savoie-74/) | Alpes | 2,413 € | +2,8 c |
+| [Haute-Saône](/prix-carburants/haute-saone-70/) | Jura | 2,412 € | +2,7 c |
+| [Lozère](/prix-carburants/lozere-48/) | Massif central | 2,407 € | +2,2 c |
+| [Aude](/prix-carburants/aude-11/) | Pyrénées | 2,406 € | +2,1 c |
+| [Alpes-Maritimes](/prix-carburants/alpes-maritimes-06/) | Alpes | 2,400 € | +1,5 c |
+| [Drôme](/prix-carburants/drome-26/) | Alpes | 2,400 € | +1,5 c |
+| [Allier](/prix-carburants/allier-03/) | Massif central | 2,397 € | +1,2 c |
+| [Rhône](/prix-carburants/rhone-69/) | Massif central | 2,397 € | +1,2 c |
+| [Hautes-Alpes](/prix-carburants/hautes-alpes-05/) | Alpes | 2,396 € | +1,1 c |
+| [Vaucluse](/prix-carburants/vaucluse-84/) | Alpes | 2,396 € | +1,1 c |
+| [Isère](/prix-carburants/isere-38/) | Alpes | 2,395 € | +1,0 c |
+| [Loire](/prix-carburants/loire-42/) | Massif central | 2,395 € | +1,0 c |
+| [Haute-Garonne](/prix-carburants/haute-garonne-31/) | Pyrénées | 2,393 € | +0,8 c |
+| [Cantal](/prix-carburants/cantal-15/) | Massif central | 2,391 € | +0,6 c |
+| [Haute-Loire](/prix-carburants/haute-loire-43/) | Massif central | 2,387 € | +0,2 c |
+| [Tarn](/prix-carburants/tarn-81/) | Massif central | 2,387 € | +0,2 c |
+| [Var](/prix-carburants/var-83/) | Alpes | 2,385 € | 0,0 c |
+| [Ariège](/prix-carburants/ariege-09/) | Pyrénées | 2,384 € | -0,1 c |
+| [Hautes-Pyrénées](/prix-carburants/hautes-pyrenees-65/) | Pyrénées | 2,380 € | -0,5 c |
+| [Ain](/prix-carburants/ain-01/) | Alpes | 2,378 € | -0,7 c |
+| [Puy-de-Dôme](/prix-carburants/puy-de-dome-63/) | Massif central | 2,378 € | -0,7 c |
+| [Pyrénées-Orientales](/prix-carburants/pyrenees-orientales-66/) | Pyrénées | 2,376 € | -0,9 c |
+| [Ardèche](/prix-carburants/ardeche-07/) | Massif central | 2,375 € | -1,0 c |
+| [Alpes-de-Haute-Provence](/prix-carburants/alpes-de-haute-provence-04/) | Alpes | 2,374 € | -1,1 c |
+| [Pyrénées-Atlantiques](/prix-carburants/pyrenees-atlantiques-64/) | Pyrénées | 2,367 € | -1,8 c |
+| [Aveyron](/prix-carburants/aveyron-12/) | Massif central | 2,363 € | -2,2 c |
 
-Un résultat qui va à l'encontre d'une idée reçue : **rouler en zone montagne ne coûte pas systématiquement plus cher à la pompe**. Dix-neuf de ces départements sont au-dessus de la moyenne nationale, quinze en dessous, et l'écart entre les deux extrêmes se limite à 6,3 centimes par litre, soit 3,15 euros sur un plein de 50 litres. Ce qui coûte cher en montagne, ce n'est pas le carburant, c'est le relief : les pentes et le froid font grimper la consommation bien plus sûrement que le prix affiché.
+Le constat a changé depuis septembre. Avec la hausse du gazole, **l'Est du pays décroche** : le Bas-Rhin, le Haut-Rhin et le Territoire de Belfort affichent entre 5 et 9 centimes de plus que la moyenne nationale, dans une région déjà touchée cet été par les [tensions d'approvisionnement sur le Rhin](/blog/penurie-carburant-est-rhin-aout-2026/). Vingt-quatre des 34 départements sont désormais au-dessus de la moyenne, neuf en dessous, et l'écart entre les deux extrêmes atteint 11,5 centimes par litre, soit près de 6 euros sur un plein de 50 litres. Si vous partez vers les Vosges ou le Jura, faire le plein avant d'entrer dans la zone reste la meilleure option. Pour le reste, ce qui coûte cher en montagne, c'est d'abord le relief : les pentes et le froid font grimper la consommation bien plus sûrement que le prix affiché.
 
 Une précision sur la Corse : le décret cite bien le massif corse parmi les six concernés, et les préfectures de Corse-du-Sud et de Haute-Corse publient leurs propres arrêtés. Elle ne figure pas dans le décompte de 34 départements habituellement relayé, ce qui explique les listes divergentes que vous croiserez ailleurs.
 
 ---
 
-*Article publié le 10 septembre 2026. Prix moyens départementaux calculés à partir de nos relevés sur 9 805 stations, issus des données officielles de [prix-carburants.gouv.fr](https://www.prix-carburants.gouv.fr/), dernière mise à jour le 9 septembre 2026. La liste des communes soumises à l'obligation est fixée par arrêté préfectoral et peut évoluer d'une année sur l'autre : vérifiez-la sur [securite-routiere.gouv.fr](https://www.securite-routiere.gouv.fr/equipements-hivernaux-departements-et-communes) avant tout déplacement.*
+*Article publié le 10 septembre 2026, mis à jour le 1er octobre 2026. Prix moyens départementaux calculés à partir de nos relevés sur 9 805 stations, issus des données officielles de [prix-carburants.gouv.fr](https://www.prix-carburants.gouv.fr/), dernière mise à jour le 1er octobre 2026. La liste des communes soumises à l'obligation est fixée par arrêté préfectoral et peut évoluer d'une année sur l'autre : vérifiez-la sur [securite-routiere.gouv.fr](https://www.securite-routiere.gouv.fr/equipements-hivernaux-departements-et-communes) avant tout déplacement.*
 
 *Photo d'illustration : Tabl-trai, [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/deed.fr), via Wikimedia Commons. Signalisation sur la D 328 en direction du col de la Plantade.*
