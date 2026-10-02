@@ -1,5 +1,5 @@
 {
-  "releveLe": "2026-10-02T02:42:31.812Z",
+  "releveLe": "2026-10-02T03:42:32.262Z",
   "source": "data.economie.gouv.fr, prix-des-carburants-en-france-flux-instantane-v2",
   "criteres": {
     "carburants": [
@@ -14,14 +14,14 @@
     "stationActiveJours": 10
   },
   "national": {
-    "stations": 8781,
-    "enRupture": 1339,
-    "recentes": 1152,
+    "stations": 8777,
+    "enRupture": 1338,
+    "recentes": 1151,
     "parCarburant": {
       "Gazole": 529,
       "E10": 594,
       "SP95": 259,
-      "SP98": 998
+      "SP98": 995
     },
     "part": 15.2,
     "partRecentes": 13.1
@@ -33,9 +33,9 @@
       "enRupture": 9,
       "recentes": 8,
       "parCarburant": {
-        "E10": 2,
+        "E10": 1,
         "SP98": 6,
-        "Gazole": 3,
+        "Gazole": 2,
         "SP95": 1
       },
       "part": 15.3
@@ -273,7 +273,7 @@
     },
     "30": {
       "nom": "Gard",
-      "stations": 124,
+      "stations": 123,
       "enRupture": 13,
       "recentes": 11,
       "parCarburant": {
@@ -282,7 +282,7 @@
         "SP95": 2,
         "Gazole": 4
       },
-      "part": 10.5
+      "part": 10.6
     },
     "31": {
       "nom": "Haute-Garonne",
@@ -480,7 +480,7 @@
     },
     "46": {
       "nom": "Lot",
-      "stations": 54,
+      "stations": 53,
       "enRupture": 11,
       "recentes": 10,
       "parCarburant": {
@@ -489,7 +489,7 @@
         "Gazole": 6,
         "SP95": 3
       },
-      "part": 20.4
+      "part": 20.8
     },
     "47": {
       "nom": "Lot-et-Garonne",
@@ -613,10 +613,10 @@
       "enRupture": 18,
       "recentes": 15,
       "parCarburant": {
+        "Gazole": 10,
         "E10": 7,
         "SP98": 9,
-        "SP95": 7,
-        "Gazole": 9
+        "SP95": 7
       },
       "part": 13.3
     },
@@ -687,7 +687,7 @@
     },
     "62": {
       "nom": "Pas-de-Calais",
-      "stations": 209,
+      "stations": 208,
       "enRupture": 30,
       "recentes": 24,
       "parCarburant": {
@@ -1087,8 +1087,8 @@
       "enRupture": 12,
       "recentes": 11,
       "parCarburant": {
-        "SP98": 12,
-        "E10": 4,
+        "SP98": 10,
+        "E10": 6,
         "SP95": 1,
         "Gazole": 1
       },
@@ -1110,15 +1110,15 @@
     "95": {
       "nom": "Val-d'Oise",
       "stations": 106,
-      "enRupture": 20,
-      "recentes": 18,
+      "enRupture": 19,
+      "recentes": 17,
       "parCarburant": {
-        "E10": 10,
-        "SP98": 18,
+        "E10": 9,
+        "SP98": 17,
         "Gazole": 2,
         "SP95": 1
       },
-      "part": 18.9
+      "part": 17.9
     },
     "01": {
       "nom": "Ain",
@@ -1200,7 +1200,7 @@
     },
     "07": {
       "nom": "Ardèche",
-      "stations": 67,
+      "stations": 66,
       "enRupture": 10,
       "recentes": 8,
       "parCarburant": {
@@ -1209,7 +1209,7 @@
         "SP98": 4,
         "E10": 2
       },
-      "part": 14.9
+      "part": 15.2
     },
     "08": {
       "nom": "Ardennes",
