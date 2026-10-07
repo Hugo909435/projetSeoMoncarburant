@@ -1,5 +1,5 @@
 {
-  "releveLe": "2026-10-07T20:42:35.253Z",
+  "releveLe": "2026-10-07T22:42:38.926Z",
   "source": "data.economie.gouv.fr, prix-des-carburants-en-france-flux-instantane-v2",
   "criteres": {
     "carburants": [
@@ -14,14 +14,14 @@
     "stationActiveJours": 10
   },
   "national": {
-    "stations": 8724,
-    "enRupture": 1329,
-    "recentes": 1120,
+    "stations": 8726,
+    "enRupture": 1330,
+    "recentes": 1121,
     "parCarburant": {
       "Gazole": 525,
       "E10": 584,
       "SP95": 271,
-      "SP98": 998
+      "SP98": 999
     },
     "part": 15.2,
     "partRecentes": 12.8
@@ -387,7 +387,7 @@
     },
     "39": {
       "nom": "Jura",
-      "stations": 62,
+      "stations": 63,
       "enRupture": 7,
       "recentes": 6,
       "parCarburant": {
@@ -396,7 +396,7 @@
         "Gazole": 3,
         "SP95": 1
       },
-      "part": 11.3
+      "part": 11.1
     },
     "40": {
       "nom": "Landes",
@@ -956,15 +956,15 @@
     "83": {
       "nom": "Var",
       "stations": 155,
-      "enRupture": 7,
-      "recentes": 6,
+      "enRupture": 8,
+      "recentes": 7,
       "parCarburant": {
+        "SP98": 5,
         "E10": 3,
-        "SP98": 4,
         "Gazole": 2,
         "SP95": 2
       },
-      "part": 4.5
+      "part": 5.2
     },
     "84": {
       "nom": "Vaucluse",
@@ -1131,7 +1131,7 @@
     },
     "02": {
       "nom": "Aisne",
-      "stations": 77,
+      "stations": 78,
       "enRupture": 12,
       "recentes": 11,
       "parCarburant": {
@@ -1139,7 +1139,7 @@
         "SP98": 9,
         "E10": 6
       },
-      "part": 15.6
+      "part": 15.4
     },
     "03": {
       "nom": "Allier",
