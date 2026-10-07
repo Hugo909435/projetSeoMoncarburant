@@ -1,5 +1,5 @@
 {
-  "releveLe": "2026-10-07T19:58:30.260Z",
+  "releveLe": "2026-10-07T20:42:35.253Z",
   "source": "data.economie.gouv.fr, prix-des-carburants-en-france-flux-instantane-v2",
   "criteres": {
     "carburants": [
@@ -14,14 +14,14 @@
     "stationActiveJours": 10
   },
   "national": {
-    "stations": 8725,
-    "enRupture": 1326,
-    "recentes": 1117,
+    "stations": 8724,
+    "enRupture": 1329,
+    "recentes": 1120,
     "parCarburant": {
-      "Gazole": 521,
-      "E10": 582,
+      "Gazole": 525,
+      "E10": 584,
       "SP95": 271,
-      "SP98": 996
+      "SP98": 998
     },
     "part": 15.2,
     "partRecentes": 12.8
@@ -47,7 +47,7 @@
       "recentes": 5,
       "parCarburant": {
         "SP95": 3,
-        "E10": 2,
+        "E10": 3,
         "SP98": 6,
         "Gazole": 2
       },
@@ -69,15 +69,15 @@
     "13": {
       "nom": "Bouches-du-Rhône",
       "stations": 239,
-      "enRupture": 30,
-      "recentes": 25,
+      "enRupture": 31,
+      "recentes": 26,
       "parCarburant": {
         "SP95": 5,
-        "SP98": 27,
+        "SP98": 28,
         "E10": 12,
         "Gazole": 4
       },
-      "part": 12.6
+      "part": 13
     },
     "14": {
       "nom": "Calvados",
@@ -85,8 +85,8 @@
       "enRupture": 15,
       "recentes": 15,
       "parCarburant": {
-        "E10": 10,
-        "Gazole": 7,
+        "E10": 11,
+        "Gazole": 8,
         "SP98": 10,
         "SP95": 2
       },
@@ -290,7 +290,7 @@
       "parCarburant": {
         "E10": 22,
         "SP98": 25,
-        "Gazole": 16,
+        "Gazole": 17,
         "SP95": 8
       },
       "part": 19.1
@@ -650,7 +650,7 @@
       "enRupture": 35,
       "recentes": 33,
       "parCarburant": {
-        "Gazole": 10,
+        "Gazole": 11,
         "E10": 13,
         "SP98": 30,
         "SP95": 6
@@ -877,7 +877,7 @@
     },
     "77": {
       "nom": "Seine-et-Marne",
-      "stations": 166,
+      "stations": 165,
       "enRupture": 34,
       "recentes": 31,
       "parCarburant": {
@@ -886,7 +886,7 @@
         "Gazole": 5,
         "SP95": 4
       },
-      "part": 20.5
+      "part": 20.6
     },
     "78": {
       "nom": "Yvelines",
@@ -930,15 +930,15 @@
     "81": {
       "nom": "Tarn",
       "stations": 65,
-      "enRupture": 7,
-      "recentes": 5,
+      "enRupture": 8,
+      "recentes": 6,
       "parCarburant": {
         "E10": 4,
         "SP98": 6,
-        "Gazole": 4,
+        "Gazole": 5,
         "SP95": 2
       },
-      "part": 10.8
+      "part": 12.3
     },
     "82": {
       "nom": "Tarn-et-Garonne",
@@ -1180,14 +1180,14 @@
     "06": {
       "nom": "Alpes-Maritimes",
       "stations": 125,
-      "enRupture": 11,
-      "recentes": 8,
+      "enRupture": 12,
+      "recentes": 9,
       "parCarburant": {
         "SP95": 4,
-        "SP98": 6,
+        "SP98": 7,
         "E10": 1
       },
-      "part": 8.8
+      "part": 9.6
     },
     "07": {
       "nom": "Ardèche",
