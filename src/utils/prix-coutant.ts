@@ -27,7 +27,9 @@ export interface Operation {
   type: string;
   status: string;
   start: string;
-  end: string;
+  /** null = dispositif sans date de fin annoncée (plafonnement maintenu
+   *  « tant que... »). Ne jamais inventer une échéance pour le faire tenir. */
+  end: string | null;
   stations: number | null;
   fuels: string;
   note: string;
@@ -128,7 +130,8 @@ export function etatPrixCoutant() {
   const weekendEnd = addDays(weekendStart, 2);
 
   // Les dates étant au format AAAA-MM-JJ, la comparaison de chaînes suffit.
-  const surLeWeekend = (op: Operation) => op.start <= weekendEnd && op.end >= weekendStart;
+  const surLeWeekend = (op: Operation) =>
+    op.start <= weekendEnd && (op.end === null || op.end >= weekendStart);
   const active = operations.filter(surLeWeekend);
 
   // Opérations d'un seul magasin. Elles durent souvent bien plus longtemps
@@ -155,7 +158,8 @@ export function etatPrixCoutant() {
      *  venir. C'est ce qui justifie un rappel sur toutes les pages du site :
      *  ça se joue maintenant. */
     aujourdhui: operations.filter(
-      (op) => op.type === 'prix-coutant' && op.start <= today && op.end >= today,
+      (op) =>
+        op.type === 'prix-coutant' && op.start <= today && (op.end === null || op.end >= today),
     ),
 
     signaux: (signalsData.signals ?? []) as Signal[],
@@ -186,7 +190,10 @@ export function timelinePrixCoutant(): TimelineEntry[] {
   const today = aujourdhui();
 
   const passees: TimelineEntry[] = operations
-    .filter((op) => op.type === 'prix-coutant' && op.end < today)
+    .filter(
+      (op): op is Operation & { end: string } =>
+        op.type === 'prix-coutant' && op.end !== null && op.end < today,
+    )
     .map((op) => ({
       kind: 'passee',
       brand: op.brand,

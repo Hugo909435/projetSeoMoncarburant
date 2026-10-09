@@ -64,6 +64,8 @@ const fmtJourSansMois = new Intl.DateTimeFormat('fr-FR', {
 
 function periode(op: Operation | OperationLocale): string {
   const debut = toDate(op.start);
+  // Pas de date de fin annoncée : on ne borne pas la période à droite.
+  if (op.end === null) return `depuis le ${fmtJourAnnee.format(debut)}`;
   const fin = toDate(op.end);
   if (op.start === op.end) return `le ${fmtJourAnnee.format(debut)}`;
 
