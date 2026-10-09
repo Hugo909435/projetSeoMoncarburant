@@ -1,5 +1,5 @@
 {
-  "releveLe": "2026-10-09T17:42:32.106Z",
+  "releveLe": "2026-10-09T18:42:33.018Z",
   "source": "data.economie.gouv.fr, prix-des-carburants-en-france-flux-instantane-v2",
   "criteres": {
     "carburants": [
@@ -14,17 +14,17 @@
     "stationActiveJours": 10
   },
   "national": {
-    "stations": 8883,
-    "enRupture": 1146,
-    "recentes": 920,
+    "stations": 8886,
+    "enRupture": 1209,
+    "recentes": 993,
     "parCarburant": {
-      "Gazole": 404,
-      "E10": 472,
-      "SP95": 253,
-      "SP98": 832
+      "Gazole": 450,
+      "E10": 513,
+      "SP95": 268,
+      "SP98": 883
     },
-    "part": 12.9,
-    "partRecentes": 10.4
+    "part": 13.6,
+    "partRecentes": 11.2
   },
   "departements": {
     "10": {
@@ -43,15 +43,15 @@
     "11": {
       "nom": "Aude",
       "stations": 78,
-      "enRupture": 9,
-      "recentes": 5,
+      "enRupture": 10,
+      "recentes": 7,
       "parCarburant": {
-        "E10": 4,
-        "SP95": 2,
+        "E10": 5,
+        "SP95": 3,
         "SP98": 6,
         "Gazole": 2
       },
-      "part": 11.5
+      "part": 12.8
     },
     "12": {
       "nom": "Aveyron",
@@ -68,16 +68,16 @@
     },
     "13": {
       "nom": "Bouches-du-Rhône",
-      "stations": 242,
-      "enRupture": 20,
-      "recentes": 16,
+      "stations": 244,
+      "enRupture": 21,
+      "recentes": 17,
       "parCarburant": {
         "SP95": 4,
-        "SP98": 17,
-        "E10": 7,
+        "SP98": 18,
+        "E10": 8,
         "Gazole": 4
       },
-      "part": 8.3
+      "part": 8.6
     },
     "14": {
       "nom": "Calvados",
@@ -85,10 +85,10 @@
       "enRupture": 17,
       "recentes": 17,
       "parCarburant": {
-        "Gazole": 1,
+        "Gazole": 2,
         "E10": 8,
-        "SP95": 5,
-        "SP98": 9
+        "SP98": 11,
+        "SP95": 5
       },
       "part": 15.2
     },
@@ -108,15 +108,14 @@
     "16": {
       "nom": "Charente",
       "stations": 61,
-      "enRupture": 5,
-      "recentes": 4,
+      "enRupture": 4,
+      "recentes": 3,
       "parCarburant": {
         "E10": 2,
         "SP95": 2,
-        "SP98": 3,
-        "Gazole": 1
+        "SP98": 3
       },
-      "part": 8.2
+      "part": 6.6
     },
     "17": {
       "nom": "Charente-Maritime",
@@ -134,28 +133,28 @@
     "18": {
       "nom": "Cher",
       "stations": 63,
-      "enRupture": 8,
-      "recentes": 5,
+      "enRupture": 7,
+      "recentes": 4,
       "parCarburant": {
         "Gazole": 4,
         "SP95": 1,
-        "E10": 2,
-        "SP98": 5
+        "E10": 1,
+        "SP98": 4
       },
-      "part": 12.7
+      "part": 11.1
     },
     "19": {
       "nom": "Corrèze",
       "stations": 55,
-      "enRupture": 6,
-      "recentes": 4,
+      "enRupture": 5,
+      "recentes": 3,
       "parCarburant": {
-        "SP98": 5,
         "Gazole": 3,
         "SP95": 1,
+        "SP98": 4,
         "E10": 2
       },
-      "part": 10.9
+      "part": 9.1
     },
     "21": {
       "nom": "Côte-d'Or",
@@ -166,22 +165,22 @@
         "Gazole": 6,
         "E10": 4,
         "SP98": 9,
-        "SP95": 4
+        "SP95": 5
       },
       "part": 10.7
     },
     "22": {
       "nom": "Côtes-d'Armor",
       "stations": 107,
-      "enRupture": 6,
-      "recentes": 3,
+      "enRupture": 7,
+      "recentes": 4,
       "parCarburant": {
         "Gazole": 2,
         "E10": 1,
-        "SP98": 3,
+        "SP98": 4,
         "SP95": 2
       },
-      "part": 5.6
+      "part": 6.5
     },
     "23": {
       "nom": "Creuse",
@@ -210,9 +209,9 @@
       "nom": "Doubs",
       "stations": 97,
       "enRupture": 13,
-      "recentes": 8,
+      "recentes": 9,
       "parCarburant": {
-        "Gazole": 12,
+        "Gazole": 13,
         "SP95": 3,
         "E10": 10,
         "SP98": 10
@@ -222,27 +221,27 @@
     "26": {
       "nom": "Drôme",
       "stations": 107,
-      "enRupture": 10,
-      "recentes": 8,
+      "enRupture": 9,
+      "recentes": 7,
       "parCarburant": {
         "SP95": 3,
-        "SP98": 8,
+        "SP98": 7,
         "E10": 1
       },
-      "part": 9.3
+      "part": 8.4
     },
     "27": {
       "nom": "Eure",
       "stations": 88,
-      "enRupture": 9,
-      "recentes": 8,
+      "enRupture": 10,
+      "recentes": 9,
       "parCarburant": {
         "Gazole": 3,
         "SP95": 3,
-        "SP98": 8,
+        "SP98": 9,
         "E10": 2
       },
-      "part": 10.2
+      "part": 11.4
     },
     "28": {
       "nom": "Eure-et-Loir",
@@ -259,41 +258,41 @@
     },
     "29": {
       "nom": "Finistère",
-      "stations": 132,
-      "enRupture": 11,
-      "recentes": 10,
+      "stations": 133,
+      "enRupture": 10,
+      "recentes": 9,
       "parCarburant": {
         "E10": 5,
         "SP95": 3,
-        "SP98": 8,
+        "SP98": 7,
         "Gazole": 2
       },
-      "part": 8.3
+      "part": 7.5
     },
     "30": {
       "nom": "Gard",
-      "stations": 121,
-      "enRupture": 9,
-      "recentes": 6,
+      "stations": 122,
+      "enRupture": 12,
+      "recentes": 9,
       "parCarburant": {
-        "E10": 3,
-        "SP98": 6,
-        "Gazole": 2
+        "E10": 5,
+        "SP98": 8,
+        "Gazole": 3
       },
-      "part": 7.4
+      "part": 9.8
     },
     "31": {
       "nom": "Haute-Garonne",
       "stations": 183,
-      "enRupture": 41,
-      "recentes": 32,
+      "enRupture": 42,
+      "recentes": 33,
       "parCarburant": {
         "E10": 31,
         "SP98": 33,
-        "Gazole": 24,
-        "SP95": 7
+        "Gazole": 26,
+        "SP95": 8
       },
-      "part": 22.4
+      "part": 23
     },
     "32": {
       "nom": "Gers",
@@ -311,15 +310,15 @@
     "33": {
       "nom": "Gironde",
       "stations": 206,
-      "enRupture": 21,
-      "recentes": 21,
+      "enRupture": 24,
+      "recentes": 24,
       "parCarburant": {
-        "SP95": 2,
-        "SP98": 17,
-        "Gazole": 7,
+        "SP95": 3,
+        "SP98": 20,
+        "Gazole": 9,
         "E10": 13
       },
-      "part": 10.2
+      "part": 11.7
     },
     "34": {
       "nom": "Hérault",
@@ -342,8 +341,8 @@
       "parCarburant": {
         "Gazole": 6,
         "SP95": 5,
-        "SP98": 8,
-        "E10": 4
+        "SP98": 7,
+        "E10": 3
       },
       "part": 11.3
     },
@@ -362,27 +361,28 @@
     "37": {
       "nom": "Indre-et-Loire",
       "stations": 82,
-      "enRupture": 8,
-      "recentes": 8,
+      "enRupture": 10,
+      "recentes": 10,
       "parCarburant": {
+        "E10": 1,
         "Gazole": 2,
         "SP95": 2,
-        "SP98": 5
+        "SP98": 6
       },
-      "part": 9.8
+      "part": 12.2
     },
     "38": {
       "nom": "Isère",
       "stations": 176,
-      "enRupture": 18,
-      "recentes": 16,
+      "enRupture": 21,
+      "recentes": 19,
       "parCarburant": {
         "E10": 9,
-        "SP98": 16,
-        "Gazole": 7,
+        "SP98": 18,
+        "Gazole": 8,
         "SP95": 4
       },
-      "part": 10.2
+      "part": 11.9
     },
     "39": {
       "nom": "Jura",
@@ -405,7 +405,7 @@
       "parCarburant": {
         "Gazole": 4,
         "E10": 6,
-        "SP98": 4,
+        "SP98": 5,
         "SP95": 2
       },
       "part": 10.1
@@ -419,22 +419,22 @@
         "SP98": 5,
         "SP95": 2,
         "Gazole": 4,
-        "E10": 3
+        "E10": 4
       },
       "part": 11.7
     },
     "42": {
       "nom": "Loire",
-      "stations": 118,
-      "enRupture": 15,
-      "recentes": 14,
+      "stations": 117,
+      "enRupture": 16,
+      "recentes": 15,
       "parCarburant": {
         "Gazole": 11,
         "SP95": 6,
-        "E10": 6,
-        "SP98": 9
+        "E10": 4,
+        "SP98": 10
       },
-      "part": 12.7
+      "part": 13.7
     },
     "43": {
       "nom": "Haute-Loire",
@@ -450,19 +450,19 @@
     "44": {
       "nom": "Loire-Atlantique",
       "stations": 157,
-      "enRupture": 18,
-      "recentes": 12,
+      "enRupture": 20,
+      "recentes": 14,
       "parCarburant": {
-        "E10": 6,
+        "E10": 7,
         "SP95": 3,
-        "SP98": 15,
+        "SP98": 17,
         "Gazole": 3
       },
-      "part": 11.5
+      "part": 12.7
     },
     "45": {
       "nom": "Loiret",
-      "stations": 100,
+      "stations": 99,
       "enRupture": 16,
       "recentes": 11,
       "parCarburant": {
@@ -471,20 +471,20 @@
         "E10": 7,
         "SP95": 2
       },
-      "part": 16
+      "part": 16.2
     },
     "46": {
       "nom": "Lot",
       "stations": 54,
-      "enRupture": 11,
-      "recentes": 10,
+      "enRupture": 12,
+      "recentes": 11,
       "parCarburant": {
-        "Gazole": 6,
-        "E10": 5,
-        "SP98": 7,
-        "SP95": 3
+        "Gazole": 8,
+        "E10": 6,
+        "SP98": 8,
+        "SP95": 4
       },
-      "part": 20.4
+      "part": 22.2
     },
     "47": {
       "nom": "Lot-et-Garonne",
@@ -502,15 +502,15 @@
     "48": {
       "nom": "Lozère",
       "stations": 31,
-      "enRupture": 4,
-      "recentes": 1,
+      "enRupture": 5,
+      "recentes": 2,
       "parCarburant": {
-        "Gazole": 4,
+        "Gazole": 5,
         "SP95": 2,
         "E10": 2,
-        "SP98": 2
+        "SP98": 3
       },
-      "part": 12.9
+      "part": 16.1
     },
     "49": {
       "nom": "Maine-et-Loire",
@@ -518,8 +518,8 @@
       "enRupture": 13,
       "recentes": 12,
       "parCarburant": {
-        "Gazole": 5,
-        "E10": 4,
+        "Gazole": 4,
+        "E10": 3,
         "SP98": 9,
         "SP95": 2
       },
@@ -531,9 +531,9 @@
       "enRupture": 16,
       "recentes": 16,
       "parCarburant": {
-        "SP98": 12,
+        "SP98": 13,
         "Gazole": 5,
-        "E10": 5,
+        "E10": 7,
         "SP95": 4
       },
       "part": 14
@@ -541,15 +541,15 @@
     "51": {
       "nom": "Marne",
       "stations": 88,
-      "enRupture": 9,
-      "recentes": 9,
+      "enRupture": 10,
+      "recentes": 10,
       "parCarburant": {
         "Gazole": 2,
         "SP95": 2,
-        "SP98": 6,
+        "SP98": 7,
         "E10": 2
       },
-      "part": 10.2
+      "part": 11.4
     },
     "52": {
       "nom": "Haute-Marne",
@@ -557,7 +557,7 @@
       "enRupture": 7,
       "recentes": 5,
       "parCarburant": {
-        "Gazole": 3,
+        "Gazole": 2,
         "E10": 2,
         "SP98": 6,
         "SP95": 1
@@ -585,8 +585,8 @@
       "parCarburant": {
         "SP95": 4,
         "E10": 12,
-        "SP98": 12,
-        "Gazole": 9
+        "SP98": 13,
+        "Gazole": 10
       },
       "part": 23.5
     },
@@ -606,28 +606,28 @@
     "56": {
       "nom": "Morbihan",
       "stations": 134,
-      "enRupture": 11,
-      "recentes": 10,
+      "enRupture": 14,
+      "recentes": 13,
       "parCarburant": {
-        "SP98": 6,
-        "SP95": 5,
+        "SP98": 7,
+        "SP95": 7,
         "Gazole": 6,
         "E10": 2
       },
-      "part": 8.2
+      "part": 10.4
     },
     "57": {
       "nom": "Moselle",
       "stations": 113,
-      "enRupture": 23,
-      "recentes": 18,
+      "enRupture": 25,
+      "recentes": 20,
       "parCarburant": {
-        "E10": 9,
-        "SP98": 17,
-        "Gazole": 6,
+        "E10": 11,
+        "SP98": 18,
+        "Gazole": 7,
         "SP95": 5
       },
-      "part": 20.4
+      "part": 22.1
     },
     "58": {
       "nom": "Nièvre",
@@ -636,7 +636,7 @@
       "recentes": 5,
       "parCarburant": {
         "SP98": 3,
-        "Gazole": 2,
+        "Gazole": 3,
         "E10": 2,
         "SP95": 1
       },
@@ -644,94 +644,94 @@
     },
     "59": {
       "nom": "Nord",
-      "stations": 237,
-      "enRupture": 34,
-      "recentes": 32,
+      "stations": 238,
+      "enRupture": 38,
+      "recentes": 36,
       "parCarburant": {
-        "SP98": 29,
-        "Gazole": 3,
-        "E10": 10,
-        "SP95": 3
+        "SP98": 33,
+        "Gazole": 5,
+        "E10": 13,
+        "SP95": 4
       },
-      "part": 14.3
+      "part": 16
     },
     "60": {
       "nom": "Oise",
-      "stations": 110,
-      "enRupture": 19,
-      "recentes": 17,
+      "stations": 109,
+      "enRupture": 25,
+      "recentes": 23,
       "parCarburant": {
-        "SP98": 15,
-        "E10": 6,
-        "SP95": 3,
-        "Gazole": 3
+        "E10": 13,
+        "SP98": 19,
+        "SP95": 5,
+        "Gazole": 4
       },
-      "part": 17.3
+      "part": 22.9
     },
     "61": {
       "nom": "Orne",
       "stations": 53,
-      "enRupture": 9,
-      "recentes": 6,
+      "enRupture": 10,
+      "recentes": 7,
       "parCarburant": {
-        "Gazole": 4,
-        "SP98": 5,
-        "E10": 3,
+        "Gazole": 5,
+        "SP98": 6,
+        "E10": 4,
         "SP95": 3
       },
-      "part": 17
+      "part": 18.9
     },
     "62": {
       "nom": "Pas-de-Calais",
       "stations": 210,
-      "enRupture": 22,
-      "recentes": 16,
+      "enRupture": 24,
+      "recentes": 18,
       "parCarburant": {
-        "SP98": 17,
+        "SP98": 19,
         "SP95": 5,
         "Gazole": 4,
         "E10": 8
       },
-      "part": 10.5
+      "part": 11.4
     },
     "63": {
       "nom": "Puy-de-Dôme",
-      "stations": 112,
-      "enRupture": 16,
-      "recentes": 14,
+      "stations": 111,
+      "enRupture": 18,
+      "recentes": 16,
       "parCarburant": {
-        "Gazole": 9,
-        "E10": 6,
-        "SP98": 9,
+        "Gazole": 12,
+        "E10": 8,
+        "SP98": 11,
         "SP95": 3
       },
-      "part": 14.3
+      "part": 16.2
     },
     "64": {
       "nom": "Pyrénées-Atlantiques",
-      "stations": 100,
-      "enRupture": 15,
-      "recentes": 15,
+      "stations": 99,
+      "enRupture": 14,
+      "recentes": 14,
       "parCarburant": {
         "E10": 8,
-        "SP98": 10,
         "Gazole": 3,
-        "SP95": 3
+        "SP98": 10,
+        "SP95": 2
       },
-      "part": 15
+      "part": 14.1
     },
     "65": {
       "nom": "Hautes-Pyrénées",
-      "stations": 41,
+      "stations": 42,
       "enRupture": 5,
       "recentes": 5,
       "parCarburant": {
-        "SP98": 3,
+        "SP98": 4,
+        "Gazole": 3,
         "E10": 3,
-        "SP95": 1,
-        "Gazole": 1
+        "SP95": 1
       },
-      "part": 12.2
+      "part": 11.9
     },
     "66": {
       "nom": "Pyrénées-Orientales",
@@ -747,42 +747,42 @@
     },
     "67": {
       "nom": "Bas-Rhin",
-      "stations": 139,
-      "enRupture": 42,
-      "recentes": 31,
+      "stations": 140,
+      "enRupture": 45,
+      "recentes": 35,
       "parCarburant": {
-        "Gazole": 16,
-        "E10": 23,
-        "SP95": 10,
-        "SP98": 35
+        "Gazole": 20,
+        "E10": 29,
+        "SP95": 11,
+        "SP98": 34
       },
-      "part": 30.2
+      "part": 32.1
     },
     "68": {
       "nom": "Haut-Rhin",
       "stations": 103,
-      "enRupture": 33,
-      "recentes": 22,
+      "enRupture": 34,
+      "recentes": 24,
       "parCarburant": {
-        "Gazole": 25,
-        "E10": 29,
+        "Gazole": 26,
+        "E10": 30,
         "SP98": 30,
         "SP95": 3
       },
-      "part": 32
+      "part": 33
     },
     "69": {
       "nom": "Rhône",
       "stations": 185,
-      "enRupture": 19,
-      "recentes": 18,
+      "enRupture": 21,
+      "recentes": 20,
       "parCarburant": {
-        "Gazole": 7,
-        "SP98": 11,
-        "E10": 8,
+        "Gazole": 9,
+        "SP98": 13,
+        "E10": 9,
         "SP95": 8
       },
-      "part": 10.3
+      "part": 11.4
     },
     "70": {
       "nom": "Haute-Saône",
@@ -799,28 +799,28 @@
     "71": {
       "nom": "Saône-et-Loire",
       "stations": 134,
-      "enRupture": 10,
-      "recentes": 8,
+      "enRupture": 11,
+      "recentes": 10,
       "parCarburant": {
-        "Gazole": 6,
+        "Gazole": 8,
         "SP95": 1,
-        "SP98": 7,
-        "E10": 2
+        "SP98": 9,
+        "E10": 5
       },
-      "part": 7.5
+      "part": 8.2
     },
     "72": {
       "nom": "Sarthe",
       "stations": 86,
-      "enRupture": 14,
-      "recentes": 13,
+      "enRupture": 15,
+      "recentes": 14,
       "parCarburant": {
         "Gazole": 6,
         "SP95": 3,
-        "SP98": 8,
+        "SP98": 9,
         "E10": 7
       },
-      "part": 16.3
+      "part": 17.4
     },
     "73": {
       "nom": "Savoie",
@@ -838,65 +838,65 @@
     "74": {
       "nom": "Haute-Savoie",
       "stations": 112,
-      "enRupture": 11,
-      "recentes": 9,
+      "enRupture": 13,
+      "recentes": 11,
       "parCarburant": {
-        "Gazole": 2,
+        "Gazole": 5,
         "SP95": 5,
-        "SP98": 7,
+        "SP98": 9,
         "E10": 3
       },
-      "part": 9.8
+      "part": 11.6
     },
     "75": {
       "nom": "Paris",
       "stations": 38,
-      "enRupture": 8,
-      "recentes": 8,
+      "enRupture": 5,
+      "recentes": 5,
       "parCarburant": {
-        "SP98": 8,
-        "E10": 3,
-        "SP95": 1
+        "SP98": 5,
+        "SP95": 1,
+        "E10": 1
       },
-      "part": 21.1
+      "part": 13.2
     },
     "76": {
       "nom": "Seine-Maritime",
       "stations": 164,
-      "enRupture": 25,
-      "recentes": 22,
+      "enRupture": 26,
+      "recentes": 23,
       "parCarburant": {
-        "Gazole": 3,
-        "E10": 12,
-        "SP98": 15,
-        "SP95": 6
+        "Gazole": 5,
+        "E10": 13,
+        "SP98": 16,
+        "SP95": 7
       },
-      "part": 15.2
+      "part": 15.9
     },
     "77": {
       "nom": "Seine-et-Marne",
       "stations": 169,
-      "enRupture": 24,
-      "recentes": 21,
+      "enRupture": 26,
+      "recentes": 24,
       "parCarburant": {
-        "SP98": 20,
-        "Gazole": 4,
+        "SP98": 22,
+        "Gazole": 6,
         "SP95": 3,
-        "E10": 6
+        "E10": 7
       },
-      "part": 14.2
+      "part": 15.4
     },
     "78": {
       "nom": "Yvelines",
       "stations": 134,
-      "enRupture": 24,
-      "recentes": 14,
+      "enRupture": 25,
+      "recentes": 15,
       "parCarburant": {
-        "SP98": 17,
+        "SP98": 18,
         "E10": 7,
         "SP95": 5
       },
-      "part": 17.9
+      "part": 18.7
     },
     "79": {
       "nom": "Deux-Sèvres",
@@ -904,48 +904,48 @@
       "enRupture": 7,
       "recentes": 6,
       "parCarburant": {
+        "SP95": 4,
         "Gazole": 3,
-        "SP95": 3,
-        "E10": 3,
-        "SP98": 4
+        "E10": 2,
+        "SP98": 3
       },
       "part": 11.1
     },
     "80": {
       "nom": "Somme",
-      "stations": 98,
-      "enRupture": 13,
-      "recentes": 10,
+      "stations": 99,
+      "enRupture": 15,
+      "recentes": 12,
       "parCarburant": {
         "SP98": 9,
-        "Gazole": 5,
+        "Gazole": 6,
         "SP95": 2,
-        "E10": 3
+        "E10": 4
       },
-      "part": 13.3
+      "part": 15.2
     },
     "81": {
       "nom": "Tarn",
       "stations": 67,
-      "enRupture": 8,
-      "recentes": 6,
+      "enRupture": 9,
+      "recentes": 7,
       "parCarburant": {
         "Gazole": 7,
         "E10": 4,
-        "SP98": 5,
+        "SP98": 6,
         "SP95": 2
       },
-      "part": 11.9
+      "part": 13.4
     },
     "82": {
       "nom": "Tarn-et-Garonne",
       "stations": 58,
       "enRupture": 13,
-      "recentes": 9,
+      "recentes": 10,
       "parCarburant": {
         "SP95": 3,
-        "Gazole": 10,
-        "E10": 10,
+        "Gazole": 11,
+        "E10": 11,
         "SP98": 9
       },
       "part": 22.4
@@ -969,7 +969,7 @@
       "enRupture": 9,
       "recentes": 9,
       "parCarburant": {
-        "E10": 4,
+        "E10": 5,
         "SP98": 6,
         "Gazole": 3,
         "SP95": 2
@@ -1016,27 +1016,27 @@
     "88": {
       "nom": "Vosges",
       "stations": 76,
-      "enRupture": 14,
-      "recentes": 11,
+      "enRupture": 15,
+      "recentes": 12,
       "parCarburant": {
-        "Gazole": 6,
-        "E10": 9,
+        "Gazole": 7,
+        "E10": 11,
         "SP98": 11
       },
-      "part": 18.4
+      "part": 19.7
     },
     "89": {
       "nom": "Yonne",
       "stations": 80,
-      "enRupture": 5,
-      "recentes": 2,
+      "enRupture": 7,
+      "recentes": 5,
       "parCarburant": {
+        "SP98": 6,
         "SP95": 2,
-        "SP98": 3,
         "E10": 1,
         "Gazole": 1
       },
-      "part": 6.3
+      "part": 8.8
     },
     "90": {
       "nom": "Territoire de Belfort",
@@ -1053,14 +1053,14 @@
     "91": {
       "nom": "Essonne",
       "stations": 121,
-      "enRupture": 26,
-      "recentes": 19,
+      "enRupture": 27,
+      "recentes": 20,
       "parCarburant": {
-        "SP98": 24,
+        "SP98": 25,
         "E10": 8,
         "SP95": 2
       },
-      "part": 21.5
+      "part": 22.3
     },
     "92": {
       "nom": "Hauts-de-Seine",
@@ -1068,7 +1068,7 @@
       "enRupture": 13,
       "recentes": 12,
       "parCarburant": {
-        "E10": 4,
+        "E10": 5,
         "SP98": 13
       },
       "part": 20.6
@@ -1076,15 +1076,15 @@
     "93": {
       "nom": "Seine-Saint-Denis",
       "stations": 80,
-      "enRupture": 12,
-      "recentes": 11,
+      "enRupture": 13,
+      "recentes": 12,
       "parCarburant": {
+        "SP98": 11,
         "E10": 7,
-        "SP98": 10,
         "Gazole": 2,
         "SP95": 1
       },
-      "part": 15
+      "part": 16.3
     },
     "94": {
       "nom": "Val-de-Marne",
@@ -1094,7 +1094,7 @@
       "parCarburant": {
         "SP98": 14,
         "Gazole": 2,
-        "E10": 6,
+        "E10": 5,
         "SP95": 2
       },
       "part": 19.7
@@ -1102,53 +1102,53 @@
     "95": {
       "nom": "Val-d'Oise",
       "stations": 103,
-      "enRupture": 23,
-      "recentes": 20,
+      "enRupture": 25,
+      "recentes": 23,
       "parCarburant": {
-        "E10": 8,
-        "SP98": 20,
+        "E10": 10,
+        "SP98": 22,
         "Gazole": 1
       },
-      "part": 22.3
+      "part": 24.3
     },
     "01": {
       "nom": "Ain",
       "stations": 113,
-      "enRupture": 16,
-      "recentes": 14,
+      "enRupture": 15,
+      "recentes": 13,
       "parCarburant": {
         "SP95": 4,
         "Gazole": 9,
-        "SP98": 9,
-        "E10": 3
+        "SP98": 7,
+        "E10": 1
       },
-      "part": 14.2
+      "part": 13.3
     },
     "02": {
       "nom": "Aisne",
       "stations": 83,
-      "enRupture": 6,
-      "recentes": 5,
+      "enRupture": 7,
+      "recentes": 6,
       "parCarburant": {
+        "Gazole": 3,
         "SP98": 5,
         "E10": 1,
-        "Gazole": 1,
         "SP95": 1
       },
-      "part": 7.2
+      "part": 8.4
     },
     "03": {
       "nom": "Allier",
-      "stations": 72,
-      "enRupture": 11,
-      "recentes": 10,
+      "stations": 71,
+      "enRupture": 13,
+      "recentes": 12,
       "parCarburant": {
-        "SP98": 7,
-        "E10": 3,
-        "SP95": 2,
-        "Gazole": 3
+        "SP98": 9,
+        "Gazole": 6,
+        "E10": 6,
+        "SP95": 2
       },
-      "part": 15.3
+      "part": 18.3
     },
     "04": {
       "nom": "Alpes-de-Haute-Provence",
@@ -1175,41 +1175,42 @@
     },
     "06": {
       "nom": "Alpes-Maritimes",
-      "stations": 121,
-      "enRupture": 8,
-      "recentes": 6,
+      "stations": 122,
+      "enRupture": 10,
+      "recentes": 9,
       "parCarburant": {
-        "SP95": 5,
-        "SP98": 5,
-        "E10": 3,
-        "Gazole": 1
+        "SP95": 7,
+        "Gazole": 2,
+        "E10": 5,
+        "SP98": 7
       },
-      "part": 6.6
+      "part": 8.2
     },
     "07": {
       "nom": "Ardèche",
       "stations": 65,
-      "enRupture": 9,
-      "recentes": 6,
+      "enRupture": 10,
+      "recentes": 7,
       "parCarburant": {
-        "SP98": 6,
-        "Gazole": 5,
-        "E10": 2,
-        "SP95": 4
+        "Gazole": 6,
+        "SP95": 5,
+        "SP98": 7,
+        "E10": 2
       },
-      "part": 13.8
+      "part": 15.4
     },
     "08": {
       "nom": "Ardennes",
       "stations": 43,
-      "enRupture": 4,
-      "recentes": 3,
+      "enRupture": 5,
+      "recentes": 4,
       "parCarburant": {
         "Gazole": 2,
         "SP95": 3,
-        "SP98": 2
+        "E10": 1,
+        "SP98": 3
       },
-      "part": 9.3
+      "part": 11.6
     },
     "09": {
       "nom": "Ariège",
