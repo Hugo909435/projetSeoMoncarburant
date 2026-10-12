@@ -126,6 +126,85 @@ export function stationHeading(s: StationLike): string {
   return `${stationDisplayName(s)}${addr} à ${s.ville}`;
 }
 
+/** Mots de liaison laissés en minuscules dans une adresse remise en casse. */
+const ADDRESS_SMALL_WORDS = new Set(['de', 'du', 'des', 'la', 'le', 'les', 'et', 'à', 'au', 'aux', 'sur', 'sous', 'en']);
+
+/**
+ * Adresse telle qu'elle apparaît dans le <title>.
+ *
+ * Une partie du flux officiel écrit les adresses tout en capitales
+ * ("AV DU CDT BERNARD BICHERAY"), ce qui crie dans une page de résultats. On ne
+ * retouche que ces adresses-là : une adresse déjà saisie en casse mixte est
+ * laissée telle quelle.
+ */
+export function titleAddress(adresse: string): string {
+  const a = adresse.replace(/\s+/g, ' ').replace(/'\s+/g, "'").trim();
+  if (/\p{Ll}/u.test(a)) return a;
+  return a
+    .toLowerCase()
+    .split(' ')
+    .map((word, i) =>
+      i > 0 && ADDRESS_SMALL_WORDS.has(word)
+        ? word
+        : word
+            .replace(/^([ld]')?(\p{L})/u, (_m, article, c) => `${article ?? ''}${c.toUpperCase()}`)
+            .replace(/-(\p{L})/gu, (_m, c) => `-${c.toUpperCase()}`),
+    )
+    .join(' ');
+}
+
+/** Longueur maximale d'un <title>, alignée sur le plafond metaTitle du site. */
+const TITLE_MAX = 60;
+
+/**
+ * <title> de la page.
+ *
+ * La rue en fait partie : sans elle, deux stations de la même enseigne dans la
+ * même commune portaient exactement le même titre (jusqu'à 18 fiches pour
+ * « Prix carburant station Total Paris »).
+ *
+ * Le titre est construit, pas rédigé : on essaie des formulations de plus en
+ * plus courtes et on retient la première qui tient dans la limite, plutôt que
+ * de tronquer au milieu d'un mot.
+ */
+export function stationTitle(s: StationLike, isCheapest: boolean): string {
+  const clean = (t: string) => t.replace(/\s+/g, ' ').trim();
+  const brand = s.enseigne && s.enseigne !== 'independent' ? s.enseigne.trim() : '';
+  const cheapest = isCheapest ? ' - la moins chère' : '';
+
+  const adresse = (s.adresse ?? '').trim();
+  const street = adresse.length >= 5 ? titleAddress(adresse) : null;
+
+  if (street) {
+    const withStreet = [
+      `Prix carburant station ${brand} ${s.ville}, ${street}${cheapest}`,
+      `Prix carburant station ${brand} ${s.ville}, ${street}`,
+      `Prix carburant ${brand} ${s.ville}, ${street}`,
+      `Carburant ${brand} ${s.ville}, ${street}`,
+    ].map(clean);
+    const fit = withStreet.find((t) => t.length <= TITLE_MAX);
+    if (fit) return fit;
+
+    // Adresse trop longue pour tenir en entier : on la coupe sur une frontière
+    // de mot. Le début de la rue suffit presque toujours à distinguer la fiche.
+    const prefix = clean(`Carburant ${brand} ${s.ville}, `) + ' ';
+    const words = street.split(' ');
+    while (words.length > 1 && (prefix + words.join(' ')).length > TITLE_MAX) words.pop();
+    const shortened = prefix + words.join(' ').replace(/[,;:]$/, '');
+    if (shortened.length <= TITLE_MAX && words.join(' ').length >= 8) return shortened;
+  }
+
+  // Sans adresse exploitable, ou commune à nom très long
+  // ("Bretteville-l'Orgueilleuse Thue et Mue").
+  const withoutStreet = [
+    `Prix carburant station ${brand} ${s.ville}${cheapest}`,
+    `Prix carburant station ${brand} ${s.ville}`,
+    `Prix carburant station ${s.ville}`,
+    `Carburant ${s.ville}`,
+  ].map(clean);
+  return withoutStreet.find((t) => t.length <= TITLE_MAX) ?? withoutStreet.at(-1)!.slice(0, TITLE_MAX).trimEnd();
+}
+
 /**
  * Résume les horaires en une phrase. Retourne null si la station ne déclare
  * rien d'exploitable, plutôt que d'inventer une amplitude.

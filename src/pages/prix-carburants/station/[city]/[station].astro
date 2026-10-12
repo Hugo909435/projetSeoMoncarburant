@@ -23,6 +23,7 @@ import {
   buildStationIntro,
   buildStationFaq,
   stationHeading,
+  stationTitle,
   stationDisplayName,
   type StationLike,
 } from '../../../../utils/station-intro';
@@ -47,6 +48,16 @@ export async function getStaticPaths() {
       Math.sin(dLat / 2) ** 2 +
       Math.cos(toRad(aLat)) * Math.cos(toRad(bLat)) * Math.sin(dLng / 2) ** 2;
     return 2 * R * Math.asin(Math.sqrt(h));
+  };
+
+  /** Rayon dans lequel une station moins chère vaut le détour. */
+  const ALTERNATIVE_MAX_KM = 5;
+  /** Âge maximal d'une déclaration de prix pour entrer dans la comparaison. */
+  const ALTERNATIVE_FRESH_DAYS = 7;
+  const dataDate = meta.lastUpdate ? new Date(meta.lastUpdate).getTime() : Date.now();
+  const isFresh = (maj: string | null | undefined): boolean => {
+    const t = maj ? new Date(maj).getTime() : NaN;
+    return Number.isFinite(t) && (dataDate - t) / 86400000 <= ALTERNATIVE_FRESH_DAYS;
   };
 
   const deptFiles = import.meta.glob('../../../../data/fuel/stations-by-department/*.json', { eager: true });
@@ -183,10 +194,39 @@ export async function getStaticPaths() {
       // Cinq stations les plus proches du même département. Le maillage se
       // densifie à mesure que les vagues sortent : une voisine non encore
       // publiée est affichée sans lien.
-      const nearby = all
+      const byDistance = all
         .filter((s) => s.id !== station.id && s.lat && s.lng)
         .map((s) => ({ station: s, distance: haversine(station.lat, station.lng, s.lat, s.lng) }))
-        .sort((a, b) => a.distance - b.distance)
+        .sort((a, b) => a.distance - b.distance);
+
+      // Alternative la moins chère à portée de détour, pour chiffrer l'écart
+      // sur un plein. Les deux prix doivent être récents : comparer un tarif
+      // du jour à une déclaration vieille d'un mois donnerait un écart faux.
+      const stationGazole = station.prices?.Gazole ?? null;
+      const cheaper =
+        stationGazole != null && isFresh(station.maj)
+          ? byDistance
+              .filter(
+                ({ station: s, distance }) =>
+                  distance <= ALTERNATIVE_MAX_KM &&
+                  s.prices?.Gazole != null &&
+                  s.prices.Gazole < stationGazole &&
+                  isFresh(s.maj),
+              )
+              .sort((a, b) => a.station.prices.Gazole - b.station.prices.Gazole || a.distance - b.distance)[0]
+          : undefined;
+      const alternative = cheaper
+        ? {
+            nom: cheaper.station.enseigne ?? null,
+            adresse: cheaper.station.adresse,
+            ville: displayCity(cheaper.station),
+            gazole: cheaper.station.prices.Gazole as number,
+            distance: cheaper.distance,
+            url: stationUrl(cheaper.station.id),
+          }
+        : null;
+
+      const nearby = byDistance
         .slice(0, 5)
         .map(({ station: s, distance }) => ({
           id: s.id,
@@ -217,6 +257,7 @@ export async function getStaticPaths() {
           cityHasPage: citySlugsWithPage.has(station.villeSlug),
           brandHasPage: !!station.enseigneSlug && brandSlugsWithPage.has(station.enseigneSlug),
           nearby,
+          alternative,
           canonicalPath: `/prix-carburants/station/${entry.path}/`,
         },
       });
@@ -240,6 +281,7 @@ const {
   cityHasPage,
   brandHasPage,
   nearby,
+  alternative,
   canonicalPath,
 } = Astro.props;
 
@@ -281,6 +323,31 @@ const faq = buildStationFaq(introParams);
 const weekHours = decodeHoraires(horaires);
 const alwaysOpen = isAlwaysOpen(horaires);
 
+// Les horaires du flux officiel sont ceux de l'accueil, pas de la pompe : des
+// stations à automate se déclarent « fermées » sept jours sur sept tout en
+// vendant du carburant jour et nuit. Sur ces fiches, un tableau de sept
+// « Fermé » dirait le contraire de la réalité : on n'affiche le détail que si
+// au moins un créneau est déclaré.
+const hasDeclaredSlot = !!weekHours?.some((d) => !d.closed && !d.unknown);
+const showHoursTable = !automate || hasDeclaredSlot;
+
+// Écart sur un plein avec la station voisine la moins chère. En dessous de
+// 2 centimes au litre (1 € sur le plein), l'écart ne justifie pas un détour.
+const PLEIN_LITRES = 50;
+const gazolePrice = s.prices['Gazole'] ?? null;
+const pleinGap =
+  alternative && gazolePrice != null && gazolePrice - alternative.gazole >= 0.02
+    ? ((gazolePrice - alternative.gazole) * PLEIN_LITRES).toFixed(2)
+    : null;
+const alternativeLabel = alternative
+  ? `${alternative.nom ?? 'Station-service'}${alternative.adresse ? `, ${alternative.adresse}` : ''}`
+  : null;
+const alternativeDistance = alternative
+  ? alternative.distance < 1
+    ? `${Math.round(alternative.distance * 1000)} m`
+    : `${alternative.distance.toFixed(1)} km`
+  : null;
+
 // Fiche trop pauvre pour être proposée à l'indexation : pas de prix à comparer,
 // adresse inexploitable, ou déclaration trop ancienne. La page reste accessible
 // et reliée au site, elle n'est simplement pas offerte au référencement.
@@ -299,21 +366,7 @@ const lastUpdate = meta.lastUpdate
 // construit, pas rédigé : on dégrade proprement plutôt que de tronquer au milieu
 // d'un mot sur les adresses longues.
 const gazole = s.prices['Gazole'] ?? null;
-const cheapestLabel = cityRankGazole === 1 ? ' - la moins chère' : '';
-
-// Trois formulations par ordre de préférence, de la plus riche à la plus
-// courte. On retient la première qui tient dans la limite, et on tronque en
-// dernier recours pour les communes à nom très long
-// ("Bretteville-l'Orgueilleuse Thue et Mue").
-const titleCandidates = [
-  `Prix carburant station ${brandName ?? ''} ${s.ville}${cheapestLabel}`,
-  `Prix carburant station ${brandName ?? ''} ${s.ville}`,
-  `Prix carburant station ${s.ville}`,
-  `Carburant ${s.ville}`,
-].map((t) => t.replace(/\s+/g, ' ').trim());
-
-const title =
-  titleCandidates.find((t) => t.length <= 60) ?? titleCandidates.at(-1)!.slice(0, 60).trimEnd();
+const title = stationTitle(s, cityRankGazole === 1);
 
 // La description est assemblée puis tronquée sur une frontière de phrase :
 // une adresse longue ne doit pas produire une coupe au milieu d'un mot.
@@ -543,6 +596,15 @@ function priceDiff(price: number | null | undefined, fuelKey: string) {
               Classement Gazole à {s.ville} : <strong>{cityRankGazole}<sup>e</sup> sur {cityRankTotal}</strong> stations comparées.
             </p>
           )}
+          {pleinGap && alternative && (
+            <p class="plein-note">
+              Sur un plein de {PLEIN_LITRES} litres de Gazole, cette station coûte environ <strong>{pleinGap} € de plus</strong> que cette voisine :
+              {' '}{alternative.url
+                ? <a href={alternative.url}>{alternativeLabel}</a>
+                : <span>{alternativeLabel}</span>}
+              {' '}({alternative.ville}, à {alternativeDistance}, {alternative.gazole.toFixed(3)} €/L), d'après les derniers prix déclarés.
+            </p>
+          )}
         </section>
       )}
 
@@ -569,7 +631,15 @@ function priceDiff(price: number | null | undefined, fuelKey: string) {
       {weekHours && (
         <section class="section-block">
           <h2>Horaires d'ouverture</h2>
-          <table class="hours-table">
+          {automate && (
+            <p class="hours-auto">
+              <strong>Carburant accessible 24 h/24</strong> par automate carte bancaire.
+              {showHoursTable
+                ? " Les horaires ci-dessous sont ceux de l'accueil, tels que déclarés par la station."
+                : " La station ne déclare aucun horaire d'accueil avec personnel."}
+            </p>
+          )}
+          {showHoursTable && <table class="hours-table">
             <tbody>
               {weekHours.map((d) => (
                 <tr>
@@ -582,8 +652,7 @@ function priceDiff(price: number | null | undefined, fuelKey: string) {
                 </tr>
               ))}
             </tbody>
-          </table>
-          {automate && <p class="hours-note">Un automate carte bancaire reste accessible en dehors de ces horaires.</p>}
+          </table>}
         </section>
       )}
 
@@ -801,7 +870,9 @@ function priceDiff(price: number | null | undefined, fuelKey: string) {
   .hours-table th { text-align: left; font-weight: 600; color: var(--color-primary); padding: 0.45rem 0.75rem 0.45rem 0; border-bottom: 1px solid #f1f5f9; }
   .hours-table td { padding: 0.45rem 0; border-bottom: 1px solid #f1f5f9; }
   .hours-table .muted { color: #94a3b8; }
-  .hours-note { font-size: 0.8125rem; color: var(--color-text-muted); margin-top: 0.75rem; }
+  .hours-auto { font-size: 0.9rem; color: #065f46; background: #ecfdf5; border-left: 4px solid #065f46; border-radius: 0.375rem; padding: 0.5rem 0.75rem; margin: 0 0 0.9rem; max-width: 26rem; }
+  .plein-note { font-size: 0.9rem; color: #374151; margin-top: 0.6rem; }
+  .plein-note a { color: var(--color-primary); font-weight: 600; }
 
   .services-list { display: flex; flex-wrap: wrap; gap: 0.5rem; list-style: none; padding: 0; margin: 0; }
   .services-list li { background: #f1f5f9; border: 1px solid #e2e8f0; border-radius: 999px; padding: 0.3rem 0.75rem; font-size: 0.8125rem; color: #334155; }
