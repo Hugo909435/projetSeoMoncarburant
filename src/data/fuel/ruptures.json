@@ -1,5 +1,5 @@
 {
-  "releveLe": "2026-10-12T21:42:28.100Z",
+  "releveLe": "2026-10-12T22:42:27.269Z",
   "source": "data.economie.gouv.fr, prix-des-carburants-en-france-flux-instantane-v2",
   "criteres": {
     "carburants": [
@@ -14,16 +14,16 @@
     "stationActiveJours": 10
   },
   "national": {
-    "stations": 8628,
-    "enRupture": 1427,
-    "recentes": 1215,
+    "stations": 8625,
+    "enRupture": 1428,
+    "recentes": 1217,
     "parCarburant": {
-      "Gazole": 569,
-      "E10": 693,
-      "SP95": 303,
+      "Gazole": 571,
+      "E10": 697,
+      "SP95": 304,
       "SP98": 1057
     },
-    "part": 16.5,
+    "part": 16.6,
     "partRecentes": 14.1
   },
   "departements": {
@@ -273,7 +273,7 @@
     },
     "30": {
       "nom": "Gard",
-      "stations": 119,
+      "stations": 118,
       "enRupture": 6,
       "recentes": 5,
       "parCarburant": {
@@ -282,7 +282,7 @@
         "SP98": 5,
         "E10": 2
       },
-      "part": 5
+      "part": 5.1
     },
     "31": {
       "nom": "Haute-Garonne",
@@ -716,15 +716,15 @@
     "64": {
       "nom": "Pyrénées-Atlantiques",
       "stations": 94,
-      "enRupture": 19,
-      "recentes": 19,
+      "enRupture": 20,
+      "recentes": 20,
       "parCarburant": {
         "E10": 9,
         "SP98": 12,
         "SP95": 4,
-        "Gazole": 4
+        "Gazole": 5
       },
-      "part": 20.2
+      "part": 21.3
     },
     "65": {
       "nom": "Hautes-Pyrénées",
@@ -843,7 +843,7 @@
     },
     "74": {
       "nom": "Haute-Savoie",
-      "stations": 114,
+      "stations": 113,
       "enRupture": 16,
       "recentes": 13,
       "parCarburant": {
@@ -852,7 +852,7 @@
         "Gazole": 5,
         "E10": 5
       },
-      "part": 14
+      "part": 14.2
     },
     "75": {
       "nom": "Paris",
@@ -860,8 +860,9 @@
       "enRupture": 11,
       "recentes": 11,
       "parCarburant": {
-        "E10": 6,
+        "E10": 7,
         "SP98": 11,
+        "SP95": 1,
         "Gazole": 1
       },
       "part": 29.7
@@ -959,7 +960,7 @@
     },
     "83": {
       "nom": "Var",
-      "stations": 152,
+      "stations": 151,
       "enRupture": 17,
       "recentes": 15,
       "parCarburant": {
@@ -968,7 +969,7 @@
         "SP95": 2,
         "Gazole": 2
       },
-      "part": 11.2
+      "part": 11.3
     },
     "84": {
       "nom": "Vaucluse",
@@ -1067,7 +1068,7 @@
       "parCarburant": {
         "SP95": 3,
         "SP98": 23,
-        "E10": 13,
+        "E10": 14,
         "Gazole": 3
       },
       "part": 20.2
@@ -1114,11 +1115,11 @@
       "nom": "Val-d'Oise",
       "stations": 104,
       "enRupture": 22,
-      "recentes": 18,
+      "recentes": 19,
       "parCarburant": {
         "SP98": 21,
-        "Gazole": 3,
-        "E10": 12
+        "Gazole": 4,
+        "E10": 13
       },
       "part": 21.2
     },
@@ -1193,7 +1194,7 @@
       "parCarburant": {
         "SP98": 11,
         "SP95": 5,
-        "E10": 5,
+        "E10": 6,
         "Gazole": 1
       },
       "part": 10.2
