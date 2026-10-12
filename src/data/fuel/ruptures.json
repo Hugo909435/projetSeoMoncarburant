@@ -1,5 +1,5 @@
 {
-  "releveLe": "2026-10-12T00:42:26.172Z",
+  "releveLe": "2026-10-12T01:42:30.182Z",
   "source": "data.economie.gouv.fr, prix-des-carburants-en-france-flux-instantane-v2",
   "criteres": {
     "carburants": [
@@ -14,11 +14,11 @@
     "stationActiveJours": 10
   },
   "national": {
-    "stations": 8717,
+    "stations": 8716,
     "enRupture": 1628,
-    "recentes": 1444,
+    "recentes": 1445,
     "parCarburant": {
-      "Gazole": 679,
+      "Gazole": 680,
       "E10": 971,
       "SP95": 315,
       "SP98": 1268
@@ -107,7 +107,7 @@
     },
     "16": {
       "nom": "Charente",
-      "stations": 60,
+      "stations": 59,
       "enRupture": 6,
       "recentes": 5,
       "parCarburant": {
@@ -116,7 +116,7 @@
         "Gazole": 1,
         "SP98": 5
       },
-      "part": 10
+      "part": 10.2
     },
     "17": {
       "nom": "Charente-Maritime",
@@ -351,11 +351,11 @@
       "nom": "Indre",
       "stations": 40,
       "enRupture": 6,
-      "recentes": 4,
+      "recentes": 5,
       "parCarburant": {
+        "Gazole": 3,
         "SP95": 3,
         "E10": 1,
-        "Gazole": 2,
         "SP98": 2
       },
       "part": 15
