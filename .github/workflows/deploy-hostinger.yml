@@ -6,7 +6,7 @@ on:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-    timeout-minutes: 40
+    timeout-minutes: 55
 
     steps:
       - name: Checkout du dépôt
@@ -40,7 +40,7 @@ jobs:
         run: sudo apt-get install -y --no-install-recommends lftp
 
       - name: Déploiement vers Hostinger
-        timeout-minutes: 30
+        timeout-minutes: 45
         env:
           FTP_USER: ${{ secrets.FTP_USER }}
           FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
@@ -101,6 +101,20 @@ jobs:
           # timeout après 25 min, alors que les runs à 2 connexions
           # terminaient en 16-19 min) ; le goulot d'étranglement est donc le
           # débit de transfert, pas le nombre de connexions concurrentes.
+          #
+          # Dossiers statiques envoyés à part avec --ignore-time : chaque build
+          # Astro réécrit tous les fichiers de dist avec une date neuve, donc
+          # mirror (qui compare taille + date) renvoyait à chaque déploiement
+          # les ~410 fichiers de _astro, images, fonts et vendor (~22 Mo) alors
+          # qu'ils ne changent quasiment jamais. Sans la date, mirror ne compare
+          # plus que la taille : c'est sûr pour _astro (noms hashés par
+          # contenu), et pour images/fonts/vendor (copiés tels quels depuis
+          # public/) le seul cas raté serait un fichier remplacé par un autre
+          # de taille strictement identique (le renommer suffit alors). Le
+          # reste du site (pages HTML, data/, sitemaps) garde la comparaison
+          # avec la date, car les pages de prix changent de contenu sans
+          # forcément changer de taille. Avec un mirror complet qui frôlait
+          # les 27-30 min, ce gain évite les timeouts.
           max_attempts=5
           for attempt in $(seq 1 "$max_attempts"); do
             echo "::group::Tentative de déploiement $attempt/$max_attempts"
@@ -115,9 +129,14 @@ jobs:
                      set mirror:parallel-directories no; \
                      set cmd:fail-exit no; \
                      rm -r -f domains; \
+                     mkdir -p _astro images fonts vendor; \
                      set cmd:fail-exit yes; \
                      lcd dist; \
-                     mirror -R --delete --verbose . .; \
+                     mirror -R --delete --ignore-time --verbose _astro _astro; \
+                     mirror -R --delete --ignore-time --verbose images images; \
+                     mirror -R --delete --ignore-time --verbose fonts fonts; \
+                     mirror -R --delete --ignore-time --verbose vendor vendor; \
+                     mirror -R --delete --verbose -x ^_astro/ -x ^images/ -x ^fonts/ -x ^vendor/ . .; \
                      quit" \
                 "$FTP_HOST"; then
               echo "::endgroup::"
