@@ -1,5 +1,5 @@
 {
-  "releveLe": "2026-10-14T07:43:16.180Z",
+  "releveLe": "2026-10-14T08:42:31.098Z",
   "source": "data.economie.gouv.fr, prix-des-carburants-en-france-flux-instantane-v2",
   "criteres": {
     "carburants": [
@@ -14,13 +14,13 @@
     "stationActiveJours": 10
   },
   "national": {
-    "stations": 8753,
-    "enRupture": 1184,
-    "recentes": 961,
+    "stations": 8752,
+    "enRupture": 1182,
+    "recentes": 959,
     "parCarburant": {
       "Gazole": 402,
       "E10": 491,
-      "SP95": 263,
+      "SP95": 261,
       "SP98": 839
     },
     "part": 13.5,
@@ -68,15 +68,15 @@
     "13": {
       "nom": "Bouches-du-Rhône",
       "stations": 239,
-      "enRupture": 24,
+      "enRupture": 23,
       "recentes": 18,
       "parCarburant": {
-        "SP95": 6,
+        "SP95": 5,
         "E10": 9,
         "SP98": 17,
         "Gazole": 1
       },
-      "part": 10
+      "part": 9.6
     },
     "14": {
       "nom": "Calvados",
@@ -757,7 +757,7 @@
       "nom": "Haut-Rhin",
       "stations": 103,
       "enRupture": 32,
-      "recentes": 21,
+      "recentes": 20,
       "parCarburant": {
         "E10": 28,
         "SP98": 29,
@@ -872,7 +872,7 @@
       "nom": "Seine-et-Marne",
       "stations": 163,
       "enRupture": 24,
-      "recentes": 22,
+      "recentes": 21,
       "parCarburant": {
         "SP98": 19,
         "E10": 5,
@@ -1108,7 +1108,7 @@
     },
     "01": {
       "nom": "Ain",
-      "stations": 113,
+      "stations": 112,
       "enRupture": 19,
       "recentes": 16,
       "parCarburant": {
@@ -1117,7 +1117,7 @@
         "SP95": 2,
         "SP98": 11
       },
-      "part": 16.8
+      "part": 17
     },
     "02": {
       "nom": "Aisne",
@@ -1147,12 +1147,10 @@
     "04": {
       "nom": "Alpes-de-Haute-Provence",
       "stations": 37,
-      "enRupture": 1,
+      "enRupture": 0,
       "recentes": 0,
-      "parCarburant": {
-        "SP95": 1
-      },
-      "part": 2.7
+      "parCarburant": {},
+      "part": 0
     },
     "05": {
       "nom": "Hautes-Alpes",
