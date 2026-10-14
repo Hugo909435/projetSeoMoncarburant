@@ -1,5 +1,5 @@
 {
-  "releveLe": "2026-10-14T22:42:30.254Z",
+  "releveLe": "2026-10-14T23:42:34.883Z",
   "source": "data.economie.gouv.fr, prix-des-carburants-en-france-flux-instantane-v2",
   "criteres": {
     "carburants": [
@@ -14,17 +14,17 @@
     "stationActiveJours": 10
   },
   "national": {
-    "stations": 8809,
+    "stations": 8789,
     "enRupture": 1226,
-    "recentes": 1026,
+    "recentes": 1025,
     "parCarburant": {
       "Gazole": 429,
-      "E10": 529,
+      "E10": 528,
       "SP95": 257,
       "SP98": 892
     },
     "part": 13.9,
-    "partRecentes": 11.6
+    "partRecentes": 11.7
   },
   "departements": {
     "10": {
@@ -156,7 +156,7 @@
     },
     "21": {
       "nom": "Côte-d'Or",
-      "stations": 119,
+      "stations": 118,
       "enRupture": 15,
       "recentes": 13,
       "parCarburant": {
@@ -165,7 +165,7 @@
         "Gazole": 7,
         "SP95": 3
       },
-      "part": 12.6
+      "part": 12.7
     },
     "22": {
       "nom": "Côtes-d'Armor",
@@ -283,16 +283,16 @@
     },
     "31": {
       "nom": "Haute-Garonne",
-      "stations": 185,
+      "stations": 183,
       "enRupture": 36,
-      "recentes": 25,
+      "recentes": 24,
       "parCarburant": {
         "SP98": 25,
         "Gazole": 13,
-        "E10": 24,
+        "E10": 23,
         "SP95": 8
       },
-      "part": 19.5
+      "part": 19.7
     },
     "32": {
       "nom": "Gers",
@@ -322,7 +322,7 @@
     },
     "34": {
       "nom": "Hérault",
-      "stations": 151,
+      "stations": 150,
       "enRupture": 13,
       "recentes": 9,
       "parCarburant": {
@@ -331,7 +331,7 @@
         "Gazole": 4,
         "SP95": 4
       },
-      "part": 8.6
+      "part": 8.7
     },
     "35": {
       "nom": "Ille-et-Vilaine",
@@ -461,7 +461,7 @@
     },
     "45": {
       "nom": "Loiret",
-      "stations": 105,
+      "stations": 104,
       "enRupture": 11,
       "recentes": 7,
       "parCarburant": {
@@ -470,7 +470,7 @@
         "E10": 3,
         "SP95": 2
       },
-      "part": 10.5
+      "part": 10.6
     },
     "46": {
       "nom": "Lot",
@@ -655,7 +655,7 @@
     },
     "60": {
       "nom": "Oise",
-      "stations": 109,
+      "stations": 108,
       "enRupture": 16,
       "recentes": 15,
       "parCarburant": {
@@ -664,7 +664,7 @@
         "E10": 7,
         "SP95": 4
       },
-      "part": 14.7
+      "part": 14.8
     },
     "61": {
       "nom": "Orne",
@@ -694,7 +694,7 @@
     },
     "63": {
       "nom": "Puy-de-Dôme",
-      "stations": 110,
+      "stations": 109,
       "enRupture": 22,
       "recentes": 21,
       "parCarburant": {
@@ -703,11 +703,11 @@
         "E10": 12,
         "SP95": 4
       },
-      "part": 20
+      "part": 20.2
     },
     "64": {
       "nom": "Pyrénées-Atlantiques",
-      "stations": 98,
+      "stations": 97,
       "enRupture": 14,
       "recentes": 14,
       "parCarburant": {
@@ -716,11 +716,11 @@
         "SP98": 12,
         "Gazole": 3
       },
-      "part": 14.3
+      "part": 14.4
     },
     "65": {
       "nom": "Hautes-Pyrénées",
-      "stations": 40,
+      "stations": 39,
       "enRupture": 2,
       "recentes": 1,
       "parCarburant": {
@@ -728,7 +728,7 @@
         "Gazole": 1,
         "E10": 1
       },
-      "part": 5
+      "part": 5.1
     },
     "66": {
       "nom": "Pyrénées-Orientales",
@@ -809,7 +809,7 @@
     },
     "72": {
       "nom": "Sarthe",
-      "stations": 89,
+      "stations": 88,
       "enRupture": 19,
       "recentes": 16,
       "parCarburant": {
@@ -818,7 +818,7 @@
         "Gazole": 4,
         "SP95": 2
       },
-      "part": 21.3
+      "part": 21.6
     },
     "73": {
       "nom": "Savoie",
@@ -835,7 +835,7 @@
     },
     "74": {
       "nom": "Haute-Savoie",
-      "stations": 113,
+      "stations": 112,
       "enRupture": 18,
       "recentes": 16,
       "parCarburant": {
@@ -844,7 +844,7 @@
         "SP98": 13,
         "E10": 7
       },
-      "part": 15.9
+      "part": 16.1
     },
     "75": {
       "nom": "Paris",
@@ -872,7 +872,7 @@
     },
     "77": {
       "nom": "Seine-et-Marne",
-      "stations": 165,
+      "stations": 164,
       "enRupture": 26,
       "recentes": 23,
       "parCarburant": {
@@ -881,11 +881,11 @@
         "SP95": 6,
         "Gazole": 2
       },
-      "part": 15.8
+      "part": 15.9
     },
     "78": {
       "nom": "Yvelines",
-      "stations": 135,
+      "stations": 134,
       "enRupture": 30,
       "recentes": 25,
       "parCarburant": {
@@ -894,7 +894,7 @@
         "Gazole": 3,
         "SP95": 4
       },
-      "part": 22.2
+      "part": 22.4
     },
     "79": {
       "nom": "Deux-Sèvres",
@@ -950,7 +950,7 @@
     },
     "83": {
       "nom": "Var",
-      "stations": 156,
+      "stations": 155,
       "enRupture": 14,
       "recentes": 12,
       "parCarburant": {
@@ -963,7 +963,7 @@
     },
     "84": {
       "nom": "Vaucluse",
-      "stations": 91,
+      "stations": 90,
       "enRupture": 9,
       "recentes": 8,
       "parCarburant": {
@@ -972,7 +972,7 @@
         "SP98": 7,
         "SP95": 2
       },
-      "part": 9.9
+      "part": 10
     },
     "85": {
       "nom": "Vendée",
@@ -1013,7 +1013,7 @@
     },
     "88": {
       "nom": "Vosges",
-      "stations": 78,
+      "stations": 77,
       "enRupture": 21,
       "recentes": 16,
       "parCarburant": {
@@ -1022,7 +1022,7 @@
         "SP95": 1,
         "SP98": 16
       },
-      "part": 26.9
+      "part": 27.3
     },
     "89": {
       "nom": "Yonne",
@@ -1075,7 +1075,7 @@
     },
     "93": {
       "nom": "Seine-Saint-Denis",
-      "stations": 81,
+      "stations": 78,
       "enRupture": 8,
       "recentes": 7,
       "parCarburant": {
@@ -1083,11 +1083,11 @@
         "SP98": 6,
         "Gazole": 2
       },
-      "part": 9.9
+      "part": 10.3
     },
     "94": {
       "nom": "Val-de-Marne",
-      "stations": 73,
+      "stations": 72,
       "enRupture": 9,
       "recentes": 6,
       "parCarburant": {
@@ -1095,7 +1095,7 @@
         "SP95": 2,
         "E10": 1
       },
-      "part": 12.3
+      "part": 12.5
     },
     "95": {
       "nom": "Val-d'Oise",
