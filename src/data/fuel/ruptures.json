@@ -1,5 +1,5 @@
 {
-  "releveLe": "2026-10-16T22:04:32.437Z",
+  "releveLe": "2026-10-16T22:42:27.240Z",
   "source": "data.economie.gouv.fr, prix-des-carburants-en-france-flux-instantane-v2",
   "criteres": {
     "carburants": [
@@ -15,16 +15,16 @@
   },
   "national": {
     "stations": 8756,
-    "enRupture": 1254,
-    "recentes": 1070,
+    "enRupture": 1257,
+    "recentes": 1073,
     "parCarburant": {
-      "Gazole": 457,
-      "E10": 531,
-      "SP95": 251,
-      "SP98": 945
+      "Gazole": 461,
+      "E10": 533,
+      "SP95": 252,
+      "SP98": 948
     },
-    "part": 14.3,
-    "partRecentes": 12.2
+    "part": 14.4,
+    "partRecentes": 12.3
   },
   "departements": {
     "10": {
@@ -314,15 +314,15 @@
     "33": {
       "nom": "Gironde",
       "stations": 211,
-      "enRupture": 31,
-      "recentes": 31,
+      "enRupture": 32,
+      "recentes": 32,
       "parCarburant": {
         "E10": 16,
-        "SP98": 25,
+        "SP98": 26,
         "SP95": 3,
         "Gazole": 7
       },
-      "part": 14.7
+      "part": 15.2
     },
     "34": {
       "nom": "Hérault",
@@ -576,7 +576,7 @@
       "enRupture": 13,
       "recentes": 10,
       "parCarburant": {
-        "Gazole": 3,
+        "Gazole": 4,
         "SP95": 3,
         "SP98": 9,
         "E10": 4
@@ -706,7 +706,7 @@
       "enRupture": 20,
       "recentes": 19,
       "parCarburant": {
-        "Gazole": 13,
+        "Gazole": 14,
         "SP98": 16,
         "E10": 13,
         "SP95": 4
@@ -856,14 +856,15 @@
     "75": {
       "nom": "Paris",
       "stations": 38,
-      "enRupture": 6,
-      "recentes": 5,
+      "enRupture": 7,
+      "recentes": 6,
       "parCarburant": {
-        "SP98": 6,
-        "Gazole": 1,
-        "E10": 1
+        "SP98": 7,
+        "Gazole": 2,
+        "E10": 2,
+        "SP95": 1
       },
-      "part": 15.8
+      "part": 18.4
     },
     "76": {
       "nom": "Seine-Maritime",
@@ -881,15 +882,15 @@
     "77": {
       "nom": "Seine-et-Marne",
       "stations": 163,
-      "enRupture": 19,
-      "recentes": 17,
+      "enRupture": 20,
+      "recentes": 18,
       "parCarburant": {
-        "SP98": 14,
+        "SP98": 15,
         "E10": 6,
         "SP95": 3,
         "Gazole": 2
       },
-      "part": 11.7
+      "part": 12.3
     },
     "78": {
       "nom": "Yvelines",
@@ -1122,8 +1123,8 @@
       "enRupture": 19,
       "recentes": 16,
       "parCarburant": {
-        "Gazole": 10,
-        "E10": 3,
+        "Gazole": 11,
+        "E10": 4,
         "SP95": 3,
         "SP98": 12
       },
