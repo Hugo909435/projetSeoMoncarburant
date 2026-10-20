@@ -101,6 +101,20 @@ jobs:
           # timeout après 25 min, alors que les runs à 2 connexions
           # terminaient en 16-19 min) ; le goulot d'étranglement est donc le
           # débit de transfert, pas le nombre de connexions concurrentes.
+          #
+          # Mirror en deux passes : tout le site SAUF les fiches stations
+          # d'abord, puis prix-carburants/station/ ensuite. Le build régénère
+          # chaque fichier (mtime neuve), donc le mirror renvoie l'intégralité
+          # des milliers de fiches stations à chaque run. En une seule passe
+          # alphabétique, quand l'étape dépassait ses 30 min (run du 20/10/2026
+          # coupé en pleine fiche station de Toulouse), tout ce qui suit
+          # "prix-carburants/station/" (prix-coutant-carburant/, blog/...) n'était
+          # jamais envoyé : une modification éditoriale pouvait rester bloquée
+          # hors ligne indéfiniment. Avec les pages éditoriales en tête, elles
+          # partent en quelques minutes quel que soit le sort des fiches stations.
+          # --exclude n'empêche pas la suppression pour rien : sans
+          # --delete-excluded, lftp ne supprime jamais côté distant un chemin
+          # exclu, la deuxième passe garde donc seule la main sur ce dossier.
           max_attempts=5
           for attempt in $(seq 1 "$max_attempts"); do
             echo "::group::Tentative de déploiement $attempt/$max_attempts"
@@ -117,7 +131,8 @@ jobs:
                      rm -r -f domains; \
                      set cmd:fail-exit yes; \
                      lcd dist; \
-                     mirror -R --delete --verbose . .; \
+                     mirror -R --delete --verbose --exclude ^prix-carburants/station/ . .; \
+                     mirror -R --delete --verbose prix-carburants/station prix-carburants/station; \
                      quit" \
                 "$FTP_HOST"; then
               echo "::endgroup::"
