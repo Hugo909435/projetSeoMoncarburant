@@ -1,6 +1,6 @@
 {
   "_comment": "Source unique des opérations carburant à prix coûtant. Ce fichier alimente le composant ProchaineOperation.astro et, à terme, les articles mensuels. Ne jamais recopier une date à la main dans un article : l'ajouter ici. Les enseignes annoncent leurs opérations 2 à 3 jours à l'avance seulement, ce fichier est donc à mettre à jour en début de semaine. Champs : start/end au format AAAA-MM-JJ (dates incluses), end à null pour un dispositif sans date de fin annoncée (ne jamais inventer d'échéance), type 'prix-coutant' ou 'plafonnement', status 'confirmee' (annoncée officiellement par l'enseigne) ou 'terminee'. Ne jamais saisir une opération non annoncée : les fenêtres seulement probables vont dans fenetresProbables. Les opérations d'un seul magasin vont dans operationsLocales, jamais dans operations : 'operations' est raisonné au niveau enseigne et déclenche le bandeau national, qui annoncerait à toute la France une offre valable dans une seule station.",
-  "_updatedAt": "2026-10-09",
+  "_updatedAt": "2026-10-20",
   "operations": [
     {
       "id": "leclerc-2026-07-03",
@@ -92,7 +92,7 @@
       "label": "Vacances de la Toussaint",
       "from": "2026-10-16",
       "to": "2026-10-25",
-      "note": "Fenêtre habituelle avant les départs d'automne."
+      "note": "Fenêtre habituelle avant les départs d'automne. Au 20 octobre, aucune enseigne n'a annoncé de date nationale : le premier week-end des vacances s'est déroulé sans opération."
     },
     {
       "label": "Fêtes de fin d'année",
