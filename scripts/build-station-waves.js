@@ -78,7 +78,7 @@ const INTERVAL_DAYS = 14;
  * mais la capacité du site à absorber du volume, et cela se teste en montant.
  *
  * À 100 pages du début à la fin, le parc complet demanderait 99 vagues, soit
- * près de quatre ans. Avec ces paliers, 22 vagues suffisent.
+ * près de quatre ans. Avec ces paliers, une quinzaine de vagues suffisent.
  *
  * IMPORTANT : modifier ce tableau n'a aucun effet sur les stations déjà
  * planifiées, l'affectation étant idempotente par construction. Pour appliquer
@@ -87,9 +87,10 @@ const INTERVAL_DAYS = 14;
  */
 const WAVE_PLAN = [
   { fromWave: 1, size: 100 },  // vagues 1 à 4, prudence initiale
-  { fromWave: 5, size: 250 },  // vagues 5 à 9 (avancé le 28/09/2026 : 90 % des 400 premières fiches déjà en impressions)
-  { fromWave: 10, size: 500 }, // vagues 10 à 14
-  { fromWave: 15, size: 800 }, // vagues 15 et suivantes
+  { fromWave: 5, size: 250 },  // vagues 5 et 6 (avancé le 28/09/2026 : 90 % des 400 premières fiches déjà en impressions)
+  { fromWave: 7, size: 500 },  // vagues 7 et 8 (avancé le 20/10/2026 : les 900 fiches publiées s'indexent bien)
+  { fromWave: 9, size: 800 },  // vagues 9 et 10
+  { fromWave: 11, size: 1200 }, // vagues 11 et suivantes
 ];
 
 /**
