@@ -1,5 +1,5 @@
 {
-  "releveLe": "2026-10-24T20:42:29.793Z",
+  "releveLe": "2026-10-24T20:45:09.860Z",
   "source": "data.economie.gouv.fr, prix-des-carburants-en-france-flux-instantane-v2",
   "criteres": {
     "carburants": [
@@ -15,13 +15,13 @@
   },
   "national": {
     "stations": 8390,
-    "enRupture": 1537,
-    "recentes": 1348,
+    "enRupture": 1539,
+    "recentes": 1350,
     "parCarburant": {
-      "Gazole": 687,
-      "E10": 851,
+      "Gazole": 689,
+      "E10": 855,
       "SP95": 292,
-      "SP98": 1177
+      "SP98": 1178
     },
     "part": 18.3,
     "partRecentes": 16.1
@@ -111,7 +111,7 @@
       "recentes": 3,
       "parCarburant": {
         "Gazole": 3,
-        "E10": 1,
+        "E10": 2,
         "SP98": 3,
         "SP95": 2
       },
@@ -221,15 +221,15 @@
     "26": {
       "nom": "Drôme",
       "stations": 103,
-      "enRupture": 15,
-      "recentes": 14,
+      "enRupture": 16,
+      "recentes": 15,
       "parCarburant": {
+        "E10": 10,
         "SP98": 11,
-        "Gazole": 10,
-        "SP95": 3,
-        "E10": 9
+        "Gazole": 11,
+        "SP95": 3
       },
-      "part": 14.6
+      "part": 15.5
     },
     "27": {
       "nom": "Eure",
@@ -382,8 +382,8 @@
       "parCarburant": {
         "SP95": 5,
         "SP98": 23,
-        "Gazole": 16,
-        "E10": 18
+        "Gazole": 17,
+        "E10": 19
       },
       "part": 16.3
     },
@@ -455,15 +455,15 @@
     "44": {
       "nom": "Loire-Atlantique",
       "stations": 153,
-      "enRupture": 26,
-      "recentes": 24,
+      "enRupture": 27,
+      "recentes": 25,
       "parCarburant": {
-        "SP98": 20,
+        "SP98": 21,
         "SP95": 6,
         "E10": 12,
         "Gazole": 7
       },
-      "part": 17
+      "part": 17.6
     },
     "45": {
       "nom": "Loiret",
@@ -1068,7 +1068,7 @@
       "parCarburant": {
         "SP95": 4,
         "SP98": 31,
-        "E10": 18,
+        "E10": 19,
         "Gazole": 6
       },
       "part": 28
