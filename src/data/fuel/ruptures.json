@@ -1,5 +1,5 @@
 {
-  "releveLe": "2026-10-25T19:01:28.044Z",
+  "releveLe": "2026-10-25T19:42:33.877Z",
   "source": "data.economie.gouv.fr, prix-des-carburants-en-france-flux-instantane-v2",
   "criteres": {
     "carburants": [
@@ -14,14 +14,14 @@
     "stationActiveJours": 10
   },
   "national": {
-    "stations": 8184,
-    "enRupture": 1731,
-    "recentes": 1555,
+    "stations": 8183,
+    "enRupture": 1732,
+    "recentes": 1556,
     "parCarburant": {
-      "Gazole": 869,
-      "E10": 1098,
+      "Gazole": 871,
+      "E10": 1101,
       "SP95": 298,
-      "SP98": 1351
+      "SP98": 1352
     },
     "part": 21.2,
     "partRecentes": 19
@@ -173,15 +173,15 @@
     "22": {
       "nom": "Côtes-d'Armor",
       "stations": 98,
-      "enRupture": 12,
-      "recentes": 9,
+      "enRupture": 13,
+      "recentes": 10,
       "parCarburant": {
         "E10": 6,
-        "SP98": 9,
+        "SP98": 10,
         "Gazole": 7,
         "SP95": 1
       },
-      "part": 12.2
+      "part": 13.3
     },
     "23": {
       "nom": "Creuse",
@@ -243,7 +243,7 @@
       "parCarburant": {
         "SP95": 4,
         "SP98": 16,
-        "Gazole": 6,
+        "Gazole": 7,
         "E10": 7
       },
       "part": 21.2
@@ -567,7 +567,7 @@
       "recentes": 7,
       "parCarburant": {
         "Gazole": 8,
-        "E10": 5,
+        "E10": 6,
         "SP98": 8,
         "SP95": 1
       },
@@ -627,7 +627,7 @@
     },
     "57": {
       "nom": "Moselle",
-      "stations": 116,
+      "stations": 115,
       "enRupture": 31,
       "recentes": 28,
       "parCarburant": {
@@ -636,7 +636,7 @@
         "SP98": 22,
         "SP95": 8
       },
-      "part": 26.7
+      "part": 27
     },
     "58": {
       "nom": "Nièvre",
@@ -670,10 +670,10 @@
       "enRupture": 30,
       "recentes": 28,
       "parCarburant": {
+        "E10": 21,
         "SP98": 23,
         "Gazole": 17,
-        "SP95": 10,
-        "E10": 20
+        "SP95": 10
       },
       "part": 27
     },
@@ -903,7 +903,7 @@
       "parCarburant": {
         "E10": 30,
         "SP98": 39,
-        "Gazole": 7,
+        "Gazole": 8,
         "SP95": 2
       },
       "part": 31.3
@@ -1198,7 +1198,7 @@
         "Gazole": 5,
         "SP95": 4,
         "SP98": 23,
-        "E10": 17
+        "E10": 18
       },
       "part": 20.8
     },
