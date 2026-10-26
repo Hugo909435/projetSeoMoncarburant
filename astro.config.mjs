@@ -163,7 +163,7 @@ export default defineConfig({
   integrations: [
     mdx(),
     sitemap({
-      filter: (page) => !page.includes('/404') && !weakUrls.has(page),
+      filter: (page) => !page.includes('/404') && !page.includes('/newsletter/') && !weakUrls.has(page),
       serialize(item) {
         const articleDate = articleLastmods.get(item.url);
         item.lastmod = (articleDate ?? siteLastmod).toISOString();

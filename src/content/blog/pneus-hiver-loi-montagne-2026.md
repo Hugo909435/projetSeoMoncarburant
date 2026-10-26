@@ -5,7 +5,7 @@ metaDescription: "Pneus hiver obligatoires du 1er novembre 2026 au 31 mars 2027 
 slug: "pneus-hiver-loi-montagne-2026"
 excerpt: "Équipements hivernaux obligatoires du 1er novembre au 31 mars dans 34 départements. La liste complète, le marquage 3PMSF qui a remplacé le M+S, et le surcoût réel en carburant."
 publishedAt: 2026-09-10
-updatedAt: 2026-10-01
+updatedAt: 2026-10-26
 author: "hugo-beignon"
 category: "entretien"
 tags: ["loi montagne", "pneus hiver", "3PMSF", "équipements hivernaux", "chaînes neige", "hiver 2026", "réglementation"]
@@ -172,6 +172,6 @@ Une précision sur la Corse : le décret cite bien le massif corse parmi les six
 
 ---
 
-*Article publié le 10 septembre 2026, mis à jour le 1er octobre 2026. Prix moyens départementaux calculés à partir de nos relevés sur 9 805 stations, issus des données officielles de [prix-carburants.gouv.fr](https://www.prix-carburants.gouv.fr/), dernière mise à jour le 1er octobre 2026. La liste des communes soumises à l'obligation est fixée par arrêté préfectoral et peut évoluer d'une année sur l'autre : vérifiez-la sur [securite-routiere.gouv.fr](https://www.securite-routiere.gouv.fr/equipements-hivernaux-departements-et-communes) avant tout déplacement.*
+*Article publié le 10 septembre 2026, mis à jour le 26 octobre 2026. Prix moyens départementaux calculés à partir de nos relevés sur 9 820 stations, issus des données officielles de [prix-carburants.gouv.fr](https://www.prix-carburants.gouv.fr/). La liste des communes soumises à l'obligation est fixée par arrêté préfectoral et peut évoluer d'une année sur l'autre : vérifiez-la sur [securite-routiere.gouv.fr](https://www.securite-routiere.gouv.fr/equipements-hivernaux-departements-et-communes) avant tout déplacement.*
 
 *Photo d'illustration : Tabl-trai, [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/deed.fr), via Wikimedia Commons. Signalisation sur la D 328 en direction du col de la Plantade.*

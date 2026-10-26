@@ -5,7 +5,7 @@ metaDescription: "L'État vend 10 millions de barils de gazole à prix coûtant 
 slug: "baisse-gazole-1er-novembre-stocks-strategiques"
 excerpt: "Le Premier ministre promet 12 à 18 centimes de moins sur le gazole dès le 1er novembre, grâce aux stocks stratégiques. L'essence n'est pas concernée et le Brent peut tout changer."
 publishedAt: 2026-10-13
-updatedAt: 2026-10-13
+updatedAt: 2026-10-26
 author: "hugo-beignon"
 category: "carburants"
 tags: ["gazole", "prix carburant", "baisse", "stocks stratégiques", "sagess", "novembre 2026", "gouvernement"]
@@ -45,6 +45,7 @@ La mesure a été présentée en deux temps. Le **7 octobre**, le gouvernement a
 
 Le **12 octobre**, après une réunion avec les distributeurs à Matignon, le Premier ministre a précisé le calendrier :
 
+- **23 octobre** : parution au Journal officiel du décret n° 2026-981 encadrant la mise sur le marché et la cession à prix coûtant des 10 millions de barils ;
 - **28 octobre** : premières ventes de gazole aux distributeurs ;
 - **1er novembre** : début de la baisse attendue à la pompe ;
 - **fin janvier 2027** : fin de l'opération, après trois mois.
