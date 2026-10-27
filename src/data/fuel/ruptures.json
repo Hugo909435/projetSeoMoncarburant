@@ -1,5 +1,5 @@
 {
-  "releveLe": "2026-10-27T03:42:24.268Z",
+  "releveLe": "2026-10-27T04:42:31.222Z",
   "source": "data.economie.gouv.fr, prix-des-carburants-en-france-flux-instantane-v2",
   "criteres": {
     "carburants": [
@@ -14,16 +14,16 @@
     "stationActiveJours": 10
   },
   "national": {
-    "stations": 8174,
+    "stations": 8171,
     "enRupture": 1516,
-    "recentes": 1295,
+    "recentes": 1294,
     "parCarburant": {
-      "Gazole": 776,
-      "E10": 762,
+      "Gazole": 774,
+      "E10": 761,
       "SP95": 281,
-      "SP98": 1136
+      "SP98": 1135
     },
-    "part": 18.5,
+    "part": 18.6,
     "partRecentes": 15.8
   },
   "departements": {
@@ -35,7 +35,7 @@
       "parCarburant": {
         "SP95": 4,
         "SP98": 9,
-        "Gazole": 4,
+        "Gazole": 3,
         "E10": 2
       },
       "part": 20.4
@@ -431,7 +431,7 @@
     },
     "42": {
       "nom": "Loire",
-      "stations": 111,
+      "stations": 110,
       "enRupture": 14,
       "recentes": 12,
       "parCarburant": {
@@ -440,7 +440,7 @@
         "Gazole": 9,
         "SP95": 2
       },
-      "part": 12.6
+      "part": 12.7
     },
     "43": {
       "nom": "Haute-Loire",
@@ -457,7 +457,7 @@
     },
     "44": {
       "nom": "Loire-Atlantique",
-      "stations": 149,
+      "stations": 148,
       "enRupture": 15,
       "recentes": 15,
       "parCarburant": {
@@ -1040,12 +1040,12 @@
       "nom": "Yonne",
       "stations": 54,
       "enRupture": 12,
-      "recentes": 11,
+      "recentes": 10,
       "parCarburant": {
         "SP98": 10,
-        "Gazole": 2,
-        "E10": 5,
-        "SP95": 3
+        "E10": 4,
+        "SP95": 3,
+        "Gazole": 1
       },
       "part": 22.2
     },
@@ -1093,7 +1093,7 @@
       "enRupture": 17,
       "recentes": 14,
       "parCarburant": {
-        "SP98": 15,
+        "SP98": 14,
         "Gazole": 5,
         "E10": 7,
         "SP95": 1
@@ -1240,7 +1240,7 @@
     },
     "2A": {
       "nom": "Corse-du-Sud",
-      "stations": 19,
+      "stations": 18,
       "enRupture": 0,
       "recentes": 0,
       "parCarburant": {},
