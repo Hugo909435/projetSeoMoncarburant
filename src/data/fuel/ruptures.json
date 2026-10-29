@@ -1,5 +1,5 @@
 {
-  "releveLe": "2026-10-29T21:47:43.887Z",
+  "releveLe": "2026-10-29T22:42:31.910Z",
   "source": "data.economie.gouv.fr, prix-des-carburants-en-france-flux-instantane-v2",
   "criteres": {
     "carburants": [
@@ -14,17 +14,17 @@
     "stationActiveJours": 10
   },
   "national": {
-    "stations": 8495,
-    "enRupture": 1502,
-    "recentes": 1215,
+    "stations": 8497,
+    "enRupture": 1509,
+    "recentes": 1221,
     "parCarburant": {
-      "Gazole": 589,
-      "E10": 620,
-      "SP95": 251,
-      "SP98": 1137
+      "Gazole": 590,
+      "E10": 626,
+      "SP95": 252,
+      "SP98": 1144
     },
-    "part": 17.7,
-    "partRecentes": 14.3
+    "part": 17.8,
+    "partRecentes": 14.4
   },
   "departements": {
     "10": {
@@ -285,15 +285,15 @@
     "31": {
       "nom": "Haute-Garonne",
       "stations": 175,
-      "enRupture": 32,
-      "recentes": 31,
+      "enRupture": 33,
+      "recentes": 32,
       "parCarburant": {
         "Gazole": 27,
-        "SP98": 26,
+        "SP98": 27,
         "E10": 13,
         "SP95": 2
       },
-      "part": 18.3
+      "part": 18.9
     },
     "32": {
       "nom": "Gers",
@@ -467,15 +467,15 @@
     "45": {
       "nom": "Loiret",
       "stations": 99,
-      "enRupture": 18,
-      "recentes": 7,
+      "enRupture": 19,
+      "recentes": 8,
       "parCarburant": {
-        "SP98": 16,
+        "SP98": 17,
         "Gazole": 6,
         "E10": 6,
         "SP95": 2
       },
-      "part": 18.2
+      "part": 19.2
     },
     "46": {
       "nom": "Lot",
@@ -505,14 +505,14 @@
     },
     "48": {
       "nom": "Lozère",
-      "stations": 30,
+      "stations": 31,
       "enRupture": 3,
       "recentes": 2,
       "parCarburant": {
         "SP95": 1,
         "SP98": 2
       },
-      "part": 10
+      "part": 9.7
     },
     "49": {
       "nom": "Maine-et-Loire",
@@ -701,7 +701,7 @@
       "parCarburant": {
         "Gazole": 13,
         "E10": 19,
-        "SP98": 12,
+        "SP98": 13,
         "SP95": 3
       },
       "part": 21.2
@@ -709,15 +709,15 @@
     "64": {
       "nom": "Pyrénées-Atlantiques",
       "stations": 97,
-      "enRupture": 12,
-      "recentes": 11,
+      "enRupture": 13,
+      "recentes": 12,
       "parCarburant": {
         "Gazole": 4,
-        "E10": 5,
-        "SP98": 9,
+        "E10": 6,
+        "SP98": 10,
         "SP95": 2
       },
-      "part": 12.4
+      "part": 13.4
     },
     "65": {
       "nom": "Hautes-Pyrénées",
@@ -749,7 +749,7 @@
       "enRupture": 48,
       "recentes": 36,
       "parCarburant": {
-        "E10": 30,
+        "E10": 31,
         "SP98": 38,
         "Gazole": 31,
         "SP95": 6
@@ -850,14 +850,15 @@
     "75": {
       "nom": "Paris",
       "stations": 39,
-      "enRupture": 10,
-      "recentes": 10,
+      "enRupture": 12,
+      "recentes": 12,
       "parCarburant": {
-        "SP98": 10,
-        "Gazole": 2,
-        "E10": 2
+        "E10": 4,
+        "SP95": 1,
+        "SP98": 12,
+        "Gazole": 2
       },
-      "part": 25.6
+      "part": 30.8
     },
     "76": {
       "nom": "Seine-Maritime",
@@ -1056,11 +1057,11 @@
       "nom": "Essonne",
       "stations": 123,
       "enRupture": 35,
-      "recentes": 27,
+      "recentes": 26,
       "parCarburant": {
         "SP95": 3,
         "SP98": 33,
-        "E10": 14
+        "E10": 13
       },
       "part": 28.5
     },
@@ -1090,16 +1091,16 @@
     },
     "94": {
       "nom": "Val-de-Marne",
-      "stations": 72,
-      "enRupture": 20,
-      "recentes": 14,
+      "stations": 73,
+      "enRupture": 22,
+      "recentes": 16,
       "parCarburant": {
-        "SP98": 17,
-        "Gazole": 3,
-        "E10": 6,
+        "SP98": 18,
+        "Gazole": 4,
+        "E10": 7,
         "SP95": 1
       },
-      "part": 27.8
+      "part": 30.1
     },
     "95": {
       "nom": "Val-d'Oise",
@@ -1107,7 +1108,7 @@
       "enRupture": 31,
       "recentes": 28,
       "parCarburant": {
-        "E10": 14,
+        "E10": 16,
         "SP98": 29,
         "Gazole": 4
       },
