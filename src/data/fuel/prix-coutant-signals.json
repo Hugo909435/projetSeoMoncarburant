@@ -1,15 +1,25 @@
 {
-  "generatedAt": "2026-10-30T23:42:30.154Z",
+  "generatedAt": "2026-10-31T00:42:33.915Z",
   "comparedTo": {
-    "sha": "3cd8e4b36",
-    "date": "2026-10-30T00:42:40Z"
+    "sha": "68475bccb",
+    "date": "2026-10-30T03:42:47Z"
   },
-  "marketShift": -0.01,
-  "sampleSize": 17661,
+  "marketShift": -0.013,
+  "sampleSize": 17696,
   "thresholds": {
     "dropThreshold": 0.03,
     "minStations": 40,
     "minShare": 0.45
   },
-  "signals": []
+  "signals": [
+    {
+      "brand": "total-access",
+      "brandName": "Total Access",
+      "stationsDropping": 178,
+      "stationsObserved": 238,
+      "share": 0.748,
+      "medianDrop": 0.087,
+      "maxDrop": 0.087
+    }
+  ]
 }
