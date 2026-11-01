@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-11-01T04:42:34.999Z",
+  "generatedAt": "2026-11-01T05:42:38.501Z",
   "comparedTo": {
-    "sha": "db8955d98",
-    "date": "2026-10-31T07:42:34Z"
+    "sha": "d4d700f71",
+    "date": "2026-10-31T08:44:47Z"
   },
-  "marketShift": -0.064,
-  "sampleSize": 17605,
+  "marketShift": -0.114,
+  "sampleSize": 17597,
   "thresholds": {
     "dropThreshold": 0.03,
     "minStations": 40,
@@ -15,20 +15,11 @@
     {
       "brand": "leclerc",
       "brandName": "E.Leclerc",
-      "stationsDropping": 345,
+      "stationsDropping": 332,
       "stationsObserved": 574,
-      "share": 0.601,
-      "medianDrop": 0.146,
-      "maxDrop": 0.237
-    },
-    {
-      "brand": "esso",
-      "brandName": "Esso",
-      "stationsDropping": 266,
-      "stationsObserved": 504,
-      "share": 0.528,
-      "medianDrop": 0.098,
-      "maxDrop": 0.224
+      "share": 0.578,
+      "medianDrop": 0.096,
+      "maxDrop": 0.187
     }
   ]
 }
