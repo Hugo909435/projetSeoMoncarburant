@@ -81,7 +81,7 @@ let stationsCache: any[] | null = null;
 
 async function loadStations(): Promise<any[]> {
   if (stationsCache) return stationsCache;
-  const resp = await fetch('/data/stations-light.json');
+  const resp = await fetch(`/data/stations-light.json?fresh=${Date.now()}`, { cache: 'no-store' });
   if (!resp.ok) throw new Error('Impossible de charger les données.');
   stationsCache = await resp.json();
   return stationsCache!;

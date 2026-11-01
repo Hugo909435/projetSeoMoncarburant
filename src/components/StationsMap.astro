@@ -171,7 +171,7 @@ const nationalGazole = (statsNational as Record<string, number>)['Gazole'] ?? 0;
 
       const nat = parseFloat(mapEl.dataset.nationalGazole || '0');
 
-      const resp = await fetch('/data/stations-light.json');
+      const resp = await fetch(`/data/stations-light.json?fresh=${Date.now()}`, { cache: 'no-store' });
       if (!resp.ok) throw new Error('data');
       const stations = await resp.json();
 

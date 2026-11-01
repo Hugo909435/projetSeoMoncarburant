@@ -28,7 +28,7 @@ const { iso, label } = Astro.props;
     if (cibles.length === 0) return;
 
     try {
-      const resp = await fetch('/data/meta.json');
+      const resp = await fetch(`/data/meta.json?fresh=${Date.now()}`, { cache: 'no-store' });
       if (!resp.ok) return;
 
       const meta = await resp.json();

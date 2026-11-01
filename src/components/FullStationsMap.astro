@@ -1071,7 +1071,7 @@ for (const slug of brandSlugs) {
 
       leafletMap.on('moveend', scheduleViewUpdate);
 
-      const resp = await fetch('/data/stations-light.json');
+      const resp = await fetch(`/data/stations-light.json?fresh=${Date.now()}`, { cache: 'no-store' });
       if (!resp.ok) throw new Error('Impossible de charger les données de stations.');
       stations = await resp.json();
 
