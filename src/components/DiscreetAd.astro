@@ -1,0 +1,105 @@
+---
+// Emplacements manuels de la page prix coûtant. Le chargement d'AdSense et
+// le consentement restent gérés par BaseLayout, comme pour les autres pages.
+interface Props {
+  placement: 'weekend' | 'calendrier' | 'conditions';
+  layout?: 'banner' | 'sidebar';
+}
+
+const { placement, layout = 'banner' } = Astro.props;
+---
+
+<aside
+  class:list={['discreet-ad', { 'discreet-ad--sidebar': layout === 'sidebar' }]}
+  aria-label="Publicité"
+  data-discreet-ad={placement}
+>
+  <span class="discreet-ad__label" aria-hidden="true">Publicité</span>
+  <ins
+    class="adsbygoogle discreet-ad__unit"
+    style="display:block"
+    data-ad-client="ca-pub-3886240842343078"
+    data-ad-slot="9482478582"
+  ></ins>
+</aside>
+
+<script>
+  const adWindow = window as Window & {
+    adsbygoogle?: { push: (parameters: Record<string, never>) => unknown };
+  };
+
+  function requestAd(placement: HTMLElement) {
+    if (placement.dataset.adRequested) return;
+    const unit = placement.querySelector<HTMLElement>('.adsbygoogle');
+    if (!unit || unit.dataset.adsbygoogleStatus || unit.getBoundingClientRect().width === 0) return;
+
+    placement.dataset.adRequested = 'true';
+    (adWindow.adsbygoogle = adWindow.adsbygoogle || []).push({});
+  }
+
+  const placements = document.querySelectorAll<HTMLElement>('[data-discreet-ad]');
+  if ('IntersectionObserver' in window) {
+    // Une petite avance laisse le temps de charger l'annonce avant son arrivée
+    // à l'écran, sans demander immédiatement les blocs en bas de page.
+    const observer = new IntersectionObserver((entries) => {
+      for (const entry of entries) {
+        if (!entry.isIntersecting) continue;
+        requestAd(entry.target as HTMLElement);
+        observer.unobserve(entry.target);
+      }
+    }, { rootMargin: '300px 0px' });
+    placements.forEach((placement) => observer.observe(placement));
+  } else {
+    placements.forEach(requestAd);
+  }
+</script>
+
+<style>
+  /* Tailles explicites suivant le modèle responsive documenté par AdSense :
+     https://support.google.com/adsense/answer/9183363?hl=fr
+     Pas de format auto, de recadrage de création ni de superposition. */
+  .discreet-ad {
+    --ad-height: 100px;
+    width: 100%;
+    min-width: 0;
+    min-height: calc(var(--ad-height) + 2.625rem);
+    padding-block: 0.75rem;
+    border-block: 1px solid #eef2f7;
+    text-align: center;
+  }
+
+  .discreet-ad__label {
+    display: block;
+    margin-bottom: 0.375rem;
+    color: #6b7280;
+    font-size: 0.625rem;
+    line-height: 1;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .discreet-ad__unit {
+    width: 250px;
+    height: var(--ad-height);
+    margin-inline: auto;
+  }
+
+  @media (min-width: 352px) {
+    .discreet-ad__unit { width: 320px; }
+  }
+
+  @media (min-width: 532px) {
+    .discreet-ad { --ad-height: 60px; }
+    .discreet-ad__unit { width: 468px; }
+  }
+
+  @media (min-width: 800px) {
+    .discreet-ad { --ad-height: 90px; }
+    .discreet-ad__unit { width: 728px; }
+  }
+
+  @media (min-width: 900px) {
+    .discreet-ad--sidebar { --ad-height: 250px; }
+    .discreet-ad--sidebar .discreet-ad__unit { width: 300px; }
+  }
+</style>

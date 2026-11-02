@@ -10,7 +10,7 @@ import Breadcrumb from '../components/Breadcrumb.astro';
 import BrandLogo from '../components/BrandLogo.astro';
 import ProchaineOperation from '../components/ProchaineOperation.astro';
 import FAQ from '../components/FAQ.astro';
-import AdUnit from '../components/AdUnit.astro';
+import DiscreetAd from '../components/DiscreetAd.astro';
 import { timelinePrixCoutant } from '../utils/prix-coutant';
 
 const entry = await getEntry('piliers', 'prix-coutant-carburant');
@@ -162,20 +162,18 @@ const enseignesSchema = {
   </section>
 
   <section class="pcc-section pcc-intro container">
-    <div class="pcc-text-ad-row">
-      <p class="pcc-text-ad-copy">
-        Leclerc, Intermarché, Carrefour et Système U organisent chacun, plusieurs fois par an, des opérations
-        d'essence et de carburant à prix coûtant : le litre est vendu sans marge, au prix d'achat par l'enseigne.
-        Chez Leclerc en particulier, le carburant à prix coûtant est ouvert à tous, sans carte de fidélité. Ces
-        fenêtres durent en général 24 à 48 heures, sont annoncées seulement 2 à 3 jours à l'avance, et reviennent
-        aux mêmes moments chaque année : avant les grands départs d'été, à la rentrée scolaire, aux vacances de la
-        Toussaint et en fin d'année. Cette page centralise trois informations mises à jour en continu : le statut
-        de l'opération carburant à prix coûtant ce week-end, le calendrier complet des opérations 2026 (déjà
-        passées ou probables), et les conditions d'accès propres à chaque enseigne (carte de fidélité, montant
-        d'achat minimum).
-      </p>
-      <AdUnit class="pcc-text-ad" fixedSize />
-    </div>
+    <DiscreetAd placement="weekend" />
+    <p class="pcc-text-ad-copy">
+      Leclerc, Intermarché, Carrefour et Système U organisent chacun, plusieurs fois par an, des opérations
+      d'essence et de carburant à prix coûtant : le litre est vendu sans marge, au prix d'achat par l'enseigne.
+      Chez Leclerc en particulier, le carburant à prix coûtant est ouvert à tous, sans carte de fidélité. Ces
+      fenêtres durent en général 24 à 48 heures, sont annoncées seulement 2 à 3 jours à l'avance, et reviennent
+      aux mêmes moments chaque année : avant les grands départs d'été, à la rentrée scolaire, aux vacances de la
+      Toussaint et en fin d'année. Cette page centralise trois informations mises à jour en continu : le statut
+      de l'opération carburant à prix coûtant ce week-end, le calendrier complet des opérations 2026 (déjà
+      passées ou probables), et les conditions d'accès propres à chaque enseigne (carte de fidélité, montant
+      d'achat minimum).
+    </p>
   </section>
 
   <section class="pcc-section container" aria-labelledby="pcc-calendrier-title">
@@ -223,7 +221,9 @@ const enseignesSchema = {
     </ol>
   </section>
 
-  <AdUnit />
+  <div class="pcc-ad-break container">
+    <DiscreetAd placement="calendrier" />
+  </div>
 
   <section class="pcc-section container" aria-labelledby="pcc-enseignes-title">
     <h2 id="pcc-enseignes-title" class="pcc-section-title">Comparez les 4 enseignes</h2>
@@ -263,7 +263,7 @@ const enseignesSchema = {
         sont plus fréquemment couplées à une carte Pass ou à un montant minimum de courses, ce qui les rend un
         peu moins automatiques mais potentiellement cumulables avec le programme de fidélité.
       </p>
-      <AdUnit class="pcc-text-ad" fixedSize />
+      <DiscreetAd placement="conditions" layout="sidebar" />
     </div>
   </section>
 
@@ -403,20 +403,22 @@ const enseignesSchema = {
     padding-top: 5.75rem;
   }
 
-  /* Bloc texte + pub compacte (AdUnit fixedSize, 300x250). Deux colonnes à
-     partir de 900px, le texte d'abord en mobile : une pub de 250px de haut
-     posée avant le premier paragraphe repousse tout le contenu sous la ligne
-     de flottaison. */
+  .pcc-intro > .pcc-text-ad-copy {
+    margin-top: 2rem;
+  }
+
+  .pcc-ad-break {
+    padding-top: 2rem;
+  }
+
+  /* L'annonce reste à côté des explications sur grand écran et devient un
+     bandeau compact après le texte sur mobile. */
   .pcc-text-ad-row {
     display: grid;
     gap: 1.5rem;
     align-items: start;
     margin-top: 1.5rem;
     justify-items: center;
-  }
-
-  .pcc-intro .pcc-text-ad-row {
-    margin-top: 0;
   }
 
   @media (min-width: 900px) {
@@ -435,19 +437,6 @@ const enseignesSchema = {
     color: var(--color-text-secondary);
     margin: 0;
   }
-
-  :global(.pcc-text-ad) {
-    margin: 0 !important;
-  }
-
-  /* Pas d'agrandissement de la colonne pub sur ordinateur. Un emplacement
-     réservé en 300x600 laissait un trou de ~350px : AdSense reste libre de
-     servir une création plus petite (300x250) dans un slot 300x600, et la
-     hauteur réservée en trop restait vide, sous la pub comme sous le
-     paragraphe voisin puisque la ligne est une grille. Le 300x250 de
-     fixedSize est toujours rempli exactement : aucun blanc, aucun décalage
-     de mise en page. Pour un vrai half page, il faudrait créer dans AdSense
-     un bloc dédié de taille fixe 300x600 et passer son slot ici. */
 
   .pcc-section-title {
     font-size: clamp(1.375rem, 3.6vw, 1.625rem);
