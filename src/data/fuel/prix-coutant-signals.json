@@ -1,15 +1,25 @@
 {
-  "generatedAt": "2026-11-02T07:42:33.131Z",
+  "generatedAt": "2026-11-02T08:42:32.021Z",
   "comparedTo": {
-    "sha": "f6412bd08",
-    "date": "2026-11-01T10:42:46Z"
+    "sha": "b0d893ce1",
+    "date": "2026-11-01T11:42:42Z"
   },
-  "marketShift": -0.07,
-  "sampleSize": 17005,
+  "marketShift": -0.072,
+  "sampleSize": 16977,
   "thresholds": {
     "dropThreshold": 0.03,
     "minStations": 40,
     "minShare": 0.45
   },
-  "signals": []
+  "signals": [
+    {
+      "brand": "intermarche",
+      "brandName": "Intermarché",
+      "stationsDropping": 553,
+      "stationsObserved": 1145,
+      "share": 0.483,
+      "medianDrop": 0.13,
+      "maxDrop": 0.228
+    }
+  ]
 }
