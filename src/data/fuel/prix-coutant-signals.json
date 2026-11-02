@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-11-02T18:17:59.756Z",
+  "generatedAt": "2026-11-02T18:42:39.746Z",
   "comparedTo": {
-    "sha": "2d463a591",
-    "date": "2026-11-01T21:42:35Z"
+    "sha": "fd451b0cc",
+    "date": "2026-11-01T22:42:39Z"
   },
-  "marketShift": -0.054,
-  "sampleSize": 16645,
+  "marketShift": -0.06,
+  "sampleSize": 16632,
   "thresholds": {
     "dropThreshold": 0.03,
     "minStations": 40,
@@ -18,17 +18,17 @@
       "stationsDropping": 1020,
       "stationsObserved": 1145,
       "share": 0.891,
-      "medianDrop": 0.15,
-      "maxDrop": 0.243
+      "medianDrop": 0.143,
+      "maxDrop": 0.23
     },
     {
       "brand": "super-u",
       "brandName": "Super U",
-      "stationsDropping": 309,
+      "stationsDropping": 296,
       "stationsObserved": 629,
-      "share": 0.491,
-      "medianDrop": 0.13,
-      "maxDrop": 0.237
+      "share": 0.471,
+      "medianDrop": 0.129,
+      "maxDrop": 0.231
     },
     {
       "brand": "auchan",
@@ -36,8 +36,8 @@
       "stationsDropping": 138,
       "stationsObserved": 163,
       "share": 0.847,
-      "medianDrop": 0.135,
-      "maxDrop": 0.19
+      "medianDrop": 0.129,
+      "maxDrop": 0.184
     }
   ]
 }
