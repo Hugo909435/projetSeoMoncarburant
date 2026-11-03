@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-11-03T04:42:30.757Z",
+  "generatedAt": "2026-11-03T05:42:29.450Z",
   "comparedTo": {
-    "sha": "1e0f59aff",
-    "date": "2026-11-02T07:42:45Z"
+    "sha": "5f9a0c85e",
+    "date": "2026-11-02T08:42:36Z"
   },
-  "marketShift": -0.046,
-  "sampleSize": 16678,
+  "marketShift": -0.04,
+  "sampleSize": 16710,
   "thresholds": {
     "dropThreshold": 0.03,
     "minStations": 40,
@@ -13,22 +13,13 @@
   },
   "signals": [
     {
-      "brand": "intermarche",
-      "brandName": "Intermarché",
-      "stationsDropping": 779,
-      "stationsObserved": 1146,
-      "share": 0.68,
-      "medianDrop": 0.155,
-      "maxDrop": 0.251
-    },
-    {
       "brand": "auchan",
       "brandName": "Auchan",
-      "stationsDropping": 133,
+      "stationsDropping": 126,
       "stationsObserved": 163,
-      "share": 0.816,
-      "medianDrop": 0.142,
-      "maxDrop": 0.194
+      "share": 0.773,
+      "medianDrop": 0.148,
+      "maxDrop": 0.2
     }
   ]
 }
