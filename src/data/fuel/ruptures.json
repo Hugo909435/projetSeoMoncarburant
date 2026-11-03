@@ -1,5 +1,5 @@
 {
-  "releveLe": "2026-11-03T22:42:27.829Z",
+  "releveLe": "2026-11-03T23:18:18.406Z",
   "source": "data.economie.gouv.fr, prix-des-carburants-en-france-flux-instantane-v2",
   "criteres": {
     "carburants": [
@@ -15,16 +15,16 @@
   },
   "national": {
     "stations": 9031,
-    "enRupture": 1717,
-    "recentes": 1395,
+    "enRupture": 1718,
+    "recentes": 1397,
     "parCarburant": {
-      "Gazole": 661,
-      "E10": 828,
+      "Gazole": 664,
+      "E10": 830,
       "SP95": 280,
-      "SP98": 1301
+      "SP98": 1302
     },
     "part": 19,
-    "partRecentes": 15.4
+    "partRecentes": 15.5
   },
   "departements": {
     "10": {
@@ -34,7 +34,7 @@
       "recentes": 11,
       "parCarburant": {
         "SP98": 11,
-        "Gazole": 8,
+        "Gazole": 9,
         "E10": 6,
         "SP95": 4
       },
@@ -75,7 +75,7 @@
         "SP95": 9,
         "E10": 14,
         "SP98": 46,
-        "Gazole": 3
+        "Gazole": 4
       },
       "part": 20.3
     },
@@ -188,6 +188,7 @@
       "enRupture": 1,
       "recentes": 1,
       "parCarburant": {
+        "Gazole": 1,
         "SP95": 1
       },
       "part": 3.1
@@ -455,15 +456,15 @@
     "44": {
       "nom": "Loire-Atlantique",
       "stations": 162,
-      "enRupture": 26,
-      "recentes": 25,
+      "enRupture": 27,
+      "recentes": 26,
       "parCarburant": {
         "Gazole": 9,
-        "SP98": 21,
+        "SP98": 22,
         "SP95": 2,
         "E10": 12
       },
-      "part": 16
+      "part": 16.7
     },
     "45": {
       "nom": "Loiret",
@@ -651,10 +652,10 @@
       "nom": "Nord",
       "stations": 230,
       "enRupture": 47,
-      "recentes": 42,
+      "recentes": 43,
       "parCarburant": {
         "Gazole": 11,
-        "E10": 25,
+        "E10": 26,
         "SP98": 40,
         "SP95": 6
       },
@@ -727,15 +728,15 @@
     "65": {
       "nom": "Hautes-Pyrénées",
       "stations": 41,
-      "enRupture": 8,
-      "recentes": 6,
+      "enRupture": 7,
+      "recentes": 5,
       "parCarburant": {
         "SP95": 2,
-        "SP98": 6,
-        "Gazole": 7,
-        "E10": 6
+        "SP98": 5,
+        "Gazole": 6,
+        "E10": 5
       },
-      "part": 19.5
+      "part": 17.1
     },
     "66": {
       "nom": "Pyrénées-Orientales",
@@ -754,7 +755,7 @@
       "recentes": 43,
       "parCarburant": {
         "Gazole": 32,
-        "E10": 36,
+        "E10": 37,
         "SP98": 44,
         "SP95": 10
       },
@@ -776,15 +777,15 @@
     "69": {
       "nom": "Rhône",
       "stations": 186,
-      "enRupture": 27,
-      "recentes": 25,
+      "enRupture": 28,
+      "recentes": 26,
       "parCarburant": {
-        "SP98": 18,
+        "SP98": 19,
         "SP95": 8,
         "E10": 8,
         "Gazole": 6
       },
-      "part": 14.5
+      "part": 15.1
     },
     "70": {
       "nom": "Haute-Saône",
@@ -1088,9 +1089,9 @@
       "enRupture": 19,
       "recentes": 16,
       "parCarburant": {
-        "E10": 10,
+        "E10": 11,
         "SP98": 19,
-        "Gazole": 4,
+        "Gazole": 5,
         "SP95": 1
       },
       "part": 23.2
