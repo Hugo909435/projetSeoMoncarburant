@@ -38,6 +38,12 @@ class FTPIntegrationTests(unittest.TestCase):
         self.write(self.remote, 'data/stations-light.json', 'fresh hourly prices')
         self.write(self.remote, 'prix-carburants/station/test/index.html', 'old station')
         self.write(self.remote, 'obsolete.html', 'retired page')
+        # FTP timestamps have second resolution. Both fixture versions have
+        # equal-sized content: explicitly make the deployed copy older so a
+        # normal incremental mirror can distinguish it from the new build.
+        for file in self.remote.rglob('*'):
+            if file.is_file():
+                os.utime(file, (946684800, 946684800))
         self.username = 'test:user,commas'
         self.password = 'test;password$with"quotes-and-comma,'
         authorizer = DummyAuthorizer()
