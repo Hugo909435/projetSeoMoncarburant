@@ -36,8 +36,11 @@ fi
 max_attempts=3
 for attempt in $(seq 1 "$max_attempts"); do
   echo "::group::Déploiement $phase, tentative $attempt/$max_attempts"
-  if lftp -u "$FTP_USER","$FTP_PASSWORD" -p 21 \
-    -e "set cmd:fail-exit yes;
+  # Sélectionner le serveur avant de lire les commandes. Un programme -e
+  # multiligne peut être réinterprété lors de l'ouverture et lancer mirror
+  # sans session. L'entrée standard évite cette seconde analyse des arguments.
+  # Le mot de passe reste dans l'environnement, jamais dans le programme lftp.
+  if printf '%s\n' "set cmd:fail-exit yes;
         set ftp:ssl-allow no;
         set ftp:passive-mode true;
         set net:timeout 30;
@@ -47,7 +50,8 @@ for attempt in $(seq 1 "$max_attempts"); do
         set mirror:parallel-directories no;
         lcd dist;
         $commands
-        quit" "$FTP_HOST"; then
+        quit" | LFTP_PASSWORD="$FTP_PASSWORD" lftp --norc \
+          --user "$FTP_USER" --env-password -p "${FTP_PORT:-21}" "$FTP_HOST"; then
     echo '::endgroup::'
     echo "Déploiement $phase terminé."
     exit 0

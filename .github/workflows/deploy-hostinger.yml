@@ -30,13 +30,16 @@ jobs:
       - name: Vérification du script de déploiement
         run: python3 scripts/test-deploy-hostinger.py
 
+      - name: Installation des outils FTP
+        run: sudo apt-get install -y --no-install-recommends lftp python3-pyftpdlib
+
+      - name: Test de transfert FTP local
+        run: /usr/bin/python3 scripts/test-deploy-hostinger-integration.py
+
       - name: Build Astro
         run: npx astro build
         env:
           NODE_ENV: production
-
-      - name: Installation de lftp
-        run: sudo apt-get install -y --no-install-recommends lftp
 
       - name: Déploiement des ressources et pages principales
         timeout-minutes: 20

@@ -21,6 +21,7 @@ class DeploymentTests(unittest.TestCase):
         shell_env = self.root / 'test-env.sh'
         shell_env.write_text('''lftp() {
   printf '%s\\n' "$*" >> "$TEST_FTP_LOG"
+  cat >> "$TEST_FTP_LOG"
   return "${TEST_FTP_EXIT:-0}"
 }
 sleep() { return 0; }
@@ -51,6 +52,17 @@ sleep() { return 0; }
         calls = self.log.read_text()
         self.assertIn('prix-carburants/station prix-carburants/station', calls)
         self.assertNotIn('--ignore-time', calls)
+
+    def test_connection_is_selected_before_reading_commands(self):
+        self.env['FTP_USER'] = 'test:user,with-delimiters'
+        self.env['FTP_PASSWORD'] = 'private-password-not-for-command-line'
+        result = self.run_phase('core')
+        self.assertEqual(result.returncode, 0, result.stderr)
+        calls = self.log.read_text()
+        self.assertIn('--user test:user,with-delimiters --env-password', calls)
+        self.assertLess(calls.index('test.invalid'), calls.index('mirror -R'))
+        self.assertNotIn('private-password-not-for-command-line', calls)
+        self.assertNotIn(' -e ', calls)
 
     def test_failure_retries_three_times_and_stays_failed(self):
         self.env['TEST_FTP_EXIT'] = '1'
