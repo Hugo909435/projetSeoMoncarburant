@@ -26,6 +26,9 @@ faq:
     answer: "Les enseignes annoncent 5 à 10 centimes par litre, mais ce chiffre inclut l'écart de prix habituel entre une grande surface et la moyenne du marché. L'effet propre de l'opération, c'est-à-dire la marge à laquelle le distributeur renonce, se situe plutôt entre 1 et 3 centimes par litre, soit 0,50 à 1,50 euro sur un plein de 50 litres. Les taxes, qui représentent environ 60 % du prix, ne bougent pas."
   - question: "TotalEnergies fait-il du prix coûtant en août 2026 ?"
     answer: "Non, TotalEnergies ne pratique pas le prix coûtant mais un plafonnement. Depuis le 22 juillet 2026, l'essence est plafonnée à 1,99 €/L et le diesel à 2,25 €/L dans toutes ses stations de France métropolitaine, y compris sur autoroute lors des week-ends de grands départs des 1er et 2, 15 et 16, puis 29 et 30 août 2026. C'est un plafond permanent sur la période, pas une opération de deux jours."
+currentInfo:
+  url: "/prix-coutant-carburant/"
+  label: "Voir les opérations prix coûtant du week-end"
 draft: false
 ---
 

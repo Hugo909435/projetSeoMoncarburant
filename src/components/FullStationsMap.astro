@@ -1133,5 +1133,18 @@ for (const slug of brandSlugs) {
   // Cette carte est le contenu principal de la page (pas une amélioration
   // progressive en bas de page comme HeroMap) : elle se charge immédiatement,
   // sans attendre un scroll ou un idle callback.
+  // Les pages villes transmettent la recherche et le carburant choisis.
+  const initialParams = new URLSearchParams(window.location.search);
+  const initialFuel = initialParams.get('carburant');
+  if (initialFuel && Object.hasOwn(FUEL_LABELS, initialFuel)) {
+    fuelFiltersEl?.querySelectorAll<HTMLButtonElement>('.fm-fuel-btn').forEach(button => {
+      if (button.dataset.fuel === initialFuel) button.click();
+    });
+  }
+  const initialCity = initialParams.get('ville')?.trim();
+  if (initialCity) {
+    if (inputEl) inputEl.value = initialCity;
+    doSearch(initialCity);
+  }
   initMap();
 </script>

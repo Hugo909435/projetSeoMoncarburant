@@ -35,7 +35,7 @@ const lastUpdate = meta.lastUpdate
   : null;
 
 const regionName = regionData.name;
-const title = `Prix des carburants en ${regionName} : comparateur en temps réel`;
+const title = `Prix des carburants en ${regionName} : comparez les stations`;
 const description = `Comparez les prix du carburant en ${regionName}. Gazole, SP95, SP98, E10, E85, GPL. Mis à jour quotidiennement depuis les données officielles.`;
 ---
 
@@ -47,7 +47,7 @@ const description = `Comparez les prix du carburant en ${regionName}. Gazole, SP
         <div class="fuel-hero-inner">
           <p class="fuel-hero-breadcrumb"><a href="/prix-carburants/">France</a> › {regionName}</p>
           <h1>Prix des carburants en {regionName}</h1>
-          <p class="fuel-hero-sub">Comparateur en temps réel · données officielles</p>
+          <p class="fuel-hero-sub">Prix déclarés · données officielles</p>
           {lastUpdate && (
             <p class="fuel-update-badge">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>

@@ -41,8 +41,8 @@ const lastUpdate = meta.lastUpdate
   ? new Date(meta.lastUpdate).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })
   : null;
 
-const title = 'Comparateur carburant : prix essence et gazole';
-const description = "Comparateur de carburant en temps réel : gazole, SP95, SP95-E10, SP98 dans toute la France. Données officielles, mises à jour quotidiennement.";
+const title = 'Prix carburant : comparez les stations près de chez vous';
+const description = "Trouvez les stations les moins chères près de chez vous. Comparez gazole, SP95, SP98, E10, E85 et GPL avec les prix déclarés et les itinéraires.";
 ---
 
 <BaseLayout title={title} description={description} canonical="/prix-carburants/">
@@ -54,7 +54,7 @@ const description = "Comparateur de carburant en temps réel : gazole, SP95, SP9
       <div class="container">
         <div class="fuel-hero-inner">
           <h1>Comparateur de carburant en France</h1>
-          <p class="fuel-hero-sub">Prix en temps réel · {meta.totalStations.toLocaleString('fr-FR')} stations</p>
+          <p class="fuel-hero-sub">Prix déclarés par les stations · {meta.totalStations.toLocaleString('fr-FR')} stations</p>
           {lastUpdate && (
             <p class="fuel-update-badge">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
@@ -204,9 +204,9 @@ const description = "Comparateur de carburant en temps réel : gazole, SP95, SP9
           publié sous <strong>Licence Ouverte</strong>.
         </p>
         <p>
-          Notre algorithme récupère automatiquement le fichier quotidien (J-1), le décompresse, parse les {meta.totalStations.toLocaleString('fr-FR')} stations
+          Notre algorithme récupère automatiquement le flux instantané officiel, le décompresse, analyse les {meta.totalStations.toLocaleString('fr-FR')} stations
           et calcule les prix moyens nationaux, régionaux et départementaux. Les ruptures de stock sont exclues des calculs.
-          Chaque station affiche la date de sa dernière mise à jour pour plus de transparence.
+          La carte et la recherche lisent les données de la dernière collecte. Les tableaux des pages sont actualisés lors de la reconstruction du site. La date de déclaration de chaque station reste la référence pour son prix.
         </p>
         <p>
           Utilisez le <strong>comparateur ci-dessus</strong> pour trouver les stations les moins chères près de chez vous :

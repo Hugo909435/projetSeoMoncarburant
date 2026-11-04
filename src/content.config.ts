@@ -19,6 +19,10 @@ const articleSchema = ({ image }: SchemaContext) => z.object({
   featuredImage: image(),
   imageAlt: z.string(),
   readingTime: z.number(),
+  currentInfo: z.object({
+    url: z.string().startsWith('/'),
+    label: z.string(),
+  }).optional(),
   pillar: z.string().optional(), // slug du pilier parent
   relatedArticles: z.array(z.string()).default([]),
   ctaTitle: z.string().optional(),

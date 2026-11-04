@@ -80,6 +80,11 @@ function periode(op: Operation | OperationLocale): string {
 
 const libelleWeekend = `${fmtJour.format(toDate(weekendStart))} au ${fmtJourAnnee.format(toDate(weekendEnd))}`;
 const verifieLe = fmtCourt.format(toDate(verifieLeIso));
+const pageUpdatedAt = new Date();
+const pageUpdatedLabel = new Intl.DateTimeFormat('fr-FR', {
+  timeZone: PARIS_TZ, day: 'numeric', month: 'long', year: 'numeric',
+  hour: '2-digit', minute: '2-digit',
+}).format(pageUpdatedAt);
 
 const fmtHeure = new Intl.DateTimeFormat('fr-FR', {
   timeZone: PARIS_TZ,
@@ -122,11 +127,12 @@ const fmtHeure = new Intl.DateTimeFormat('fr-FR', {
     </ul>
   ) : (
     <div class="pco-empty">
-      <p><strong>Aucune opération à prix coûtant n'est annoncée pour ce week-end.</strong></p>
+      <p><strong>Aucune opération nationale à prix coûtant n'est renseignée pour ce week-end dans notre suivi.</strong></p>
       <p>
         Les enseignes ne communiquent leurs dates que 2 à 3 jours à l'avance, par SMS,
-        via leur application ou par affichage en magasin. Cette page est mise à jour
-        plusieurs fois par jour : si une annonce tombe d'ici vendredi, elle apparaîtra ici.
+        via leur application ou par affichage en magasin. Consultez aussi les annonces
+        de votre station : le recalcul de cette page ne constitue pas une nouvelle
+        vérification des annonces des enseignes.
       </p>
       {locales.map((op) => (
         <p class="pco-locale">
@@ -150,7 +156,7 @@ const fmtHeure = new Intl.DateTimeFormat('fr-FR', {
 
       {prochaineFenetre && (
         <p class="pco-fenetre">
-          <span class="pco-fenetre-label">Prochaine fenêtre probable</span>
+          <span class="pco-fenetre-label">Période habituelle à surveiller, non confirmée</span>
           <span>
             {prochaineFenetre.label}, du {fmtCourtSansAnnee.format(toDate(prochaineFenetre.from))}
             au {fmtCourt.format(toDate(prochaineFenetre.to))}. {prochaineFenetre.note}
@@ -197,7 +203,10 @@ const fmtHeure = new Intl.DateTimeFormat('fr-FR', {
 
   <div class="pco-foot">
     <a href="/prix-carburants/" class="pco-cta">Comparer les stations autour de vous →</a>
-    <p class="pco-verif">Dates vérifiées le {verifieLe}</p>
+    <div class="pco-verif">
+      <p>Page actualisée le <time datetime={pageUpdatedAt.toISOString()}>{pageUpdatedLabel}</time>.</p>
+      <p>Annonces renseignées le <time datetime={verifieLeIso}>{verifieLe}</time>.</p>
+    </div>
   </div>
 </aside>
 
@@ -378,6 +387,8 @@ const fmtHeure = new Intl.DateTimeFormat('fr-FR', {
   }
   .pco-cta:hover { opacity: 0.85; }
   .pco-verif { margin: 0; font-size: 0.75rem; color: var(--color-text-muted); }
+  .pco-verif p { margin: 0; }
+  .pco-verif p + p { margin-top: 0.25rem; }
 
   @media (max-width: 480px) {
     .pco { padding: 1rem 1.1rem; }

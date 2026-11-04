@@ -23,6 +23,9 @@ faq:
     answer: "Le gazole reste plus exposé aux à-coups du marché parce que la France en importe une part plus importante que l'essence, notamment depuis la Russie et les raffineries du Moyen-Orient via des circuits indirects. Un regain de tensions dans ces zones pèse donc en premier sur son prix de revient, avant de se diffuser aux autres carburants."
   - question: "Faut-il s'attendre à une nouvelle flambée comme en mars 2026 ?"
     answer: "Rien ne l'indique pour l'instant. La hausse de juillet reste, à ce stade, d'une ampleur très inférieure au choc du détroit d'Ormuz en mars 2026, qui avait fait bondir le Brent de 10 à 13 % en quelques jours. Mais la mécanique est la même : tout dépend de l'issue des tensions en cours, et cet article sera mis à jour si la situation évolue nettement."
+currentInfo:
+  url: "/prix-moyen-carburant-france/"
+  label: "Consulter les prix moyens actuels et leur évolution"
 draft: false
 ---
 

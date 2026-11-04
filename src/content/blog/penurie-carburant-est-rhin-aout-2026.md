@@ -26,6 +26,9 @@ faq:
     answer: "Non. C'est le réflexe qui aggrave le plus la situation : la chaîne d'approvisionnement absorbe une consommation normale, elle craque quand tout le monde vient remplir un réservoir à moitié plein par précaution. S'ajoutent le risque d'incendie lié au stockage à domicile, les limitations de vente souvent appliquées en période de tension et le vieillissement de l'essence stockée, qui perd ses qualités en quelques mois."
   - question: "Puis-je mettre du SP95-E10 si ma station n'a plus de SP98 ?"
     answer: "Dans la très grande majorité des cas, oui. Le SP98 est le carburant le moins vendu, donc souvent le premier à manquer quand un dépôt arbitre ses livraisons. La quasi-totalité des voitures essence commercialisées depuis 2000 acceptent le SP95-E10, à vérifier sur la trappe à carburant ou dans le carnet d'entretien. Les deux carburants se mélangent sans risque dans le réservoir."
+currentInfo:
+  url: "/penurie-carburant/"
+  label: "Consulter les ruptures de carburant actuellement signalées"
 draft: false
 ---
 

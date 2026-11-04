@@ -1,0 +1,183 @@
+---
+import BrandLogo from './BrandLogo.astro';
+import StationLink from './StationLink.astro';
+import { FUEL_KEYS, type FuelStatKey } from '../data/fuel/config';
+import { formatMaj } from '../utils/format-maj';
+
+interface Station {
+  id: string;
+  adresse?: string;
+  ville?: string;
+  cp?: string;
+  lat?: number;
+  lng?: number;
+  enseigne?: string | null;
+  enseigneSlug?: string | null;
+  prices: Partial<Record<FuelStatKey, number>>;
+  ruptures?: Partial<Record<FuelStatKey, string>>;
+  maj?: string | null;
+}
+interface Props { stations: Station[]; cityName: string }
+const { stations, cityName } = Astro.props;
+const labels: Record<FuelStatKey, string> = {
+  Gazole: 'Gazole', SP95: 'SP95', SP98: 'SP98', E10: 'SP95-E10', E85: 'E85', GPLc: 'GPL',
+};
+const price = (s: Station, fuel: FuelStatKey) => {
+  const value = s.prices[fuel];
+  return !s.ruptures?.[fuel] && typeof value === 'number' && Number.isFinite(value) && value > 0 ? value : null;
+};
+const rankings = Object.fromEntries(FUEL_KEYS.map(fuel => [fuel,
+  stations.filter(s => price(s, fuel) !== null).sort((a, b) => price(a, fuel)! - price(b, fuel)!),
+])) as Record<FuelStatKey, Station[]>;
+const initialFuel = FUEL_KEYS.find(fuel => rankings[fuel].length > 0) ?? 'Gazole';
+const sortedStations = [...rankings[initialFuel], ...stations.filter(s => price(s, initialFuel) === null)];
+const formatPrice = (value: number) => value.toLocaleString('fr-FR', { minimumFractionDigits: 3, maximumFractionDigits: 3 });
+const mapUrl = (fuel: FuelStatKey) => `/carte/?${new URLSearchParams({ ville: cityName, carburant: fuel })}`;
+function directions(s: Station) {
+  const destination = Number.isFinite(s.lat) && Number.isFinite(s.lng)
+    ? `${s.lat},${s.lng}` : `${s.adresse ?? ''}, ${s.cp ?? ''} ${cityName}`;
+  return `https://www.google.com/maps/dir/?${new URLSearchParams({ api: '1', destination })}`;
+}
+const oldPrice = (s: Station) => !s.maj || !Number.isFinite(Date.parse(s.maj)) || Date.now() - Date.parse(s.maj) > 7 * 86400000;
+---
+
+<section class="city-comparator section-block" data-city-comparator aria-labelledby="city-compare-title">
+  <div class="compare-heading">
+    <div>
+      <p class="compare-eyebrow">Choisir sa station</p>
+      <h2 id="city-compare-title">Les stations les moins chères à {cityName}</h2>
+    </div>
+    <div class="fuel-choice" data-city-fuel-control hidden>
+      <label for="city-fuel">Votre carburant</label>
+      <select id="city-fuel" aria-controls="city-best-prices city-stations-table">
+        {FUEL_KEYS.map(fuel => <option value={fuel} selected={fuel === initialFuel}>{labels[fuel]}</option>)}
+      </select>
+    </div>
+  </div>
+
+  <div id="city-best-prices" aria-live="polite" aria-atomic="true">
+    {FUEL_KEYS.map(fuel => (
+      <div data-city-fuel-panel={fuel} hidden={fuel !== initialFuel}>
+        <p class="ranking-summary">{rankings[fuel].length} station{rankings[fuel].length !== 1 ? 's' : ''} avec un prix déclaré pour le {labels[fuel]}.</p>
+        {rankings[fuel].length > 0 ? (
+          <ol class="best-stations">
+            {rankings[fuel].slice(0, 3).map((s, index) => (
+              <li class="best-station">
+                <div class="best-brand"><span class="station-rank">{index + 1}</span>{s.enseigne ?? 'Station-service'}</div>
+                <p class="best-price">{formatPrice(price(s, fuel)!)} <span>€/L</span></p>
+                <p class="best-address"><StationLink id={s.id} adresse={s.adresse} ville={s.ville} /> <span>{s.cp}</span></p>
+                <p class:list={['best-date', { 'price-old': oldPrice(s) }]}>
+                  Déclaration : {s.maj ? <time datetime={s.maj.replace(' ', 'T')}>{formatMaj(s.maj)}</time> : 'date inconnue'}
+                  {oldPrice(s) && <span>Prix ancien ou non daté, à vérifier avant de partir.</span>}
+                </p>
+                <a class="station-directions" href={directions(s)} target="_blank" rel="noopener noreferrer">Itinéraire <span class="sr-only">vers {s.adresse ?? 'la station'} (nouvel onglet)</span> ↗</a>
+              </li>
+            ))}
+          </ol>
+        ) : <p class="empty-prices">Aucun prix disponible pour ce carburant. Consultez les autres carburants ou la carte des stations à proximité.</p>}
+        <a class="city-map-link" href={mapUrl(fuel)}>Voir les stations sur la carte →</a>
+      </div>
+    ))}
+  </div>
+
+  <p class="price-note">Classement des prix déclarés, hors ruptures signalées. Une absence de rupture signalée ne garantit pas la disponibilité. Vérifiez la date de déclaration et le prix en station.</p>
+  <noscript><p>Le classement ci-dessus porte sur le {labels[initialFuel]}. Le tableau ci-dessous présente tous les carburants.</p></noscript>
+
+  <div class="table-wrapper" role="region" aria-label={`Prix des stations à ${cityName}`} tabindex="0">
+    <table class="stations-table" id="city-stations-table">
+      <caption>Stations à {cityName}, triées par prix du <span data-city-sort-label>{labels[initialFuel]}</span>. Les stations sans prix pour ce carburant figurent à la fin.</caption>
+      <thead><tr>
+        <th scope="col">Marque</th><th scope="col">Adresse</th><th scope="col">CP</th>
+        {FUEL_KEYS.map(fuel => <th scope="col" data-city-fuel={fuel} aria-sort={fuel === initialFuel ? 'ascending' : undefined}>{labels[fuel]}</th>)}
+        <th scope="col" title="Dernière déclaration de prix transmise par la station">Déclaré</th>
+      </tr></thead>
+      <tbody>
+        {sortedStations.map(s => <tr>
+          <td class="brand-cell">{s.enseigneSlug ? <BrandLogo slug={s.enseigneSlug} name={s.enseigne ?? s.enseigneSlug} /> : (s.enseigne ?? 'Station-service')}</td>
+          <td class="station-address"><StationLink id={s.id} adresse={s.adresse} ville={s.ville} /></td>
+          <td>{s.cp}</td>
+          {FUEL_KEYS.map(fuel => <td data-city-fuel={fuel} data-price={price(s, fuel) ?? ''} class:list={{ 'selected-price': fuel === initialFuel }}>
+            {s.ruptures?.[fuel] ? <span class="rupture">Rupture</span> : price(s, fuel) !== null ? formatPrice(price(s, fuel)!) : <span aria-label="Prix non déclaré">-</span>}
+          </td>)}
+          <td class="station-date" title={s.maj ?? 'Date inconnue'}>{formatMaj(s.maj)}</td>
+        </tr>)}
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-city-comparator]').forEach(root => {
+    const select = root.querySelector<HTMLSelectElement>('select');
+    const body = root.querySelector('tbody');
+    if (!select || !body) return;
+    const rows = Array.from(body.rows);
+    const panels = root.querySelectorAll<HTMLElement>('[data-city-fuel-panel]');
+    const cells = root.querySelectorAll<HTMLElement>('[data-city-fuel]');
+    const update = () => {
+      const fuel = select.value;
+      if (!Array.from(panels).some(panel => panel.dataset.cityFuelPanel === fuel)) return;
+      panels.forEach(panel => { panel.hidden = panel.dataset.cityFuelPanel !== fuel; });
+      const readPrice = (row: HTMLTableRowElement) => {
+        const cell = Array.from(row.cells).find(cell => cell.dataset.cityFuel === fuel);
+        return cell?.dataset.price ? Number(cell.dataset.price) : Infinity;
+      };
+      rows.sort((a, b) => readPrice(a) - readPrice(b));
+      body.append(...rows);
+      cells.forEach(cell => {
+        const selected = cell.dataset.cityFuel === fuel;
+        cell.classList.toggle('selected-price', selected);
+        if (cell.tagName === 'TH') {
+          if (selected) cell.setAttribute('aria-sort', 'ascending');
+          else cell.removeAttribute('aria-sort');
+        }
+      });
+      const label = root.querySelector('[data-city-sort-label]');
+      if (label) label.textContent = select.selectedOptions[0].textContent;
+    };
+    select.addEventListener('change', update);
+    update();
+    const control = root.querySelector<HTMLElement>('[data-city-fuel-control]');
+    if (control) control.hidden = false;
+  });
+</script>
+
+<style>
+  .section-block { margin-bottom: 3rem; }
+  .compare-heading { display: flex; align-items: end; justify-content: space-between; gap: 1.5rem; flex-wrap: wrap; margin-bottom: 1rem; }
+  .compare-eyebrow { color: var(--color-text-muted); font-size: .75rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; margin: 0 0 .4rem; }
+  h2 { color: var(--color-primary); font-size: clamp(1.25rem, 3vw, 1.65rem); line-height: 1.3; margin: 0; }
+  .fuel-choice { display: grid; gap: .35rem; }
+  .fuel-choice[hidden], [data-city-fuel-panel][hidden] { display: none; }
+  label { font-size: .8rem; font-weight: 700; color: var(--color-primary); }
+  select { min-height: 44px; min-width: 160px; border: 1px solid #94a3b8; border-radius: .5rem; padding: .5rem .75rem; color: var(--color-primary); background: white; font: inherit; }
+  select:focus-visible, a:focus-visible, .table-wrapper:focus-visible { outline: 3px solid var(--color-accent); outline-offset: 3px; }
+  .ranking-summary { color: var(--color-text-muted); font-size: .875rem; margin: 0 0 1rem; }
+  .best-stations { list-style: none; padding: 0; margin: 0 0 1rem; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
+  .best-station { border: 1px solid #cbd5e1; border-radius: .65rem; padding: 1.1rem; background: #fff; display: flex; flex-direction: column; align-items: start; }
+  .best-station:first-child { border-top: 3px solid #15803d; padding-top: calc(1.1rem - 2px); background: #f5fbf7; }
+  .best-brand { display: flex; align-items: center; gap: .55rem; font-weight: 700; color: var(--color-primary); font-size: .875rem; }
+  .station-rank { font-size: .75rem; padding: .1rem .4rem; border-radius: .25rem; background: #e2e8f0; }
+  .best-price { margin: .6rem 0 .5rem; color: var(--color-primary); font-size: 2rem; font-weight: 800; font-variant-numeric: tabular-nums; }
+  .best-price span { font-size: .875rem; font-weight: 500; }
+  .best-address { font-size: .875rem; line-height: 1.5; margin: 0; overflow-wrap: anywhere; }
+  .best-address > span { display: block; color: var(--color-text-muted); }
+  .best-date { font-size: .75rem; margin: .65rem 0 1rem; color: #475569; }
+  .best-date > span { display: block; margin-top: .25rem; }
+  .price-old { color: #92400e; }
+  .station-directions { margin-top: auto; display: inline-flex; align-items: center; min-height: 44px; font-size: .875rem; font-weight: 700; color: var(--color-primary); }
+  .city-map-link { display: inline-flex; align-items: center; min-height: 44px; font-weight: 700; color: var(--color-primary); }
+  .price-note, .empty-prices { font-size: .8125rem; line-height: 1.6; color: #475569; margin: .5rem 0 1.5rem; }
+  .table-wrapper { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; font-size: .875rem; font-variant-numeric: tabular-nums; }
+  caption { text-align: left; font-size: .875rem; color: #475569; padding-bottom: .75rem; line-height: 1.5; }
+  th { background: #f1f5f9; color: var(--color-primary); text-align: left; font-size: .8rem; padding: .7rem .65rem; white-space: nowrap; }
+  td { padding: .7rem .65rem; border-bottom: 1px solid #e2e8f0; }
+  .selected-price { background: #f0fdf4; font-weight: 700; }
+  .station-address { min-width: 160px; }
+  .brand-cell { min-width: 100px; }
+  .station-date { font-size: .75rem; white-space: nowrap; color: #475569; }
+  .rupture { font-size: .75rem; color: #b91c1c; }
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  @media (max-width: 640px) { .best-stations { grid-template-columns: 1fr; } .fuel-choice { width: 100%; } }
+</style>

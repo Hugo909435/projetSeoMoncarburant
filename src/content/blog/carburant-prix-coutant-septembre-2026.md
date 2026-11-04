@@ -27,6 +27,9 @@ faq:
     answer: "Les enseignes annoncent 5 à 10 centimes par litre, mais ce chiffre mélange deux effets : l'écart structurel entre une grande surface et la moyenne nationale, qui existe toute l'année, et l'effet propre de l'opération, c'est-à-dire la marge à laquelle le distributeur renonce vraiment. Ce second effet se limite en général à 1-3 centimes par litre, soit 0,50 à 1,50 euro sur un plein de 50 litres. Les taxes, qui représentent environ 60 % du prix affiché, ne bougent pas."
   - question: "Quand aura lieu la prochaine opération prix coûtant après la rentrée ?"
     answer: "La fenêtre suivante se situe traditionnellement aux vacances de la Toussaint, fin octobre. Aucune date n'est confirmée à ce stade : ces opérations ne sont annoncées que quelques jours à l'avance, par application mobile, SMS ou affichage en station."
+currentInfo:
+  url: "/prix-coutant-carburant/"
+  label: "Voir les opérations prix coûtant du week-end"
 draft: false
 ---
 

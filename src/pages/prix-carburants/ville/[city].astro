@@ -1,7 +1,6 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
-import BrandLogo from '../../../components/BrandLogo.astro';
-import StationLink from '../../../components/StationLink.astro';
+import CityStationComparator from '../../../components/CityStationComparator.astro';
 import departments from '../../../data/departments.json';
 import statsNational from '../../../data/fuel/stats-national.json';
 import meta from '../../../data/fuel/meta.json';
@@ -10,7 +9,6 @@ import { buildCityIntro } from '../../../utils/city-intro';
 import { buildCityIdentity } from '../../../utils/city-identity';
 import { deptContent } from '../../../data/local-content';
 import LocalIdentity from '../../../components/LocalIdentity.astro';
-import { formatMaj } from '../../../utils/format-maj';
 import { existsSync } from 'node:fs';
 import AdUnit from '../../../components/AdUnit.astro';
 
@@ -40,13 +38,12 @@ function priceDiff(price: number | null | undefined, fuelKey: string) {
 }
 
 const lastUpdate = meta.lastUpdate
-  ? new Date(meta.lastUpdate).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })
+  ? new Date(meta.lastUpdate).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'Europe/Paris' })
   : null;
 
-const gazoleAvg = stats['Gazole'];
-
-const title = `Prix carburant à ${cityName} - Comparateur Mon Carburant`;
-const description = `Comparez les prix du carburant à ${cityName}. ${count} stations-service référencées${gazoleAvg ? `, prix moyen Gazole ${gazoleAvg.toFixed(3)}€/L` : ''}. Mis à jour quotidiennement.`;
+const localTitle = `Carburant à ${cityName} : les stations les moins chères`;
+const title = localTitle.length <= 60 ? localTitle : `Prix carburant à ${cityName}`;
+const description = `Prix du carburant à ${cityName} : comparez ${count} stations, gazole, SP95, SP98, E10, E85 et GPL. Prix déclarés, dates et itinéraires.`;
 
 const introSentences = buildCityIntro({
   cityName,
@@ -137,14 +134,7 @@ const jsonLdBreadcrumb = {
     </section>
 
     <div class="container page-body">
-      <!-- Identité locale -->
-      {cityIdentity && (
-        <LocalIdentity
-          content={cityIdentity}
-          placeName={cityName}
-          heading={`${cityName} : repères`}
-        />
-      )}
+      <CityStationComparator stations={stations} cityName={cityName} />
 
       <!-- Stats -->
       <section class="section-block">
@@ -173,42 +163,14 @@ const jsonLdBreadcrumb = {
 
       <AdUnit />
 
-      <!-- Stations triées par prix -->
-      <section class="section-block">
-        <h2>Stations à {cityName}, prix croissants</h2>
-        <div class="table-wrapper">
-          <table class="stations-table">
-            <thead>
-              <tr>
-                <th>Marque</th>
-                <th>Adresse</th>
-                <th>CP</th>
-                <th>Gazole</th>
-                <th>SP95</th>
-                <th>E10</th>
-                <th>E85</th>
-                <th>GPL</th>
-                <th title="Date de la dernière déclaration de prix par la station">Déclaré</th>
-              </tr>
-            </thead>
-            <tbody>
-              {stations.map((s: any) => (
-                <tr>
-                  <td class="brand-cell">{s.enseigneSlug ? <BrandLogo slug={s.enseigneSlug} name={s.enseigne ?? s.enseigneSlug} /> : <span class="brand-unknown">{s.enseigne ?? '-'}</span>}</td>
-                  <td class="station-addr"><StationLink id={s.id} adresse={s.adresse} ville={s.ville} /></td>
-                  <td>{s.cp}</td>
-                  <td>{s.prices.Gazole?.toFixed(3) ?? '-'}</td>
-                  <td>{s.prices.SP95?.toFixed(3) ?? '-'}</td>
-                  <td>{s.prices.E10?.toFixed(3) ?? '-'}</td>
-                  <td>{s.prices.E85?.toFixed(3) ?? '-'}</td>
-                  <td>{s.prices.GPLc?.toFixed(3) ?? '-'}</td>
-                  <td class="station-maj" title={s.maj ?? ''}>{formatMaj(s.maj)}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </section>
+      <!-- Identité locale -->
+      {cityIdentity && (
+        <LocalIdentity
+          content={cityIdentity}
+          placeName={cityName}
+          heading={`${cityName} : repères`}
+        />
+      )}
 
       <!-- Liens navigation -->
       <section class="section-block">
@@ -238,7 +200,7 @@ const jsonLdBreadcrumb = {
   .city-subtitle { color: #94a3b8; margin: 0 0 0.5rem; }
   .dept-link { color: var(--color-accent); text-decoration: none; }
   .dept-link:hover { text-decoration: underline; }
-  .update-info { font-size: 0.8125rem; color: #64748b; margin: 0; }
+  .update-info { font-size: 0.8125rem; color: #cbd5e1; margin: 0; }
   .page-body { padding-top: 2rem; padding-bottom: 3rem; }
   .section-block { margin-bottom: 3rem; }
   .section-block h2 { font-size: 1.2rem; font-weight: 700; color: var(--color-primary); margin: 0 0 1.25rem; border-bottom: 2px solid #e5e7eb; padding-bottom: 0.5rem; }
@@ -252,15 +214,6 @@ const jsonLdBreadcrumb = {
   .badge-green { background: #dcfce7; color: #166534; }
   .badge-orange { background: #fff7ed; color: #c2410c; }
   .badge-neutral { background: #f1f5f9; color: #64748b; }
-  .table-wrapper { overflow-x: auto; }
-  .stations-table { width: 100%; border-collapse: collapse; font-size: 0.875rem; }
-  .stations-table th { background: #f1f5f9; color: var(--color-primary); padding: 0.6rem 0.75rem; text-align: left; font-size: 0.8rem; }
-  .stations-table td { padding: 0.55rem 0.75rem; border-bottom: 1px solid #f1f5f9; }
-  .stations-table tr:hover td { background: #f8fafc; }
-  .station-addr { max-width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .station-maj { white-space: nowrap; font-size: 0.75rem; color: #64748b; }
-  .brand-cell { white-space: nowrap; padding: 0.4rem 0.75rem; }
-  .brand-unknown { font-size: 0.7rem; color: #64748b; background: #f1f5f9; border-radius: 3px; padding: 0.1rem 0.4rem; }
   .nav-links { display: flex; gap: 1rem; flex-wrap: wrap; }
   .nav-link {
     background: #f1f5f9; border: 1px solid #e2e8f0; border-radius: 0.5rem;

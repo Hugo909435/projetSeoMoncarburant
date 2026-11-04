@@ -6,19 +6,15 @@ on:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-    timeout-minutes: 40
+    # Les fiches stations dépassent à elles seules vingt minutes de transfert.
+    # Les phases ont leurs propres limites, dans un budget global borné.
+    timeout-minutes: 75
 
     steps:
       - name: Checkout du dépôt
         uses: actions/checkout@v4
         with:
-          # Sans ref explicite, checkout se fige sur le SHA qui a déclenché le
-          # run appelant. Quand ce workflow est invoqué juste après le job
-          # fetch-and-update (qui vient de pousser un nouveau commit de
-          # données), ce SHA figé pointe encore vers l'état d'AVANT ce commit :
-          # le build et le déploiement se faisaient donc sur les données du
-          # cycle précédent, jamais les plus fraîches. ref: main force la
-          # récupération du HEAD réel de la branche au moment du checkout.
+          # Inclure les derniers commits de prix des workflows de collecte.
           ref: main
           fetch-depth: 1
 
@@ -26,10 +22,13 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '22'
-          cache: 'npm'
+          cache: npm
 
       - name: Installation des dépendances
         run: npm ci
+
+      - name: Vérification du script de déploiement
+        run: python3 scripts/test-deploy-hostinger.py
 
       - name: Build Astro
         run: npx astro build
@@ -39,116 +38,23 @@ jobs:
       - name: Installation de lftp
         run: sudo apt-get install -y --no-install-recommends lftp
 
-      - name: Déploiement vers Hostinger
-        timeout-minutes: 30
+      - name: Déploiement des ressources et pages principales
+        timeout-minutes: 20
         env:
           FTP_USER: ${{ secrets.FTP_USER }}
           FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
           FTP_HOST: ${{ secrets.FTP_HOST }}
+        run: bash scripts/deploy-hostinger.sh core
+
+      - name: Déploiement des fiches stations
+        timeout-minutes: 45
+        env:
+          FTP_USER: ${{ secrets.FTP_USER }}
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+          FTP_HOST: ${{ secrets.FTP_HOST }}
+        run: bash scripts/deploy-hostinger.sh stations
+
+      - name: Résumé du déploiement
         run: |
-          # Identifiants passés en variables d'env (pas dans l'URL) : évite
-          # qu'un caractère spécial dans le mot de passe (@ : / % # ...) casse
-          # le parsing de l'URL ftp://user:pass@host et fausse le login.
-          # Ce compte FTP est déjà enraciné dans le document root du site
-          # (contrairement à l'ancien compte SFTP) : on mirror directement dans
-          # le répertoire courant "." et pas dans domains/mon-carburant.com/public_html/,
-          # qui n'existe pas ici.
-          #
-          # Le rm -r -f domains (dossier créé par erreur le temps qu'on
-          # identifie le bon chemin de dépôt, voir historique du fichier) est
-          # fait dans CETTE MÊME session lftp plutôt que dans une étape FTP
-          # séparée : une connexion FTP de plus par run, juste pour un rm qui
-          # ne trouve probablement plus rien à supprimer depuis longtemps,
-          # contribuait inutilement à la rafale de connexions décrite plus
-          # bas. cmd:fail-exit no/yes encadre le rm pour qu'un dossier déjà
-          # absent n'interrompe pas le script avant le mirror.
-          # Retry au niveau shell plutôt que de tout miser sur les retries internes
-          # de lftp : Hostinger bloque temporairement les connexions répétées,
-          # donc une session qui casse en cours de mirror a besoin d'un vrai cooldown avant
-          # de rouvrir une connexion propre, pas juste de reconnexions internes
-          # rapprochées qui retombent dans la même fenêtre de throttling. mirror
-          # étant incrémental (diff avec le distant), relancer une session neuve
-          # reprend là où la précédente s'est arrêtée.
-          #
-          # Backoff exponentiel (30s, 60s, 120s, 240s) plutôt qu'une pause fixe :
-          # un run récent a vu les 4 tentatives échouer d'affilée en timeout de
-          # connexion pur (aucun "Login OK", le port 21 ne répondait tout
-          # simplement pas), ce qui indique un blocage Hostinger qui dure parfois
-          # plus longtemps qu'une pause fixe de 30s entre essais. Avec 5
-          # tentatives et un cooldown qui s'allonge, le dernier essai n'arrive
-          # qu'après 7 minutes de pause cumulée, ce qui laisse largement plus de
-          # marge au blocage pour retomber.
-          #
-          # net:persist-retries 0 (au lieu de 3) et net:max-retries 1 (au lieu
-          # de 3) : avant, chaque itération de CETTE boucle relançait un lftp
-          # qui, en interne, retentait déjà de se reconnecter jusqu'à 3 fois
-          # (via reconnect-interval-base/multiplier) avant de rendre la main
-          # au backoff externe. Les deux retries s'empilaient : jusqu'à ~20
-          # connexions FTP réelles en quelques minutes sur les 5 tentatives,
-          # ce qui ressemble à une rafale d'abus côté Hostinger et déclenche
-          # probablement son blocage IP temporaire (cf. le run cité plus haut
-          # où même 7 min de pause cumulée n'ont pas suffi). Un rerun manuel
-          # marche toujours du premier coup parce qu'il obtient un runner
-          # GitHub avec une IP différente, pas encore bloquée. En limitant
-          # chaque process lftp à une seule connexion, cette boucle devient le
-          # seul niveau de retry, avec exactement 5 connexions espacées par le
-          # vrai backoff (30/60/120/240s) au lieu de 20 rapprochées.
-          #
-          # mirror:parallel-transfer-count reste à 2 : le passage à 1 (tenté
-          # dans une révision précédente pour limiter les connexions
-          # concurrentes) a fait passer le mirror complet au-delà des 25 min
-          # allouées à cette étape (le run précédent avec cette valeur a
-          # timeout après 25 min, alors que les runs à 2 connexions
-          # terminaient en 16-19 min) ; le goulot d'étranglement est donc le
-          # débit de transfert, pas le nombre de connexions concurrentes.
-          #
-          # Mirror en deux passes : tout le site SAUF les fiches stations
-          # d'abord, puis prix-carburants/station/ ensuite. Le build régénère
-          # chaque fichier (mtime neuve), donc le mirror renvoie l'intégralité
-          # des milliers de fiches stations à chaque run. En une seule passe
-          # alphabétique, quand l'étape dépassait ses 30 min (run du 20/10/2026
-          # coupé en pleine fiche station de Toulouse), tout ce qui suit
-          # "prix-carburants/station/" (prix-coutant-carburant/, blog/...) n'était
-          # jamais envoyé : une modification éditoriale pouvait rester bloquée
-          # hors ligne indéfiniment. Avec les pages éditoriales en tête, elles
-          # partent en quelques minutes quel que soit le sort des fiches stations.
-          # --exclude n'empêche pas la suppression pour rien : sans
-          # --delete-excluded, lftp ne supprime jamais côté distant un chemin
-          # exclu, la deuxième passe garde donc seule la main sur ce dossier.
-          max_attempts=5
-          for attempt in $(seq 1 "$max_attempts"); do
-            echo "::group::Tentative de déploiement $attempt/$max_attempts"
-            if lftp -u "$FTP_USER","$FTP_PASSWORD" -p 21 \
-                 -e "debug 3; \
-                     set ftp:ssl-allow no; \
-                     set ftp:passive-mode true; \
-                     set net:timeout 30; \
-                     set net:max-retries 1; \
-                     set net:persist-retries 0; \
-                     set mirror:parallel-transfer-count 2; \
-                     set mirror:parallel-directories no; \
-                     set cmd:fail-exit no; \
-                     rm -r -f domains; \
-                     set cmd:fail-exit yes; \
-                     lcd dist; \
-                     mirror -R --delete --verbose --exclude ^prix-carburants/station/ . .; \
-                     mirror -R --delete --verbose prix-carburants/station prix-carburants/station; \
-                     quit" \
-                "$FTP_HOST"; then
-              echo "::endgroup::"
-              echo "Déploiement réussi à la tentative $attempt."
-              exit 0
-            fi
-            echo "::endgroup::"
-            echo "Tentative $attempt échouée."
-            if [ "$attempt" -lt "$max_attempts" ]; then
-              backoff=$((30 * (2 ** (attempt - 1))))
-              if [ "$backoff" -gt 240 ]; then
-                backoff=240
-              fi
-              echo "Pause de ${backoff}s avant nouvelle tentative (laisse le throttling Hostinger retomber)..."
-              sleep "$backoff"
-            fi
-          done
-          echo "Toutes les tentatives de déploiement ont échoué."
-          exit 1
+          echo '### Déploiement Hostinger terminé' >> "$GITHUB_STEP_SUMMARY"
+          echo 'Ressources, pages principales et fiches stations publiées avec succès.' >> "$GITHUB_STEP_SUMMARY"

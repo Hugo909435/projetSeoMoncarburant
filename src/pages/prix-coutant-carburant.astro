@@ -153,7 +153,7 @@ const enseignesSchema = {
       </p>
       <h1 class="pcc-title">Carburant à prix coûtant</h1>
       <p class="pcc-subtitle">
-        Le statut du week-end en cours, le comparatif des quatre enseignes et le calendrier des opérations, à jour en continu.
+        Les opérations renseignées pour le week-end, les conditions par enseigne et les périodes habituelles à surveiller.
       </p>
     </div>
     <div class="pcc-widget-wrap container">
@@ -169,9 +169,9 @@ const enseignesSchema = {
       Chez Leclerc en particulier, le carburant à prix coûtant est ouvert à tous, sans carte de fidélité. Ces
       fenêtres durent en général 24 à 48 heures, sont annoncées seulement 2 à 3 jours à l'avance, et reviennent
       aux mêmes moments chaque année : avant les grands départs d'été, à la rentrée scolaire, aux vacances de la
-      Toussaint et en fin d'année. Cette page centralise trois informations mises à jour en continu : le statut
+      Toussaint et en fin d'année. Cette page centralise trois informations : le statut
       de l'opération carburant à prix coûtant ce week-end, le calendrier complet des opérations 2026 (déjà
-      passées ou probables), et les conditions d'accès propres à chaque enseigne (carte de fidélité, montant
+      passées ou périodes habituelles à surveiller), et les conditions d'accès propres à chaque enseigne (carte de fidélité, montant
       d'achat minimum).
     </p>
   </section>
@@ -187,11 +187,11 @@ const enseignesSchema = {
       habituellement le plus grand nombre d'opérations de l'année, a fait exception cette fois : aucune des
       quatre enseignes n'a communiqué de date nationale entre fin août et fin septembre. D'habitude, les
       vacances de la Toussaint sont l'occasion d'une nouvelle vague de remises : en 2025, Leclerc et Intermarché
-      avaient vendu leur carburant à prix coûtant dès le premier week-end des vacances. Cette année, avec le
-      conflit au Moyen-Orient et un gazole qui dépasse 2,35 €/L, rien de tel : nous sommes en pleine période
-      des vacances et aucune enseigne n'a annoncé d'opération. Seul TotalEnergies maintient son plafonnement
-      dans toutes ses stations. La prochaine période à surveiller est celle des fêtes de fin d'année, mi-décembre. Les dates précises ne sont en général communiquées que quelques jours à
-      l'avance, par SMS, notification d'application ou affichage en station.
+      avaient vendu leur carburant à prix coûtant dès le premier week-end des vacances. Pour 2026,
+      notre bilan de la Toussaint ne recensait aucune opération nationale
+      lors de sa rédaction. Le bloc en haut de page présente les opérations de notre suivi pour le
+      week-end concerné. Les périodes futures du calendrier sont des repères saisonniers, sans annonce
+      ni date confirmée. Consultez les communications des enseignes et de votre station avant de partir.
     </p>
     <p class="pcc-text-ad-copy">
       Ce calendrier ne recense que les opérations d'enseigne, valables sur l'ensemble d'un réseau. Il existe
@@ -207,7 +207,7 @@ const enseignesSchema = {
           <span class="pcc-timeline-dot" aria-hidden="true"></span>
           <div class="pcc-timeline-card">
             <div class="pcc-timeline-main">
-              <span class="pcc-timeline-badge">{t.kind === 'passee' ? 'Passée' : 'À venir (probable)'}</span>
+              <span class="pcc-timeline-badge">{t.kind === 'passee' ? 'Passée' : 'Période habituelle, non confirmée'}</span>
               <p class="pcc-timeline-heading">{t.brandName ?? t.label}</p>
               <p class="pcc-timeline-dates">
                 {formatRange(t.start, t.end)}
@@ -321,7 +321,7 @@ const enseignesSchema = {
 
   <div class="pcc-section pcc-footnote-wrap container">
     <p class="pcc-footnote">
-      Dernière vérification le {updatedLabel}. Le statut du week-end en cours est recalculé plusieurs fois par jour à partir des annonces des enseignes ; les périodes et conditions décrites sont celles habituellement constatées et peuvent varier d'une année et d'un magasin à l'autre.
+      Guide mis à jour le {updatedLabel}. La date d'actualisation de la page et celle des annonces renseignées figurent dans le bloc du week-end. Le recalcul du calendrier ne vérifie pas de nouvelles annonces. Les périodes et conditions habituelles peuvent varier d'une année et d'un magasin à l'autre.
     </p>
   </div>
 </BaseLayout>

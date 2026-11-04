@@ -23,6 +23,9 @@ faq:
     answer: "La prochaine fenêtre traditionnelle à surveiller se situe autour des départs en vacances de fin d'année, entre le 18 et le 24 décembre 2026. Certaines stations d'hypermarchés peuvent toutefois proposer des opérations locales ponctuelles d'ici là."
   - question: "Où faire son plein le moins cher en l'absence de prix coûtant ?"
     answer: "Les stations d'hypermarchés (E.Leclerc et Intermarché) restent en moyenne 10 à 15 centimes moins chères que les stations traditionnelles. Pour le gazole et le SP95, les stations TotalEnergies plafonnent également leurs prix à 1,99 €/L pour l'essence et 2,25 €/L pour le diesel."
+currentInfo:
+  url: "/prix-coutant-carburant/"
+  label: "Voir les opérations prix coûtant du week-end"
 draft: false
 ---
 

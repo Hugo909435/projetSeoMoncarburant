@@ -33,7 +33,7 @@ const description = 'Comment fonctionne notre comparateur de prix carburant ? So
       <h2>1. Source des données</h2>
       <p>
         Les prix affichés sur Mon Carburant proviennent exclusivement du
-        <strong>flux officiel quotidien du gouvernement français</strong>, disponible sur :
+        <strong>flux instantané officiel du gouvernement français</strong>, disponible sur :
       </p>
       <ul>
         <li>
@@ -42,8 +42,8 @@ const description = 'Comment fonctionne notre comparateur de prix carburant ? So
           </a>
         </li>
         <li>
-          <a href="https://www.data.gouv.fr/datasets/prix-des-carburants-en-france-flux-quotidien-1" rel="noopener noreferrer" target="_blank">
-            data.gouv.fr (Jeux de données)
+          <a href="https://donnees.roulez-eco.fr/opendata/instantane" rel="noopener noreferrer" target="_blank">
+            Télécharger le flux instantané officiel
           </a>
         </li>
       </ul>
@@ -54,16 +54,18 @@ const description = 'Comment fonctionne notre comparateur de prix carburant ? So
       </p>
       <p>
         Chaque station-service est légalement tenue de communiquer ses prix au gouvernement
-        dès qu'elle les modifie. Ces prix sont agrégés et publiés chaque jour dans un fichier XML compressé.
+        dès qu'elle les modifie. Ces déclarations sont regroupées dans un flux instantané, disponible sous forme de fichier XML compressé.
       </p>
     </section>
 
     <section class="methodo-section">
       <h2>2. Fréquence de mise à jour</h2>
       <p>
-        Notre système récupère le flux de données <strong>quotidiennement à 6h00 du matin</strong>
-        (heure de Paris). Le fichier fourni correspond aux données du jour J-1, c'est-à-dire
-        les prix communiqués la veille.
+        La collecte du flux instantané est programmée <strong>toutes les heures</strong>.
+        La carte et la recherche utilisent les fichiers issus de la dernière collecte réussie.
+        Les tableaux des pages villes, départements et stations sont actualisés lors de la
+        reconstruction du site, programmée toutes les trois heures. Des retards de collecte
+        ou de publication restent possibles.
       </p>
       <p>
         La date et l'heure de la dernière mise à jour sont affichées sur chaque page du comparateur.
@@ -96,9 +98,9 @@ const description = 'Comment fonctionne notre comparateur de prix carburant ? So
         <h3>⚠️ Points d'attention</h3>
         <ul>
           <li>
-            <strong>Délai J-1</strong> : les prix affichés correspondent aux données de la veille.
-            En cas de forte variation des cours du pétrole, les prix réels en station peuvent
-            différer légèrement.
+            <strong>Délai de publication</strong> : le flux instantané ne garantit pas une synchronisation
+            immédiate avec la pompe. Une déclaration, sa collecte et sa publication peuvent être décalées.
+            La date de collecte ne remplace pas la date de déclaration du prix par la station.
           </li>
           <li>
             <strong>Stations non mises à jour</strong> : certaines stations ne transmettent pas
@@ -145,9 +147,10 @@ const description = 'Comment fonctionne notre comparateur de prix carburant ? So
     <section class="methodo-section">
       <h2>6. Note sur les données historiques</h2>
       <p>
-        Le comparateur actuel ne conserve que les données du jour J-1. L'historique des prix
-        (courbes d'évolution sur plusieurs mois) est une fonctionnalité prévue dans une prochaine version.
-        Ce type de suivi nécessite un stockage temporel des données qui n'est pas encore implémenté.
+        Nous conservons des relevés quotidiens des moyennes de prix pour présenter leur évolution
+        sur la <a href="/prix-moyen-carburant-france/">page des prix moyens en France</a>.
+        Ces moyennes décrivent les stations disposant d'un prix déclaré au moment du relevé.
+        Elles ne constituent pas un historique exhaustif de chaque changement de prix de chaque station.
       </p>
     </section>
 

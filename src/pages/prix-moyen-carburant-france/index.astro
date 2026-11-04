@@ -54,9 +54,7 @@ const gazoleMonth = monthlyAverage('Gazole', monthKey) ?? statsNational.Gazole ?
 const e10Month = monthlyAverage('E10', monthKey) ?? statsNational.E10 ?? null;
 const sp98Month = monthlyAverage('SP98', monthKey) ?? statsNational.SP98 ?? null;
 
-const title = gazoleMonth != null
-  ? `Prix moyen gazole ${monthLabel} : ${fr3(gazoleMonth)} €/L en France`
-  : `Prix moyen carburant en France : ${monthLabel}`;
+const title = `Prix moyen carburant en France : ${monthLabel}`;
 const description = gazoleMonth != null && e10Month != null && sp98Month != null
   ? `Prix moyen du gazole en France en ${monthLabel} : ${fr3(gazoleMonth)} €/L. SP95-E10 à ${fr3(e10Month)} €/L, SP98 à ${fr3(sp98Month)} €/L. Moyenne du mois et historique quotidien.`
   : `Prix moyen officiel du gazole, SP95, SP95-E10, SP98, E85 et GPL en France en ${monthLabel}. Données actualisées quotidiennement (ministère de l'Économie).`;
@@ -92,7 +90,7 @@ const faq = [
   }] : []),
   {
     q: `Quel est le prix moyen du gazole en France aujourd'hui ?`,
-    a: `Au ${lastUpdateLabel}, le prix moyen national du gazole est de ${statsNational.Gazole?.toFixed(3)} €/L, selon le relevé quotidien du ministère de l'Économie sur les stations-service de France métropolitaine et des DOM.`,
+    a: `Au ${lastUpdateLabel}, le prix moyen national du gazole est de ${statsNational.Gazole?.toFixed(3)} €/L, selon le relevé quotidien du ministère de l'Économie sur les stations-service de France métropolitaine.`,
   },
   {
     q: `Quel est le prix moyen de l'essence (SP95, SP95-E10, SP98) en France ?`,
@@ -216,7 +214,7 @@ const jsonLdFaq = {
           })}
         </div>
         <p class="pm-source">
-          Données officielles issues du flux quotidien du{' '}
+          Données officielles issues du flux instantané du{' '}
           <a href="https://data.economie.gouv.fr/explore/dataset/prix_des_carburants_en_france_flux_instantane_v2" rel="noopener noreferrer" target="_blank">ministère de l'Économie</a>,
           calculées à partir des prix déclarés par {fuelMeta.totalStations.toLocaleString('fr-FR')} stations-service.
         </p>
@@ -272,7 +270,7 @@ const jsonLdFaq = {
           Ce prix moyen national est une moyenne arithmétique : il donne une tendance de marché, mais les écarts
           entre stations restent importants (jusqu'à 20 à 30 centimes par litre selon l'emplacement et l'enseigne).
           Pour trouver la station la moins chère près de chez vous, utilisez notre{' '}
-          <a href="/prix-carburants/">comparateur de prix carburant en temps réel</a>, qui référence
+          <a href="/prix-carburants/">comparateur de prix des stations</a>, qui référence
           {' '}{fuelMeta.totalStations.toLocaleString('fr-FR')} stations partout en France.
         </p>
         <p>
