@@ -578,6 +578,7 @@ function stationToLight(s) {
     enseigne: s.enseigne ?? null,
     enseigneSlug: s.enseigneSlug ?? null,
     prices: s.prices,
+    priceUpdates: s.priceUpdates ?? {},
     maj: s.maj ?? null,
     ...(s.ruptures ? { ruptures: s.ruptures } : {}),
   };

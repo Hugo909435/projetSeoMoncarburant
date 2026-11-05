@@ -11,11 +11,14 @@ import { deptContent } from '../../../data/local-content';
 import LocalIdentity from '../../../components/LocalIdentity.astro';
 import { existsSync } from 'node:fs';
 import AdUnit from '../../../components/AdUnit.astro';
+import FAQ from '../../../components/FAQ.astro';
+import { comparablePrice, parisDay, rankComparableStations } from '../../../utils/fuel-comparison.mjs';
 
 export async function getStaticPaths() {
   const cityFiles = import.meta.glob('../../../data/fuel/stations-by-city/*.json', { eager: true });
   const deps = departments as Record<string, { num: string; name: string; slug: string; region: string; regionSlug: string }>;
 
+  const cityEntries = Object.values(cityFiles) as any[];
   return Object.entries(cityFiles).map(([path, data]: [string, any]) => {
     const slug = path.match(/\/([^/]+)\.json$/)?.[1];
     if (!slug || !data || !data.stations || data.stations.length === 0) return null;
@@ -23,12 +26,15 @@ export async function getStaticPaths() {
     const dept = deps[data.department];
     return {
       params: { city: slug },
-      props: { cityData: data, dept },
+      props: { cityData: data, dept, nearbyCities: cityEntries
+        .filter(city => city.citySlug !== data.citySlug && city.department === data.department && city.count >= 3)
+        .sort((a, b) => b.count - a.count).slice(0, 6)
+        .map(city => ({ name: city.cityName, slug: city.citySlug })) },
     };
   }).filter(Boolean);
 }
 
-const { cityData, dept } = Astro.props;
+const { cityData, dept, nearbyCities } = Astro.props;
 const { cityName, citySlug, stats, stations, count } = cityData;
 
 function priceDiff(price: number | null | undefined, fuelKey: string) {
@@ -43,7 +49,27 @@ const lastUpdate = meta.lastUpdate
 
 const localTitle = `Carburant à ${cityName} : les stations les moins chères`;
 const title = localTitle.length <= 60 ? localTitle : `Prix carburant à ${cityName}`;
-const description = `Prix du carburant à ${cityName} : comparez ${count} stations, gazole, SP95, SP98, E10, E85 et GPL. Prix déclarés, dates et itinéraires.`;
+const recentGazole = rankComparableStations(stations, 'Gazole', parisDay());
+const minGazole = recentGazole.length ? comparablePrice(recentGazole[0], 'Gazole') : null;
+const priceLead = minGazole != null ? `Gazole dès ${minGazole.toFixed(3).replace('.', ',')} €/L (déclarations récentes). ` : '';
+const detailedDescription = `${cityName} : ${priceLead}Comparez ${count} stations, essence et gazole, avec dates des prix et itinéraires.`;
+const description = detailedDescription.length <= 160 ? detailedDescription : `Carburant à ${cityName} : comparez ${count} stations, essence et gazole. Dates des prix déclarés, adresses et itinéraires.`;
+const localFaq = [
+  {
+    question: `Où trouver du gazole moins cher à ${cityName} ?`,
+    answer: minGazole != null
+      ? `Dans les déclarations de 7 jours maximum, le prix le plus bas du gazole est de ${minGazole.toFixed(3).replace('.', ',')} €/L. Le classement en haut de page donne les adresses et les dates. Vérifiez le tarif en station avant de partir.`
+      : `Aucun prix du gazole avec une déclaration de 7 jours maximum n'est disponible dans notre classement. Le tableau conserve les autres déclarations avec leur date ; vous pouvez aussi comparer les autres carburants.`,
+  },
+  {
+    question: `Comment comparer l'essence à ${cityName} ?`,
+    answer: `Choisissez SP95, SP95-E10 ou SP98 dans le sélecteur du comparateur. Les stations sont alors classées pour ce carburant, avec les déclarations récentes en premier. Vérifiez la compatibilité avec votre véhicule.`,
+  },
+  {
+    question: 'La date affichée garantit-elle le prix du jour ?',
+    answer: `Non. La date est celle de la déclaration disponible dans nos données. Quand la date du carburant n'est pas fournie, nous affichons la dernière déclaration de la station, qui peut concerner un autre carburant. Le prix affiché en station reste à vérifier.`,
+  },
+];
 
 const introSentences = buildCityIntro({
   cityName,
@@ -180,6 +206,18 @@ const jsonLdBreadcrumb = {
         </div>
       </section>
 
+      {nearbyCities.length > 0 && (
+        <section class="section-block" aria-labelledby="other-local-cities">
+          <h2 id="other-local-cities">Comparer dans les autres villes du département</h2>
+          <p class="local-note">Pour comparer si vous vous y rendez déjà. Ces villes ne sont pas nécessairement les plus proches.</p>
+          <nav class="nav-links" aria-label="Autres villes du département">
+            {nearbyCities.map((city: { name: string; slug: string }) => <a class="nav-link" href={`/prix-carburants/ville/${city.slug}/`}>{city.name}</a>)}
+          </nav>
+        </section>
+      )}
+      <FAQ items={localFaq} />
+      <p class="local-note">Pour situer les tarifs locaux, consultez le <a href="/prix-moyen-carburant-france/#bilan-hebdomadaire">bilan hebdomadaire des prix en France</a> et notre <a href="/prix-carburants/methodologie/">méthodologie</a>.</p>
+
       <!-- Texte SEO -->
       <section class="section-block seo-text">
         <h2>Carburant à {cityName} : tout savoir</h2>
@@ -192,6 +230,7 @@ const jsonLdBreadcrumb = {
 </BaseLayout>
 
 <style>
+  .local-note { color:#475569; font-size:.875rem; line-height:1.6; margin-bottom:1rem; }
   .breadcrumb-nav { font-size: 0.875rem; color: var(--color-text-muted); }
   .breadcrumb-nav a { color: var(--color-primary); text-decoration: none; }
   .breadcrumb-nav a:hover { text-decoration: underline; }
@@ -204,11 +243,11 @@ const jsonLdBreadcrumb = {
   .page-body { padding-top: 2rem; padding-bottom: 3rem; }
   .section-block { margin-bottom: 3rem; }
   .section-block h2 { font-size: 1.2rem; font-weight: 700; color: var(--color-primary); margin: 0 0 1.25rem; border-bottom: 2px solid #e5e7eb; padding-bottom: 0.5rem; }
-  .fuel-stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem; }
-  @media (min-width: 768px) { .fuel-stats-grid { grid-template-columns: repeat(6, 1fr); } }
+  .fuel-stats-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.75rem; }
+  @media (min-width: 768px) { .fuel-stats-grid { grid-template-columns: repeat(6, minmax(0, 1fr)); } }
   .fuel-stat-card { background: #fff; border: 2px solid #e5e7eb; border-top: 3px solid var(--fuel-color); border-radius: 0.5rem; padding: 1rem; }
   .fsc-label { font-size: 0.75rem; color: var(--color-text-muted); font-weight: 700; margin-bottom: 0.25rem; }
-  .fsc-price { font-size: 1.25rem; font-weight: 800; color: var(--fuel-color); display: flex; align-items: baseline; gap: 0.2rem; }
+  .fsc-price { font-size: 1.25rem; font-weight: 800; color: var(--fuel-color); display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.2rem; }
   .fsc-unit { font-size: 0.7rem; font-weight: 500; color: var(--color-text-muted); }
   .fsc-diff { font-size: 0.7rem; padding: 0.15rem 0.4rem; border-radius: 999px; margin-top: 0.25rem; display: inline-block; font-weight: 600; }
   .badge-green { background: #dcfce7; color: #166534; }

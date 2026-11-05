@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import PriceHistoryChart from '../../components/PriceHistoryChart.astro';
+import WeeklyFuelBrief from '../../components/WeeklyFuelBrief.astro';
 import AdUnit from '../../components/AdUnit.astro';
 import statsNational from '../../data/fuel/stats-national.json';
 import priceHistory from '../../data/fuel/price-history.json';
@@ -53,6 +54,20 @@ const fr3 = (v: number) => v.toFixed(3).replace('.', ',');
 const gazoleMonth = monthlyAverage('Gazole', monthKey) ?? statsNational.Gazole ?? null;
 const e10Month = monthlyAverage('E10', monthKey) ?? statsNational.E10 ?? null;
 const sp98Month = monthlyAverage('SP98', monthKey) ?? statsNational.SP98 ?? null;
+
+// Comparaison datée avec le dernier relevé avant l'opération de novembre.
+// Le bloc suit les données et disparaît après la période concernée.
+const novemberBaseline = history.find((entry) => entry.date === '2026-10-31');
+const latestObservation = history[history.length - 1];
+const novemberComparison = novemberBaseline && latestObservation
+  && latestObservation.date >= '2026-11-01' && latestObservation.date < '2027-02-01'
+  ? FUELS.filter(({ key }) => ['Gazole', 'E10', 'SP98'].includes(key)).flatMap(({ key, label }) => {
+      const before = novemberBaseline.prices[key];
+      const after = latestObservation.prices[key];
+      if (before == null || after == null) return [];
+      return [{ label, before, after, diff: after - before }];
+    })
+  : [];
 
 const title = `Prix moyen carburant en France : ${monthLabel}`;
 const description = gazoleMonth != null && e10Month != null && sp98Month != null
@@ -152,6 +167,43 @@ const jsonLdFaq = {
     </section>
 
     <div class="container page-body">
+
+      <WeeklyFuelBrief />
+
+      {novemberComparison.length > 0 && latestObservation && (
+        <section class="section-block seo-text" aria-labelledby="november-prices-title">
+          <h2 id="november-prices-title">Baisse des carburants depuis le 1er novembre : le bilan</h2>
+          <p>
+            Évolution du prix moyen entre le 31 octobre 2026, avant le début de l'opération sur le gazole,
+            et le {dateFormatter.format(new Date(`${latestObservation.date}T12:00:00Z`))}.
+          </p>
+          <div class="table-wrapper">
+            <table class="pm-table">
+              <thead>
+                <tr><th>Carburant</th><th>31 octobre 2026</th><th>Dernier relevé</th><th>Écart sur 50 L</th></tr>
+              </thead>
+              <tbody>
+                {novemberComparison.map(({ label, before, after, diff }) => (
+                  <tr>
+                    <td class="pm-table-date">{label}</td>
+                    <td>{fr3(before)} €/L</td>
+                    <td>{fr3(after)} €/L</td>
+                    <td class={diff < 0 ? 'pm-down' : diff > 0 ? 'pm-up' : ''}>
+                      {diff > 0 ? '+' : ''}{(diff * 50).toFixed(2).replace('.', ',')} €
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <p>
+            Ces écarts mesurent la variation totale de nos moyennes nationales, sans isoler l'effet de la mesure
+            gouvernementale. Le prix et l'économie dans votre station peuvent différer. Consultez notre{' '}
+            <a href="/blog/baisse-gazole-1er-novembre-stocks-strategiques/">bilan de la baisse du gazole en novembre</a>{' '}
+            pour comprendre la mesure, puis <a href="/prix-gazole/">comparez les stations de gazole près de chez vous</a>.
+          </p>
+        </section>
+      )}
 
       <!-- Moyenne du mois -->
       {monthFirstDay && (

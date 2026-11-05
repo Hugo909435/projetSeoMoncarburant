@@ -2,6 +2,7 @@
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import BrandLogo from '../../../components/BrandLogo.astro';
 import StationLink from '../../../components/StationLink.astro';
+import localPriorities from '../../../data/seo-local-priorities.json';
 import statsNational from '../../../data/fuel/stats-national.json';
 import brandsIndex from '../../../data/fuel/brands.json';
 import departmentsData from '../../../data/departments.json';
@@ -10,6 +11,7 @@ import { formatMaj } from '../../../utils/format-maj';
 import AdUnit from '../../../components/AdUnit.astro';
 import FAQ from '../../../components/FAQ.astro';
 import { stationUrl } from '../../../utils/station-waves';
+import { comparablePrice, fuelDeclaration, hasRecentDeclaration, parisDay, rankComparableStations } from '../../../utils/fuel-comparison.mjs';
 
 export async function getStaticPaths() {
   const brandFiles = import.meta.glob('../../../data/fuel/stations-by-brand/*.json', { eager: true });
@@ -32,10 +34,19 @@ export async function getStaticPaths() {
     }))
     .sort((a, b) => a.gazole - b.gazole);
 
-  return entries.map(e => ({ params: { brand: e.slug }, props: { brandData: e.data, ranking, rankMin } }));
+  const cities = Object.values(import.meta.glob('../../../data/fuel/stations-by-city/*.json', { eager: true })) as any[];
+  return entries.map(e => {
+    const localCities = cities.filter(city => city.count >= 3 && city.stations.some((s: any) => s.enseigneSlug === e.slug))
+      .map(city => ({ slug: city.citySlug, name: city.cityName, count: city.stations.filter((s: any) => s.enseigneSlug === e.slug).length }))
+      .sort((a, b) => {
+        const priority = (slug: string) => { const i = localPriorities.cities.indexOf(slug); return i < 0 ? 999 : i; };
+        return priority(a.slug) - priority(b.slug) || b.count - a.count || a.name.localeCompare(b.name, 'fr');
+      }).slice(0, 8);
+    return { params: { brand: e.slug }, props: { brandData: e.data, ranking, rankMin, localCities } };
+  });
 }
 
-const { brandData, ranking, rankMin } = Astro.props;
+const { brandData, ranking, rankMin, localCities } = Astro.props;
 const { slug, name, stats, top10, count, departments: deptNums } = brandData;
 
 const FUELS = ['Gazole', 'SP95', 'SP98', 'E10', 'E85', 'GPLc'] as const;
@@ -100,8 +111,12 @@ const ordinal = (n: number) => (n === 1 ? '1re' : `${n}e`);
 const rankIndex = ranking.findIndex((r: { slug: string }) => r.slug === slug);
 const gazoleRank = rankIndex >= 0 ? rankIndex + 1 : null;
 
-// Stations triées du gazole le moins cher au plus cher. Celles qui ne déclarent
+// Stations triées du carburant choisi le moins cher au plus cher. Celles qui ne déclarent
 // pas de gazole suivent, triées sur l'E10, puis celles sans aucun prix.
+const referenceDay = parisDay();
+const initialFuel = FUELS.find(fuel => rankComparableStations(brandData.stations, fuel, referenceDay).length > 0) ?? 'Gazole';
+const initialStations = rankComparableStations(brandData.stations, initialFuel, referenceDay);
+const freshTop10 = Object.fromEntries(['Gazole', 'SP95'].map(fuel => [fuel, rankComparableStations(brandData.stations, fuel, referenceDay).slice(0, 10)]));
 const NO_PRICE = 99;
 const sortedStations = [...brandData.stations].sort((a: any, b: any) =>
   (a.prices?.Gazole ?? NO_PRICE) - (b.prices?.Gazole ?? NO_PRICE)
@@ -110,8 +125,10 @@ const sortedStations = [...brandData.stations].sort((a: any, b: any) =>
 const FIRST_ROWS = 30;
 
 const title = `Prix carburant ${name} : gasoil et essence aujourd'hui`;
-const descPrix = gazoleAvg ? ` : gazole moyen à ${gazoleAvg.toFixed(3)} €/L, ${gazolediffStr}` : '';
-const description = `Prix gasoil et essence dans les ${count} stations ${name}${descPrix}. Actualisé plusieurs fois par jour.`;
+const descPrix = gazoleAvg ? `Gazole moyen à ${gazoleAvg.toFixed(3).replace('.', ',')} €/L. ` : '';
+const description = `${name} : ${descPrix}Comparez le gasoil et l'essence par station. Cherchez votre ville ou code postal et vérifiez la date des prix.`;
+const showNovemberContext = meta.lastUpdate
+  && meta.lastUpdate.slice(0, 10) >= '2026-11-01' && meta.lastUpdate.slice(0, 10) < '2027-02-01';
 
 // Top 3 enseignes pour la navigation croisée (exclure l'enseigne courante)
 const siblingBrands = (brandsIndex as { slug: string; name: string; count: number }[])
@@ -128,11 +145,12 @@ const deptsCovered = (deptNums as string[])
 // plutôt qu'objets : sur 1 000 stations et plus, les noms de clés répétés
 // pèsent plus lourd que les données. Ordre des colonnes : voir le script.
 const stationsData = JSON.stringify({
+  referenceDay,
   rows: sortedStations.map((s: any) => [
     s.adresse ?? '', s.ville ?? '', s.cp ?? '', s.dep ?? '',
-    s.prices?.Gazole ?? null, s.prices?.SP95 ?? null, s.prices?.E10 ?? null,
-    s.prices?.SP98 ?? null, s.prices?.E85 ?? null,
-    s.maj ?? '', stationUrl(s.id) ?? '',
+    comparablePrice(s, 'Gazole'), comparablePrice(s, 'SP95'), comparablePrice(s, 'E10'),
+    comparablePrice(s, 'SP98'), comparablePrice(s, 'E85'),
+    s.maj ?? '', stationUrl(s.id) ?? '', comparablePrice(s, 'GPLc'), s.priceUpdates ?? null,
   ]),
   deps: Object.fromEntries(deptsCovered.map(d => [d.num, d.slug])),
 }).replace(/</g, '\\u003c');
@@ -159,7 +177,7 @@ const faqItems = [
   },
   {
     question: `Comment trouver la station ${name} la moins chère près de chez moi ?`,
-    answer: `Saisissez votre ville, votre code postal ou votre numéro de département dans la recherche de cette page. Les stations ${name} correspondantes s'affichent du gazole le moins cher au plus cher, avec la date de la dernière déclaration de prix.`,
+    answer: `Saisissez votre ville, votre code postal ou votre numéro de département dans la recherche de cette page. Les stations ${name} correspondantes s'affichent du carburant choisi le moins cher au plus cher, avec la date de la dernière déclaration de prix.`,
   },
 ].filter(Boolean) as { question: string; answer: string }[];
 
@@ -214,6 +232,97 @@ const jsonLdBreadcrumb = {
 
     <div class="container page-body">
 
+      <!-- Toutes les stations : recherche + 30 premières, le reste via le script -->
+      <section class="section-block" id="stations">
+        <h2>Comparez les stations {name} près de chez vous</h2>
+        <div class="brand-search">
+          <label for="brand-search-input">Trouver une station {name} près de chez vous</label>
+          <div class="brand-controls">
+          <div class="brand-place-field">
+          <input
+            type="search"
+            id="brand-search-input"
+            data-brand={name}
+            placeholder="Ville, code postal ou département"
+            autocomplete="off"
+            aria-controls="brand-stations-table"
+          />
+          </div>
+          <div class="brand-fuel-field" data-brand-interactive hidden>
+            <label for="brand-fuel">Votre carburant</label>
+            <select id="brand-fuel" aria-controls="brand-stations-table">
+              {FUELS.map(fuel => <option value={fuel} selected={fuel === initialFuel}>{FUEL_LABELS[fuel]}</option>)}
+            </select>
+          </div>
+          </div>
+          <label class="brand-recency" data-brand-interactive hidden>
+            <input type="checkbox" id="brand-recent" checked aria-controls="brand-stations-table" />
+            Déclarations de 7 jours maximum
+          </label>
+          <p class="brand-date-note">Hors ruptures signalées. Quand la date du carburant manque, la date affichée est la dernière déclaration de la station, qui peut concerner un autre carburant.</p>
+          <p id="brand-search-status" class="brand-search-status" aria-live="polite">
+            {initialStations.length} stations avec un prix de {FUEL_LABELS[initialFuel]} et une déclaration de 7 jours maximum, triées par prix croissant.
+          </p>
+        </div>
+        <div class="table-wrapper">
+          <table class="stations-table full-table" id="brand-stations-table">
+            <thead>
+              <tr>
+                <th>Adresse</th>
+                <th>Ville</th>
+                <th>Dept</th>
+                <th>Gazole</th>
+                <th>SP95</th>
+                <th>E10</th>
+                <th>SP98</th>
+                <th>E85</th>
+                <th>GPL</th>
+                <th title="Date de la dernière déclaration de prix par la station">Déclaré</th>
+              </tr>
+            </thead>
+            <tbody>
+              {initialStations.slice(0, FIRST_ROWS).map((s: any) => (
+                <tr>
+                  <td class="station-addr"><StationLink id={s.id} adresse={s.adresse} ville={s.ville} /></td>
+                  <td>{s.ville}</td>
+                  <td>
+                    <a href={`/prix-carburants/${deps[s.dep]?.slug ?? s.dep}/`} class="dept-pill-link">
+                      {s.dep}
+                    </a>
+                  </td>
+                  <td>{s.prices.Gazole?.toFixed(3) ?? '-'}</td>
+                  <td>{s.prices.SP95?.toFixed(3) ?? '-'}</td>
+                  <td>{s.prices.E10?.toFixed(3) ?? '-'}</td>
+                  <td>{s.prices.SP98?.toFixed(3) ?? '-'}</td>
+                  <td>{s.prices.E85?.toFixed(3) ?? '-'}</td>
+                  <td>{comparablePrice(s, 'GPLc')?.toFixed(3) ?? '-'}</td>
+                  <td class="station-maj" title={fuelDeclaration(s, initialFuel) ?? ''}>{formatMaj(fuelDeclaration(s, initialFuel))}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        {initialStations.length > FIRST_ROWS && (
+          <div style="text-align:center;margin-top:1rem">
+            <button id="brand-show-more" class="btn-show-more" type="button">
+              Afficher les {initialStations.length - FIRST_ROWS} stations restantes ↓
+            </button>
+          </div>
+        )}
+        <script type="application/json" id="brand-stations-data" set:html={stationsData} />
+      </section>
+
+
+      {localCities.length > 0 && (
+        <nav class="section-block" aria-label={`Comparer ${name} avec les stations locales`}>
+          <h2>Comparer {name} avec les autres stations de votre ville</h2>
+          <p class="dept-intro">Ces pages comparent toutes les enseignes de la ville, avec les prix déclarés et les itinéraires.</p>
+          <div class="dept-grid">
+            {localCities.map((city: { slug: string; name: string }) => <a class="dept-pill" href={`/prix-carburants/ville/${city.slug}/`}>{city.name}</a>)}
+          </div>
+        </nav>
+      )}
+
       <!-- Stats par carburant -->
       <section class="section-block">
         <h2>Prix moyens {name} en France</h2>
@@ -250,67 +359,19 @@ const jsonLdBreadcrumb = {
         )}
       </section>
 
-      <!-- Toutes les stations : recherche + 30 premières, le reste via le script -->
-      <section class="section-block" id="stations">
-        <h2>Toutes les stations {name} ({count})</h2>
-        <div class="brand-search">
-          <label for="brand-search-input">Trouver une station {name} près de chez vous</label>
-          <input
-            type="search"
-            id="brand-search-input"
-            data-brand={name}
-            placeholder="Ville, code postal ou département"
-            autocomplete="off"
-          />
-          <p id="brand-search-status" class="brand-search-status" aria-live="polite">
-            Stations triées du gazole le moins cher au plus cher.
+      {showNovemberContext && PRIX_COUTANT_BRANDS.includes(slug) && (
+        <section class="section-block seo-text" aria-labelledby="november-brand-title">
+          <h2 id="november-brand-title">La baisse du gazole en novembre chez {name}</h2>
+          <p>
+            La moyenne du réseau ne donne pas le prix de votre station. Comparez les prix de votre secteur
+            dans le comparateur en haut de page et vérifiez leur date de déclaration. Notre{' '}
+            <a href="/blog/baisse-gazole-1er-novembre-stocks-strategiques/">bilan de la baisse du gazole depuis le 1er novembre</a>{' '}
+            explique la mesure et chiffre l'évolution nationale. Pour la tendance du jour, consultez les{' '}
+            <a href="/prix-moyen-carburant-france/">prix moyens en France</a>.
           </p>
-        </div>
-        <div class="table-wrapper">
-          <table class="stations-table full-table" id="brand-stations-table">
-            <thead>
-              <tr>
-                <th>Adresse</th>
-                <th>Ville</th>
-                <th>Dept</th>
-                <th>Gazole</th>
-                <th>SP95</th>
-                <th>E10</th>
-                <th>SP98</th>
-                <th>E85</th>
-                <th title="Date de la dernière déclaration de prix par la station">Déclaré</th>
-              </tr>
-            </thead>
-            <tbody>
-              {sortedStations.slice(0, FIRST_ROWS).map((s: any) => (
-                <tr>
-                  <td class="station-addr"><StationLink id={s.id} adresse={s.adresse} ville={s.ville} /></td>
-                  <td>{s.ville}</td>
-                  <td>
-                    <a href={`/prix-carburants/${deps[s.dep]?.slug ?? s.dep}/`} class="dept-pill-link">
-                      {s.dep}
-                    </a>
-                  </td>
-                  <td>{s.prices.Gazole?.toFixed(3) ?? '-'}</td>
-                  <td>{s.prices.SP95?.toFixed(3) ?? '-'}</td>
-                  <td>{s.prices.E10?.toFixed(3) ?? '-'}</td>
-                  <td>{s.prices.SP98?.toFixed(3) ?? '-'}</td>
-                  <td>{s.prices.E85?.toFixed(3) ?? '-'}</td>
-                  <td class="station-maj" title={s.maj ?? ''}>{formatMaj(s.maj)}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-        {sortedStations.length > FIRST_ROWS && (
-          <div style="text-align:center;margin-top:1rem">
-            <button id="brand-show-more" class="btn-show-more" type="button">
-              Afficher les {sortedStations.length - FIRST_ROWS} stations restantes ↓
-            </button>
-          </div>
-        )}
-        <script type="application/json" id="brand-stations-data" set:html={stationsData} />
-      </section>
+        </section>
+      )}
+
 
       <AdUnit />
 
@@ -369,42 +430,44 @@ const jsonLdBreadcrumb = {
       )}
 
       <!-- Top 10 moins chères -->
-      {(top10.Gazole?.length > 0 || top10.SP95?.length > 0) && (
+      {(freshTop10.Gazole?.length > 0 || freshTop10.SP95?.length > 0) && (
         <section class="section-block">
-          <h2>Top 10 stations {name} les moins chères de France</h2>
+          <h2>Prix bas {name} : déclarations récentes</h2>
           <div class="top10-tabs">
-            {top10.Gazole?.length > 0 && (
+            {freshTop10.Gazole?.length > 0 && (
               <div class="top10-group">
                 <h3 class="top10-title" style="color:#374151">Gazole</h3>
                 <table class="stations-table">
                   <thead>
-                    <tr><th>Station</th><th>Ville</th><th>Prix Gazole</th></tr>
+                    <tr><th>Station</th><th>Ville</th><th>Prix Gazole</th><th>Déclaration</th></tr>
                   </thead>
                   <tbody>
-                    {top10.Gazole.map((s: any) => (
+                    {freshTop10.Gazole.map((s: any) => (
                       <tr>
                         <td class="station-addr"><StationLink id={s.id} adresse={s.adresse} ville={s.ville} /></td>
                         <td><a href={`/prix-carburants/${deps[s.dep]?.slug ?? s.dep}/`} class="dept-link">{s.ville}</a></td>
                         <td class="price-highlight">{s.prices.Gazole?.toFixed(3) ?? '-'} €/L</td>
+                        <td>{formatMaj(fuelDeclaration(s, 'Gazole'))}</td>
                       </tr>
                     ))}
                   </tbody>
                 </table>
               </div>
             )}
-            {top10.SP95?.length > 0 && (
+            {freshTop10.SP95?.length > 0 && (
               <div class="top10-group">
                 <h3 class="top10-title" style="color:#16a34a">Sans-Plomb 95</h3>
                 <table class="stations-table">
                   <thead>
-                    <tr><th>Station</th><th>Ville</th><th>Prix SP95</th></tr>
+                    <tr><th>Station</th><th>Ville</th><th>Prix SP95</th><th>Déclaration</th></tr>
                   </thead>
                   <tbody>
-                    {top10.SP95.map((s: any) => (
+                    {freshTop10.SP95.map((s: any) => (
                       <tr>
                         <td class="station-addr"><StationLink id={s.id} adresse={s.adresse} ville={s.ville} /></td>
                         <td><a href={`/prix-carburants/${deps[s.dep]?.slug ?? s.dep}/`} class="dept-link">{s.ville}</a></td>
                         <td class="price-highlight">{s.prices.SP95?.toFixed(3) ?? '-'} €/L</td>
+                        <td>{formatMaj(fuelDeclaration(s, 'SP95'))}</td>
                       </tr>
                     ))}
                   </tbody>
@@ -492,29 +555,35 @@ const jsonLdBreadcrumb = {
 <script>
   import { formatMaj } from '../../../utils/format-maj';
   import { escapeHtml } from '../../../utils/escape-html';
+  import { hasRecentDeclaration, fuelDeclaration } from '../../../utils/fuel-comparison.mjs';
 
   // Colonnes de #brand-stations-data, dans l'ordre écrit par le frontmatter.
-  const ADRESSE = 0, VILLE = 1, CP = 2, DEP = 3, GAZOLE = 4, SP95 = 5, E10 = 6, SP98 = 7, E85 = 8, MAJ = 9, URL = 10;
-  type Row = [string, string, string, string, number | null, number | null, number | null, number | null, number | null, string, string];
+  const ADRESSE = 0, VILLE = 1, CP = 2, DEP = 3, GAZOLE = 4, SP95 = 5, E10 = 6, SP98 = 7, E85 = 8, MAJ = 9, URL = 10, GPL = 11, DATES = 12;
+  type Row = [string, string, string, string, number | null, number | null, number | null, number | null, number | null, string, string, number | null, Record<string, string> | null];
 
   const dataEl = document.getElementById('brand-stations-data');
   const tbody = document.querySelector('#brand-stations-table tbody');
   const input = document.getElementById('brand-search-input') as HTMLInputElement | null;
   const status = document.getElementById('brand-search-status');
   const btn = document.getElementById('brand-show-more');
+  const fuelSelect = document.getElementById('brand-fuel') as HTMLSelectElement | null;
+  const recentOnly = document.getElementById('brand-recent') as HTMLInputElement | null;
 
-  if (dataEl && tbody && input && status) {
-    const { rows, deps } = JSON.parse(dataEl.textContent || '{}') as { rows: Row[]; deps: Record<string, string> };
+  if (dataEl && tbody && input && status && fuelSelect && recentOnly) {
+    const { rows, deps, referenceDay } = JSON.parse(dataEl.textContent || '{}') as { rows: Row[]; deps: Record<string, string>; referenceDay: string };
+    const fuelColumns: Record<string, number> = { Gazole: GAZOLE, SP95, SP98, E10, E85, GPLc: GPL };
+    const declaration = (r: Row) => fuelDeclaration({ maj: r[MAJ], priceUpdates: r[DATES] }, fuelSelect.value);
+    const eligibleRows = () => rows.filter(r => typeof r[fuelColumns[fuelSelect.value]] === 'number'
+      && (!recentOnly.checked || hasRecentDeclaration({ maj: r[MAJ], priceUpdates: r[DATES] }, fuelSelect.value, referenceDay)))
+      .sort((a, b) => Number(a[fuelColumns[fuelSelect.value]]) - Number(b[fuelColumns[fuelSelect.value]]));
     const brand = input.dataset.brand || '';
     const FIRST_ROWS = 30;
     // Au-delà, la liste devient illisible sur mobile : mieux vaut préciser la recherche.
     const MAX_RESULTS = 200;
-    const defaultStatus = status.textContent || '';
     let expanded = false;
 
     // Les villes arrivent en casse et accentuation variables (« CHâTILLON-SUR-SEINE »).
     const norm = (v: string) => v.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
-    let index: { ville: string; adresse: string }[] | null = null;
 
     const price = (v: number | null) => (typeof v === 'number' ? v.toFixed(3) : '-');
     const rowHtml = (r: Row) => {
@@ -529,7 +598,8 @@ const jsonLdBreadcrumb = {
         <td>${price(r[E10])}</td>
         <td>${price(r[SP98])}</td>
         <td>${price(r[E85])}</td>
-        <td class="station-maj" title="${escapeHtml(r[MAJ])}">${formatMaj(r[MAJ])}</td>
+        <td>${price(r[GPL])}</td>
+        <td class="station-maj" title="${escapeHtml(declaration(r) || '')}">${formatMaj(declaration(r))}</td>
       </tr>`;
     };
     const render = (list: Row[], limit: number) => {
@@ -538,43 +608,48 @@ const jsonLdBreadcrumb = {
 
     const update = () => {
       const q = norm(input.value);
+      const eligible = eligibleRows();
+      const fuelLabel = fuelSelect.selectedOptions[0].textContent;
+      const suffix = recentOnly.checked ? ', déclarations de 7 jours maximum' : ', toutes dates de déclaration';
       if (!q) {
-        render(rows, expanded ? rows.length : FIRST_ROWS);
-        status.textContent = defaultStatus;
-        if (btn) btn.hidden = expanded;
+        render(eligible, expanded ? MAX_RESULTS : FIRST_ROWS);
+        status.textContent = `${eligible.length} stations avec un prix de ${fuelLabel}${suffix}. Tri par prix croissant.${expanded && eligible.length > MAX_RESULTS ? ' Les 200 premiers résultats sont affichés : précisez une ville.' : ''}`;
+        if (btn) { btn.hidden = expanded || eligible.length <= FIRST_ROWS; btn.textContent = `Afficher plus de stations (${eligible.length})`; }
         return;
       }
-      index ??= rows.map(r => ({ ville: norm(r[VILLE]), adresse: norm(r[ADRESSE]) }));
-      const idx = index;
-      const byDep = (dep: string) => rows.filter(r => r[DEP].toLowerCase() === dep);
+      const byDep = (dep: string) => eligible.filter(r => r[DEP].toLowerCase() === dep);
       let matches: Row[];
       // Renseigné quand la recherche exacte ne donne rien et qu'on élargit au département.
       let widened = '';
       if (/^\d+$/.test(q)) {
         // 1 ou 2 chiffres : numéro de département. Au-delà : début de code postal.
-        matches = q.length <= 2 ? byDep(q.padStart(2, '0')) : rows.filter(r => r[CP].startsWith(q));
+        matches = q.length <= 2 ? byDep(q.padStart(2, '0')) : eligible.filter(r => r[CP].startsWith(q));
         if (matches.length === 0 && q.length === 5) {
           widened = q.slice(0, 2);
           matches = byDep(widened);
         }
       } else {
         // La ville d'abord : « bordeaux » ne doit pas remonter une « route de Bordeaux » ailleurs.
-        matches = rows.filter((r, i) => idx[i].ville.includes(q) || r[DEP].toLowerCase() === q);
-        if (matches.length === 0) matches = rows.filter((_, i) => idx[i].adresse.includes(q));
+        matches = eligible.filter(r => norm(r[VILLE]).includes(q) || r[DEP].toLowerCase() === q);
+        if (matches.length === 0) matches = eligible.filter(r => norm(r[ADRESSE]).includes(q));
       }
       render(matches, MAX_RESULTS);
       if (btn) btn.hidden = true;
       const n = matches.length;
-      const found = `${n} station${n > 1 ? 's' : ''} ${brand}`;
+      const found = `${n} station${n > 1 ? 's' : ''} ${brand} avec un prix de ${fuelLabel}${suffix}`;
       status.textContent = n === 0
-        ? `Aucune station ${brand} trouvée pour « ${input.value.trim()} ».`
+        ? `Aucune station avec un prix pour ce carburant et ces filtres trouvée pour « ${input.value.trim()} ».`
         : (widened
-          ? `Aucune station ${brand} au code postal ${q}. ${found} dans le département ${widened}, du gazole le moins cher au plus cher`
-          : `${found} trouvée${n > 1 ? 's' : ''}, du gazole le moins cher au plus cher`)
+          ? `Aucune station ${brand} au code postal ${q}. ${found} dans le département ${widened}, du carburant choisi le moins cher au plus cher`
+          : `${found} trouvée${n > 1 ? 's' : ''}, du carburant choisi le moins cher au plus cher`)
           + (n > MAX_RESULTS ? ` (${MAX_RESULTS} premières affichées, précisez la recherche).` : '.');
     };
 
     input.addEventListener('input', update);
+    fuelSelect.addEventListener('change', () => { expanded = false; update(); });
+    recentOnly.addEventListener('change', () => { expanded = false; update(); });
+    document.querySelectorAll<HTMLElement>('[data-brand-interactive]').forEach(el => { el.hidden = false; });
+    update();
     btn?.addEventListener('click', () => {
       expanded = true;
       update();
@@ -583,6 +658,16 @@ const jsonLdBreadcrumb = {
 </script>
 
 <style>
+  .brand-controls { display:flex; align-items:end; gap:1rem; margin-top:.5rem; }
+  .brand-place-field { flex:1; min-width:0; }
+  .brand-fuel-field { display:grid; gap:.35rem; }
+  .brand-fuel-field select { min-height:44px; padding:.65rem; border:1px solid #94a3b8; border-radius:.5rem; background:white; font:inherit; }
+  .brand-search .brand-recency { display:flex; align-items:center; gap:.6rem; margin-top:1rem; font-size:.875rem; }
+  .brand-search .brand-recency input { width:20px; height:20px; margin:0; padding:0; }
+  .brand-date-note { font-size:.8rem; line-height:1.5; color:#475569; }
+  [data-brand-interactive][hidden] { display:none; }
+  @media(max-width:480px) { .brand-controls { flex-direction:column; align-items:stretch; } }
+
   .breadcrumb-nav { font-size:0.875rem; color:var(--color-text-muted); margin-bottom:0.5rem; }
   .breadcrumb-nav a { color:var(--color-primary); text-decoration:none; }
   .breadcrumb-nav a:hover { text-decoration:underline; }
@@ -707,7 +792,8 @@ const jsonLdBreadcrumb = {
     :global(#brand-stations-table td:nth-child(6))::before { content:'E10'; }
     :global(#brand-stations-table td:nth-child(7))::before { content:'SP98'; }
     :global(#brand-stations-table td:nth-child(8))::before { content:'E85'; }
-    :global(#brand-stations-table td:nth-child(9)) { order:5; flex:0 0 100%; }
-    :global(#brand-stations-table td:nth-child(9))::before { content:'Prix déclaré : '; }
+    :global(#brand-stations-table td:nth-child(9))::before { content:'GPL'; }
+    :global(#brand-stations-table td:nth-child(10)) { order:5; flex:0 0 100%; }
+    :global(#brand-stations-table td:nth-child(10))::before { content:'Prix déclaré : '; }
   }
 </style>

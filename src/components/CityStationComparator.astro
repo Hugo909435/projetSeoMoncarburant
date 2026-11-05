@@ -3,6 +3,7 @@ import BrandLogo from './BrandLogo.astro';
 import StationLink from './StationLink.astro';
 import { FUEL_KEYS, type FuelStatKey } from '../data/fuel/config';
 import { formatMaj } from '../utils/format-maj';
+import { comparablePrice, fuelDeclaration, hasRecentDeclaration, parisDay, rankComparableStations } from '../utils/fuel-comparison.mjs';
 
 interface Station {
   id: string;
@@ -16,21 +17,19 @@ interface Station {
   prices: Partial<Record<FuelStatKey, number>>;
   ruptures?: Partial<Record<FuelStatKey, string>>;
   maj?: string | null;
+  priceUpdates?: Partial<Record<FuelStatKey, string>>;
 }
 interface Props { stations: Station[]; cityName: string }
 const { stations, cityName } = Astro.props;
 const labels: Record<FuelStatKey, string> = {
   Gazole: 'Gazole', SP95: 'SP95', SP98: 'SP98', E10: 'SP95-E10', E85: 'E85', GPLc: 'GPL',
 };
-const price = (s: Station, fuel: FuelStatKey) => {
-  const value = s.prices[fuel];
-  return !s.ruptures?.[fuel] && typeof value === 'number' && Number.isFinite(value) && value > 0 ? value : null;
-};
-const rankings = Object.fromEntries(FUEL_KEYS.map(fuel => [fuel,
-  stations.filter(s => price(s, fuel) !== null).sort((a, b) => price(a, fuel)! - price(b, fuel)!),
-])) as Record<FuelStatKey, Station[]>;
+const referenceDay = parisDay();
+const price = (s: Station, fuel: FuelStatKey) => comparablePrice(s, fuel);
+const rankings = Object.fromEntries(FUEL_KEYS.map(fuel => [fuel, rankComparableStations(stations, fuel, referenceDay)])) as Record<FuelStatKey, Station[]>;
 const initialFuel = FUEL_KEYS.find(fuel => rankings[fuel].length > 0) ?? 'Gazole';
-const sortedStations = [...rankings[initialFuel], ...stations.filter(s => price(s, initialFuel) === null)];
+const sortedStations = [...rankings[initialFuel], ...stations.filter(s => !rankings[initialFuel].includes(s))
+  .sort((a, b) => (price(a, initialFuel) ?? Infinity) - (price(b, initialFuel) ?? Infinity))];
 const formatPrice = (value: number) => value.toLocaleString('fr-FR', { minimumFractionDigits: 3, maximumFractionDigits: 3 });
 const mapUrl = (fuel: FuelStatKey) => `/carte/?${new URLSearchParams({ ville: cityName, carburant: fuel })}`;
 function directions(s: Station) {
@@ -38,7 +37,7 @@ function directions(s: Station) {
     ? `${s.lat},${s.lng}` : `${s.adresse ?? ''}, ${s.cp ?? ''} ${cityName}`;
   return `https://www.google.com/maps/dir/?${new URLSearchParams({ api: '1', destination })}`;
 }
-const oldPrice = (s: Station) => !s.maj || !Number.isFinite(Date.parse(s.maj)) || Date.now() - Date.parse(s.maj) > 7 * 86400000;
+const oldPrice = (s: Station, fuel: FuelStatKey) => !hasRecentDeclaration(s, fuel, referenceDay);
 ---
 
 <section class="city-comparator section-block" data-city-comparator aria-labelledby="city-compare-title">
@@ -58,7 +57,7 @@ const oldPrice = (s: Station) => !s.maj || !Number.isFinite(Date.parse(s.maj)) |
   <div id="city-best-prices" aria-live="polite" aria-atomic="true">
     {FUEL_KEYS.map(fuel => (
       <div data-city-fuel-panel={fuel} hidden={fuel !== initialFuel}>
-        <p class="ranking-summary">{rankings[fuel].length} station{rankings[fuel].length !== 1 ? 's' : ''} avec un prix déclaré pour le {labels[fuel]}.</p>
+        <p class="ranking-summary">{rankings[fuel].length} station{rankings[fuel].length !== 1 ? 's' : ''} avec un prix et une déclaration de 7 jours maximum pour le {labels[fuel]}.</p>
         {rankings[fuel].length > 0 ? (
           <ol class="best-stations">
             {rankings[fuel].slice(0, 3).map((s, index) => (
@@ -66,29 +65,29 @@ const oldPrice = (s: Station) => !s.maj || !Number.isFinite(Date.parse(s.maj)) |
                 <div class="best-brand"><span class="station-rank">{index + 1}</span>{s.enseigne ?? 'Station-service'}</div>
                 <p class="best-price">{formatPrice(price(s, fuel)!)} <span>€/L</span></p>
                 <p class="best-address"><StationLink id={s.id} adresse={s.adresse} ville={s.ville} /> <span>{s.cp}</span></p>
-                <p class:list={['best-date', { 'price-old': oldPrice(s) }]}>
-                  Déclaration : {s.maj ? <time datetime={s.maj.replace(' ', 'T')}>{formatMaj(s.maj)}</time> : 'date inconnue'}
-                  {oldPrice(s) && <span>Prix ancien ou non daté, à vérifier avant de partir.</span>}
+                <p class:list={['best-date', { 'price-old': oldPrice(s, fuel) }]}>
+                  Déclaration : {fuelDeclaration(s, fuel) ? <time datetime={fuelDeclaration(s, fuel).replace(' ', 'T')}>{formatMaj(fuelDeclaration(s, fuel))}</time> : 'date inconnue'}
+                  {oldPrice(s, fuel) && <span>Prix ancien ou non daté, à vérifier avant de partir.</span>}
                 </p>
                 <a class="station-directions" href={directions(s)} target="_blank" rel="noopener noreferrer">Itinéraire <span class="sr-only">vers {s.adresse ?? 'la station'} (nouvel onglet)</span> ↗</a>
               </li>
             ))}
           </ol>
-        ) : <p class="empty-prices">Aucun prix disponible pour ce carburant. Consultez les autres carburants ou la carte des stations à proximité.</p>}
+        ) : <p class="empty-prices">Aucun prix avec une déclaration de 7 jours maximum pour ce carburant. Les autres prix restent consultables dans le tableau. Consultez les autres carburants ou la carte des stations à proximité.</p>}
         <a class="city-map-link" href={mapUrl(fuel)}>Voir les stations sur la carte →</a>
       </div>
     ))}
   </div>
 
-  <p class="price-note">Classement des prix déclarés, hors ruptures signalées. Une absence de rupture signalée ne garantit pas la disponibilité. Vérifiez la date de déclaration et le prix en station.</p>
+  <p class="price-note">Le classement met en avant les déclarations de 7 jours maximum, hors ruptures signalées. Si la date du carburant manque, nous utilisons la dernière déclaration de la station, qui peut concerner un autre carburant. Une absence de rupture signalée ne garantit pas la disponibilité. Vérifiez la date de déclaration et le prix en station.</p>
   <noscript><p>Le classement ci-dessus porte sur le {labels[initialFuel]}. Le tableau ci-dessous présente tous les carburants.</p></noscript>
 
   <div class="table-wrapper" role="region" aria-label={`Prix des stations à ${cityName}`} tabindex="0">
     <table class="stations-table" id="city-stations-table">
-      <caption>Stations à {cityName}, triées par prix du <span data-city-sort-label>{labels[initialFuel]}</span>. Les stations sans prix pour ce carburant figurent à la fin.</caption>
+      <caption>Stations à {cityName}, triées par prix du <span data-city-sort-label>{labels[initialFuel]}</span>. Les prix anciens ou sans date, puis les stations sans prix, figurent après les déclarations récentes.</caption>
       <thead><tr>
         <th scope="col">Marque</th><th scope="col">Adresse</th><th scope="col">CP</th>
-        {FUEL_KEYS.map(fuel => <th scope="col" data-city-fuel={fuel} aria-sort={fuel === initialFuel ? 'ascending' : undefined}>{labels[fuel]}</th>)}
+        {FUEL_KEYS.map(fuel => <th scope="col" data-city-fuel={fuel} aria-sort={fuel === initialFuel ? 'other' : undefined}>{labels[fuel]}</th>)}
         <th scope="col" title="Dernière déclaration de prix transmise par la station">Déclaré</th>
       </tr></thead>
       <tbody>
@@ -96,10 +95,10 @@ const oldPrice = (s: Station) => !s.maj || !Number.isFinite(Date.parse(s.maj)) |
           <td class="brand-cell">{s.enseigneSlug ? <BrandLogo slug={s.enseigneSlug} name={s.enseigne ?? s.enseigneSlug} /> : (s.enseigne ?? 'Station-service')}</td>
           <td class="station-address"><StationLink id={s.id} adresse={s.adresse} ville={s.ville} /></td>
           <td>{s.cp}</td>
-          {FUEL_KEYS.map(fuel => <td data-city-fuel={fuel} data-price={price(s, fuel) ?? ''} class:list={{ 'selected-price': fuel === initialFuel }}>
+          {FUEL_KEYS.map(fuel => <td data-city-fuel={fuel} data-price={price(s, fuel) ?? ''} data-recent={hasRecentDeclaration(s, fuel, referenceDay) ? '1' : '0'} data-declaration={fuelDeclaration(s, fuel) ?? ''} class:list={{ 'selected-price': fuel === initialFuel }}>
             {s.ruptures?.[fuel] ? <span class="rupture">Rupture</span> : price(s, fuel) !== null ? formatPrice(price(s, fuel)!) : <span aria-label="Prix non déclaré">-</span>}
           </td>)}
-          <td class="station-date" title={s.maj ?? 'Date inconnue'}>{formatMaj(s.maj)}</td>
+          <td class="station-date" title={fuelDeclaration(s, initialFuel) ?? 'Date inconnue'}>{formatMaj(fuelDeclaration(s, initialFuel))}{oldPrice(s, initialFuel) && <span class="price-old">Ancien ou non daté</span>}</td>
         </tr>)}
       </tbody>
     </table>
@@ -107,6 +106,7 @@ const oldPrice = (s: Station) => !s.maj || !Number.isFinite(Date.parse(s.maj)) |
 </section>
 
 <script>
+  import { formatMaj } from '../utils/format-maj';
   document.querySelectorAll<HTMLElement>('[data-city-comparator]').forEach(root => {
     const select = root.querySelector<HTMLSelectElement>('select');
     const body = root.querySelector('tbody');
@@ -122,13 +122,28 @@ const oldPrice = (s: Station) => !s.maj || !Number.isFinite(Date.parse(s.maj)) |
         const cell = Array.from(row.cells).find(cell => cell.dataset.cityFuel === fuel);
         return cell?.dataset.price ? Number(cell.dataset.price) : Infinity;
       };
-      rows.sort((a, b) => readPrice(a) - readPrice(b));
+      const selectedCell = (row: HTMLTableRowElement) => Array.from(row.cells).find(cell => cell.dataset.cityFuel === fuel);
+      const group = (row: HTMLTableRowElement) => !Number.isFinite(readPrice(row)) ? 2 : selectedCell(row)?.dataset.recent === '1' ? 0 : 1;
+      rows.sort((a, b) => group(a) - group(b) || readPrice(a) - readPrice(b));
+      rows.forEach(row => {
+        const date = row.querySelector('.station-date');
+        if (!date) return;
+        const declaration = selectedCell(row)?.dataset.declaration || '';
+        date.textContent = formatMaj(declaration);
+        date.setAttribute('title', declaration || 'Date inconnue');
+        if (group(row) !== 0) {
+          const note = document.createElement('span');
+          note.className = 'price-old';
+          note.textContent = 'Ancien ou non daté';
+          date.append(note);
+        }
+      });
       body.append(...rows);
       cells.forEach(cell => {
         const selected = cell.dataset.cityFuel === fuel;
         cell.classList.toggle('selected-price', selected);
         if (cell.tagName === 'TH') {
-          if (selected) cell.setAttribute('aria-sort', 'ascending');
+          if (selected) cell.setAttribute('aria-sort', 'other');
           else cell.removeAttribute('aria-sort');
         }
       });
@@ -176,6 +191,7 @@ const oldPrice = (s: Station) => !s.maj || !Number.isFinite(Date.parse(s.maj)) |
   .selected-price { background: #f0fdf4; font-weight: 700; }
   .station-address { min-width: 160px; }
   .brand-cell { min-width: 100px; }
+  .station-date > span { display:block; }
   .station-date { font-size: .75rem; white-space: nowrap; color: #475569; }
   .rupture { font-size: .75rem; color: #b91c1c; }
   .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }

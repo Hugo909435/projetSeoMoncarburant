@@ -1,6 +1,9 @@
 ---
 title: "Le gazole va-t-il baisser en octobre 2026 ? Ce qu'on peut prévoir"
 metaTitle: "Le gazole va-t-il baisser en octobre 2026 ? Prévisions"
+currentInfo:
+  url: "/blog/baisse-gazole-1er-novembre-stocks-strategiques/"
+  label: "Baisse du gazole en novembre : voir les prix et le bilan mesuré"
 metaDescription: "Le gazole recule doucement depuis son record de 2,415 €/L. Brent sous 100 dollars, Ormuz, OPEP+ : ce qui peut faire baisser le prix en octobre, et de combien."
 slug: "gazole-va-t-il-baisser-octobre-2026"
 excerpt: "Le gazole a perdu 3 centimes depuis son record du 20 septembre. Le Brent est repassé sous les 100 dollars, mais tout dépend encore des négociations sur le détroit d'Ormuz."

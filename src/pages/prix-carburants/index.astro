@@ -68,6 +68,7 @@ const description = "Trouvez les stations les moins chères près de chez vous. 
     <!-- Prix nationaux -->
     <section class="container section-gap">
       <h2 class="section-title">Prix moyens nationaux</h2>
+      <p><a href="/prix-moyen-carburant-france/#bilan-hebdomadaire" class="section-see-all">Prix des carburants cette semaine : évolution et économies sur un plein →</a></p>
       <div class="fuel-cards-grid">
         {FUEL_CONFIG.map(({ key, label, color }) => {
           const price = statsNational[key as keyof typeof statsNational];

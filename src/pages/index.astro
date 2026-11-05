@@ -213,6 +213,7 @@ const webAppSchema = {
             ))}
           </ul>
           <a href="/prix-carburants/" class="dept-all-link">Voir tous les départements →</a>
+          <a href="/prix-moyen-carburant-france/#bilan-hebdomadaire" class="dept-all-link">La baisse des prix : bilan sur 7 jours →</a>
         </div>
 
       </div>
@@ -330,7 +331,7 @@ const webAppSchema = {
             <p class="pilier-eyebrow">Guide complet</p>
             <h2 class="pilier-feature-title">{featuredPilier.data.title}</h2>
             <p class="pilier-feature-excerpt">{featuredPilier.data.excerpt}</p>
-            <a href={`/piliers/${featuredPilier.data.slug}/`} class="btn-primary">
+            <a href={featuredPilier.data.slug === 'prix-coutant-carburant' ? '/prix-coutant-carburant/' : `/piliers/${featuredPilier.data.slug}/`} class="btn-primary">
               Lire le guide complet →
             </a>
           </div>
