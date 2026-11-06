@@ -1,5 +1,5 @@
 {
-  "releveLe": "2026-11-06T03:42:39.891Z",
+  "releveLe": "2026-11-06T05:42:39.945Z",
   "source": "data.economie.gouv.fr, prix-des-carburants-en-france-flux-instantane-v2",
   "criteres": {
     "carburants": [
@@ -14,17 +14,17 @@
     "stationActiveJours": 10
   },
   "national": {
-    "stations": 9219,
-    "enRupture": 1544,
-    "recentes": 1204,
+    "stations": 9218,
+    "enRupture": 1542,
+    "recentes": 1202,
     "parCarburant": {
-      "Gazole": 477,
-      "E10": 733,
+      "Gazole": 476,
+      "E10": 731,
       "SP95": 264,
-      "SP98": 1199
+      "SP98": 1198
     },
     "part": 16.7,
-    "partRecentes": 13.1
+    "partRecentes": 13
   },
   "departements": {
     "10": {
@@ -34,9 +34,8 @@
       "recentes": 6,
       "parCarburant": {
         "SP98": 12,
-        "E10": 4,
-        "SP95": 3,
-        "Gazole": 1
+        "E10": 3,
+        "SP95": 3
       },
       "part": 19.7
     },
@@ -505,7 +504,7 @@
     },
     "48": {
       "nom": "Lozère",
-      "stations": 33,
+      "stations": 32,
       "enRupture": 3,
       "recentes": 3,
       "parCarburant": {
@@ -514,7 +513,7 @@
         "SP95": 1,
         "SP98": 1
       },
-      "part": 9.1
+      "part": 9.4
     },
     "49": {
       "nom": "Maine-et-Loire",
@@ -775,15 +774,15 @@
     "69": {
       "nom": "Rhône",
       "stations": 190,
-      "enRupture": 26,
-      "recentes": 26,
+      "enRupture": 25,
+      "recentes": 25,
       "parCarburant": {
-        "SP98": 18,
+        "SP98": 17,
         "SP95": 8,
         "Gazole": 4,
         "E10": 8
       },
-      "part": 13.7
+      "part": 13.2
     },
     "70": {
       "nom": "Haute-Saône",
@@ -916,15 +915,15 @@
     "80": {
       "nom": "Somme",
       "stations": 107,
-      "enRupture": 15,
-      "recentes": 12,
+      "enRupture": 14,
+      "recentes": 11,
       "parCarburant": {
         "SP98": 9,
         "Gazole": 5,
-        "E10": 5,
+        "E10": 4,
         "SP95": 3
       },
-      "part": 14
+      "part": 13.1
     },
     "81": {
       "nom": "Tarn",
