@@ -7,9 +7,7 @@ import { buildDeptIntro } from '../../utils/dept-intro';
 import LocalIdentity from '../../components/LocalIdentity.astro';
 import { deptContent } from '../../data/local-content';
 import BrandLogo from '../../components/BrandLogo.astro';
-import { resolveBrandLogo } from '../../utils/brand-logo';
 import StationLink from '../../components/StationLink.astro';
-import { stationUrl } from '../../utils/station-waves';
 import { formatMaj } from '../../utils/format-maj';
 import AdUnit from '../../components/AdUnit.astro';
 import ruptures from '../../data/fuel/ruptures.json';
@@ -309,7 +307,7 @@ const jsonLdGasStations = dept.num === '53'
               </tr>
             </thead>
             <tbody>
-              {stations.slice(0, 30).map((s: any) => (
+              {stations.map((s: any) => (
                 <tr>
                   <td class="brand-cell">{s.enseigneSlug ? <BrandLogo slug={s.enseigneSlug} name={s.enseigne ?? s.enseigneSlug} /> : <span class="brand-unknown">{s.enseigne ?? '-'}</span>}</td>
                   <td class="station-addr"><StationLink id={s.id} adresse={s.adresse} ville={s.ville} /></td>
@@ -327,15 +325,6 @@ const jsonLdGasStations = dept.num === '53'
             </tbody>
           </table>
         </div>
-        {count > 30 && (
-          <div style="text-align:center; margin-top:1rem">
-            <button id="show-more-btn" class="btn-show-more" data-stations={JSON.stringify(stations.slice(30).map((s: any) => ({
-              adresse: s.adresse, ville: s.ville, cp: s.cp, pop: s.pop, prices: s.prices, enseigne: s.enseigne, enseigneSlug: s.enseigneSlug, logo: resolveBrandLogo(s.enseigneSlug), maj: s.maj, url: stationUrl(s.id)
-            })))}>
-              Afficher toutes les {count} stations ↓
-            </button>
-          </div>
-        )}
       </section>
 
       <!-- Départements limitrophes -->
@@ -380,43 +369,6 @@ const jsonLdGasStations = dept.num === '53'
     </div>
   </div>
 </BaseLayout>
-
-<script>
-  import { formatMaj } from '../../utils/format-maj';
-  import { escapeHtml } from '../../utils/escape-html';
-
-  // Afficher plus de stations
-  const btn = document.getElementById('show-more-btn');
-  if (btn) {
-    btn.addEventListener('click', () => {
-      const extraStations = JSON.parse(btn.dataset.stations || '[]');
-      const tbody = document.querySelector('#all-stations-table tbody');
-      if (!tbody) return;
-      extraStations.forEach((s: any) => {
-        const tr = document.createElement('tr');
-        const brandLabel = escapeHtml(s.enseigne || s.enseigneSlug);
-        const brandHtml = s.enseigneSlug && s.logo
-          ? `<span class="brand-logo-wrap"><img src="${escapeHtml(s.logo)}" alt="${brandLabel}" class="brand-logo-img" loading="lazy" onerror="this.style.display='none';this.nextSibling.style.display='inline-block'"/><span class="brand-logo-text" style="display:none">${brandLabel}</span></span>`
-          : `<span class="brand-unknown">${escapeHtml(s.enseigne || '-')}</span>`;
-        tr.innerHTML = `
-          <td class="brand-cell">${brandHtml}</td>
-          <td class="station-addr">${s.url ? `<a href="${escapeHtml(s.url)}">${escapeHtml(s.adresse || 'Station-service')}</a>` : escapeHtml(s.adresse || '-')}</td>
-          <td>${escapeHtml(s.ville)} (${escapeHtml(s.cp)})</td>
-          <td><span class="pop-badge ${s.pop === 'autoroute' ? 'pop-auto' : 'pop-route'}">${s.pop === 'autoroute' ? 'Autoroute' : 'Route'}</span></td>
-          <td>${s.prices?.Gazole?.toFixed(3) ?? '-'}</td>
-          <td>${s.prices?.SP95?.toFixed(3) ?? '-'}</td>
-          <td>${s.prices?.SP98?.toFixed(3) ?? '-'}</td>
-          <td>${s.prices?.E10?.toFixed(3) ?? '-'}</td>
-          <td>${s.prices?.E85?.toFixed(3) ?? '-'}</td>
-          <td>${s.prices?.GPLc?.toFixed(3) ?? '-'}</td>
-          <td class="station-maj" title="${escapeHtml(s.maj ?? '')}">${formatMaj(s.maj)}</td>
-        `;
-        tbody.appendChild(tr);
-      });
-      btn.remove();
-    });
-  }
-</script>
 
 <style>
   .breadcrumb-nav { font-size: 0.875rem; color: var(--color-text-muted); margin-bottom: 0.5rem; }
@@ -490,12 +442,6 @@ const jsonLdGasStations = dept.num === '53'
     color: #fff;
     border-color: var(--color-primary);
   }
-  .btn-show-more {
-    background: #fff; border: 2px solid var(--color-primary); color: var(--color-primary);
-    padding: 0.6rem 1.5rem; border-radius: 0.5rem; font-weight: 600; cursor: pointer; font-size: 0.9rem;
-    transition: all 0.2s;
-  }
-  .btn-show-more:hover { background: var(--color-primary); color: #fff; }
   .neighbor-grid { display: flex; flex-wrap: wrap; gap: 0.75rem; }
   .neighbor-card {
     background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 0.5rem;

@@ -15,8 +15,8 @@
  * définition, donc aucun risque qu'une page soit noindex mais reste au sitemap.
  */
 
-/** Au-delà de ce délai, le prix affiché n'est plus une information fiable. */
-export const STALE_DAYS = 90;
+/** Au-delà de ce délai, le prix affiché n'est plus une information fiable (réduit à 45 jours pour protéger la qualité du crawl SEO). */
+export const STALE_DAYS = 45;
 
 /**
  * En dessous de ce nombre de carburants cotés, la page n'a rien à comparer.

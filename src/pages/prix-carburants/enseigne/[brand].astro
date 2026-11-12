@@ -122,7 +122,7 @@ const sortedStations = [...brandData.stations].sort((a: any, b: any) =>
   (a.prices?.Gazole ?? NO_PRICE) - (b.prices?.Gazole ?? NO_PRICE)
   || (a.prices?.E10 ?? NO_PRICE) - (b.prices?.E10 ?? NO_PRICE)
   || String(a.ville ?? '').localeCompare(String(b.ville ?? ''), 'fr'));
-const FIRST_ROWS = 30;
+const FIRST_ROWS = 60;
 
 const title = `Prix carburant ${name} : gasoil et essence aujourd'hui`;
 const descPrix = gazoleAvg ? `Gazole moyen à ${gazoleAvg.toFixed(3).replace('.', ',')} €/L. ` : '';
@@ -577,7 +577,7 @@ const jsonLdBreadcrumb = {
       && (!recentOnly.checked || hasRecentDeclaration({ maj: r[MAJ], priceUpdates: r[DATES] }, fuelSelect.value, referenceDay)))
       .sort((a, b) => Number(a[fuelColumns[fuelSelect.value]]) - Number(b[fuelColumns[fuelSelect.value]]));
     const brand = input.dataset.brand || '';
-    const FIRST_ROWS = 30;
+    const FIRST_ROWS = 60;
     // Au-delà, la liste devient illisible sur mobile : mieux vaut préciser la recherche.
     const MAX_RESULTS = 200;
     let expanded = false;

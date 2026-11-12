@@ -3,10 +3,11 @@
 Note de référence pour la mise en ligne progressive des fiches station-service
 de mon-carburant.com.
 
-Dernière mise à jour du document : 28 septembre 2026.
-Cadence en vigueur : montée en charge 100 puis 250, 500 et 800 (22 vagues),
-paliers avancés le 28/09/2026.
-État : vagues 1 à 4 en ligne (400 fiches).
+Dernière mise à jour du document : 12 novembre 2026.
+Cadence en vigueur : vagues 1 à 8 publiées (1 900 fiches). Paliers ajustés le 12/11/2026 :
+freinage d'urgence à 50 pages par vague (vagues 9 à 14) pour résorber les 706 pages
+bloquées en Search Console (409 explorées non indexées, 297 détectées non indexées).
+État : vagues 1 à 8 en ligne (1 900 fiches). Prochaine vague : n°9 le 24/11/2026 (50 fiches).
 
 ---
 
@@ -112,6 +113,14 @@ Pour réafficher ce calendrier à tout moment :
 ```bash
 npm run waves:plan
 ```
+
+### Freinage appliqué le 12/11/2026 (résorption du retard d'indexation)
+
+Relevé Search Console du 12/11/2026 :
+- 824 pages non indexées dont 409 « Explorée, actuellement non indexée » et 297 « Détectée, actuellement non indexée ».
+- La montée en charge rapide d'octobre/novembre (vagues à 250 puis 500 fiches, 1 900 fiches en ligne) a dépassé la capacité d'absorption de Googlebot.
+- Action prise : gel des vagues 1 à 8 (1 900 fiches conservées sans changement d'URL) et réduction immédiate des vagues 9 à 14 à 50 pages par vague via `npm run waves:replan`.
+- Les vagues 15 et suivantes reprendront à 100 puis 200 pages une fois le taux d'indexation revenu au-dessus de 80 %.
 
 ### Le prochain point de décision
 

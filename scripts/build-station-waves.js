@@ -86,11 +86,12 @@ const INTERVAL_DAYS = 14;
  * publiées et redistribue uniquement les suivantes.
  */
 const WAVE_PLAN = [
-  { fromWave: 1, size: 100 },  // vagues 1 à 4, prudence initiale
-  { fromWave: 5, size: 250 },  // vagues 5 et 6 (avancé le 28/09/2026 : 90 % des 400 premières fiches déjà en impressions)
-  { fromWave: 7, size: 500 },  // vagues 7 et 8 (avancé le 20/10/2026 : les 900 fiches publiées s'indexent bien)
-  { fromWave: 9, size: 800 },  // vagues 9 et 10
-  { fromWave: 11, size: 1200 }, // vagues 11 et suivantes
+  { fromWave: 1, size: 100 },  // vagues 1 à 4, prudence initiale (historique)
+  { fromWave: 5, size: 250 },  // vagues 5 et 6 (historique)
+  { fromWave: 7, size: 500 },  // vagues 7 et 8 (historique : 1 900 fiches publiées au 10/11/2026)
+  { fromWave: 9, size: 50 },   // vagues 9 à 14 (freinage d'urgence : 50 stations pour laisser Google digérer)
+  { fromWave: 15, size: 100 }, // reprise très douce
+  { fromWave: 25, size: 200 }, // consolidation ultérieure
 ];
 
 /**
