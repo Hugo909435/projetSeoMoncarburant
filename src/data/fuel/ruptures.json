@@ -1,5 +1,5 @@
 {
-  "releveLe": "2026-11-18T21:24:43.429Z",
+  "releveLe": "2026-11-18T21:42:32.970Z",
   "source": "data.economie.gouv.fr, prix-des-carburants-en-france-flux-instantane-v2",
   "criteres": {
     "carburants": [
@@ -15,13 +15,13 @@
   },
   "national": {
     "stations": 9144,
-    "enRupture": 812,
-    "recentes": 601,
+    "enRupture": 813,
+    "recentes": 602,
     "parCarburant": {
-      "Gazole": 201,
-      "E10": 260,
+      "Gazole": 202,
+      "E10": 261,
       "SP95": 160,
-      "SP98": 545
+      "SP98": 546
     },
     "part": 8.9,
     "partRecentes": 6.6
@@ -571,13 +571,15 @@
     "56": {
       "nom": "Morbihan",
       "stations": 134,
-      "enRupture": 5,
-      "recentes": 3,
+      "enRupture": 6,
+      "recentes": 4,
       "parCarburant": {
-        "SP98": 4,
-        "SP95": 1
+        "SP98": 5,
+        "SP95": 1,
+        "Gazole": 1,
+        "E10": 1
       },
-      "part": 3.7
+      "part": 4.5
     },
     "57": {
       "nom": "Moselle",
