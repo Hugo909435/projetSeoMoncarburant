@@ -1,5 +1,5 @@
 {
-  "releveLe": "2026-11-18T21:42:32.970Z",
+  "releveLe": "2026-11-18T22:42:26.900Z",
   "source": "data.economie.gouv.fr, prix-des-carburants-en-france-flux-instantane-v2",
   "criteres": {
     "carburants": [
@@ -15,13 +15,13 @@
   },
   "national": {
     "stations": 9144,
-    "enRupture": 813,
-    "recentes": 602,
+    "enRupture": 810,
+    "recentes": 599,
     "parCarburant": {
-      "Gazole": 202,
-      "E10": 261,
+      "Gazole": 200,
+      "E10": 257,
       "SP95": 160,
-      "SP98": 546
+      "SP98": 543
     },
     "part": 8.9,
     "partRecentes": 6.6
@@ -133,13 +133,13 @@
     "19": {
       "nom": "Corrèze",
       "stations": 58,
-      "enRupture": 1,
-      "recentes": 1,
+      "enRupture": 2,
+      "recentes": 2,
       "parCarburant": {
-        "Gazole": 1,
-        "SP98": 1
+        "SP98": 2,
+        "Gazole": 1
       },
-      "part": 1.7
+      "part": 3.4
     },
     "21": {
       "nom": "Côte-d'Or",
@@ -337,15 +337,15 @@
     "37": {
       "nom": "Indre-et-Loire",
       "stations": 87,
-      "enRupture": 18,
-      "recentes": 9,
+      "enRupture": 17,
+      "recentes": 8,
       "parCarburant": {
         "SP95": 6,
-        "Gazole": 4,
-        "SP98": 10,
-        "E10": 6
+        "Gazole": 3,
+        "SP98": 9,
+        "E10": 5
       },
-      "part": 20.7
+      "part": 19.5
     },
     "38": {
       "nom": "Isère",
@@ -571,15 +571,13 @@
     "56": {
       "nom": "Morbihan",
       "stations": 134,
-      "enRupture": 6,
-      "recentes": 4,
+      "enRupture": 5,
+      "recentes": 3,
       "parCarburant": {
-        "SP98": 5,
-        "SP95": 1,
-        "Gazole": 1,
-        "E10": 1
+        "SP98": 4,
+        "SP95": 1
       },
-      "part": 4.5
+      "part": 3.7
     },
     "57": {
       "nom": "Moselle",
@@ -1007,15 +1005,15 @@
     "91": {
       "nom": "Essonne",
       "stations": 123,
-      "enRupture": 25,
-      "recentes": 19,
+      "enRupture": 24,
+      "recentes": 18,
       "parCarburant": {
-        "E10": 9,
-        "SP98": 20,
+        "E10": 8,
+        "SP98": 19,
         "SP95": 3,
         "Gazole": 1
       },
-      "part": 20.3
+      "part": 19.5
     },
     "92": {
       "nom": "Hauts-de-Seine",
@@ -1025,7 +1023,7 @@
       "parCarburant": {
         "SP98": 12,
         "Gazole": 1,
-        "E10": 7
+        "E10": 6
       },
       "part": 20
     },
@@ -1058,14 +1056,14 @@
     "95": {
       "nom": "Val-d'Oise",
       "stations": 105,
-      "enRupture": 10,
-      "recentes": 8,
+      "enRupture": 9,
+      "recentes": 7,
       "parCarburant": {
         "Gazole": 4,
         "E10": 5,
-        "SP98": 10
+        "SP98": 9
       },
-      "part": 9.5
+      "part": 8.6
     },
     "01": {
       "nom": "Ain",
