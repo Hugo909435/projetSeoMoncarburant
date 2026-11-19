@@ -1,5 +1,5 @@
 {
-  "releveLe": "2026-11-19T00:42:38.666Z",
+  "releveLe": "2026-11-19T04:42:35.267Z",
   "source": "data.economie.gouv.fr, prix-des-carburants-en-france-flux-instantane-v2",
   "criteres": {
     "carburants": [
@@ -14,14 +14,14 @@
     "stationActiveJours": 10
   },
   "national": {
-    "stations": 9156,
+    "stations": 9155,
     "enRupture": 815,
     "recentes": 604,
     "parCarburant": {
       "Gazole": 205,
       "E10": 262,
       "SP95": 160,
-      "SP98": 548
+      "SP98": 549
     },
     "part": 8.9,
     "partRecentes": 6.6
@@ -64,7 +64,7 @@
     },
     "13": {
       "nom": "Bouches-du-Rhône",
-      "stations": 261,
+      "stations": 260,
       "enRupture": 33,
       "recentes": 23,
       "parCarburant": {
@@ -73,7 +73,7 @@
         "E10": 6,
         "SP95": 2
       },
-      "part": 12.6
+      "part": 12.7
     },
     "14": {
       "nom": "Calvados",
@@ -103,7 +103,8 @@
       "enRupture": 1,
       "recentes": 1,
       "parCarburant": {
-        "SP95": 1
+        "SP95": 1,
+        "SP98": 1
       },
       "part": 1.6
     },
