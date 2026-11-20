@@ -73,7 +73,7 @@ const pageUrl = `https://mon-carburant.com/categorie/${category}/`;
           <h2 class="section-label">Guides complets</h2>
           <div class="piliers-list">
             {piliers.map((p) => (
-              <a href={`/piliers/${p.data.slug}/`} class="pilier-card">
+              <a href={p.data.slug === 'prix-coutant-carburant' ? '/prix-coutant-carburant/' : `/piliers/${p.data.slug}/`} class="pilier-card">
                 <div class="pilier-card-image">
                   <Image src={p.data.featuredImage} alt={p.data.imageAlt} width={320} height={180} loading="lazy" decoding="async" />
                   <span class="badge pilier-badge">Guide complet</span>

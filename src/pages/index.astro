@@ -13,6 +13,7 @@ import statsNational from '../data/fuel/stats-national.json';
 import statsByDepartment from '../data/fuel/stats-by-department.json';
 import fuelMeta from '../data/fuel/meta.json';
 import departmentsData from '../data/departments.json';
+import brandsIndex from '../data/fuel/brands.json';
 
 const allArticles = await getCollection('blog', ({ data }) => !data.draft);
 allArticles.sort((a, b) => b.data.publishedAt.getTime() - a.data.publishedAt.getTime());
@@ -61,6 +62,15 @@ const lastUpdate = lastUpdateDate
 const POPULAR_DEPT_NUMS = ['75', '13', '69', '33', '31', '59', '44', '06'];
 const depts = departmentsData as Record<string, { name: string; slug: string }>;
 const deptStats = statsByDepartment as Record<string, Record<string, number | null>>;
+
+// Enseignes mises en avant sur l'accueil : réseaux nationaux les plus recherchés,
+// affichés seulement si leur page existe (enseigne présente dans les données).
+const HOME_BRAND_SLUGS = ['leclerc', 'total', 'intermarche', 'carrefour', 'super-u', 'auchan', 'esso', 'total-access'];
+type HomeBrand = { slug: string; name: string; count: number };
+const brandBySlug = new Map((brandsIndex as HomeBrand[]).map((b) => [b.slug, b]));
+const homeBrands = HOME_BRAND_SLUGS
+  .map((slug) => brandBySlug.get(slug))
+  .filter((b): b is HomeBrand => Boolean(b));
 
 const { prixCoutant: prixCoutantOperations, prochaineFenetre } = etatPrixCoutant();
 const prixCoutantEnCours = prixCoutantOperations.length > 0;
@@ -115,7 +125,7 @@ const webAppSchema = {
   applicationCategory: 'UtilitiesApplication',
   operatingSystem: 'Web',
   inLanguage: 'fr-FR',
-  description: 'Comparez les prix carburant de plus de 9 800 stations en France. SP95, SP98, Gazole, E85 mis à jour quotidiennement.',
+  description: `Comparez les prix carburant de ${fuelMeta.totalStations.toLocaleString('fr-FR')} stations en France. Gazole, SP95, SP98, E10, E85 et GPL, prix déclarés actualisés plusieurs fois par jour.`,
   dateModified: fuelMeta.lastUpdate,
   offers: {
     '@type': 'Offer',
@@ -131,8 +141,8 @@ const webAppSchema = {
 ---
 
 <BaseLayout
-  title="Mon Carburant : trouvez la station la moins chère"
-  description="Trouvez les stations les moins chères près de chez vous. Comparez les prix déclarés du gazole, SP95, SP98, E10 et E85 sur la carte et consultez les itinéraires."
+  title="Prix carburant aujourd'hui : comparateur essence et diesel"
+  description="Comparez les prix de l'essence et du diesel aujourd'hui. Trouvez les stations-service les moins chères près de chez vous avec Mon Carburant."
   canonical="https://mon-carburant.com/"
   jsonLd={[websiteSchema, organizationSchema, webAppSchema]}
 >
@@ -184,9 +194,14 @@ const webAppSchema = {
                 );
               })}
             </div>
-            <a href="/prix-carburants/" class="widget-cta">
-              Voir le comparateur complet →
-            </a>
+            <div class="widget-links">
+              <a href="/prix-carburants/" class="widget-cta">
+                Voir le comparateur complet →
+              </a>
+              <a href="/prix-moyen-carburant-france/" class="widget-cta">
+                Prix moyen du carburant en France →
+              </a>
+            </div>
           </div>
 
           <!-- Widget b : Recherche interactive -->
@@ -219,6 +234,29 @@ const webAppSchema = {
       </div>
     </div>
   </section>
+
+  <!-- Accès direct aux pages enseignes (maillage interne vers les pages à fort volume) -->
+  {homeBrands.length > 0 && (
+    <nav class="section-brands" aria-labelledby="home-brands-title">
+      <div class="container">
+        <h2 id="home-brands-title" class="section-title">Prix carburant par enseigne</h2>
+        <p class="brands-desc">
+          Prix moyens, classement et liste des stations de chaque réseau, avec la date de déclaration des prix.
+        </p>
+        <ul class="brands-list" role="list">
+          {homeBrands.map((b) => (
+            <li>
+              <a href={`/prix-carburants/enseigne/${b.slug}/`} class="brand-pill">
+                Prix carburant {b.name}
+                <span class="brand-pill-count">{b.count.toLocaleString('fr-FR')} stations</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+        <a href="/prix-carburants/enseigne/" class="dept-all-link">Toutes les enseignes →</a>
+      </div>
+    </nav>
+  )}
 
   <!-- Prix coûtant : page la plus consultée du site, section permanente (contrairement à
        AlertePrixCoutant qui n'apparaît que le jour d'une opération en cours). -->
@@ -770,6 +808,57 @@ const webAppSchema = {
 
   .widget-cta:hover {
     text-decoration: underline;
+  }
+
+  .widget-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.25rem;
+  }
+
+  /* Enseignes */
+  .section-brands {
+    padding: 2rem 0 0.5rem;
+  }
+
+  .brands-desc {
+    color: var(--color-text-muted);
+    font-size: 0.9375rem;
+    margin: 0.25rem 0 1rem;
+  }
+
+  .brands-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 13rem), 1fr));
+    gap: 0.625rem;
+  }
+
+  .brand-pill {
+    display: flex;
+    flex-direction: column;
+    gap: 0.125rem;
+    min-height: 44px;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--color-border);
+    border-radius: 0.75rem;
+    background: #fff;
+    color: var(--color-primary);
+    font-weight: 600;
+    font-size: 0.9375rem;
+    text-decoration: none;
+  }
+
+  .brand-pill:hover {
+    border-color: var(--color-accent);
+  }
+
+  .brand-pill-count {
+    font-size: 0.8125rem;
+    font-weight: 400;
+    color: var(--color-text-muted);
   }
 
   /* Widget b : recherche rapide */

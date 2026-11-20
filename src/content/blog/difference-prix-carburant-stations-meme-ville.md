@@ -89,7 +89,7 @@ Sur un plein de 50 litres de SP95-E10, choisir la station la moins chère plutô
 
 Comparer manuellement les prix affichés en roulant de station en station coûte plus cher en carburant que ce que ça fait économiser. La solution la plus simple reste d'utiliser les données publiques : chaque station-service française a l'obligation de déclarer ses prix, qui remontent sur [prix-carburants.gouv.fr](https://www.prix-carburants.gouv.fr/) en quasi temps réel.
 
-Un comparateur comme moncarburant.com reprend ces mêmes données officielles pour afficher directement, sur une carte, les stations les moins chères autour de votre position ou de votre trajet. Plutôt que de deviner quelle enseigne est la moins chère ce mois-ci, vous voyez le prix réel, à jour, station par station.
+Un comparateur comme notre [comparateur des prix carburant](/prix-carburants/) reprend ces mêmes données officielles pour afficher directement, sur une carte, les stations les moins chères autour de votre position ou de votre trajet. Plutôt que de deviner quelle enseigne est la moins chère ce mois-ci, vous voyez le prix réel, à jour, station par station.
 
 ## Ce qu'il faut retenir
 

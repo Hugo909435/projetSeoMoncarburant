@@ -124,9 +124,23 @@ const sortedStations = [...brandData.stations].sort((a: any, b: any) =>
   || String(a.ville ?? '').localeCompare(String(b.ville ?? ''), 'fr'));
 const FIRST_ROWS = 60;
 
-const title = `Prix carburant ${name} : gasoil et essence aujourd'hui`;
-const descPrix = gazoleAvg ? `Gazole moyen à ${gazoleAvg.toFixed(3).replace('.', ',')} €/L. ` : '';
-const description = `${name} : ${descPrix}Comparez le gasoil et l'essence par station. Cherchez votre ville ou code postal et vérifiez la date des prix.`;
+// Nom court tel que tapé dans les recherches (« prix carburant leclerc »).
+const SEARCH_NAMES: Record<string, string> = { leclerc: 'Leclerc' };
+const searchName = SEARCH_NAMES[slug] ?? name;
+// On n'annonce SP95 et SP98 dans le titre que si le réseau en déclare. Super U :
+// formulation « diesel et essence » retenue après l'audit GSC du 19/11/2026.
+const hasSp9598 = stats.SP95?.avg != null && stats.SP98?.avg != null;
+const titleCandidates = [
+  slug !== 'super-u' && hasSp9598 && `Prix carburant ${searchName} aujourd'hui : diesel, SP95 et SP98`,
+  `Prix carburant ${searchName} aujourd'hui : diesel et essence`,
+  `Prix carburant ${searchName} aujourd'hui`,
+].filter(Boolean) as string[];
+const title = titleCandidates.find(t => t.length <= 60) ?? titleCandidates[titleCandidates.length - 1];
+const fr3 = (v: number) => v.toFixed(3).replace('.', ',');
+const descPrix = gazoleAvg
+  ? `gasoil à ${fr3(gazoleAvg)} €/L en moyenne dans ${stats.Gazole.count.toLocaleString('fr-FR')} stations. `
+  : `${count.toLocaleString('fr-FR')} stations référencées. `;
+const description = `Prix des carburants chez ${searchName} : ${descPrix}Comparez les stations près de chez vous et la date de mise à jour.`;
 const showNovemberContext = meta.lastUpdate
   && meta.lastUpdate.slice(0, 10) >= '2026-11-01' && meta.lastUpdate.slice(0, 10) < '2027-02-01';
 

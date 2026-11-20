@@ -124,6 +124,20 @@ for (const sectionDir of ['blog', 'piliers']) {
     }
   }
 }
+// Listes d'articles (blog, catégories, auteur) : elles ne changent qu'à la
+// publication ou mise à jour d'un article.
+const latestArticleDate = [...articleLastmods.values()].reduce(
+  (max, d) => (d > max ? d : max),
+  new Date(0),
+);
+// Pages dont le contenu suit les données carburant (rebuild horaire).
+const isDataPage = (url) =>
+  url === `${SITE}/` ||
+  url.includes('/prix-') ||
+  url === `${SITE}/carte/` ||
+  url === `${SITE}/penurie-carburant/`;
+const isArticleListing = (url) =>
+  /^https:\/\/mon-carburant\.com\/(blog|categorie|auteur)\//.test(url);
 
 export default defineConfig({
   site: 'https://mon-carburant.com',
@@ -165,8 +179,16 @@ export default defineConfig({
     sitemap({
       filter: (page) => !page.includes('/404') && !page.includes('/newsletter/') && !weakUrls.has(page),
       serialize(item) {
+        // <lastmod> uniquement quand il reflète une vraie modification : date
+        // propre de l'article, date des données pour les pages de prix, date du
+        // dernier article pour les listes. Pages statiques (mentions légales,
+        // contact...) : pas de lastmod plutôt qu'une date de build trompeuse.
         const articleDate = articleLastmods.get(item.url);
-        item.lastmod = (articleDate ?? siteLastmod).toISOString();
+        const lastmod = articleDate
+          ?? (isDataPage(item.url) ? siteLastmod : null)
+          ?? (isArticleListing(item.url) && latestArticleDate.getTime() > 0 ? latestArticleDate : null);
+        if (lastmod) item.lastmod = lastmod.toISOString();
+        else delete item.lastmod;
         if (item.url === 'https://mon-carburant.com/') {
           item.changefreq = 'daily';
           item.priority = 1.0;

@@ -94,10 +94,10 @@ Ce qui ne changera pas : la hausse structurelle du gazole et le poids de la fisc
 
 Face à des prix structurellement élevés, la marge de manœuvre côté comportement reste réelle :
 
-- **Comparer les stations** avant de faire le plein : l'écart peut dépasser 15 c/L sur une même zone géographique.
+- **[Comparer les stations](/prix-carburants/)** avant de faire le plein : l'écart peut dépasser 15 c/L sur une même zone géographique.
 - **Adopter l'éco-conduite** : rouler à 110 km/h sur autoroute au lieu de 130 km/h économise environ 20 % de carburant. Notre [guide complet pour réduire sa facture de carburant](/piliers/reduire-facture-carburant/) détaille les gestes les plus efficaces.
 - **Vérifier la pression des pneus** : un pneu sous-gonflé de 0,5 bar génère 2 % de surconsommation.
-- **Profiter des opérations à prix coûtant** des grandes surfaces, annoncées généralement 3 à 5 jours à l'avance, notamment en octobre-novembre.
+- **Profiter des [opérations à prix coûtant](/prix-coutant-carburant/)** des grandes surfaces, annoncées généralement 3 à 5 jours à l'avance, notamment en octobre-novembre.
 
 Pour une vision complète de l'évolution des prix depuis 2024 et les prévisions pour fin 2026, consultez notre article de fond sur les [prix du carburant en 2026](/blog/prix-carburant-2026/).
 

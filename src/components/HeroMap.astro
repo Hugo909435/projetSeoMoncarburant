@@ -49,7 +49,7 @@ for (const slug of brandSlugs) {
     <div class="container">
       <p class="hm-eyebrow">Comparateur de prix carburant · France</p>
       <h1 id="hm-title" class="hm-title">
-        Mon Carburant : trouvez la station la moins chère<br />
+        Comparez les prix du carburant<br />
         <span class="hm-accent">près de chez vous</span>
       </h1>
 
@@ -63,7 +63,8 @@ for (const slug of brandSlugs) {
       )}
 
       <p class="hm-subtitle">
-        {fuelMeta.totalStations.toLocaleString('fr-FR')} stations référencées &middot; Données officielles du gouvernement
+        Gazole, SP95, SP98, E10, E85 et GPL : les prix déclarés par {fuelMeta.totalStations.toLocaleString('fr-FR')} stations-service,
+        d'après les données officielles du gouvernement. Cherchez une ville, un code postal ou les stations autour de vous.
       </p>
 
       <form id="hm-form" class="hm-form" role="search" aria-label="Recherche par ville ou code postal" novalidate>

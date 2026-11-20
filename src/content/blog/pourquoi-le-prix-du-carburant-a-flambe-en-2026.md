@@ -56,7 +56,7 @@ L'[Agence internationale de l'énergie](https://www.iea.org/) (AIE) a, en mars 2
 
 Pendant quelques semaines, la mécanique a bien joué en sens inverse. Portés par des **négociations entre les États-Unis et l'Iran**, les prix s'étaient détendus à partir de début juin : le gazole était revenu à son plus bas niveau depuis la mi-mars, et le SP95-E10 était repassé sous 2 euros le litre, environ une station sur trois affichant moins de 2 euros.
 
-Cette parenthèse est refermée, et la hausse continue de s'accélérer. Voici l'état des prix moyens nationaux d'après nos relevés quotidiens :
+Cette parenthèse est refermée, et la hausse continue de s'accélérer. Voici l'état des prix moyens nationaux d'après nos relevés quotidiens (les valeurs du jour sont sur notre page [prix moyen du carburant en France](/prix-moyen-carburant-france/)) :
 
 | Carburant | 15-16 septembre 2026 | Sur 7 jours | Sur 30 jours |
 |---|---|---|---|

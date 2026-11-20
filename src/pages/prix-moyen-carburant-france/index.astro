@@ -7,6 +7,13 @@ import statsNational from '../../data/fuel/stats-national.json';
 import priceHistory from '../../data/fuel/price-history.json';
 import fuelMeta from '../../data/fuel/meta.json';
 import { FUEL_COLORS, type FuelStatKey } from '../../data/fuel/config';
+import brandsIndex from '../../data/fuel/brands.json';
+
+// Enseignes liées depuis la page (uniquement celles qui ont une page générée).
+const PM_BRAND_SLUGS = ['leclerc', 'total', 'intermarche', 'carrefour', 'super-u', 'auchan', 'esso'];
+const pmBrands = PM_BRAND_SLUGS
+  .map((slug) => (brandsIndex as { slug: string; name: string }[]).find((b) => b.slug === slug))
+  .filter((b): b is { slug: string; name: string } => Boolean(b));
 
 const FUELS: { key: FuelStatKey; label: string }[] = [
   { key: 'Gazole', label: 'Gazole' },
@@ -69,10 +76,16 @@ const novemberComparison = novemberBaseline && latestObservation
     })
   : [];
 
-const title = `Prix moyen carburant en France : ${monthLabel}`;
-const description = gazoleMonth != null && e10Month != null && sp98Month != null
-  ? `Prix moyen du gazole en France en ${monthLabel} : ${fr3(gazoleMonth)} €/L. SP95-E10 à ${fr3(e10Month)} €/L, SP98 à ${fr3(sp98Month)} €/L. Moyenne du mois et historique quotidien.`
-  : `Prix moyen officiel du gazole, SP95, SP95-E10, SP98, E85 et GPL en France en ${monthLabel}. Données actualisées quotidiennement (ministère de l'Économie).`;
+// Title limité à 60 caractères : la formulation de l'audit GSC
+// (« Prix moyen du carburant aujourd'hui en France : diesel et essence »,
+// 65 car.) aurait été tronquée dans les résultats.
+const title = `Prix moyen carburant aujourd'hui en France : diesel, essence`;
+const todayGazole = statsNational.Gazole ?? null;
+const todayE10 = statsNational.E10 ?? null;
+const todaySp98 = statsNational.SP98 ?? null;
+const description = todayGazole != null && todayE10 != null && todaySp98 != null
+  ? `Prix moyen en France aujourd'hui : gazole ${fr3(todayGazole)} €/L, SP95-E10 ${fr3(todayE10)} €/L, SP98 ${fr3(todaySp98)} €/L. Évolution sur 7 et 30 jours, moyenne de ${monthLabel}.`
+  : `Retrouvez le prix moyen de l'essence et du diesel en France, les tarifs par carburant et leur évolution selon les dernières données disponibles.`;
 
 function trend(key: FuelStatKey) {
   const withValue = history.filter((h) => h.prices[key] != null);
@@ -157,8 +170,8 @@ const jsonLdFaq = {
     <!-- Hero -->
     <section class="pm-hero">
       <div class="container">
-        <h1>Prix moyen des carburants en France</h1>
-        <p class="pm-subtitle">Moyenne nationale officielle, {monthLabel}</p>
+        <h1>Prix moyen du carburant en France</h1>
+        <p class="pm-subtitle">Moyenne simple des prix déclarés par les stations (données officielles), {monthLabel}</p>
         <p class="pm-update">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
           Mis à jour le <time datetime={fuelMeta.lastUpdate}>{lastUpdateLabel}</time>
@@ -331,6 +344,26 @@ const jsonLdFaq = {
         </p>
       </section>
 
+      <!-- Maillage vers les pages enseignes et prix coûtant -->
+      {pmBrands.length > 0 && (
+        <nav class="section-block seo-text" aria-labelledby="pm-brands-title">
+          <h2 id="pm-brands-title">Prix moyen par enseigne</h2>
+          <p>
+            La moyenne nationale mélange toutes les enseignes. Pour connaître les prix d'un réseau et ses stations
+            les moins chères, consultez sa page dédiée :
+          </p>
+          <ul class="pm-brand-links">
+            {pmBrands.map((b) => (
+              <li><a href={`/prix-carburants/enseigne/${b.slug}/`}>Prix carburant {b.name}</a></li>
+            ))}
+          </ul>
+          <p>
+            Les opérations ponctuelles de vente sans marge sont suivies sur la page{' '}
+            <a href="/prix-coutant-carburant/">carburant à prix coûtant</a>.
+          </p>
+        </nav>
+      )}
+
     </div>
   </div>
 </BaseLayout>
@@ -339,6 +372,9 @@ const jsonLdFaq = {
   .breadcrumb-nav { font-size:0.875rem; color:var(--color-text-muted); margin-bottom:0.5rem; }
   .breadcrumb-nav a { color:var(--color-primary); text-decoration:none; }
   .breadcrumb-nav a:hover { text-decoration:underline; }
+
+  .pm-brand-links { display:flex; flex-wrap:wrap; gap:0.5rem 1.25rem; list-style:none; padding:0; margin:0 0 1rem; }
+  .pm-brand-links a { display:inline-block; padding:0.5rem 0; font-weight:600; }
 
   .pm-hero { background:var(--color-primary); color:#fff; padding:2.5rem 0 2rem; }
   .pm-hero h1 { font-size:clamp(1.5rem,3.5vw,2.25rem); font-weight:800; color:#fff; margin:0 0 0.5rem; }

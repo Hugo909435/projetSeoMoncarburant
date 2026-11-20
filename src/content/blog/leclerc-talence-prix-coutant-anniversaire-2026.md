@@ -32,7 +32,7 @@ faq:
 draft: false
 ---
 
-Une opération à prix coûtant dure en général 48 heures. Celle du centre E.Leclerc de Talence, en Gironde, en annonce **treize**, du 22 septembre au 4 octobre 2026. Cette durée inhabituelle a une explication simple, et elle change la façon dont il faut lire l'offre : ce n'est pas une opération de l'enseigne, c'est une opération de magasin.
+Une opération à prix coûtant dure en général 48 heures. Celle du centre E.Leclerc de Talence, en Gironde, en annonce **treize**, du 22 septembre au 4 octobre 2026. Cette durée inhabituelle a une explication simple, et elle change la façon dont il faut lire l'offre : ce n'est pas une opération de l'enseigne, c'est une opération de magasin. Les opérations nationales des enseignes sont recensées sur notre page [carburant à prix coûtant](/prix-coutant-carburant/).
 
 <p class="text-sm text-slate-500 italic">Photo : Lionel Allorge, <a href="https://creativecommons.org/licenses/by-sa/3.0/deed.fr" target="_blank" rel="noopener">CC BY-SA 3.0</a>, via Wikimedia Commons. Photo d'illustration, station Leclerc.</p>
 

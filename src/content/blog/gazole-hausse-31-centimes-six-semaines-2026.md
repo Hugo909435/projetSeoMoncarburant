@@ -111,7 +111,7 @@ Autrement dit, la fenêtre s'est refermée il y a deux jours. Si vous aviez rep�
 
 ## Ce que ça change concrètement
 
-**Si vous roulez au diesel**, l'arbitrage entre stations devient nettement plus rentable qu'avant. Quand le litre coûte 2,21 €, un écart de 10 centimes entre deux stations d'une même agglomération représente 5 € sur un plein de 50 litres. C'est le moment de comparer plutôt que de prendre la station habituelle par réflexe.
+**Si vous roulez au diesel**, l'arbitrage entre stations devient nettement plus rentable qu'avant. Quand le litre coûte 2,21 €, un écart de 10 centimes entre deux stations d'une même agglomération représente 5 € sur un plein de 50 litres. C'est le moment de [comparer le prix du gazole près de chez vous](/prix-gazole/) plutôt que de prendre la station habituelle par réflexe. Pour suivre l'évolution depuis cet article, consultez le [prix moyen du carburant en France](/prix-moyen-carburant-france/), actualisé chaque jour.
 
 **Si vous hésitez pour votre prochain achat**, cet été change le calcul. L'avantage économique historique du diesel reposait sur un carburant moins cher et une consommation plus basse. Le premier terme a disparu, et durablement au vu de l'origine du choc. Notre comparatif [diesel ou essence en 2026](/blog/diesel-ou-essence-2026-achat/) reprend le raisonnement complet.
 
