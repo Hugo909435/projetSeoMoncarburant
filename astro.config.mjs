@@ -164,6 +164,10 @@ export default defineConfig({
     // Ancien article promu en page pilier à la racine du site (2026-09-17).
     '/blog/prix-coutant-carburant-calendrier-leclerc-intermarche-carrefour/':
       '/prix-coutant-carburant/',
+    // Bilans mensuels remplacés par la page pilier prix coûtant (2026-11-20) :
+    // ils captaient ~150k impressions à faible CTR sur les mêmes requêtes.
+    '/blog/carburant-prix-coutant-aout-2026/': '/prix-coutant-carburant/',
+    '/blog/carburant-prix-coutant-septembre-2026/': '/prix-coutant-carburant/',
   },
   compressHTML: true,
   prefetch: {

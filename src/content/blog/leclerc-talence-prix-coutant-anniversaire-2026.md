@@ -13,7 +13,7 @@ tags: ["prix coûtant", "leclerc", "talence", "gironde", "bordeaux", "carburant"
 featuredImage: "../../assets/articles/leclerc-talence-prix-coutant-anniversaire-2026.webp"
 imageAlt: "Station-service E.Leclerc avec son auvent, ses pompes et le panneau d'accès au centre commercial"
 readingTime: 5
-relatedArticles: ["prix-coutant-carburant-vaut-il-le-coup", "carburant-prix-coutant-septembre-2026", "intermarche-poce-sur-cisse-folle-semaine-septembre-2026"]
+relatedArticles: ["prix-coutant-carburant-vaut-il-le-coup", "intermarche-poce-sur-cisse-folle-semaine-septembre-2026"]
 ctaTitle: "Comparez les prix carburant en Gironde"
 ctaDescription: "Notre comparateur référence les stations de Gironde et du réseau E.Leclerc, avec les prix officiels mis à jour plusieurs fois par jour."
 faq:

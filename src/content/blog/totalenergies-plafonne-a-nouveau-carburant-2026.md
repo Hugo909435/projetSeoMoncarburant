@@ -12,7 +12,7 @@ tags: ["totalenergies", "plafonnement prix", "prix carburant", "patrick pouyann�
 featuredImage: "../../assets/articles/totalenergies-plafonne-prix-carburant-2026.webp"
 imageAlt: "Station-service TotalEnergies avec ses pompes et son enseigne rouge et bleue"
 readingTime: 6
-relatedArticles: ["essence-hausse-gazole-depasse-plafond-septembre-2026", "totalenergies-menace-lever-plafond-taxe-superprofits-2026", "carburant-prix-coutant-septembre-2026", "michel-edouard-leclerc-carburant-240-euros-litre"]
+relatedArticles: ["essence-hausse-gazole-depasse-plafond-septembre-2026", "totalenergies-menace-lever-plafond-taxe-superprofits-2026", "michel-edouard-leclerc-carburant-240-euros-litre"]
 ctaTitle: "Trouvez la station la moins chère près de chez vous"
 ctaDescription: "Notre comparateur référence les prix de plus de 11 000 stations-service en France, mis à jour quotidiennement via les données officielles."
 faq:
@@ -45,7 +45,7 @@ Le plafond TotalEnergies n'a toujours pas bougé : 1,99 €/L pour l'essence et 
 
 À la mi-septembre 2026, les prix moyens nationaux s'établissent à 2,153 €/L pour le SP95-E10, 2,208 €/L pour le SP95 et 2,250 €/L pour le SP98. L'écart avec le plafond essence, qui tournait autour de 4 à 14 centimes fin août puis 12 à 22 centimes début septembre, atteint désormais 16 à 26 centimes selon le carburant. Côté diesel, la bascule amorcée début septembre s'accentue : le prix moyen national atteint 2,332 €/L, plus de 8 centimes au-dessus du plafond de 2,25 €/L, contre à peine 3 centimes une semaine plus tôt. Signe supplémentaire du changement de dynamique, c'est désormais l'essence qui accélère le plus vite sur une semaine glissante, alors que le gazole avait longtemps mené la hausse. Nous détaillons ce basculement dans notre [point du 16 septembre sur l'essence et le plafond gazole dépassé](/blog/essence-hausse-gazole-depasse-plafond-septembre-2026/).
 
-Cette accélération avait d'ailleurs poussé Michel-Édouard Leclerc à évoquer, le 5 septembre sur LCI, [un risque de carburant à 2,40 €/L](/blog/michel-edouard-leclerc-carburant-240-euros-litre/), tout en reconnaissant une forte incertitude sur la suite. Dans ce contexte, le plafond TotalEnergies, qu'il s'agisse de l'essence ou du diesel, reste un repère concret pour limiter la facture à la pompe, avec un écart désormais plus favorable qu'à aucun autre moment depuis son rétablissement en juillet. Pour le point complet sur les prix et les opérations en cours à la rentrée, voir notre [bilan carburant de septembre 2026](/blog/carburant-prix-coutant-septembre-2026/).
+Cette accélération avait d'ailleurs poussé Michel-Édouard Leclerc à évoquer, le 5 septembre sur LCI, [un risque de carburant à 2,40 €/L](/blog/michel-edouard-leclerc-carburant-240-euros-litre/), tout en reconnaissant une forte incertitude sur la suite. Dans ce contexte, le plafond TotalEnergies, qu'il s'agisse de l'essence ou du diesel, reste un repère concret pour limiter la facture à la pompe, avec un écart désormais plus favorable qu'à aucun autre moment depuis son rétablissement en juillet. Pour le point complet sur les prix et les opérations en cours à la rentrée, voir notre [page dédiée au carburant à prix coûtant](/prix-coutant-carburant/).
 
 ## Mise à jour du 31 août 2026 : le plafond maintenu, mais sous conditions
 
