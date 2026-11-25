@@ -12,6 +12,7 @@ import ProchaineOperation from '../components/ProchaineOperation.astro';
 import FAQ from '../components/FAQ.astro';
 import DiscreetAd from '../components/DiscreetAd.astro';
 import { timelinePrixCoutant } from '../utils/prix-coutant';
+import operationsData from '../data/prix-coutant/operations.json';
 
 const entry = await getEntry('piliers', 'prix-coutant-carburant');
 if (!entry) throw new Error('Entrée prix-coutant-carburant introuvable');
@@ -35,6 +36,11 @@ const formatRange = (start: string, end: string) =>
     : `${rangeFormatter.format(toDate(start))} - ${dateFormatter.format(toDate(end))}`;
 
 const updatedLabel = dateFormatter.format(updatedAt ?? publishedAt);
+// Date de la dernière vérification des annonces des enseignes : la même que
+// celle du bloc du week-end, pour qu'une seule mise à jour d'operations.json
+// les fasse avancer partout sur la page.
+const verifieLeIso = operationsData._updatedAt;
+const verifieLeLabel = dateFormatter.format(toDate(verifieLeIso));
 
 const brandsEyebrow = ['E.Leclerc', 'Intermarché', 'Carrefour', 'Système U'];
 
@@ -155,6 +161,9 @@ const enseignesSchema = {
       <p class="pcc-subtitle">
         Les opérations renseignées pour le week-end, les conditions par enseigne et les périodes habituelles à surveiller.
       </p>
+      <p class="pcc-verified">
+        Annonces des enseignes vérifiées le <time datetime={verifieLeIso}>{verifieLeLabel}</time>
+      </p>
     </div>
     <div class="pcc-widget-wrap container">
       <ProchaineOperation />
@@ -195,7 +204,8 @@ const enseignesSchema = {
       vacances de la Toussaint sont l'occasion d'une nouvelle vague de remises : en 2025, Leclerc et Intermarché
       avaient vendu leur carburant à prix coûtant dès le premier week-end des vacances. Pour 2026,
       notre bilan de la Toussaint ne recensait aucune opération nationale
-      lors de sa rédaction. Le bloc en haut de page présente les opérations de notre suivi pour le
+      lors de sa rédaction. À notre dernière vérification, le <time datetime={verifieLeIso}>{verifieLeLabel}</time>,
+      aucune nouvelle opération nationale n'avait été annoncée. Le bloc en haut de page présente les opérations de notre suivi pour le
       week-end concerné. Les périodes futures du calendrier sont des repères saisonniers, sans annonce
       ni date confirmée. Consultez les communications des enseignes et de votre station avant de partir.
     </p>
@@ -327,7 +337,7 @@ const enseignesSchema = {
 
   <div class="pcc-section pcc-footnote-wrap container">
     <p class="pcc-footnote">
-      Guide mis à jour le {updatedLabel}. La date d'actualisation de la page et celle des annonces renseignées figurent dans le bloc du week-end. Le recalcul du calendrier ne vérifie pas de nouvelles annonces. Les périodes et conditions habituelles peuvent varier d'une année et d'un magasin à l'autre.
+      Guide mis à jour le {updatedLabel}, annonces des enseignes vérifiées le {verifieLeLabel}. La date d'actualisation de la page et celle des annonces renseignées figurent dans le bloc du week-end. Le recalcul du calendrier ne vérifie pas de nouvelles annonces. Les périodes et conditions habituelles peuvent varier d'une année et d'un magasin à l'autre.
     </p>
   </div>
 </BaseLayout>
@@ -387,6 +397,12 @@ const enseignesSchema = {
     color: rgba(255, 255, 255, 0.82);
     max-width: min(52ch, 100%);
     margin: 0;
+  }
+
+  .pcc-verified {
+    font-size: 0.875rem;
+    color: rgba(255, 255, 255, 0.65);
+    margin: 0.75rem 0 0;
   }
 
   /* Le widget déborde sur la bande sombre : effet "ticket" flottant. Le
