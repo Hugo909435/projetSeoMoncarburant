@@ -95,4 +95,6 @@ Aucun de ces leviers ne transformera radicalement votre facture à lui seul, mai
 
 **Limitez les accessoires électriques non essentiels** une fois l'habitacle à bonne température : un siège chauffant laissé en position maximale toute la trajet n'apporte rien de plus qu'un réglage modéré après les premières minutes.
 
+Si vous roulez en diesel, un autre risque guette par grand froid : le gazole qui fige et bloque le moteur. Nos conseils pour l'éviter sont dans notre article sur [le gazole figé par le froid](/blog/gazole-fige-grand-froid-temperature/).
+
 Le chauffage, lui, peut rester allumé sans mauvaise conscience : ce n'est pas lui qui vide votre réservoir plus vite en hiver. Pour aller plus loin sur les leviers qui font vraiment baisser votre facture toute l'année, consultez notre guide complet [réduire sa facture de carburant](/piliers/reduire-facture-carburant/).
