@@ -1,5 +1,5 @@
 {
-  "releveLe": "2026-11-26T21:42:37.141Z",
+  "releveLe": "2026-11-26T22:18:42.695Z",
   "source": "data.economie.gouv.fr, prix-des-carburants-en-france-flux-instantane-v2",
   "criteres": {
     "carburants": [
@@ -15,16 +15,16 @@
   },
   "national": {
     "stations": 9138,
-    "enRupture": 492,
-    "recentes": 360,
+    "enRupture": 495,
+    "recentes": 363,
     "parCarburant": {
-      "Gazole": 108,
-      "E10": 167,
+      "Gazole": 112,
+      "E10": 170,
       "SP95": 102,
-      "SP98": 299
+      "SP98": 300
     },
     "part": 5.4,
-    "partRecentes": 3.9
+    "partRecentes": 4
   },
   "departements": {
     "10": {
@@ -402,14 +402,15 @@
     "44": {
       "nom": "Loire-Atlantique",
       "stations": 159,
-      "enRupture": 5,
-      "recentes": 4,
+      "enRupture": 6,
+      "recentes": 5,
       "parCarburant": {
         "SP98": 3,
+        "Gazole": 1,
         "E10": 1,
         "SP95": 1
       },
-      "part": 3.1
+      "part": 3.8
     },
     "45": {
       "nom": "Loiret",
@@ -668,9 +669,9 @@
       "recentes": 23,
       "parCarburant": {
         "SP98": 20,
-        "Gazole": 7,
+        "Gazole": 8,
         "SP95": 5,
-        "E10": 9
+        "E10": 10
       },
       "part": 18.4
     },
@@ -812,14 +813,14 @@
     "79": {
       "nom": "Deux-Sèvres",
       "stations": 65,
-      "enRupture": 3,
-      "recentes": 3,
+      "enRupture": 4,
+      "recentes": 4,
       "parCarburant": {
         "SP98": 1,
         "E10": 1,
-        "Gazole": 1
+        "Gazole": 2
       },
-      "part": 4.6
+      "part": 6.2
     },
     "80": {
       "nom": "Somme",
@@ -954,14 +955,14 @@
     "91": {
       "nom": "Essonne",
       "stations": 125,
-      "enRupture": 10,
-      "recentes": 5,
+      "enRupture": 11,
+      "recentes": 6,
       "parCarburant": {
-        "SP98": 5,
-        "E10": 4,
+        "SP98": 6,
+        "E10": 5,
         "SP95": 3
       },
-      "part": 8
+      "part": 8.8
     },
     "92": {
       "nom": "Hauts-de-Seine",
@@ -1006,8 +1007,9 @@
       "enRupture": 11,
       "recentes": 11,
       "parCarburant": {
-        "E10": 7,
-        "SP98": 7
+        "E10": 8,
+        "SP98": 7,
+        "Gazole": 1
       },
       "part": 10.3
     },
