@@ -1,5 +1,5 @@
 {
-  "releveLe": "2026-11-27T23:25:56.493Z",
+  "releveLe": "2026-11-27T23:42:23.355Z",
   "source": "data.economie.gouv.fr, prix-des-carburants-en-france-flux-instantane-v2",
   "criteres": {
     "carburants": [
@@ -14,11 +14,11 @@
     "stationActiveJours": 10
   },
   "national": {
-    "stations": 9166,
-    "enRupture": 506,
-    "recentes": 384,
+    "stations": 9167,
+    "enRupture": 507,
+    "recentes": 385,
     "parCarburant": {
-      "Gazole": 112,
+      "Gazole": 113,
       "E10": 176,
       "SP95": 96,
       "SP98": 314
@@ -565,7 +565,7 @@
     },
     "58": {
       "nom": "Nièvre",
-      "stations": 57,
+      "stations": 56,
       "enRupture": 0,
       "recentes": 0,
       "parCarburant": {},
@@ -820,12 +820,13 @@
     "79": {
       "nom": "Deux-Sèvres",
       "stations": 66,
-      "enRupture": 1,
-      "recentes": 1,
+      "enRupture": 2,
+      "recentes": 2,
       "parCarburant": {
-        "SP98": 1
+        "SP98": 1,
+        "Gazole": 1
       },
-      "part": 1.5
+      "part": 3
     },
     "80": {
       "nom": "Somme",
@@ -864,7 +865,7 @@
     },
     "83": {
       "nom": "Var",
-      "stations": 159,
+      "stations": 160,
       "enRupture": 7,
       "recentes": 4,
       "parCarburant": {
@@ -1001,7 +1002,7 @@
     },
     "95": {
       "nom": "Val-d'Oise",
-      "stations": 107,
+      "stations": 108,
       "enRupture": 17,
       "recentes": 16,
       "parCarburant": {
@@ -1009,7 +1010,7 @@
         "Gazole": 3,
         "E10": 10
       },
-      "part": 15.9
+      "part": 15.7
     },
     "01": {
       "nom": "Ain",
